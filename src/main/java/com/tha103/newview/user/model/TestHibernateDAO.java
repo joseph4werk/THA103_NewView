@@ -2,7 +2,7 @@ package com.tha103.newview.user.model;
 
 import java.util.List;
 
-public class TestJDBCDAO {
+public class TestHibernateDAO {
 	public static void main(String[] args) {
 		
 		UserDAO dao = new UserDAOImpl();

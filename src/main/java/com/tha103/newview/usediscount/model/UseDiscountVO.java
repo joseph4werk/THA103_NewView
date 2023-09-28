@@ -1,13 +1,29 @@
 package com.tha103.newview.usediscount.model;
 
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-public class UseDiscountVO implements Serializable{
-
-	private static final long serialVersionUID = 1L;
+@Entity
+@Table(name = "usediscount")
+//配合 HQL
+//@NamedQuery(name = "")
+public class UseDiscountVO{
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "useDisID")
 	private Integer useDisID;
+	
+	@Column(name = "discountNO")
 	private Integer discountNO;
+	
+	@Column(name = "userID")
 	private Integer userID;
+	
+	@Column(name = "ditUsed", columnDefinition = "TINYINT")
 	private Integer ditUsed;
 	
 	public Integer getUseDisID() {

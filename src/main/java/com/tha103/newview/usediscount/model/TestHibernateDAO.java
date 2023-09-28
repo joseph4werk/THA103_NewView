@@ -2,7 +2,7 @@ package com.tha103.newview.usediscount.model;
 
 import java.util.List;
 
-public class TestJDBCDAO {
+public class TestHibernateDAO {
 	public static void main(String[] args) {
 		UseDiscountDAO dao = new UseDiscountDAOImpl();
 
@@ -15,13 +15,13 @@ public class TestJDBCDAO {
 //		dao.insert(use1);
 		
 		// 修改
-		UseDiscountVO use2 = new UseDiscountVO();
-		use2.setUseDisID(1);
-		use2.setDiscountNO(1);
-		use2.setUserID(1);
-		use2.setDitUsed(0);
-		
-		dao.update(use2);
+//		UseDiscountVO use2 = new UseDiscountVO();
+//		use2.setUseDisID(1);
+//		use2.setDiscountNO(1);
+//		use2.setUserID(1);
+//		use2.setDitUsed(0);
+//		
+//		dao.update(use2);
 		// 刪除
 //		dao.delete(3);
 
