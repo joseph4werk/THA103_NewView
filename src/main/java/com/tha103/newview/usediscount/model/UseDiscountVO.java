@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "usediscount")
+@Table(name = "useDiscount")
 //配合 HQL
 //@NamedQuery(name = "")
 public class UseDiscountVO{
