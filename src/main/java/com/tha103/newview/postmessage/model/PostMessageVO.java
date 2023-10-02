@@ -1,13 +1,31 @@
 package com.tha103.newview.postmessage.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
-public class PostMessageVO implements java.io.Serializable {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "postmessage")
+public class PostMessageVO {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer postMessageID;
+
+	@Column(name = "postID")
 	private Integer postID;
+
+	@Column(name = "userID")
 	private Integer userID;
+
+	@Column(name = "mesContent")
 	private String mesContent;
+
+	@Column(name = "messageDate")
 	private Timestamp messageDate;
 
 	public PostMessageVO() {
@@ -15,7 +33,8 @@ public class PostMessageVO implements java.io.Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PostMessageVO(Integer postMessageID, Integer postID, Integer userID, String mesContent,Timestamp messageDate) {
+	public PostMessageVO(Integer postMessageID, Integer postID, Integer userID, String mesContent,
+			Timestamp messageDate) {
 		super();
 		this.postMessageID = postMessageID;
 		this.postID = postID;
