@@ -8,222 +8,96 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
+
+import com.tha103.util.HibernateUtil;
 import com.tha103.util.Util;
 
 public class UserDAOImpl implements UserDAO {
-//	CRUD SQL Statement
-	private static final String INSERT_STMT = "INSERT INTO user (userName, userAccount, userPassword, userBirth, userCell, userEmail, userNickname, buyAuthority, speakAuthority) "
-			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
-	private static final String GET_ALL_STMT = "SELECT * FROM user ORDER BY userID ";
-	private static final String GET_ONE_STMT = "SELECT * FROM user WHERE userID = ? ";
-	private static final String DELETE_STMT = "DELETE FROM user WHERE userID = ? ";
-	private static final String UPDATE_STMT = "UPDATE user SET userName = ?, userAccount = ?, userPassword = ?, userBirth = ?, userCell = ?, userEmail = ?, userNickname = ?, buyAuthority = ?, speakAuthority = ? WHERE userID = ? ";
 
-	static {
+	@Override
+	
+	public int insert(UserVO userVO) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		
 		try {
-			Class.forName(Util.DRIVER);
-		} catch (ClassNotFoundException ce) {
-			ce.printStackTrace();
+			session.beginTransaction();
+			session.update(userVO);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
 		}
+		return -1;
 	}
 
 	@Override
-	public void insert(UserVO userVO) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
+	public int update(UserVO userVO) {
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			System.out.println("Connected...");
-			pstmt = con.prepareStatement(INSERT_STMT);
-
-			pstmt.setString(1, userVO.getUserName());
-			pstmt.setString(2, userVO.getUserAccount());
-			pstmt.setString(3, userVO.getUserPassword());
-			pstmt.setDate(4, userVO.getUserBirth());
-			pstmt.setString(5, userVO.getUserCell());
-			pstmt.setString(6, userVO.getUserEmail());
-			pstmt.setString(7, userVO.getUserNickname());
-			pstmt.setInt(8, userVO.getBuyAuthority());
-			pstmt.setInt(9, userVO.getSpeakAuthority());
-
-			pstmt.executeUpdate();
-
-			System.out.println("date inserted");
-		} catch (SQLException e) {
+			session.beginTransaction();
+			session.update(userVO);
+			session.getTransaction().commit();
+		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			closeResources(con, pstmt, null);
+			session.getTransaction().rollback();
 		}
+		return -1;
 	}
 
 	@Override
-	public void update(UserVO userVO) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
+	public int delete(Integer userID) {
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			System.out.println("Connected...");
-			pstmt = con.prepareStatement(UPDATE_STMT);
-
-			pstmt.setString(1, userVO.getUserName());
-			pstmt.setString(2, userVO.getUserAccount());
-			pstmt.setString(3, userVO.getUserPassword());
-			pstmt.setDate(4, userVO.getUserBirth());
-			pstmt.setString(5, userVO.getUserCell());
-			pstmt.setString(6, userVO.getUserEmail());
-			pstmt.setString(7, userVO.getUserNickname());
-			pstmt.setInt(8, userVO.getBuyAuthority());
-			pstmt.setInt(9, userVO.getSpeakAuthority());
-			pstmt.setInt(10, userVO.getUserID());
-			
-			pstmt.executeUpdate();
-
-			System.out.println("data updated");
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			closeResources(con, pstmt, null);
-		}
-	}
-
-	@Override
-	public void delete(Integer userID) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try {
-			Class.forName(Util.DRIVER);
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			System.out.println("Connected...");
-			pstmt = con.prepareStatement(DELETE_STMT);
-
-			pstmt.setInt(1, userID);
-			
-			pstmt.executeUpdate();
-
-			System.out.println("data deleted");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+			session.beginTransaction();
+			UserVO user = session.get(UserVO.class, userID);
+			if (user != null) {
+				session.delete(user);
 			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			session.getTransaction().commit();
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
 		}
+		return -1;
 	}
 
 	@Override
 	public UserVO findByPrimaryKey(Integer userID) {
-
-		UserVO user = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			System.out.println("Connected...");
-			pstmt = con.prepareStatement(GET_ONE_STMT);
-
-			pstmt.setInt(1, userID);
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				user = new UserVO();
-				user.setUserID(rs.getInt("userID"));
-				user.setUserName(rs.getString("userName"));
-				user.setUserAccount(rs.getString("userAccount"));
-				user.setUserBirth(rs.getDate("userBirth"));
-				user.setUserCell(rs.getString("userCell"));
-				user.setUserEmail(rs.getString("userEmail"));
-				user.setUserNickname(rs.getString("userNickname"));
-				user.setBuyAuthority(rs.getInt("buyAuthority"));
-				user.setSpeakAuthority(rs.getInt("speakAuthority"));
-			}
-
-		} catch (SQLException e) {
+			session.beginTransaction();
+			UserVO user = session.get(UserVO.class, userID);
+			session.getTransaction().commit();
+			return user;
+		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			closeResources(con, pstmt, rs);
+			session.getTransaction().rollback();
 		}
-
-		return user;
+		return null;
 	}
 
 	@Override
 	public List<UserVO> getAll() {
-		List<UserVO> list = new ArrayList<>();
-		UserVO user = null;
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			System.out.println("Connected...");
-			pstmt = con.prepareStatement(GET_ALL_STMT);
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				user = new UserVO();
-				user.setUserID(rs.getInt("userID"));
-				user.setUserName(rs.getString("userName"));
-				user.setUserAccount(rs.getString("userAccount"));
-				user.setUserBirth(rs.getDate("userBirth"));
-				user.setUserCell(rs.getString("userCell"));
-				user.setUserEmail(rs.getString("userEmail"));
-				user.setUserNickname(rs.getString("userNickname"));
-				user.setBuyAuthority(rs.getInt("buyAuthority"));
-				user.setSpeakAuthority(rs.getInt("speakAuthority"));
-				list.add(user);
-			}
-
-		} catch (SQLException e) {
+			session.beginTransaction();
+			List<UserVO> list = session.createQuery("from UserVO", UserVO.class).list();
+			session.getTransaction().commit();
+			return list;
+		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			closeResources(con, pstmt, rs);
+			session.getTransaction().rollback();
 		}
-		return list;
+		return null;
 	}
-
-	private void closeResources(Connection con, PreparedStatement pstmt, ResultSet rs) {
-		if (rs != null) {
-			try {
-				rs.close();
-			} catch (SQLException se) {
-				se.printStackTrace(System.err);
-			}
-		}
-		if (pstmt != null) {
-			try {
-				pstmt.close();
-			} catch (SQLException se) {
-				se.printStackTrace(System.err);
-			}
-		}
-		if (con != null) {
-			try {
-				con.close();
-			} catch (Exception e) {
-				e.printStackTrace(System.err);
-			}
-		}
-	}
-
 }
