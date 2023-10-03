@@ -3,6 +3,7 @@ package com.tha103.newview.user.model;
 import java.util.*;
 
 public interface UserDAO {
+	boolean checkUserAccount(String account);
 	public int insert(UserVO userVO);
 	public int update(UserVO userVO);
 	public int delete(Integer userID);

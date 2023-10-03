@@ -153,4 +153,11 @@ public class UserVO {
 				+ ", speakAuthority=" + speakAuthority + "]";
 	}
 
+	public UserVO(String userAccount) {
+		super();
+		this.userAccount = userAccount;
+	}
+	
+	
+
 }
