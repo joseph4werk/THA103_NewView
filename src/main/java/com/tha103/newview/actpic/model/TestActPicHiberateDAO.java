@@ -40,11 +40,10 @@ public class TestActPicHiberateDAO {
 //		dao.insert(actPic);
 //
 //		// 修改
-		ActPic actPic = new ActPic();
-		actPic.setActPicID(2);;
-		actPic.setActID(2);
-		actPic.setActPic(daoPic.gifToByteArray("image/ok2.jpg"));
-		dao.update(actPic);
+//		ActPic actPic = new ActPic();
+//		actPic.setActPicID(2);;
+//		actPic.setActPic(daoPic.gifToByteArray("image/ok2.jpg"));
+//		dao.update(actPic);
 //
 //		// 刪除
 //		dao.delete(5);
@@ -57,13 +56,13 @@ public class TestActPicHiberateDAO {
 //		System.out.println("---------------------");
 
 		// 查詢多筆
-//		List<ActPic> list = dao.getAll();
-//		for (ActPic act : list) {
-//			System.out.print(act.getActPicID() + ",");
-//			System.out.print(act.getActID() + ",");
-//			System.out.print(act.getActPic() + ",");
-//			
-//			System.out.println();
-//		}
+		List<ActPic> list = dao.getAll();
+		for (ActPic act : list) {
+			System.out.print(act.getActPicID() + ",");
+			System.out.print(act.getActID().getActName() + ",");
+			System.out.print(act.getActPic() + ",");
+			
+			System.out.println();
+		}
 	}
 }
