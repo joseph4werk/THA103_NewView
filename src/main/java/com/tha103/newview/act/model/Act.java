@@ -2,6 +2,7 @@ package com.tha103.newview.act.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,22 +18,25 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.google.gson.annotations.Expose;
 import com.tha103.newview.actcategory.model.ActCategory;
 import com.tha103.newview.actpic.model.ActPic;
+import com.tha103.newview.cityAdress.model.CityAddress;
 
 @Entity
 @Table(name = "act")
 // 配合 TestHQLWithParameter.java
 @NamedQuery(name = "getAllActs", query = "from Act where ActID > :ActID order by ActID desc")
 public class Act {
+	@Expose
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "actID", updatable = false)
 	private Integer actID;
-
+	@Expose
 	@Column(name = "actName")
 	private String actName;
-
+	@Expose
 	@Column(name = "actPrice")
 	private Integer actPrice;
 
@@ -41,49 +45,57 @@ public class Act {
 //	2.TemporalType, 有DATE(mapping到java.sql.Date)、TIME(mapping到java.sql.Time)、TIMESTAMP(mapping到java.sql.Timestamp)(預設值)
 //	3.如果型態本來就是java.sql.Date, java.sql.Time, java.sql.Timestamp, 就不用@Temporal 
 //	4.這範例有 import java.util.Date; --> 是故意用 java.util.Date 做展示，所以一定要加 @Temporal
+	@Expose
 	@Temporal(TemporalType.DATE)
 	@Column(name = "actTime")
 	private Date actTime;
-
+	@Expose
 	@Column(name = "actScope")
 	private Integer actScope;
-
+	@Expose
 	@Column(name = "actIntroduce")
 	private String actIntroduce;
-
+	@Expose
 	@Column(columnDefinition = "text")
 	private String actContent;
-
+	@Expose
 	@Temporal(TemporalType.TIME)
 	@Column(name = "time")
 	private Date time;
-
+	@Expose
 	@Temporal(TemporalType.DATE)
 	@Column(name = "actDate")
 	private Date actDate;
 
 	// 搭配TestHQLQueryProperty.java
-
+	@Expose
 	@Column(columnDefinition = "TINYINT(1)")
 	private boolean approvalCondition;
-
+	@Expose
 	@Column(name = "cityAddress")
 	private String cityAddress;
 
-	
-	@JoinColumn(name = "actCategoryID")
-	private Integer actCategoryID;
-	
+	@ManyToOne
+	@JoinColumn(name = "actCategoryID",referencedColumnName = "actCategoryID")
+	private ActCategory actCategory;
+	@Expose
 	@Column(name = "pubID")
 	private Integer pubID;
-
-	@Column(name = "cityAddressID")
-	private Integer cityAddressID;
-
 	
 	
-	@OneToMany(mappedBy = "act")
-    private List<ActPic> actPics;
+	
+	@ManyToOne
+	@JoinColumn(name = "cityAddressID",referencedColumnName = "cityAddressID")
+	private CityAddress city;
+	
+	@Expose
+	@OneToMany(mappedBy = "act", cascade=CascadeType.ALL)
+	private Set<ActPic> actpics;
+	
+	
+	
+//	@OneToMany(mappedBy = "act")
+//    private List<ActPic> actPics;
 //以上為資料設定  以下為方法
 
 	@Override
@@ -91,8 +103,8 @@ public class Act {
 		return "Act [actID=" + actID + ", actName=" + actName + ", actPrice=" + actPrice + ", actTime=" + actTime
 				+ ", actScope=" + actScope + ", actIntroduce=" + actIntroduce + ", actContent=" + actContent + ", time="
 				+ time + ", actDate=" + actDate + ", approvalCondition=" + approvalCondition + ", cityAddress="
-				+ cityAddress + ", actCategoryID=" + actCategoryID + ", pubID=" + pubID + ", cityAddressID="
-				+ cityAddressID + "]";
+				+ cityAddress + ", actCategoryID=" + actCategory + ", pubID=" + pubID + ", cityAddressID="
+				+ city + "]";
 	}
 
 	public Act() {
@@ -100,7 +112,7 @@ public class Act {
 
 	public Act(Integer actID, String actName, Integer actPrice, Date actTime, Integer actScope, String actIntroduce,
 			String actContent, Date time, Date actDate, Boolean approvalCondition, String cityAddress,
-			Integer actCategoryID, Integer pubID, Integer cityAddressID) {
+			Integer actCategoryID, Integer pubID, CityAddress cityAddressID) {
 		super();
 		this.actID = actID;
 		this.actName = actName;
@@ -113,9 +125,9 @@ public class Act {
 		this.actDate = actDate;
 		this.approvalCondition = approvalCondition;
 		this.cityAddress = cityAddress;
-		this.actCategoryID = actCategoryID;
+		this.actCategory = actCategory;
 		this.pubID = pubID;
-		this.cityAddressID = cityAddressID;
+		this.city = cityAddressID;
 	}
 
 	public Integer getActID() {
@@ -162,16 +174,16 @@ public class Act {
 		return cityAddress;
 	}
 
-	public Integer getActCategoryID() {
-		return actCategoryID;
+	public ActCategory getActCategoryID() {
+		return actCategory;
 	}
 
 	public Integer getPubID() {
 		return pubID;
 	}
 
-	public Integer getCityAddressID() {
-		return cityAddressID;
+	public CityAddress getCityAddressID() {
+		return city;
 	}
 
 	public void setActID(Integer actID) {
@@ -218,16 +230,22 @@ public class Act {
 		this.cityAddress = cityAddress;
 	}
 
-	public void setActCategoryID(Integer actCategoryID) {
-		this.actCategoryID = actCategoryID;
+	
+
+	public ActCategory getActCategory() {
+		return actCategory;
+	}
+
+	public void setActCategory(ActCategory actCategory) {
+		this.actCategory = actCategory;
 	}
 
 	public void setPubID(Integer pubID) {
 		this.pubID = pubID;
 	}
 
-	public void setCityAddressID(Integer cityAddressID) {
-		this.cityAddressID = cityAddressID;
+	public void setCityAddressID(CityAddress cityAddressID) {
+		this.city = cityAddressID;
 	}
 
 }

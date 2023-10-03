@@ -70,10 +70,10 @@ public class TestHiberateDAO {
 			System.out.print(act.getActID() + ",");
 			System.out.print(act.getActName() + ",");
 			System.out.print(act.getActPrice() + ",");
-			System.out.print(act.getActCategoryID() + ",");
+			System.out.print(act.getActCategoryID().getActCategoryName() + ",");
 			System.out.print(act.getPubID() + ",");
 			System.out.print(act.getActTime() + ",");
-			System.out.print(act.getCityAddressID() +",");
+			System.out.print(act.getCityAddressID().getCityName() +",");
 			System.out.print(act.getActScope() + ",");
 			System.out.print(act.getActIntroduce() + ",");
 			System.out.print(act.getTime() + ",");

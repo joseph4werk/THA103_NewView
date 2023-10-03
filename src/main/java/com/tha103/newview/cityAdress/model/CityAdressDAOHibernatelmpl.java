@@ -1,17 +1,18 @@
-package com.tha103.newview.act.model;
+package com.tha103.newview.cityAdress.model;
+
 import java.util.List;
 
 import org.hibernate.Session;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.tha103.newview.act.model.Act;
 import com.tha103.util.HibernateUtil;
 
-
-public class ActDAOHibernateImpl implements ActDAO {
+public class CityAdressDAOHibernatelmpl implements CityAdressDAO{
 
 	@Override
-	public void insert(Act act) {
+	public void insert(CityAdress act) {
 		// TODO Auto-generated method stub
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
@@ -23,11 +24,10 @@ public class ActDAOHibernateImpl implements ActDAO {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
-		
 	}
 
 	@Override
-	public void update(Act act) {
+	public void update(CityAdress act) {
 		// TODO Auto-generated method stub
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
@@ -39,7 +39,6 @@ public class ActDAOHibernateImpl implements ActDAO {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
-		
 	}
 
 	@Override
@@ -48,7 +47,7 @@ public class ActDAOHibernateImpl implements ActDAO {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			Act act = session.get(Act.class, ActID);
+			CityAdress act = session.get(CityAdress.class, ActID);
 			if (act != null) {
 				session.delete(act);
 			}
@@ -62,12 +61,13 @@ public class ActDAOHibernateImpl implements ActDAO {
 	}
 
 	@Override
-	public Act findByPrimaryKey(Integer actID) {
+	public CityAdress findByPrimaryKey(Integer ActID) {
+		// TODO Auto-generated method stub
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Act act = null;
+		CityAdress act = null;
 		try {
 			session.beginTransaction();
-			 act = session.get(Act.class, actID);
+			 act = session.get(CityAdress.class, ActID);
 			session.getTransaction().commit();
 			
 		} catch (Exception e) {
@@ -78,11 +78,11 @@ public class ActDAOHibernateImpl implements ActDAO {
 	}
 
 	@Override
-	public List<Act> getAll() {
+	public List<CityAdress> getAll() {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			List<Act> list = session.createQuery("from Act", Act.class).list();
+			List<CityAdress> list = session.createQuery("from Act", CityAdress.class).list();
 			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 			String json = gson.toJson(list);
 			
@@ -93,9 +93,7 @@ public class ActDAOHibernateImpl implements ActDAO {
 			session.getTransaction().rollback();
 		}
 		return null;
-	
 	}
-
 	
 
 }

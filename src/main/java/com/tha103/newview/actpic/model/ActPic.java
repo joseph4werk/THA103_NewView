@@ -1,5 +1,6 @@
 package com.tha103.newview.actpic.model;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -18,21 +19,29 @@ public class ActPic {
 	@Column(name = "actPicID", updatable = false)
 	private Integer actPicID;
 
-	@Column(name = "actID")
-	private Integer actID;
+	
 
 	@Column(name = "actPic", columnDefinition = "LONGBLOB")
 	private byte[] actPic;
 
+
 	@ManyToOne
-	@JoinColumn(name = "actID", insertable = false, updatable = false)
+	@JoinColumn(name = "actID",referencedColumnName = "actID")
 	private Act act;
 
-	public ActPic(Integer actPicID, Integer actID, byte[] actPic) {
+	
+	
+	
+	@Override
+	public String toString() {
+		return "ActPic [actPicID=" + actPicID + ", actPic=" + Arrays.toString(actPic) + ", act=" + act + "]";
+	}
+
+	public ActPic(Integer actPicID, byte[] actPic, Act act) {
 		super();
 		this.actPicID = actPicID;
-		this.actID = actID;
 		this.actPic = actPic;
+		this.act = act;
 	}
 
 	public ActPic() {
@@ -44,8 +53,8 @@ public class ActPic {
 		return actPicID;
 	}
 
-	public Integer getActID() {
-		return actID;
+	public Act getActID() {
+		return act;
 	}
 
 	public byte[] getActPic() {
@@ -56,8 +65,8 @@ public class ActPic {
 		this.actPicID = actPicID;
 	}
 
-	public void setActID(Integer actID) {
-		this.actID = actID;
+	public void setActID(Act actID) {
+		this.act = actID;
 	}
 
 	public void setActPic(byte[] actPic) {
