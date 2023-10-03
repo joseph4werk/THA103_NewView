@@ -9,10 +9,10 @@ import com.google.gson.GsonBuilder;
 import com.tha103.newview.act.model.Act;
 import com.tha103.util.HibernateUtil;
 
-public class CityAdressDAOHibernatelmpl implements CityAdressDAO{
+public class CityAddressDAOHibernatelmpl implements CityAddressDAO{
 
 	@Override
-	public void insert(CityAdress act) {
+	public void insert(CityAddress act) {
 		// TODO Auto-generated method stub
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
@@ -27,7 +27,7 @@ public class CityAdressDAOHibernatelmpl implements CityAdressDAO{
 	}
 
 	@Override
-	public void update(CityAdress act) {
+	public void update(CityAddress act) {
 		// TODO Auto-generated method stub
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
@@ -47,7 +47,7 @@ public class CityAdressDAOHibernatelmpl implements CityAdressDAO{
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			CityAdress act = session.get(CityAdress.class, ActID);
+			CityAddress act = session.get(CityAddress.class, ActID);
 			if (act != null) {
 				session.delete(act);
 			}
@@ -61,13 +61,13 @@ public class CityAdressDAOHibernatelmpl implements CityAdressDAO{
 	}
 
 	@Override
-	public CityAdress findByPrimaryKey(Integer ActID) {
+	public CityAddress findByPrimaryKey(Integer ActID) {
 		// TODO Auto-generated method stub
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		CityAdress act = null;
+		CityAddress act = null;
 		try {
 			session.beginTransaction();
-			 act = session.get(CityAdress.class, ActID);
+			 act = session.get(CityAddress.class, ActID);
 			session.getTransaction().commit();
 			
 		} catch (Exception e) {
@@ -78,11 +78,11 @@ public class CityAdressDAOHibernatelmpl implements CityAdressDAO{
 	}
 
 	@Override
-	public List<CityAdress> getAll() {
+	public List<CityAddress> getAll() {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			List<CityAdress> list = session.createQuery("from Act", CityAdress.class).list();
+			List<CityAddress> list = session.createQuery("from Act", CityAddress.class).list();
 			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 			String json = gson.toJson(list);
 			
