@@ -1,8 +1,20 @@
 package com.tha103.newview.postcategory.model;
 
-public class PostCategoryVO implements java.io.Serializable{
-	
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "postcategory")
+public class PostCategoryVO {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Integer postCategoryID;
+	
+	@Column(name = "postCategoryName")
 	private String postCategoryName;
 	
 	public PostCategoryVO() {

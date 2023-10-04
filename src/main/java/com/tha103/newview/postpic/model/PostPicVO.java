@@ -1,11 +1,24 @@
 package com.tha103.newview.postpic.model;
 
 import java.util.Arrays;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-public class PostPicVO implements java.io.Serializable{
-	
+@Entity
+@Table(name = "postpic")
+public class PostPicVO{
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Integer postPicID;
+	
+	@Column(name = "postID")
 	private Integer postID;
+	
+	@Column(name = "postpic", columnDefinition = "longblob")
 	private byte[] postPic;
 	
 	
