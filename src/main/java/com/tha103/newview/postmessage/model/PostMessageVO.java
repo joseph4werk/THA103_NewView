@@ -7,7 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.tha103.newview.post.model.PostVO;
+import com.tha103.newview.user.model.UserVO;
 
 @Entity
 @Table(name = "postmessage")
@@ -16,11 +21,13 @@ public class PostMessageVO {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer postMessageID;
 
-	@Column(name = "postID")
-	private Integer postID;
+	@ManyToOne
+	@JoinColumn(name = "postID", referencedColumnName = "postID")
+	private PostVO post;
 
-	@Column(name = "userID")
-	private Integer userID;
+	@ManyToOne
+	@JoinColumn(name = "userID", referencedColumnName = "userID")
+	private UserVO user;
 
 	@Column(name = "mesContent")
 	private String mesContent;
@@ -33,12 +40,10 @@ public class PostMessageVO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PostMessageVO(Integer postMessageID, Integer postID, Integer userID, String mesContent,
+	public PostMessageVO(Integer postMessageID,  String mesContent,
 			Timestamp messageDate) {
 		super();
 		this.postMessageID = postMessageID;
-		this.postID = postID;
-		this.userID = userID;
 		this.mesContent = mesContent;
 		this.messageDate = messageDate;
 	}
@@ -51,20 +56,21 @@ public class PostMessageVO {
 		this.postMessageID = postMessageID;
 	}
 
-	public Integer getPostID() {
-		return postID;
+
+	public PostVO getPost() {
+		return post;
 	}
 
-	public void setPostID(Integer postID) {
-		this.postID = postID;
+	public void setPost(PostVO post) {
+		this.post = post;
 	}
 
-	public Integer getUserID() {
-		return userID;
+	public UserVO getUser() {
+		return user;
 	}
 
-	public void setUserID(Integer userID) {
-		this.userID = userID;
+	public void setUser(UserVO user) {
+		this.user = user;
 	}
 
 	public String getMesContent() {
@@ -85,7 +91,7 @@ public class PostMessageVO {
 
 	@Override
 	public String toString() {
-		return "PostMessageVO [postMessageID=" + postMessageID + ", postID=" + postID + ", userID=" + userID
+		return "PostMessageVO [postMessageID=" + postMessageID + ", postVO=" + post + ", userVO=" + user
 				+ ", mesContent=" + mesContent + ", messageDate=" + messageDate + "]";
 	}
 

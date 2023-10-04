@@ -2,7 +2,11 @@ package com.tha103.newview.postmessage.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+
 import org.hibernate.Session;
+
+import com.tha103.newview.post.model.PostVO;
+import com.tha103.newview.user.model.UserVO;
 import com.tha103.util.HibernateUtil;
 
 public class PostMessageHibernate implements PostMessageDAO_interface {
@@ -92,35 +96,40 @@ public class PostMessageHibernate implements PostMessageDAO_interface {
 
 		// Insert
 		PostMessageVO msg1 = new PostMessageVO();
-		msg1.setPostID(1);
-		msg1.setUserID(2);
 		msg1.setMesContent("TestA");
 		msg1.setMessageDate(new Timestamp(System.currentTimeMillis()));
 		dao.add(msg1);
-		System.out.println("Success!");
+		System.out.println("Insert Success!");
 
 		// Update
-		PostMessageVO msg2 = new PostMessageVO();
-		msg2.setPostMessageID(1);
-		msg2.setPostID(1);
-		msg2.setUserID(2);
-		msg2.setMesContent("TestB");
-		msg2.setMessageDate(new Timestamp(System.currentTimeMillis()));
-		dao.update(msg2);
-		System.out.println("Success!");
+//		PostMessageVO msg2 = dao.findByPK(1);
+//		if (msg2 != null) {
+//			msg2.setMesContent("TestB");
+//			dao.update(msg2);
+//			System.out.println("Update Success!");
+//		} else {
+//			System.out.println("Message not found!");
+//		}
 
-		// Delete
-		dao.delete(5);
-		System.out.println("Success!");
+		// Delete (Assuming message with ID 2 exists)
+		dao.delete(2);
+		System.out.println("Delete Success!");
 
-		// FindByPK
-		PostMessageVO msg3 = new PostMessageHibernate().findByPK(1);
-		System.out.println(msg3);
+		// FindByPK (Assuming message with ID 1 exists)
+		PostMessageVO msg3 = dao.findByPK(1);
+		if (msg3 != null) {
+			System.out.println(msg3);
+		} else {
+			System.out.println("Message not found!");
+		}
 
 		// ListAll
-		List<PostMessageVO> list = new PostMessageHibernate().getAll();
-		System.out.println(list);
-
+		List<PostMessageVO> list = dao.getAll();
+		if (list != null) {
+			System.out.println(list);
+		} else {
+			System.out.println("No messages found!");
+		}
 	}
 
 }
