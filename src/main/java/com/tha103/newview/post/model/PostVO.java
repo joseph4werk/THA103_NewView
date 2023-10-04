@@ -1,12 +1,22 @@
 package com.tha103.newview.post.model;
 
 import java.sql.Timestamp;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.tha103.newview.postcategory.model.PostCategoryVO;
+import com.tha103.newview.postmessage.model.PostMessageVO;
+import com.tha103.newview.user.model.UserVO;
 
 @Entity
 @Table(name = "post")
@@ -15,12 +25,17 @@ public class PostVO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer postID;
+	
+	@OneToMany(mappedBy = "postMessage" , cascade = CascadeType.ALL)
+	private Set<PostMessageVO> post;
 
-	@Column(name = "userID")
-	private Integer userID;
+	@ManyToOne
+	@JoinColumn(name = "userID", referencedColumnName = "userID")
+	private UserVO user;
 
-	@Column(name = "postCategoryID")
-	private Integer postCategoryID;
+	@ManyToOne
+	@JoinColumn(name = "postCategoryID", referencedColumnName = "postCategoryID")
+	private PostCategoryVO postCategory;
 
 	@Column(name = "postHeader")
 	private String postHeader;
@@ -48,12 +63,10 @@ public class PostVO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PostVO(Integer postID, Integer userID, Integer postCategoryID, String postHeader, Timestamp postDateTime,
+	public PostVO(Integer postID, Integer postCategoryID, String postHeader, Timestamp postDateTime,
 			Timestamp lastEditedTime, String postContent, Integer disLikeCount, Integer likeCount, Integer postStatus) {
 		super();
 		this.postID = postID;
-		this.userID = userID;
-		this.postCategoryID = postCategoryID;
 		this.postHeader = postHeader;
 		this.postDateTime = postDateTime;
 		this.lastEditedTime = lastEditedTime;
@@ -63,6 +76,19 @@ public class PostVO {
 		this.postStatus = postStatus;
 	}
 
+	public Set<PostMessageVO> getPost() {
+		return post;
+	}
+
+	public void setPost(Set<PostMessageVO> post) {
+		this.post = post;
+	}
+
+	public UserVO getUser() {
+		return user;
+	}
+
+
 	public Integer getPostID() {
 		return postID;
 	}
@@ -71,20 +97,16 @@ public class PostVO {
 		this.postID = postID;
 	}
 
-	public Integer getUserID() {
-		return userID;
+	public void setUser(UserVO user) {
+		this.user = user;
 	}
 
-	public void setUserID(Integer userID) {
-		this.userID = userID;
+	public PostCategoryVO getPostCategory() {
+		return postCategory;
 	}
 
-	public Integer getPostCategoryID() {
-		return postCategoryID;
-	}
-
-	public void setPostCategoryID(Integer postCategoryID) {
-		this.postCategoryID = postCategoryID;
+	public void setPostCategory(PostCategoryVO postCategory) {
+		this.postCategory = postCategory;
 	}
 
 	public String getPostHeader() {
@@ -145,7 +167,7 @@ public class PostVO {
 
 	@Override
 	public String toString() {
-		return "PostVO [postID=" + postID + ", userID=" + userID + ", postCategoryID=" + postCategoryID
+		return "PostVO [postID=" + postID + ", userVO=" + user + ", postCategoryVO=" + postCategory
 				+ ", postHeader=" + postHeader + ", postDateTime=" + postDateTime + ", lastEditedTime=" + lastEditedTime
 				+ ", postContent=" + postContent + ", disLikeCount=" + disLikeCount + ", likeCount=" + likeCount
 				+ ", postStatus=" + postStatus + "]";

@@ -2,7 +2,11 @@ package com.tha103.newview.post.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+
 import org.hibernate.Session;
+
+import com.tha103.newview.postcategory.model.PostCategoryVO;
+import com.tha103.newview.user.model.UserVO;
 import com.tha103.util.HibernateUtil;
 
 public class PostHibernate implements PostDAO_interface {
@@ -92,8 +96,13 @@ public class PostHibernate implements PostDAO_interface {
 
 		// Insert
 		PostVO post1 = new PostVO();
-		post1.setUserID(2);
-		post1.setPostCategoryID(2);
+		UserVO user1 = new UserVO();
+		PostCategoryVO cate1 = new PostCategoryVO();
+		
+		post1.setUser(user1);
+		user1.setUserID(2);
+		post1.setPostCategory(cate1);
+		cate1.setPostCategoryID(2);
 		post1.setPostHeader("Test Header");
 		post1.setPostDateTime(new Timestamp(System.currentTimeMillis()));
 		post1.setLastEditedTime(new Timestamp(System.currentTimeMillis()));
@@ -105,27 +114,30 @@ public class PostHibernate implements PostDAO_interface {
 		System.out.println("Success!");
 
 		// Update
-		PostVO post2 = new PostVO();
-		post2.setPostID(6);
-		post2.setUserID(2);
-		post2.setPostCategoryID(2);
-		post2.setPostHeader("Test Header2");
-		post2.setPostDateTime(new Timestamp(System.currentTimeMillis()));
-		post2.setLastEditedTime(new Timestamp(System.currentTimeMillis()));
-		post2.setPostContent("Test postContent2");
-		post2.setDisLikeCount(2);
-		post2.setLikeCount(2);
-		post2.setPostStatus(1);
-		dao.update(post2);
+//		PostVO post2 = new PostVO();
+//		UserVO user2 = new UserVO();
+//		PostCategoryVO cate2 = new PostCategoryVO();
+//		post2.setUser(user2);
+//		user2.setUserID(3);
+//		post2.setPostCategory(cate2);
+//		cate2.setPostCategoryID(4);
+//		post2.setPostHeader("Test Header2");
+//		post2.setPostDateTime(new Timestamp(System.currentTimeMillis()));
+//		post2.setLastEditedTime(new Timestamp(System.currentTimeMillis()));
+//		post2.setPostContent("Test postContent2");
+//		post2.setDisLikeCount(2);
+//		post2.setLikeCount(2);
+//		post2.setPostStatus(1);
+//		dao.update(post2);
 		System.out.println("Success!");
 
 		// Delete
-		dao.delete(7);
-		System.out.println("Success!");
+//		dao.delete(7);
+//		System.out.println("Success!");
 
 		// FindByPK
-		PostVO post3 = new PostHibernate().findByPK(1);
-		System.out.println(post3);
+//		PostVO post3 = new PostHibernate().findByPK(1);
+//		System.out.println(post3);
 
 		// ListAll
 		List<PostVO> list = new PostHibernate().getAll();

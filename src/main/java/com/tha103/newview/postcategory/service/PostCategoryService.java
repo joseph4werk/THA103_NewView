@@ -1,6 +1,10 @@
-package com.tha103.newview.postcategory.model;
+package com.tha103.newview.postcategory.service;
 
 import java.util.List;
+
+import com.tha103.newview.postcategory.model.PostCategoryDAO_interface;
+import com.tha103.newview.postcategory.model.PostCategoryHibernate;
+import com.tha103.newview.postcategory.model.PostCategoryVO;
 
 public class PostCategoryService {
 

@@ -96,23 +96,23 @@ public class PostCategoryHibernate implements PostCategoryDAO_interface {
 		System.out.println("Success!");
 		
 		// Update 
-		PostCategoryVO category2 = new PostCategoryVO();
-		category2.setPostCategoryID(10);
-		category2.setPostCategoryName("TestB");
-		dao.update(category2);
-		System.out.println("Success!");
-		
-		// Delete 
-		dao.delete(12);
-		System.out.println("Success!");
-		
-		// FindByPK
-		PostCategoryVO category4 = new PostCategoryHibernate().findByPK(1);
-		System.out.println(category4);
-		
-		// ListAll	
-		List<PostCategoryVO> list = new PostCategoryHibernate().getAll();
-		System.out.println(list);
+//		PostCategoryVO category2 = new PostCategoryVO();
+//		category2.setPostCategoryID(10);
+//		category2.setPostCategoryName("TestB");
+//		dao.update(category2);
+//		System.out.println("Success!");
+//		
+//		// Delete 
+//		dao.delete(12);
+//		System.out.println("Success!");
+//		
+//		// FindByPK
+//		PostCategoryVO category4 = new PostCategoryHibernate().findByPK(1);
+//		System.out.println(category4);
+//		
+//		// ListAll	
+//		List<PostCategoryVO> list = new PostCategoryHibernate().getAll();
+//		System.out.println(list);
 
 	}
 }

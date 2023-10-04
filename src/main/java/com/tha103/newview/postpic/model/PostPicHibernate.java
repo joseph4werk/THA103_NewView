@@ -6,8 +6,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
+
 import javax.imageio.ImageIO;
+
 import org.hibernate.Session;
+
+import com.tha103.newview.post.model.PostVO;
 import com.tha103.util.HibernateUtil;
 
 public class PostPicHibernate implements PostPicDAO_interface {
@@ -120,7 +124,9 @@ public class PostPicHibernate implements PostPicDAO_interface {
 
 		// Insert
 		PostPicVO pic1 = new PostPicVO();
-		pic1.setPostID(01);
+		PostVO post1 = new PostVO();
+		pic1.setPost(post1);
+		post1.setPostID(1);
 		byte[] img = null;
 		try {
 			img = PostPicHibernate.getPictureByteArray("C:/THA103_WebApp/Concert.jpg");
@@ -131,21 +137,23 @@ public class PostPicHibernate implements PostPicDAO_interface {
 		dao.add(pic1);
 
 		// Update
-		PostPicVO pic2 = new PostPicVO();
-		pic2.setPostPicID(9);
-		pic2.setPostID(2);
-		byte[] img2 = null;
-		try {
-			img2 = getPictureByteArray("C:/THA103_WebApp/Concert.jpg");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		pic2.setPostPic(img2);
-		dao.update(pic2);
+//		PostPicVO pic2 = new PostPicVO();
+//		PostVO post2 = new PostVO();
+//		pic2.setPostPicID(9);
+//		pic2.setPost(post2);
+//		post2.setPostID(1);
+//		byte[] img2 = null;
+//		try {
+//			img2 = getPictureByteArray("C:/THA103_WebApp/Concert.jpg");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		pic2.setPostPic(img2);
+//		dao.update(pic2);
 
 		// Delete
-		dao.delete(12);
+//		dao.delete(12);
 
 		// FindPK//
 		PostPicVO pic3 = dao.findByPK(1);
