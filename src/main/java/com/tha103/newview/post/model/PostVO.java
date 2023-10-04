@@ -14,8 +14,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.tha103.newview.likes.model.LikesVO;
 import com.tha103.newview.postcategory.model.PostCategoryVO;
 import com.tha103.newview.postmessage.model.PostMessageVO;
+import com.tha103.newview.report.model.ReportVO;
 import com.tha103.newview.user.model.UserVO;
 
 @Entity
@@ -25,9 +27,15 @@ public class PostVO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer postID;
-	
-	@OneToMany(mappedBy = "postMessage" , cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
 	private Set<PostMessageVO> post;
+
+	@OneToMany(mappedBy = "postVO", cascade = CascadeType.ALL)
+	private Set<LikesVO> likesVOs;
+
+	@OneToMany(mappedBy = "postVO", cascade = CascadeType.ALL)
+	private Set<ReportVO> reportVOs;
 
 	@ManyToOne
 	@JoinColumn(name = "userID", referencedColumnName = "userID")
@@ -63,10 +71,16 @@ public class PostVO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PostVO(Integer postID, Integer postCategoryID, String postHeader, Timestamp postDateTime,
-			Timestamp lastEditedTime, String postContent, Integer disLikeCount, Integer likeCount, Integer postStatus) {
+	public PostVO(Integer postID, Set<PostMessageVO> post, Set<LikesVO> likesVOs, Set<ReportVO> reportVOs, UserVO user,
+			PostCategoryVO postCategory, String postHeader, Timestamp postDateTime, Timestamp lastEditedTime,
+			String postContent, Integer disLikeCount, Integer likeCount, Integer postStatus) {
 		super();
 		this.postID = postID;
+		this.post = post;
+		this.likesVOs = likesVOs;
+		this.reportVOs = reportVOs;
+		this.user = user;
+		this.postCategory = postCategory;
 		this.postHeader = postHeader;
 		this.postDateTime = postDateTime;
 		this.lastEditedTime = lastEditedTime;
@@ -87,7 +101,6 @@ public class PostVO {
 	public UserVO getUser() {
 		return user;
 	}
-
 
 	public Integer getPostID() {
 		return postID;
@@ -165,12 +178,28 @@ public class PostVO {
 		this.postStatus = postStatus;
 	}
 
+	public Set<LikesVO> getLikesVOs() {
+		return likesVOs;
+	}
+
+	public void setLikesVOs(Set<LikesVO> likesVOs) {
+		this.likesVOs = likesVOs;
+	}
+
+	public Set<ReportVO> getReportVOs() {
+		return reportVOs;
+	}
+
+	public void setReportVOs(Set<ReportVO> reportVOs) {
+		this.reportVOs = reportVOs;
+	}
+
 	@Override
 	public String toString() {
-		return "PostVO [postID=" + postID + ", userVO=" + user + ", postCategoryVO=" + postCategory
-				+ ", postHeader=" + postHeader + ", postDateTime=" + postDateTime + ", lastEditedTime=" + lastEditedTime
-				+ ", postContent=" + postContent + ", disLikeCount=" + disLikeCount + ", likeCount=" + likeCount
-				+ ", postStatus=" + postStatus + "]";
+		return "PostVO [postID=" + postID + ", post=" + post + ", likesVOs=" + likesVOs + ", reportVOs=" + reportVOs
+				+ ", user=" + user + ", postCategory=" + postCategory + ", postHeader=" + postHeader + ", postDateTime="
+				+ postDateTime + ", lastEditedTime=" + lastEditedTime + ", postContent=" + postContent
+				+ ", disLikeCount=" + disLikeCount + ", likeCount=" + likeCount + ", postStatus=" + postStatus + "]";
 	}
 
 }

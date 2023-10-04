@@ -1,9 +1,16 @@
 package com.tha103.newview.discount.model;
 
 import java.sql.Date;
+import java.util.Set;
 
-public class DiscountVO implements java.io.Serializable{
-	
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
+
+import com.google.gson.annotations.Expose;
+import com.tha103.newview.usediscount.model.UseDiscountVO;
+
+public class DiscountVO implements java.io.Serializable {
+
 	private Integer discountNO;
 	private Integer pubID;
 	private Integer adminID;
@@ -12,14 +19,18 @@ public class DiscountVO implements java.io.Serializable{
 	private String discountCode;
 	private Date disStartDate;
 	private Date disFinishDate;
-	
+
+	@Expose
+	@OneToMany(mappedBy = "discountVO", cascade = CascadeType.ALL)
+	private Set<UseDiscountVO> useDiscountVOs;
+
 	public DiscountVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public DiscountVO(Integer discountNO, Integer pubID, Integer adminID, String discountContent, Integer disAmount,
-			String discountCode, Date disStartDate, Date disFinishDate) {
+			String discountCode, Date disStartDate, Date disFinishDate, Set<UseDiscountVO> useDiscountVOs) {
 		super();
 		this.discountNO = discountNO;
 		this.pubID = pubID;
@@ -29,65 +40,90 @@ public class DiscountVO implements java.io.Serializable{
 		this.discountCode = discountCode;
 		this.disStartDate = disStartDate;
 		this.disFinishDate = disFinishDate;
+		this.useDiscountVOs = useDiscountVOs;
 	}
-
 
 	public Integer getDiscountNO() {
 		return discountNO;
 	}
+
 	public void setDiscountNO(Integer discountNO) {
 		this.discountNO = discountNO;
 	}
+
 	public Integer getPubID() {
 		return pubID;
 	}
+
 	public void setPubID(Integer pubID) {
 		this.pubID = pubID;
 	}
+
 	public Integer getAdminID() {
 		return adminID;
 	}
+
 	public void setAdminID(Integer adminID) {
 		this.adminID = adminID;
 	}
+
 	public String getDiscountContent() {
 		return discountContent;
 	}
+
 	public void setDiscountContent(String discountContent) {
 		this.discountContent = discountContent;
 	}
+
 	public Integer getDisAmount() {
 		return disAmount;
 	}
+
 	public void setDisAmount(Integer disAmount) {
 		this.disAmount = disAmount;
 	}
+
 	public String getDiscountCode() {
 		return discountCode;
 	}
+
 	public void setDiscountCode(String discountCode) {
 		this.discountCode = discountCode;
 	}
+
 	public Date getDisStartDate() {
 		return disStartDate;
 	}
+
 	public void setDisStartDate(Date disStartDate) {
 		this.disStartDate = disStartDate;
 	}
+
 	public Date getDisFinishDate() {
 		return disFinishDate;
 	}
+
 	public void setDisFinishDate(Date disFinishDate) {
 		this.disFinishDate = disFinishDate;
+	}
+	
+
+	public Set<UseDiscountVO> getUseDiscountVOs() {
+		return useDiscountVOs;
+	}
+
+	public void setUseDiscountVOs(Set<UseDiscountVO> useDiscountVOs) {
+		this.useDiscountVOs = useDiscountVOs;
 	}
 
 	@Override
 	public String toString() {
 		return "DiscountVO [discountNO=" + discountNO + ", pubID=" + pubID + ", adminID=" + adminID
 				+ ", discountContent=" + discountContent + ", disAmount=" + disAmount + ", discountCode=" + discountCode
-				+ ", disStartDate=" + disStartDate + ", disFinishDate=" + disFinishDate + "]";
+				+ ", disStartDate=" + disStartDate + ", disFinishDate=" + disFinishDate + ", useDiscountVOs="
+				+ useDiscountVOs + "]";
 	}
-	
-	
-	
+
+
+
 }
