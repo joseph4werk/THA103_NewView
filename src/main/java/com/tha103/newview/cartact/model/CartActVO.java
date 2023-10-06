@@ -17,13 +17,13 @@ public class CartActVO implements java.io.Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer cartActID;
+	private Integer cartQuantity;
 	@ManyToOne
 	@JoinColumn(name = "userID" , referencedColumnName ="userID")
 	private UserVO user;
 	@ManyToOne
 	@JoinColumn(name = "actID" , referencedColumnName ="actID")
 	private ActVO act;
-	private Integer cartQuantity;
 	
 	
 	

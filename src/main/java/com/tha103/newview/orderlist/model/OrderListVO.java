@@ -24,11 +24,6 @@ public class OrderListVO implements java.io.Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer orderListID;
-	@ManyToOne
-	@JoinColumn(name = "orderID", referencedColumnName = "orderID")
-	private OrdersVO orders;
-	@ManyToOne
-	@JoinColumn(name = "actID", referencedColumnName = "actID")
 	private ActVO act;
 	private Integer actTotal;
 	private byte[] QRcodeID;
@@ -39,8 +34,13 @@ public class OrderListVO implements java.io.Serializable{
 	private Integer seatColumns;
 	private String vacancy;
 	
+	@ManyToOne
+	@JoinColumn(name = "orderID", referencedColumnName = "orderID")
+	private OrdersVO orders;
+	@ManyToOne
+	@JoinColumn(name = "actID", referencedColumnName = "actID")
 	@OneToMany(mappedBy = "orderList" , cascade = CascadeType.ALL)
-	private Set<OrderListVO> orderLists;
+	private Set<OrderListVO> OrderListVOs;
 	
 	
 	
@@ -51,12 +51,11 @@ public class OrderListVO implements java.io.Serializable{
 
 
 
-	public OrderListVO(Integer orderListID, OrdersVO orders, ActVO act, Integer actTotal, byte[] qRcodeID,
-			Timestamp orderListTime, String reviewContent, Integer fiveStarReview, Integer seatRows,
-			Integer seatColumns, String vacancy, Set<OrderListVO> orderLists) {
+	public OrderListVO(Integer orderListID, ActVO act, Integer actTotal, byte[] qRcodeID, Timestamp orderListTime,
+			String reviewContent, Integer fiveStarReview, Integer seatRows, Integer seatColumns, String vacancy,
+			OrdersVO orders, Set<OrderListVO> orderListVOs) {
 		super();
 		this.orderListID = orderListID;
-		this.orders = orders;
 		this.act = act;
 		this.actTotal = actTotal;
 		QRcodeID = qRcodeID;
@@ -66,7 +65,8 @@ public class OrderListVO implements java.io.Serializable{
 		this.seatRows = seatRows;
 		this.seatColumns = seatColumns;
 		this.vacancy = vacancy;
-		this.orderLists = orderLists;
+		this.orders = orders;
+		OrderListVOs = orderListVOs;
 	}
 
 
@@ -79,18 +79,6 @@ public class OrderListVO implements java.io.Serializable{
 
 	public void setOrderListID(Integer orderListID) {
 		this.orderListID = orderListID;
-	}
-
-
-
-	public OrdersVO getOrders() {
-		return orders;
-	}
-
-
-
-	public void setOrders(OrdersVO orders) {
-		this.orders = orders;
 	}
 
 
@@ -203,25 +191,41 @@ public class OrderListVO implements java.io.Serializable{
 
 
 
-	public Set<OrderListVO> getOrderLists() {
-		return orderLists;
+	public OrdersVO getOrders() {
+		return orders;
 	}
 
 
 
-	public void setOrderLists(Set<OrderListVO> orderLists) {
-		this.orderLists = orderLists;
+	public void setOrders(OrdersVO orders) {
+		this.orders = orders;
+	}
+
+
+
+	public Set<OrderListVO> getOrderListVOs() {
+		return OrderListVOs;
+	}
+
+
+
+	public void setOrderListVOs(Set<OrderListVO> orderListVOs) {
+		OrderListVOs = orderListVOs;
 	}
 
 
 
 	@Override
 	public String toString() {
-		return "OrderListVO [orderListID=" + orderListID + ", orders=" + orders + ", act=" + act + ", actTotal="
-				+ actTotal + ", QRcodeID=" + Arrays.toString(QRcodeID) + ", OrderListTime=" + OrderListTime
-				+ ", reviewContent=" + reviewContent + ", fiveStarReview=" + fiveStarReview + ", seatRows=" + seatRows
-				+ ", seatColumns=" + seatColumns + ", vacancy=" + vacancy + ", orderLists=" + orderLists + "]";
+		return "OrderListVO [orderListID=" + orderListID + ", act=" + act + ", actTotal=" + actTotal + ", QRcodeID="
+				+ Arrays.toString(QRcodeID) + ", OrderListTime=" + OrderListTime + ", reviewContent=" + reviewContent
+				+ ", fiveStarReview=" + fiveStarReview + ", seatRows=" + seatRows + ", seatColumns=" + seatColumns
+				+ ", vacancy=" + vacancy + ", orders=" + orders + ", OrderListVOs=" + OrderListVOs + "]";
 	}
+
+
+
+	
 
 
 	

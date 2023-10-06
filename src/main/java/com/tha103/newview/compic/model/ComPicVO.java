@@ -20,14 +20,14 @@ public class ComPicVO{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer comPicID;
 	
-	@ManyToOne
-	@JoinColumn(name = "orderListID" , referencedColumnName ="orderListID")
-	private OrderListVO orderList;
 	
 	
 	@Column(name = "comPic", columnDefinition = "longblob")
 	private byte[] comPic;
 	
+	@ManyToOne
+	@JoinColumn(name = "orderListID" , referencedColumnName ="orderListID")
+	private OrderListVO orderList;
 
 	public ComPicVO() {
 		super();
