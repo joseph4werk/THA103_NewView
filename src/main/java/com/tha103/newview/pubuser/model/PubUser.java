@@ -2,21 +2,33 @@ package com.tha103.newview.pubuser.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.tha103.newview.publisher.model.Publisher;
 
 @Entity
 @Table(name="PubUser")
 public class PubUser {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="pubUserID")
+	@Column(name="pubUserID" , updatable = false)
 	private Integer pubUserID;
 	
+	/*
 	@Column(name="pubID")
 	private Integer pubID;
+	*/
+	
+	@ManyToOne
+	@JoinColumn(name="pubID" ,referencedColumnName ="pubID")
+	private Publisher publisher;
 	
 	@Column(name="pubNickname")
 	private String pubNickname;
@@ -32,6 +44,7 @@ public class PubUser {
 
 	public PubUser() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public Integer getPubUserID() {
@@ -42,6 +55,7 @@ public class PubUser {
 		this.pubUserID = pubUserID;
 	}
 
+/*  //沒有Association的get/setter
 	public Integer getPubID() {
 		return pubID;
 	}
@@ -49,6 +63,7 @@ public class PubUser {
 	public void setPubID(Integer pubID) {
 		this.pubID = pubID;
 	}
+*/
 
 	public String getPubNickname() {
 		return pubNickname;
@@ -81,14 +96,23 @@ public class PubUser {
 	public void setPubAuthority(byte pubAuthority) {
 		this.pubAuthority = pubAuthority;
 	}
+	
+
+	public Publisher getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(Publisher publisher) {
+		this.publisher = publisher;
+	}
 
 	@Override
 	public String toString() {
-		return "PubUserPOJO [pubUserID=" + pubUserID + ", pubID=" + pubID + ", pubNickname=" + pubNickname
+		return "PubUser [pubUserID=" + pubUserID + ", publisher=" + publisher + ", pubNickname=" + pubNickname
 				+ ", pubAccount=" + pubAccount + ", pubPassword=" + pubPassword + ", pubAuthority=" + pubAuthority
 				+ "]";
 	}
-	
+
 	
 	
 }

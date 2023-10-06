@@ -8,5 +8,5 @@ public interface PublisherHibernateDAO {
 	int delete(Integer pubID);
 	Publisher findByPK(Integer pubID);
 	List<Publisher> getAll();
-
+	
 }
