@@ -1,6 +1,7 @@
 package com.tha103.newview.postpic.model;
 
 import java.util.Arrays;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,21 +11,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
 import com.tha103.newview.post.model.PostVO;
 
 @Entity
 @Table(name = "postpic")
 public class PostPicVO{
 	@Id
+	@Expose
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Integer postPicID;
 	
-	@ManyToOne
-	@JoinColumn(name = "postID" , referencedColumnName ="postID")
-	private PostVO post;
-	
+	@Expose
 	@Column(name = "postpic", columnDefinition = "longblob")
 	private byte[] postPic;
+	
+	@ManyToOne
+	@JoinColumn(name = "postID" , referencedColumnName ="postID")
+	private PostVO postVO;
 	
 	
 	public PostPicVO() {
@@ -47,11 +51,11 @@ public class PostPicVO{
 
 	
 	public PostVO getPost() {
-		return post;
+		return postVO;
 	}
 
 	public void setPost(PostVO post) {
-		this.post = post;
+		this.postVO = post;
 	}
 
 	public byte[] getPostPic() {
@@ -60,13 +64,13 @@ public class PostPicVO{
 	public void setPostPic(byte[] postPic) {
 		this.postPic = postPic;
 	}
-	
-	
+
 	@Override
 	public String toString() {
-		return "PostPicVO [postPicID=" + postPicID + ", postVO=" + post + ", postPic=" + Arrays.toString(postPic)
+		return "PostPicVO [postPicID=" + postPicID + ", postPic=" + Arrays.toString(postPic) + ", postVO=" + postVO
 				+ "]";
 	}
+	
 	
 	
 	

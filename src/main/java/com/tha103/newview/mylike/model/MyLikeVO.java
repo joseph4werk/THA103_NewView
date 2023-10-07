@@ -1,20 +1,48 @@
 package com.tha103.newview.mylike.model;
 
-public class MyLikeVO implements java.io.Serializable{
-//	private static final long serialVersionUID = 1L;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.google.gson.annotations.Expose;
+import com.tha103.newview.act.model.ActVO;
+import com.tha103.newview.user.model.UserVO;
+
+
+@Entity
+@Table(name = "myLike")
+public class MyLikeVO{
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Expose
+	@Column(name = "myLikeID")
 	private Integer myLikeID;
-	private Integer userID;
-	private Integer actID;
+	
+	
+	@ManyToOne
+	@JoinColumn(name = "userID", referencedColumnName = "userID")
+	private UserVO userVO;	
+	
+	
+	@ManyToOne
+	@JoinColumn(name = "actID", referencedColumnName = "actID")
+	private ActVO actVO;		
 	
 	public MyLikeVO() {
 		super();
 	}
 	
-	public MyLikeVO(Integer myLikeID, Integer userID, Integer actID) {
+	public MyLikeVO(Integer myLikeID, UserVO userVO, ActVO actVO) {
 		super();
 		this.myLikeID = myLikeID;
-		this.userID = userID;
-		this.actID = actID;
+		this.userVO = userVO;
+		this.actVO = actVO;
 	}
 	
 	
@@ -24,24 +52,28 @@ public class MyLikeVO implements java.io.Serializable{
 	public void setMyLikeID(Integer myLikeID) {
 		this.myLikeID = myLikeID;
 	}
-	public Integer getUserID() {
-		return userID;
-	}
-	public void setUserID(Integer userID) {
-		this.userID = userID;
-	}
-	public Integer getActID() {
-		return actID;
-	}
-	public void setActID(Integer actID) {
-		this.actID = actID;
+	
+	
+	public UserVO getUser() {
+		return userVO;
 	}
 	
-
+	public void setUser(UserVO userVO) {
+		this.userVO = userVO;
+	}
+	
+	public ActVO getAct() {
+		return actVO;
+	}
+	
+	public void setAct(ActVO actVO) {
+		this.actVO = actVO;
+	}
+	
 	
 	@Override
 	public String toString() {
-		return "MyLikeVO [myLIkeID=" + myLikeID + ", userID=" + userID + ", actID=" + actID+ "]";
+		return "MyLikeVO [myLIkeID=" + myLikeID + ", userVO=" + userVO + ", actVO=" + actVO + "]";
 	}
 	
 	

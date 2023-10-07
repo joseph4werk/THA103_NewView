@@ -11,58 +11,78 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
+import com.google.gson.annotations.Expose;
+import com.tha103.newview.post.model.PostVO;
 
 @Entity
 @Table(name = "postcategory")
 public class PostCategoryVO {
 	@Id
+	@Expose
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Integer postCategoryID;
 	
+	@Expose
 	@Column(name = "postCategoryName")
 	private String postCategoryName;
 	
-	@OneToMany(mappedBy = "postCategory" , cascade = CascadeType.ALL)
-	private Set<PostCategoryVO> post;
+	@Expose
+	@OneToMany(mappedBy = "postCategoryVO" , cascade = CascadeType.ALL)
+	private Set<PostVO> postVOs;
+	
 	
 	public PostCategoryVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	public Set<PostCategoryVO> getPost() {
-		return post;
-	}
 
-	public void setPost(Set<PostCategoryVO> post) {
-		this.post = post;
-	}
 
-	public PostCategoryVO(Integer postCategoryID, String postCategoryName) {
+	public PostCategoryVO(Integer postCategoryID, String postCategoryName, Set<PostVO> postVOs) {
 		super();
 		this.postCategoryID = postCategoryID;
 		this.postCategoryName = postCategoryName;
+		this.postVOs = postVOs;
 	}
-	
+
 
 	public Integer getPostCategoryID() {
 		return postCategoryID;
 	}
+
+
 	public void setPostCategoryID(Integer postCategoryID) {
 		this.postCategoryID = postCategoryID;
 	}
+
+
 	public String getPostCategoryName() {
 		return postCategoryName;
 	}
+
+
 	public void setPostCategoryName(String postCategoryName) {
 		this.postCategoryName = postCategoryName;
 	}
 
+
+	public Set<PostVO> getPostVOs() {
+		return postVOs;
+	}
+
+
+	public void setPostVOs(Set<PostVO> postVOs) {
+		this.postVOs = postVOs;
+	}
+
+
 	@Override
 	public String toString() {
-		return "PostCategoryVO [postCategoryID=" + postCategoryID + ", postCategoryName=" + postCategoryName + "]";
+		return "PostCategoryVO [postCategoryID=" + postCategoryID + ", postCategoryName=" + postCategoryName
+				+ ", postVOs=" + postVOs + "]";
 	}
+
+
+	
 	
 	
 }
