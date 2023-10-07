@@ -14,9 +14,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
 import com.tha103.newview.likes.model.LikesVO;
 import com.tha103.newview.postcategory.model.PostCategoryVO;
 import com.tha103.newview.postmessage.model.PostMessageVO;
+import com.tha103.newview.postpic.model.PostPicVO;
 import com.tha103.newview.report.model.ReportVO;
 import com.tha103.newview.user.model.UserVO;
 
@@ -25,62 +27,72 @@ import com.tha103.newview.user.model.UserVO;
 public class PostVO {
 
 	@Id
+	@Expose
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "postID", updatable = false)
 	private Integer postID;
-
-	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-	private Set<PostMessageVO> post;
-
-	@OneToMany(mappedBy = "postVO", cascade = CascadeType.ALL)
-	private Set<LikesVO> likesVOs;
-
-	@OneToMany(mappedBy = "postVO", cascade = CascadeType.ALL)
-	private Set<ReportVO> reportVOs;
-
-	@ManyToOne
-	@JoinColumn(name = "userID", referencedColumnName = "userID")
-	private UserVO user;
-
-	@ManyToOne
-	@JoinColumn(name = "postCategoryID", referencedColumnName = "postCategoryID")
-	private PostCategoryVO postCategory;
-
+	
+	@Expose
 	@Column(name = "postHeader")
 	private String postHeader;
 
-	@Column(name = "postDateTime")
+	@Expose
+	@Column(name = "postDateTime", insertable=false)
 	private Timestamp postDateTime;
 
-	@Column(name = "lastEditedTime")
+	@Expose
+	@Column(name = "lastEditedTime", insertable=false)
 	private Timestamp lastEditedTime;
 
+	@Expose
 	@Column(name = "postContent")
 	private String postContent;
 
+	@Expose
 	@Column(name = "disLikeCount")
 	private Integer disLikeCount;
 
+	@Expose
 	@Column(name = "likeCount")
 	private Integer likeCount;
 
+	@Expose
 	@Column(name = "postStatus", columnDefinition = "tinyint")
 	private Integer postStatus;
+	
+	@Expose
+	@OneToMany(mappedBy = "postVO" ,cascade = CascadeType.ALL)
+	private Set<ReportVO>reportVOs;
+	
+	@Expose
+	@OneToMany(mappedBy = "postVO" ,cascade = CascadeType.ALL)
+	private Set<LikesVO>likesVOs;
+	
+	@Expose
+	@OneToMany(mappedBy = "postVO" ,cascade = CascadeType.ALL)
+	private Set<PostPicVO>postPicVOs;
+	
+	@Expose
+	@OneToMany(mappedBy = "postVO" , cascade = CascadeType.ALL)
+	private Set<PostMessageVO> postMessageVOs;
+
+	@ManyToOne
+	@JoinColumn(name = "userID", referencedColumnName = "userID")
+	private UserVO userVO;
+
+	@ManyToOne
+	@JoinColumn(name = "postCategoryID", referencedColumnName = "postCategoryID")
+	private PostCategoryVO postCategoryVO;
 
 	public PostVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public PostVO(Integer postID, Set<PostMessageVO> post, Set<LikesVO> likesVOs, Set<ReportVO> reportVOs, UserVO user,
-			PostCategoryVO postCategory, String postHeader, Timestamp postDateTime, Timestamp lastEditedTime,
-			String postContent, Integer disLikeCount, Integer likeCount, Integer postStatus) {
+	public PostVO(Integer postID, Integer postCategoryID, String postHeader, Timestamp postDateTime,
+			Timestamp lastEditedTime, String postContent, Integer disLikeCount, Integer likeCount, Integer postStatus) {
 		super();
 		this.postID = postID;
-		this.post = post;
-		this.likesVOs = likesVOs;
-		this.reportVOs = reportVOs;
-		this.user = user;
-		this.postCategory = postCategory;
 		this.postHeader = postHeader;
 		this.postDateTime = postDateTime;
 		this.lastEditedTime = lastEditedTime;
@@ -90,17 +102,57 @@ public class PostVO {
 		this.postStatus = postStatus;
 	}
 
-	public Set<PostMessageVO> getPost() {
-		return post;
+	
+
+
+	public Set<ReportVO> getReportVOs() {
+		return reportVOs;
 	}
 
-	public void setPost(Set<PostMessageVO> post) {
-		this.post = post;
+	public void setReportVOs(Set<ReportVO> reportVOs) {
+		this.reportVOs = reportVOs;
 	}
 
-	public UserVO getUser() {
-		return user;
+	public Set<LikesVO> getLikesVOs() {
+		return likesVOs;
 	}
+
+	public void setLikesVOs(Set<LikesVO> likesVOs) {
+		this.likesVOs = likesVOs;
+	}
+
+	public Set<PostPicVO> getPostPicVOs() {
+		return postPicVOs;
+	}
+
+	public void setPostPicVVOs(Set<PostPicVO> postPicVOs) {
+		this.postPicVOs = postPicVOs;
+	}
+
+	public UserVO getUserVO() {
+		return userVO;
+	}
+
+	public void setUserVO(UserVO userVO) {
+		this.userVO = userVO;
+	}
+
+	public PostCategoryVO getPostCategoryVO() {
+		return postCategoryVO;
+	}
+
+	public void setPostCategoryVO(PostCategoryVO postCategoryVO) {
+		this.postCategoryVO = postCategoryVO;
+	}
+
+	public Set<PostMessageVO> getPostMessageVOs() {
+		return postMessageVOs;
+	}
+
+	public void setPostMessageVOs(Set<PostMessageVO> postMessageVOs) {
+		this.postMessageVOs = postMessageVOs;
+	}
+
 
 	public Integer getPostID() {
 		return postID;
@@ -110,17 +162,6 @@ public class PostVO {
 		this.postID = postID;
 	}
 
-	public void setUser(UserVO user) {
-		this.user = user;
-	}
-
-	public PostCategoryVO getPostCategory() {
-		return postCategory;
-	}
-
-	public void setPostCategory(PostCategoryVO postCategory) {
-		this.postCategory = postCategory;
-	}
 
 	public String getPostHeader() {
 		return postHeader;
@@ -178,28 +219,12 @@ public class PostVO {
 		this.postStatus = postStatus;
 	}
 
-	public Set<LikesVO> getLikesVOs() {
-		return likesVOs;
-	}
-
-	public void setLikesVOs(Set<LikesVO> likesVOs) {
-		this.likesVOs = likesVOs;
-	}
-
-	public Set<ReportVO> getReportVOs() {
-		return reportVOs;
-	}
-
-	public void setReportVOs(Set<ReportVO> reportVOs) {
-		this.reportVOs = reportVOs;
-	}
-
 	@Override
 	public String toString() {
-		return "PostVO [postID=" + postID + ", post=" + post + ", likesVOs=" + likesVOs + ", reportVOs=" + reportVOs
-				+ ", user=" + user + ", postCategory=" + postCategory + ", postHeader=" + postHeader + ", postDateTime="
-				+ postDateTime + ", lastEditedTime=" + lastEditedTime + ", postContent=" + postContent
-				+ ", disLikeCount=" + disLikeCount + ", likeCount=" + likeCount + ", postStatus=" + postStatus + "]";
+		return "PostVO [postID=" + postID + ", userVO=" + userVO + ", postCategoryVO=" + postCategoryVO
+				+ ", postHeader=" + postHeader + ", postDateTime=" + postDateTime + ", lastEditedTime=" + lastEditedTime
+				+ ", postContent=" + postContent + ", disLikeCount=" + disLikeCount + ", likeCount=" + likeCount
+				+ ", postStatus=" + postStatus + "]";
 	}
 
 }

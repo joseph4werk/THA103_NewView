@@ -13,7 +13,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
+import com.tha103.newview.cartact.model.CartActVO;
 import com.tha103.newview.likes.model.LikesVO;
+import com.tha103.newview.mylike.model.MyLikeVO;
+import com.tha103.newview.orders.model.OrdersVO;
+import com.tha103.newview.post.model.PostVO;
+import com.tha103.newview.postmessage.model.PostMessageVO;
 import com.tha103.newview.report.model.ReportVO;
 import com.tha103.newview.usediscount.model.UseDiscountVO;
 
@@ -75,6 +80,57 @@ public class UserVO {
 	@Expose
 	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
 	private Set<LikesVO> likesVOs;
+	
+	@Expose
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
+	private Set<PostVO> postVOs;
+	
+	@Expose
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
+	private Set<PostMessageVO> postMessageVOs;
+	
+	@Expose
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
+	private Set<CartActVO> cartActVOs;
+
+	@Expose
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
+	private Set<OrdersVO> ordersVOs;
+	
+	@Expose
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
+	private Set<MyLikeVO> myLikeVOs;
+	
+	public UserVO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public UserVO(Integer userID, String userName, String userAccount, String userPassword, Date userBirth,
+			String userCell, String userEmail, String userNickname, Integer buyAuthority, Integer speakAuthority,
+			Set<UseDiscountVO> useDiscountVOs, Set<ReportVO> reportVOs, Set<LikesVO> likesVOs, Set<PostVO> postVOs,
+			Set<PostMessageVO> postMessageVOs, Set<CartActVO> cartActVOs, Set<OrdersVO> ordersVOs,
+			Set<MyLikeVO> myLikeVOs) {
+		super();
+		this.userID = userID;
+		this.userName = userName;
+		this.userAccount = userAccount;
+		this.userPassword = userPassword;
+		this.userBirth = userBirth;
+		this.userCell = userCell;
+		this.userEmail = userEmail;
+		this.userNickname = userNickname;
+		this.buyAuthority = buyAuthority;
+		this.speakAuthority = speakAuthority;
+		this.useDiscountVOs = useDiscountVOs;
+		this.reportVOs = reportVOs;
+		this.likesVOs = likesVOs;
+		this.postVOs = postVOs;
+		this.postMessageVOs = postMessageVOs;
+		this.cartActVOs = cartActVOs;
+		this.ordersVOs = ordersVOs;
+		this.myLikeVOs = myLikeVOs;
+	}
 
 	public Integer getUserID() {
 		return userID;
@@ -180,27 +236,44 @@ public class UserVO {
 		this.likesVOs = likesVOs;
 	}
 
-	public UserVO(Integer userID, String userName, String userAccount, String userPassword, Date userBirth,
-			String userCell, String userEmail, String userNickname, Integer buyAuthority, Integer speakAuthority,
-			Set<UseDiscountVO> useDiscountVOs, Set<ReportVO> reportVOs, Set<LikesVO> likesVOs) {
-		super();
-		this.userID = userID;
-		this.userName = userName;
-		this.userAccount = userAccount;
-		this.userPassword = userPassword;
-		this.userBirth = userBirth;
-		this.userCell = userCell;
-		this.userEmail = userEmail;
-		this.userNickname = userNickname;
-		this.buyAuthority = buyAuthority;
-		this.speakAuthority = speakAuthority;
-		this.useDiscountVOs = useDiscountVOs;
-		this.reportVOs = reportVOs;
-		this.likesVOs = likesVOs;
+	public Set<PostVO> getPostVOs() {
+		return postVOs;
 	}
 
-	public UserVO() {
-		super();
+	public void setPostVOs(Set<PostVO> postVOs) {
+		this.postVOs = postVOs;
+	}
+
+	public Set<PostMessageVO> getPostMessageVOs() {
+		return postMessageVOs;
+	}
+
+	public void setPostMessageVOs(Set<PostMessageVO> postMessageVOs) {
+		this.postMessageVOs = postMessageVOs;
+	}
+
+	public Set<CartActVO> getCartActVOs() {
+		return cartActVOs;
+	}
+
+	public void setCartActVOs(Set<CartActVO> cartActVOs) {
+		this.cartActVOs = cartActVOs;
+	}
+
+	public Set<OrdersVO> getOrdersVOs() {
+		return ordersVOs;
+	}
+
+	public void setOrdersVOs(Set<OrdersVO> ordersVOs) {
+		this.ordersVOs = ordersVOs;
+	}
+
+	public Set<MyLikeVO> getMyLikeVOs() {
+		return myLikeVOs;
+	}
+
+	public void setMyLikeVOs(Set<MyLikeVO> myLikeVOs) {
+		this.myLikeVOs = myLikeVOs;
 	}
 
 	@Override
@@ -209,9 +282,10 @@ public class UserVO {
 				+ ", userPassword=" + userPassword + ", userBirth=" + userBirth + ", userCell=" + userCell
 				+ ", userEmail=" + userEmail + ", userNickname=" + userNickname + ", buyAuthority=" + buyAuthority
 				+ ", speakAuthority=" + speakAuthority + ", useDiscountVOs=" + useDiscountVOs + ", reportVOs="
-				+ reportVOs + ", likesVOs=" + likesVOs + "]";
+				+ reportVOs + ", likesVOs=" + likesVOs + ", postVOs=" + postVOs + ", postMessageVOs=" + postMessageVOs
+				+ ", cartActVOs=" + cartActVOs + ", ordersVOs=" + ordersVOs + ", myLikeVOs=" + myLikeVOs + "]";
 	}
-
+	
 //	public UserVO(String userAccount) {
 //		super();
 //		this.userAccount = userAccount;
