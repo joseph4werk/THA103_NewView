@@ -6,7 +6,7 @@ import org.hibernate.Session;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.tha103.newview.act.model.Act;
+import com.tha103.newview.act.model.ActVO;
 import com.tha103.util.HibernateUtil;
 
 public class CityAddressDAOHibernatelmpl implements CityAddressDAO{

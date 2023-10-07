@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import com.tha103.newview.act.model.Act;
+import com.tha103.newview.act.model.ActVO;
 import com.tha103.newview.actcategory.model.ActCategory;
 
 @Entity
@@ -27,17 +27,15 @@ public class ActPic {
 
 	@ManyToOne
 	@JoinColumn(name = "actID",referencedColumnName = "actID")
-	private Act act;
+	private ActVO act;
 
-	
-	
-	
+
 	@Override
 	public String toString() {
 		return "ActPic [actPicID=" + actPicID + ", actPic=" + Arrays.toString(actPic) + ", act=" + act + "]";
 	}
 
-	public ActPic(Integer actPicID, byte[] actPic, Act act) {
+	public ActPic(Integer actPicID, byte[] actPic, ActVO act) {
 		super();
 		this.actPicID = actPicID;
 		this.actPic = actPic;
@@ -53,7 +51,7 @@ public class ActPic {
 		return actPicID;
 	}
 
-	public Act getActID() {
+	public ActVO getActID() {
 		return act;
 	}
 
@@ -65,7 +63,7 @@ public class ActPic {
 		this.actPicID = actPicID;
 	}
 
-	public void setActID(Act actID) {
+	public void setActID(ActVO actID) {
 		this.act = actID;
 	}
 

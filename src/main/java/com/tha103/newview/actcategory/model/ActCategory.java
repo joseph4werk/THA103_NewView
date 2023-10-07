@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.gson.annotations.Expose;
-import com.tha103.newview.act.model.Act;
+import com.tha103.newview.act.model.ActVO;
 
 @Entity
 @Table(name = "actCategory")
@@ -32,7 +32,7 @@ public class ActCategory {
 	private String actCategoryName;
 	@Expose
 	@OneToMany(mappedBy = "actCategory", cascade=CascadeType.ALL)
-	private Set<Act> acts;
+	private Set<ActVO> acts;
 	
 	
 	
@@ -44,7 +44,11 @@ public class ActCategory {
 
 
 
-	public ActCategory(Integer actCategoryID, String actCategoryName, Set<Act> acts) {
+	
+
+
+
+	public ActCategory(Integer actCategoryID, String actCategoryName, Set<ActVO> acts) {
 		super();
 		this.actCategoryID = actCategoryID;
 		this.actCategoryName = actCategoryName;
@@ -77,13 +81,13 @@ public class ActCategory {
 
 
 
-	public Set<Act> getActs() {
+	public Set<ActVO> getActs() {
 		return acts;
 	}
 
 
 
-	public void setActs(Set<Act> acts) {
+	public void setActs(Set<ActVO> acts) {
 		this.acts = acts;
 	}
 
