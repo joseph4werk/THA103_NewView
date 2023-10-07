@@ -77,7 +77,7 @@ public class DiscountVO{
 		super();
 		this.discountNO = discountNO;
 		this.publisherVO = publisherVO;
-		this.AdminVO = adminVO;
+		this.adminVO = adminVO;
 		this.discountContent = discountContent;
 		this.disAmount = disAmount;
 		this.discountCode = discountCode;
