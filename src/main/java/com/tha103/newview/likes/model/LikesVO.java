@@ -25,14 +25,6 @@ public class LikesVO {
 	private Integer likeID;
 
 	@Expose
-	@Column(name = "postID")
-	private Integer postID;
-
-	@Expose
-	@Column(name = "userID")
-	private Integer userID;
-
-	@Expose
 	@Column(name = "likeOrNot", columnDefinition = "TINYINT")
 	private Integer likeOrNot;
 
@@ -46,13 +38,12 @@ public class LikesVO {
 
 	public LikesVO() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public LikesVO(Integer likeID, Integer postID, Integer userID, Integer likeOrNot, PostVO postVO, UserVO userVO) {
+	public LikesVO(Integer likeID, Integer likeOrNot, PostVO postVO, UserVO userVO) {
 		super();
 		this.likeID = likeID;
-		this.postID = postID;
-		this.userID = userID;
 		this.likeOrNot = likeOrNot;
 		this.postVO = postVO;
 		this.userVO = userVO;
@@ -64,22 +55,6 @@ public class LikesVO {
 
 	public void setLikeID(Integer likeID) {
 		this.likeID = likeID;
-	}
-
-	public Integer getPostID() {
-		return postID;
-	}
-
-	public void setPostID(Integer postID) {
-		this.postID = postID;
-	}
-
-	public Integer getUserID() {
-		return userID;
-	}
-
-	public void setUserID(Integer userID) {
-		this.userID = userID;
 	}
 
 	public Integer getLikeOrNot() {
@@ -108,8 +83,8 @@ public class LikesVO {
 
 	@Override
 	public String toString() {
-		return "LikesVO [likeID=" + likeID + ", postID=" + postID + ", userID=" + userID + ", likeOrNot=" + likeOrNot
-				+ ", postVO=" + postVO + ", userVO=" + userVO + "]";
+		return "LikesVO [likeID=" + likeID + ", likeOrNot=" + likeOrNot + ", postVO=" + postVO + ", userVO=" + userVO
+				+ "]";
 	}
 
 }

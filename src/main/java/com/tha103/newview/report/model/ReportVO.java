@@ -22,14 +22,6 @@ public class ReportVO {
 	private Integer reportID;
 
 	@Expose
-	@Column(name = "userID")
-	private Integer userID;
-
-	@Expose
-	@Column(name = "postID")
-	private Integer postID;
-
-	@Expose
 	@Column(name = "reportContent")
 	private String reportContent;
 
@@ -45,28 +37,26 @@ public class ReportVO {
 	@JoinColumn(name = "postID", referencedColumnName = "postID")
 	private PostVO postVO;
 
+	public ReportVO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public ReportVO(Integer reportID, String reportContent, Integer reportStatus, UserVO userVO, PostVO postVO) {
+		super();
+		this.reportID = reportID;
+		this.reportContent = reportContent;
+		this.reportStatus = reportStatus;
+		this.userVO = userVO;
+		this.postVO = postVO;
+	}
+
 	public Integer getReportID() {
 		return reportID;
 	}
 
 	public void setReportID(Integer reportID) {
 		this.reportID = reportID;
-	}
-
-	public Integer getUserID() {
-		return userID;
-	}
-
-	public void setUserID(Integer userID) {
-		this.userID = userID;
-	}
-
-	public Integer getPostID() {
-		return postID;
-	}
-
-	public void setPostID(Integer postID) {
-		this.postID = postID;
 	}
 
 	public String getReportContent() {
@@ -101,26 +91,12 @@ public class ReportVO {
 		this.postVO = postVO;
 	}
 
-	public ReportVO(Integer reportID, Integer userID, Integer postID, String reportContent, Integer reportStatus,
-			UserVO userVO, PostVO postVO) {
-		super();
-		this.reportID = reportID;
-		this.userID = userID;
-		this.postID = postID;
-		this.reportContent = reportContent;
-		this.reportStatus = reportStatus;
-		this.userVO = userVO;
-		this.postVO = postVO;
-	}
-
-	public ReportVO() {
-		super();
-	}
-
 	@Override
 	public String toString() {
-		return "ReportVO [reportID=" + reportID + ", userID=" + userID + ", postID=" + postID + ", reportContent="
-				+ reportContent + ", reportStatus=" + reportStatus + ", userVO=" + userVO + ", postVO=" + postVO + "]";
+		return "ReportVO [reportID=" + reportID + ", reportContent=" + reportContent + ", reportStatus=" + reportStatus
+				+ ", userVO=" + userVO + ", postVO=" + postVO + "]";
 	}
+
+	
 
 }
