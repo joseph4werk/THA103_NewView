@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
+import com.tha103.newview.discount.model.DiscountVO;
 import com.tha103.newview.orderlist.model.OrderListVO;
 import com.tha103.newview.publisher.model.PublisherVO;
 import com.tha103.newview.user.model.UserVO;
@@ -53,10 +54,6 @@ public class OrdersVO {
 	private Integer actQuantity;
 
 	@Expose
-	@Column(name = "discountNO")
-	private Integer discountNO;
-
-	@Expose
 	@OneToMany(mappedBy = "ordersVO", cascade = CascadeType.ALL)
 	private Set<OrderListVO> orderListVOs;
 
@@ -67,14 +64,20 @@ public class OrdersVO {
 	@ManyToOne
 	@JoinColumn(name = "pubID", referencedColumnName = "pubID")
 	private PublisherVO publisherVO;
+	
+	@ManyToOne
+	@JoinColumn(name = "discountNO", referencedColumnName = "discountNO")
+	private DiscountVO discountVO;
+	
 
 	public OrdersVO() {
 		super();
 	}
 
+
 	public OrdersVO(Integer orderID, Integer ordTotal, Integer discount, Integer discountPrice, Timestamp ordTime,
-			Integer ordType, Integer actQuantity, Integer discountNO, Set<OrderListVO> orderListVOs, UserVO userVO,
-			PublisherVO publisherVO) {
+			Integer ordType, Integer actQuantity, Set<OrderListVO> orderListVOs, UserVO userVO, PublisherVO publisherVO,
+			DiscountVO discountVO) {
 		super();
 		this.orderID = orderID;
 		this.ordTotal = ordTotal;
@@ -83,106 +86,131 @@ public class OrdersVO {
 		this.ordTime = ordTime;
 		this.ordType = ordType;
 		this.actQuantity = actQuantity;
-		this.discountNO = discountNO;
 		this.orderListVOs = orderListVOs;
 		this.userVO = userVO;
 		this.publisherVO = publisherVO;
+		this.discountVO = discountVO;
 	}
+
 
 	public Integer getOrderID() {
 		return orderID;
 	}
 
+
 	public void setOrderID(Integer orderID) {
 		this.orderID = orderID;
 	}
+
 
 	public Integer getOrdTotal() {
 		return ordTotal;
 	}
 
+
 	public void setOrdTotal(Integer ordTotal) {
 		this.ordTotal = ordTotal;
 	}
+
 
 	public Integer getDiscount() {
 		return discount;
 	}
 
+
 	public void setDiscount(Integer discount) {
 		this.discount = discount;
 	}
+
 
 	public Integer getDiscountPrice() {
 		return discountPrice;
 	}
 
+
 	public void setDiscountPrice(Integer discountPrice) {
 		this.discountPrice = discountPrice;
 	}
+
 
 	public Timestamp getOrdTime() {
 		return ordTime;
 	}
 
+
 	public void setOrdTime(Timestamp ordTime) {
 		this.ordTime = ordTime;
 	}
+
 
 	public Integer getOrdType() {
 		return ordType;
 	}
 
+
 	public void setOrdType(Integer ordType) {
 		this.ordType = ordType;
 	}
+
 
 	public Integer getActQuantity() {
 		return actQuantity;
 	}
 
+
 	public void setActQuantity(Integer actQuantity) {
 		this.actQuantity = actQuantity;
 	}
 
-	public Integer getDiscountNO() {
-		return discountNO;
-	}
-
-	public void setDiscountNO(Integer discountNO) {
-		this.discountNO = discountNO;
-	}
 
 	public Set<OrderListVO> getOrderListVOs() {
 		return orderListVOs;
 	}
 
+
 	public void setOrderListVOs(Set<OrderListVO> orderListVOs) {
 		this.orderListVOs = orderListVOs;
 	}
+
 
 	public UserVO getUserVO() {
 		return userVO;
 	}
 
+
 	public void setUserVO(UserVO userVO) {
 		this.userVO = userVO;
 	}
+
 
 	public PublisherVO getPublisherVO() {
 		return publisherVO;
 	}
 
+
 	public void setPublisherVO(PublisherVO publisherVO) {
 		this.publisherVO = publisherVO;
 	}
 
+
+	public DiscountVO getDiscountVO() {
+		return discountVO;
+	}
+
+
+	public void setDiscountVO(DiscountVO discountVO) {
+		this.discountVO = discountVO;
+	}
+
+
 	@Override
 	public String toString() {
-		return "OrdersVO [orderID=" + orderID + ", userVO=" + userVO + ", ordTotal=" + ordTotal + ", discount="
-				+ discount + ", discountPrice=" + discountPrice + ", ordTime=" + ordTime + ", publisherVO="
-				+ publisherVO + ", ordType=" + ordType + ", actQuantity=" + actQuantity + ", discountNO=" + discountNO
-				+ "]";
+		return "OrdersVO [orderID=" + orderID + ", ordTotal=" + ordTotal + ", discount=" + discount + ", discountPrice="
+				+ discountPrice + ", ordTime=" + ordTime + ", ordType=" + ordType + ", actQuantity=" + actQuantity
+				+ ", orderListVOs=" + orderListVOs + ", userVO=" + userVO + ", publisherVO=" + publisherVO
+				+ ", discountVO=" + discountVO + "]";
 	}
+
+	
 
 }

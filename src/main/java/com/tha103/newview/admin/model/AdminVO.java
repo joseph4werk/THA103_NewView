@@ -18,26 +18,30 @@ import com.tha103.newview.discount.model.DiscountVO;
 @Entity
 @Table(name="administrator")
 public class AdminVO {
-	
+	@Expose
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="adminID" , updatable = false)
 	private Integer adminID;
 	
+	@Expose
 	@Column(name="adminName")
 	private String adminName;
 	
+	@Expose
 	@Column(name="adminAccount")
 	private String adminAccount;
 	
+	@Expose
 	@Column(name="adminPassword")
 	private String adminPassword;
 	
+	@Expose
 	@Column(name="adminEmail")
 	private String adminEmail;
 	
 	@Expose
-	@OneToMany(mappedBy = "adminID", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "adminVO", cascade = CascadeType.ALL)
 	@OrderBy("adminID")
 	private Set<DiscountVO> discountVOs;
 

@@ -21,15 +21,17 @@ import com.tha103.newview.pubuser.model.PubUserVO;
 @Entity
 @Table(name="Publisher")
 public class PublisherVO {
-	
+	@Expose
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="pubID" , updatable = false)
 	private Integer pubID;
 	
+	@Expose
 	@Column(name="pubName")
 	private String pubName;
 	
+	@Expose
 	@Column(name="pubEmail")
 	private String pubEmail;
 

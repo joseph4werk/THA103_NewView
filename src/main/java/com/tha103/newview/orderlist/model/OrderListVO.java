@@ -34,7 +34,7 @@ public class OrderListVO implements java.io.Serializable {
 	private Integer actTotal;
 	
 	@Expose
-	@Column(name = "QRcodeID")
+	@Column(name = "QRcodeID", columnDefinition = "longblob")
 	private byte[] QRcodeID;
 	
 	@Expose
@@ -46,15 +46,15 @@ public class OrderListVO implements java.io.Serializable {
 	private String reviewContent;
 	
 	@Expose
-	@Column(name = "fiveStarReview")
+	@Column(name = "fiveStarReview", columnDefinition = "tinyint")
 	private Integer fiveStarReview;
 	
 	@Expose
-	@Column(name = "seatRows")
+	@Column(name = "seatRows", columnDefinition = "tinyint")
 	private Integer seatRows;
 	
 	@Expose
-	@Column(name = "seatColumns")
+	@Column(name = "seatColumns", columnDefinition = "tinyint")
 	private Integer seatColumns;
 	
 	@Expose

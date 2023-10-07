@@ -9,27 +9,31 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
 import com.tha103.newview.publisher.model.PublisherVO;
 
 @Entity
 @Table(name="PubUser")
 public class PubUserVO {
-	
+	@Expose
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="pubUserID" , updatable = false)
 	private Integer pubUserID;
 	
-	
+	@Expose
 	@Column(name="pubNickname")
 	private String pubNickname;
 	
+	@Expose
 	@Column(name="pubAccount")
 	private String pubAccount;
 	
+	@Expose
 	@Column(name="pubPassword")
 	private String pubPassword;
 	
+	@Expose
 	@Column(name="pubAuthority",columnDefinition = "tinyint")
 	private byte pubAuthority;
 	

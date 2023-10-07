@@ -7,24 +7,30 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name="administrator")
 public class Admin {
-	
+	@Expose
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="adminID" , updatable = false)
 	private Integer adminID;
 	
+	@Expose
 	@Column(name="adminName")
 	private String adminName;
 	
+	@Expose
 	@Column(name="adminAccount")
 	private String adminAccount;
 	
+	@Expose
 	@Column(name="adminPassword")
 	private String adminPassword;
 	
+	@Expose
 	@Column(name="adminEmail")
 	private String adminEmail;
 	

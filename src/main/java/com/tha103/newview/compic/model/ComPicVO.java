@@ -28,7 +28,6 @@ public class ComPicVO implements java.io.Serializable {
 	@Column(name = "comPic", columnDefinition = "longblob")
 	private byte[] comPic;
 	
-	@Expose
 	@ManyToOne
 	@JoinColumn(name = "orderListID", referencedColumnName = "orderListID")
 	private OrderListVO orderListVO;

@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -70,7 +71,7 @@ public class UserVO {
 	private Integer speakAuthority; // 0/1 = 啟用/未啟用
 
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<UseDiscountVO> useDiscountVOs;
 
 	@Expose
