@@ -71,4 +71,7 @@ public class ActPic {
 		this.actPic = actPic;
 	}
 
+	
+
+
 }

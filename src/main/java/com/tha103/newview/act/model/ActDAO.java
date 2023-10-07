@@ -14,5 +14,5 @@ public interface ActDAO{
       void delete(Integer ActID);
       ActVO findByPrimaryKey(Integer ActID);
       List<ActVO> getAll();      
-      List<ActVO> getAllWithActPics();
+      List<ActVO> getActPics();
 }
