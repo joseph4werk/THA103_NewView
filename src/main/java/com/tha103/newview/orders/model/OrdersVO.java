@@ -1,109 +1,188 @@
 package com.tha103.newview.orders.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-public class OrdersVO implements java.io.Serializable{
+import com.google.gson.annotations.Expose;
+import com.tha103.newview.orderlist.model.OrderListVO;
+import com.tha103.newview.publisher.model.PublisherVO;
+import com.tha103.newview.user.model.UserVO;
+
+@Entity
+@Table(name = "orders")
+
+public class OrdersVO {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Expose
+	@Column(name = "orderID")
 	private Integer orderID;
-	private Integer userID;
+
+	@Expose
+	@Column(name = "ordTotal")
 	private Integer ordTotal;
+
+	@Expose
+	@Column(name = "discount")
 	private Integer discount;
+
+	@Expose
+	@Column(name = "discountPrice")
 	private Integer discountPrice;
+
+	@Expose
+	@Column(name = "ordTime", insertable=false)
 	private Timestamp ordTime;
-	private Integer pubID;
-	private Integer ordType;   // 0 = not use, 1 = used, 2 = cancelled order
+
+	@Expose
+	@Column(name = "ordType", columnDefinition = "tinyint")
+	private Integer ordType; // 0 = not use, 1 = used, 2 = cancelled order
+
+	@Expose
+	@Column(name = "actQuantity")
 	private Integer actQuantity;
+
+	@Expose
+	@Column(name = "discountNO")
 	private Integer discountNO;
-	
+
+	@Expose
+	@OneToMany(mappedBy = "ordersVO", cascade = CascadeType.ALL)
+	private Set<OrderListVO> orderListVOs;
+
+	@ManyToOne
+	@JoinColumn(name = "userID", referencedColumnName = "userID")
+	private UserVO userVO;
+
+	@ManyToOne
+	@JoinColumn(name = "pubID", referencedColumnName = "pubID")
+	private PublisherVO publisherVO;
+
 	public OrdersVO() {
 		super();
 	}
-	
-	public OrdersVO(Integer orderID, Integer userID, Integer ordTotal, Integer discount, Integer discountPrice, Timestamp ordTime, Integer pubID, Integer ordType, Integer actQuantity, Integer discountNO) {
+
+	public OrdersVO(Integer orderID, Integer ordTotal, Integer discount, Integer discountPrice, Timestamp ordTime,
+			Integer ordType, Integer actQuantity, Integer discountNO, Set<OrderListVO> orderListVOs, UserVO userVO,
+			PublisherVO publisherVO) {
 		super();
 		this.orderID = orderID;
-		this.userID = userID;
 		this.ordTotal = ordTotal;
 		this.discount = discount;
 		this.discountPrice = discountPrice;
 		this.ordTime = ordTime;
-		this.pubID = pubID;
-		this.ordType = ordType;  
+		this.ordType = ordType;
 		this.actQuantity = actQuantity;
 		this.discountNO = discountNO;
+		this.orderListVOs = orderListVOs;
+		this.userVO = userVO;
+		this.publisherVO = publisherVO;
 	}
-	
-	
+
 	public Integer getOrderID() {
 		return orderID;
 	}
+
 	public void setOrderID(Integer orderID) {
 		this.orderID = orderID;
 	}
-	public Integer getUserID() {
-		return userID;
-	}
-	public void setUserID(Integer userID) {
-		this.userID = userID;
-	}
+
 	public Integer getOrdTotal() {
 		return ordTotal;
 	}
+
 	public void setOrdTotal(Integer ordTotal) {
 		this.ordTotal = ordTotal;
 	}
+
 	public Integer getDiscount() {
 		return discount;
 	}
+
 	public void setDiscount(Integer discount) {
 		this.discount = discount;
 	}
+
 	public Integer getDiscountPrice() {
 		return discountPrice;
 	}
+
 	public void setDiscountPrice(Integer discountPrice) {
 		this.discountPrice = discountPrice;
 	}
+
 	public Timestamp getOrdTime() {
 		return ordTime;
 	}
+
 	public void setOrdTime(Timestamp ordTime) {
 		this.ordTime = ordTime;
 	}
-	public Integer getPubID() {
-		return pubID;
-	}
-	public void setPubID(Integer pubID) {
-		this.pubID = pubID;
-	}
+
 	public Integer getOrdType() {
 		return ordType;
 	}
+
 	public void setOrdType(Integer ordType) {
 		this.ordType = ordType;
 	}
+
 	public Integer getActQuantity() {
 		return actQuantity;
 	}
+
 	public void setActQuantity(Integer actQuantity) {
 		this.actQuantity = actQuantity;
 	}
+
 	public Integer getDiscountNO() {
 		return discountNO;
 	}
+
 	public void setDiscountNO(Integer discountNO) {
 		this.discountNO = discountNO;
 	}
-	
 
-	
+	public Set<OrderListVO> getOrderListVOs() {
+		return orderListVOs;
+	}
+
+	public void setOrderListVOs(Set<OrderListVO> orderListVOs) {
+		this.orderListVOs = orderListVOs;
+	}
+
+	public UserVO getUserVO() {
+		return userVO;
+	}
+
+	public void setUserVO(UserVO userVO) {
+		this.userVO = userVO;
+	}
+
+	public PublisherVO getPublisherVO() {
+		return publisherVO;
+	}
+
+	public void setPublisherVO(PublisherVO publisherVO) {
+		this.publisherVO = publisherVO;
+	}
+
 	@Override
 	public String toString() {
-		return "OrdersVO [orderID=" + orderID + ", userID=" + userID + ", ordTotal=" + ordTotal
-				+ ", discount=" + discount + ", discountPrice=" + discountPrice + ", ordTime=" + ordTime
-				+ ", pubID=" + pubID + ", ordType=" + ordType + ", actQuantity=" + actQuantity
-				+ ", discountNO=" + discountNO + "]";
+		return "OrdersVO [orderID=" + orderID + ", userVO=" + userVO + ", ordTotal=" + ordTotal + ", discount="
+				+ discount + ", discountPrice=" + discountPrice + ", ordTime=" + ordTime + ", publisherVO="
+				+ publisherVO + ", ordType=" + ordType + ", actQuantity=" + actQuantity + ", discountNO=" + discountNO
+				+ "]";
 	}
-	
-	
+
 }

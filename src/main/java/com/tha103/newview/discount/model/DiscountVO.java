@@ -1,29 +1,83 @@
 package com.tha103.newview.discount.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
-public class DiscountVO implements java.io.Serializable{
-	
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.google.gson.annotations.Expose;
+import com.tha103.newview.orderlist.model.OrderListVO;
+import com.tha103.newview.publisher.model.PublisherVO;
+import com.tha103.newview.usediscount.model.UseDiscountVO;
+import com.tha103.newview.usediscount.model.AdminVO;
+
+
+@Entity
+@Table(name = "discount")
+public class DiscountVO{
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Expose
+	@Column(name = "discountNO")
 	private Integer discountNO;
-	private Integer pubID;
-	private Integer adminID;
+	
+	@Expose
+	@Column(name = "discountContent")
 	private String discountContent;
+	
+	@Expose
+	@Column(name = "disAmount")
 	private Integer disAmount;
+	
+	@Expose
+	@Column(name = "discountCode")
 	private String discountCode;
-	private Date disStartDate;
-	private Date disFinishDate;
+	
+	@Expose
+	@Column(name = "disStartDate")
+	private Timestamp disStartDate;
+	
+	@Expose
+	@Column(name = "disFinishDate")
+	private Timestamp disFinishDate;
+	
+	@Expose
+	@OneToMany(mappedBy = "discountVO")
+	private Set<UseDiscountVO> useDiscountVOs;
+	
+	@Expose
+	@OneToMany(mappedBy = "discountVO", cascade = CascadeType.ALL)
+	private Set<OrderListVO> orderListVOs;
+	
+	@ManyToOne
+	@JoinColumn(name = "pubID", referencedColumnName = "pubID")
+	private PublisherVO publisherVO;
+	
+	@ManyToOne
+	@JoinColumn(name = "adminID", referencedColumnName = "adminID")
+	private AdminVO adminVO;
 	
 	public DiscountVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public DiscountVO(Integer discountNO, Integer pubID, Integer adminID, String discountContent, Integer disAmount,
-			String discountCode, Date disStartDate, Date disFinishDate) {
+	public DiscountVO(Integer discountNO, PublisherVO publisherVO, AdminVO adminVO, String discountContent, Integer disAmount,
+			String discountCode, Timestamp disStartDate, Timestamp disFinishDate) {
 		super();
 		this.discountNO = discountNO;
-		this.pubID = pubID;
-		this.adminID = adminID;
+		this.publisherVO = publisherVO;
+		this.adminVO = adminVO;
 		this.discountContent = discountContent;
 		this.disAmount = disAmount;
 		this.discountCode = discountCode;
@@ -38,18 +92,22 @@ public class DiscountVO implements java.io.Serializable{
 	public void setDiscountNO(Integer discountNO) {
 		this.discountNO = discountNO;
 	}
-	public Integer getPubID() {
-		return pubID;
+	
+	public PublisherVO getPublisher() {
+		return publisherVO;
 	}
-	public void setPubID(Integer pubID) {
-		this.pubID = pubID;
+	
+	public void setPublisher(PublisherVO publisherVO) {
+		this.publisherVO = publisherVO;
 	}
-	public Integer getAdminID() {
-		return adminID;
+	
+	public AdminVO getAdmin() {
+		return adminVO;
 	}
-	public void setAdminID(Integer adminID) {
-		this.adminID = adminID;
+	public void setAdmin(AdminVO adminVO) {
+		this.adminVO = adminVO;
 	}
+	
 	public String getDiscountContent() {
 		return discountContent;
 	}
@@ -68,22 +126,22 @@ public class DiscountVO implements java.io.Serializable{
 	public void setDiscountCode(String discountCode) {
 		this.discountCode = discountCode;
 	}
-	public Date getDisStartDate() {
+	public Timestamp getDisStartDate() {
 		return disStartDate;
 	}
-	public void setDisStartDate(Date disStartDate) {
+	public void setDisStartDate(Timestamp disStartDate) {
 		this.disStartDate = disStartDate;
 	}
-	public Date getDisFinishDate() {
+	public Timestamp getDisFinishDate() {
 		return disFinishDate;
 	}
-	public void setDisFinishDate(Date disFinishDate) {
+	public void setDisFinishDate(Timestamp disFinishDate) {
 		this.disFinishDate = disFinishDate;
 	}
 
 	@Override
 	public String toString() {
-		return "DiscountVO [discountNO=" + discountNO + ", pubID=" + pubID + ", adminID=" + adminID
+		return "DiscountVO [discountNO=" + discountNO + ", publisherVO=" + publisherVO + ", adminVO=" + adminVO
 				+ ", discountContent=" + discountContent + ", disAmount=" + disAmount + ", discountCode=" + discountCode
 				+ ", disStartDate=" + disStartDate + ", disFinishDate=" + disFinishDate + "]";
 	}
@@ -91,3 +149,6 @@ public class DiscountVO implements java.io.Serializable{
 	
 	
 }
+
+
+

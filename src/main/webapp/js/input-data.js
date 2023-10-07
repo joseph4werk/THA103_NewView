@@ -1,4 +1,5 @@
-$(function () {
+
+$(function() {
 	/*  ================================== member 會員中心 ================================== */
 	/*  將 member 資料用陣列包裝，並使用 push 將值置入  */
 	// let member_item1 = [];
@@ -16,7 +17,7 @@ $(function () {
 	// console.log(member_item1.memberNickname);
 
 	/*  標題小字卡-名字  */
-	$("#memberName h5").on("mousemove", function () {
+	$("#memberName h5").on("mousemove", function() {
 		// console.log("aaa");
 		let h5_memberName_html = "";
 
@@ -29,7 +30,7 @@ $(function () {
 		h5_memberName_html = "";
 	});
 
-	$("#memberName p").on("mousemove", function () {
+	$("#memberName p").on("mousemove", function() {
 		// console.log("bbb");
 		let p_member_html = "";
 
@@ -53,7 +54,7 @@ $(function () {
 	};
 	// console.log(memberInfo_item);
 
-	$("#memberInfo p").on("mousemove", function () {
+	$("#memberInfo p").on("mousemove", function() {
 		// console.log("a");
 		let p_profile_html = "";
 
@@ -66,7 +67,7 @@ $(function () {
 		p_profile_html = "";
 	});
 
-	$("#memberInfo ul").on("mousemove", function () {
+	$("#memberInfo ul").on("mousemove", function() {
 		let ul_profile_detail_html = "";
 		// console.log("a");
 
@@ -116,12 +117,12 @@ $(function () {
 	// console.log(myOrders_item[0]);
 
 	/*  抓取訂單各物件的元素  */
-	$(myOrders_item).each(function (i, item) {
+	$(myOrders_item).each(function(i, item) {
 		// console.log(this)
 	});
 
 	let ul_orders_html = "";
-	$("#myOrders ul").on("click", function () {
+	$("#myOrders ul").on("click", function() {
 		// console.log("a");
 
 		/*  只加單筆的情況不用 for each
@@ -153,7 +154,7 @@ $(function () {
 			可能要data sort方法, ID 排序訂單順序
 		 */
 
-		$.each(myOrders_item, function (i, item) {
+		$.each(myOrders_item, function(i, item) {
 			ul_orders_html += `
 			<ul class="list-group">
 				<li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
@@ -210,13 +211,13 @@ $(function () {
 	);
 	// console.log(myFavoriteActivities_item);
 
-	$("#myFavoriteActivities").on("click", function (e) {
+	$("#myFavoriteActivities").on("click", function(e) {
 		let this_pic = $("#myFavoriteActivities:first('div'):first('div'):first('div') img");
 		let div_fav_act_html = "";
 		// console.log(this_pic)
 
 		/*  抓取我的最愛各物件的元素  */
-		$(myFavoriteActivities_item).each(function (i, item) {
+		$(myFavoriteActivities_item).each(function(i, item) {
 			console.log(this);
 
 			div_fav_act_html += `
@@ -278,7 +279,7 @@ $(function () {
 	let sign_in_password_val = "";
 
 	/*  打完使用者密碼後觸發 change 事件，取得 account, password 的值  */
-	$("#signIn #password").on("change", function () {
+	$("#signIn #password").on("change", function() {
 		sign_in_password_val = $("#password").val();
 		sign_in_account_val = $("#account").val();
 		// console.log(sign_in_account_val);
@@ -292,20 +293,55 @@ $(function () {
 	});
 
 	/*  ================================== sign-up 註冊 ================================== */
-	/*  將 sign-up 資料用物件包裝  */
-	let signUp_item = {
-		name: "",
-		account: "",
-		password: "",
-		birthdate: "",
-		cellphone: "",
-		email: "",
-		nickname: "",
-	};
-	// console.log(signUp_item);
 
-	/*  註冊區塊 div  */
-	`
+	/*  ==================================  ================================== */
+//	$("#submit").on("mousemove", function() {
+//		 console.log("aaa");
+//	});
+
+	$("#submit").on("click", function(e) {
+		e.preventDefault();
+		/*  將 sign-up 資料用物件包裝  */
+		let signUp_item = {
+			name: $("#name").val(),
+			account: $("#account").val(),
+			password: $("#password").val(),
+			birthdate: $("#birthdate").val(),
+			cellphone: $("#cellphone").val(),
+			email: $("#email").val(),
+			nickname: $("#nickname").val(),
+		};
+		console.log(signUp_item);
+		
+//				let register_name_val = $("#name").val();
+//				let register_account_val = $("#account").val();
+//				let register_password_val = $("#password").val();
+//				let register_birthdate_val = $("#birthdate").val();
+//				let register_cellphone_val = $("#cellphone").val();
+//				let register_email_val = $("#email").val();
+//				let register_nickname_val = $("#nickname").val();
+//				// console.log(register_name_val);
+//				// console.log(register_account_val);
+//				// console.log(register_password_val);
+//				// console.log(register_birthdate_val);
+//				// console.log(register_cellphone_val);
+//				// console.log(register_email_val);
+//				// console.log(register_nickname_val);
+//
+//				signUp_item.name = register_name_val;
+//				signUp_item.account = register_account_val;
+//				signUp_item.password = register_password_val;
+//				signUp_item.birthdate = register_birthdate_val;
+//				signUp_item.cellphone = register_cellphone_val;
+//				signUp_item.email = register_email_val;
+//				signUp_item.nickname = register_nickname_val;
+//				console.log(signUp_item);
+				
+				
+		// console.log(signUp_item);
+
+		/*  註冊區塊 div  */
+		`
 	<div class="card-body" id="register">
 		<form role="form text-left">
 			<div class="mb-3">
@@ -336,33 +372,24 @@ $(function () {
 		</form>
 	</div>
 	`;
+		$.ajax({
+			url: "http://localhost:8081/com.tha103.newview/SignUp",
+			type: "POST",
+			data: signUp_item,
+			dataType: "json",
+			beforeSend: function() { },
+			success: function(data) {
+				console.log("aaa")
 
-	/*  最後一個欄位 nickname 輸入完成後觸發 change 事件後抓值  */
-	$("#register #nickname").on("change", function () {
-		let register_name_val = $("#name").val();
-		let register_account_val = $("#account").val();
-		let register_password_val = $("#password").val();
-		let register_birthdate_val = $("#birthdate").val();
-		let register_cellphone_val = $("#cellphone").val();
-		let register_email_val = $("#email").val();
-		let register_nickname_val = $("#nickname").val();
-		// console.log(register_name_val);
-		// console.log(register_account_val);
-		// console.log(register_password_val);
-		// console.log(register_birthdate_val);
-		// console.log(register_cellphone_val);
-		// console.log(register_email_val);
-		// console.log(register_nickname_val);
 
-		signUp_item.name = register_name_val;
-		signUp_item.account = register_account_val;
-		signUp_item.password = register_password_val;
-		signUp_item.birthdate = register_birthdate_val;
-		signUp_item.cellphone = register_cellphone_val;
-		signUp_item.email = register_email_val;
-		signUp_item.nickname = register_nickname_val;
-		console.log(signUp_item);
-	});
+			},
+		});
+	})
+
+
+	/*  ==================================  ================================== */
+
+
 
 	/*  ================================== retrieve-password 忘記密碼 ================================== */
 	/*  將 sign-in 資料用物件包裝  */
@@ -390,7 +417,7 @@ $(function () {
 	</form>
 	`;
 	/*  輸入完驗證碼後觸發 change 事件後抓值  */
-	$("#verificationCode").on("change", function () {
+	$("#verificationCode").on("change", function() {
 		// console.log("a");
 		let verify_email_val = $("#email").val();
 		let verify_code_val = $("#verificationCode").val();
@@ -416,7 +443,7 @@ $(function () {
 	// console.log(myProfile_item);
 
 	/*  抓取 #profile 標籤後，對裡面的 div 進行值的修改  */
-	$("#profile").on("mousemove", function () {
+	$("#profile").on("mousemove", function() {
 		// console.log("a");
 		let div_profile_html = "";
 
@@ -506,7 +533,7 @@ $(function () {
 	</div>	
 	`;
 
-	$("#memberInfo #cellphone").on("change", function () {
+	$("#memberInfo #cellphone").on("change", function() {
 		// console.log("a");
 		let memberInfo_name_html = $("#name").val();
 		let memberInfo_nickname_html = $("#nickname").val();
@@ -557,7 +584,7 @@ $(function () {
 	`;
 
 	/*  確認完新密碼後觸發 change 事件後抓值  */
-	$("#changePassword #confirmNewPassword").on("change", function () {
+	$("#changePassword #confirmNewPassword").on("change", function() {
 		// console.log("a");
 		let changePassword_oldPassword_val = $("#oldPassword").val();
 		let changePassword_newPassword_val = $("#newPassword").val();

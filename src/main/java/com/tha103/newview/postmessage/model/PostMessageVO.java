@@ -7,40 +7,51 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.google.gson.annotations.Expose;
+import com.tha103.newview.post.model.PostVO;
+import com.tha103.newview.user.model.UserVO;
 
 @Entity
 @Table(name = "postmessage")
 public class PostMessageVO {
 	@Id
+	@Expose
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer postMessageID;
-
-	@Column(name = "postID")
-	private Integer postID;
-
-	@Column(name = "userID")
-	private Integer userID;
-
+	
+	@Expose
 	@Column(name = "mesContent")
 	private String mesContent;
-
-	@Column(name = "messageDate")
+	
+	@Expose
+	@Column(name = "messageDate" , insertable=false)
 	private Timestamp messageDate;
+	
+	@ManyToOne
+	@JoinColumn(name = "postID", referencedColumnName = "postID")
+	private PostVO postVO;
+
+	@ManyToOne
+	@JoinColumn(name = "userID", referencedColumnName = "userID")
+	private UserVO userVO;
 
 	public PostMessageVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public PostMessageVO(Integer postMessageID, Integer postID, Integer userID, String mesContent,
-			Timestamp messageDate) {
+	public PostMessageVO(Integer postMessageID, String mesContent, Timestamp messageDate, PostVO postVO,
+			UserVO userVO) {
 		super();
 		this.postMessageID = postMessageID;
-		this.postID = postID;
-		this.userID = userID;
 		this.mesContent = mesContent;
 		this.messageDate = messageDate;
+		this.postVO = postVO;
+		this.userVO = userVO;
 	}
 
 	public Integer getPostMessageID() {
@@ -49,22 +60,6 @@ public class PostMessageVO {
 
 	public void setPostMessageID(Integer postMessageID) {
 		this.postMessageID = postMessageID;
-	}
-
-	public Integer getPostID() {
-		return postID;
-	}
-
-	public void setPostID(Integer postID) {
-		this.postID = postID;
-	}
-
-	public Integer getUserID() {
-		return userID;
-	}
-
-	public void setUserID(Integer userID) {
-		this.userID = userID;
 	}
 
 	public String getMesContent() {
@@ -83,10 +78,29 @@ public class PostMessageVO {
 		this.messageDate = messageDate;
 	}
 
+	public PostVO getPostVO() {
+		return postVO;
+	}
+
+	public void setPostVO(PostVO postVO) {
+		this.postVO = postVO;
+	}
+
+	public UserVO getUserVO() {
+		return userVO;
+	}
+
+	public void setUserVO(UserVO userVO) {
+		this.userVO = userVO;
+	}
+
 	@Override
 	public String toString() {
-		return "PostMessageVO [postMessageID=" + postMessageID + ", postID=" + postID + ", userID=" + userID
-				+ ", mesContent=" + mesContent + ", messageDate=" + messageDate + "]";
+		return "PostMessageVO [postMessageID=" + postMessageID + ", mesContent=" + mesContent + ", messageDate="
+				+ messageDate + ", postVO=" + postVO + ", userVO=" + userVO + "]";
 	}
+
+	
+	
 
 }

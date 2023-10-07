@@ -4,9 +4,9 @@ import java.util.List;
 
 public class TestHibernateDAO {
 	public static void main(String[] args) {
-		
+
 		UserDAO dao = new UserDAOImpl();
-		
+
 		// 新增
 //		UserVO user1 = new UserVO();
 //		user1.setUserName("abc");
@@ -20,7 +20,7 @@ public class TestHibernateDAO {
 //		user1.setSpeakAuthority(0);
 //		
 //		dao.insert(user1);
-		
+
 		// 修改
 //		UserVO user2 = new UserVO();
 //		user2.setUserID(1);
@@ -35,20 +35,24 @@ public class TestHibernateDAO {
 //		user2.setSpeakAuthority(0);
 //		
 //		dao.update(user2);
-		
-		
+
 		// 刪除
-		
+
 //		dao.delete(3);
-		
+
 		// 查詢單筆
 		UserVO user3 = dao.findByPrimaryKey(1);
 		System.out.println(user3);
-		
+
 		// 查詢多筆
 		List<UserVO> list = dao.getAll();
-		for(UserVO lists : list) {
+		for (UserVO lists : list) {
 			System.out.println(lists);
 		}
+
+		// 使用 userAccount 查詢單筆
+		boolean notExist = dao.checkUserAccount("test_a");
+		System.out.println("userAccount: test_a is available = " + notExist);
+
 	}
 }

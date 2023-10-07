@@ -2,52 +2,78 @@ package com.tha103.newview.compic.model;
 
 import java.util.Arrays;
 
-public class ComPicVO implements java.io.Serializable{
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.google.gson.annotations.Expose;
+import com.tha103.newview.orderlist.model.OrderListVO;
+
+@Entity
+@Table(name = "compic")
+public class ComPicVO implements java.io.Serializable {
+	
+	@Expose
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "comPicID")
 	private Integer comPicID;
-	private Integer orderListID;
+
+	@Expose
+	@Column(name = "comPic", columnDefinition = "longblob")
 	private byte[] comPic;
 	
+	@Expose
+	@ManyToOne
+	@JoinColumn(name = "orderListID", referencedColumnName = "orderListID")
+	private OrderListVO orderListVO;
 
 	public ComPicVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	public ComPicVO(Integer comPicID, Integer orderListID, byte[] comPic) {
+
+	public ComPicVO(Integer comPicID, byte[] comPic, OrderListVO orderListVO) {
 		super();
 		this.comPicID = comPicID;
-		this.orderListID = orderListID;
 		this.comPic = comPic;
+		this.orderListVO = orderListVO;
 	}
 
-
-	public Integer getOrderListID() {
-		return orderListID;
-	}
-	public void setOrderListID(Integer orderListID) {
-		this.orderListID = orderListID;
-	}
 	public Integer getComPicID() {
 		return comPicID;
 	}
+
 	public void setComPicID(Integer comPicID) {
 		this.comPicID = comPicID;
 	}
+
 	public byte[] getComPic() {
 		return comPic;
 	}
+
 	public void setComPic(byte[] comPic) {
 		this.comPic = comPic;
 	}
 
+	public OrderListVO getOrderListVO() {
+		return orderListVO;
+	}
+
+	public void setOrderListVO(OrderListVO orderListVO) {
+		this.orderListVO = orderListVO;
+	}
 
 	@Override
 	public String toString() {
-		return "ComPicVO [comPicID=" + comPicID + ", orderListID=" + orderListID + ", comPic=" + Arrays.toString(comPic)
+		return "ComPicVO [comPicID=" + comPicID + ", comPic=" + Arrays.toString(comPic) + ", orderListVO=" + orderListVO
 				+ "]";
 	}
-	
-	
+
 	
 }
