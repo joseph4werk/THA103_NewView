@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
-import com.tha103.newview.act.model.Act;
+import com.tha103.newview.act.model.ActVO;
 
 @Entity
 @Table(name = "city")
@@ -27,7 +27,7 @@ public class CityAddress {
 	private String cityName;
 	@Expose
 	@OneToMany(mappedBy = "city", cascade=CascadeType.ALL)
-	private Set<Act> acts;
+	private Set<ActVO> acts;
 	
 	public Integer getActAdressID() {
 		return cityAddressID;
@@ -41,10 +41,10 @@ public class CityAddress {
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
 	}
-	public Set<Act> getActs() {
+	public Set<ActVO> getActs() {
 		return acts;
 	}
-	public void setActs(Set<Act> acts) {
+	public void setActs(Set<ActVO> acts) {
 		this.acts = acts;
 	}
 	@Override
@@ -55,7 +55,7 @@ public class CityAddress {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public CityAddress(Integer actAddressID, String cityName, Set<Act> acts) {
+	public CityAddress(Integer actAddressID, String cityName, Set<ActVO> acts) {
 		super();
 		this.cityAddressID = actAddressID;
 		this.cityName = cityName;

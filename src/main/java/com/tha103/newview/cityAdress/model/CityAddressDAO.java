@@ -2,7 +2,7 @@ package com.tha103.newview.cityAdress.model;
 
 import java.util.List;
 
-import com.tha103.newview.act.model.Act;
+import com.tha103.newview.act.model.ActVO;
 
 public interface CityAddressDAO {
 
