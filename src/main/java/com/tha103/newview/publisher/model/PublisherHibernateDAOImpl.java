@@ -7,7 +7,7 @@ import com.tha103.util.HibernateUtil;
 public class PublisherHibernateDAOImpl implements PublisherHibernateDAO{
 
 	@Override
-	public int add(Publisher publisher) {
+	public int add(PublisherVO publisher) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
@@ -22,7 +22,7 @@ public class PublisherHibernateDAOImpl implements PublisherHibernateDAO{
 	}
 
 	@Override
-	public int update(Publisher publisher) {
+	public int update(PublisherVO publisher) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
@@ -41,7 +41,7 @@ public class PublisherHibernateDAOImpl implements PublisherHibernateDAO{
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			Publisher pub = session.get(Publisher.class,pubID);
+			PublisherVO pub = session.get(PublisherVO.class,pubID);
 			if(pub != null) {
 				session.delete(pub);
 			}
@@ -55,11 +55,11 @@ public class PublisherHibernateDAOImpl implements PublisherHibernateDAO{
 	}
 
 	@Override
-	public Publisher findByPK(Integer pubID) {
+	public PublisherVO findByPK(Integer pubID) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			Publisher pub = session.get(Publisher.class,pubID);
+			PublisherVO pub = session.get(PublisherVO.class,pubID);
 			session.getTransaction().commit();
 			return pub;
 		}catch(Exception e) {
@@ -70,11 +70,11 @@ public class PublisherHibernateDAOImpl implements PublisherHibernateDAO{
 	}
 
 	@Override
-	public List<Publisher> getAll() {
+	public List<PublisherVO> getAll() {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			List<Publisher> list = session.createQuery("from Publisher",Publisher.class).list();
+			List<PublisherVO> list = session.createQuery("from Publisher",PublisherVO.class).list();
 			session.getTransaction().rollback();
 			return list;
 		}catch(Exception e) {

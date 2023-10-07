@@ -11,7 +11,7 @@ public class AdminHibernateDAOImpl implements AdminHibernateDAO{
 	Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
 	@Override
-	public int update(Admin admin) {
+	public int update(AdminVO admin) {
 		try {
 			session.beginTransaction();
 			session.update(admin);
@@ -26,10 +26,10 @@ public class AdminHibernateDAOImpl implements AdminHibernateDAO{
 	
 
 	@Override
-	public List<Admin> getAll() {
+	public List<AdminVO> getAll() {
 		try {
 			session.beginTransaction();
-			List<Admin> list = session.createQuery("from Admin",Admin.class).list();
+			List<AdminVO> list = session.createQuery("from Admin",AdminVO.class).list();
 			session.getTransaction().commit();
 			return list;
 		} catch (Exception e) {

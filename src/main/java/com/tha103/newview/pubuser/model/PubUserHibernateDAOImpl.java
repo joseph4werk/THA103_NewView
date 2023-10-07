@@ -13,7 +13,7 @@ public class PubUserHibernateDAOImpl implements PubUserHibernateDAO{
 	Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
 	@Override
-	public int add(PubUser pubuser) {
+	public int add(PubUserVO pubuser) {
 		try {
 			session.beginTransaction();
 			Integer id = (Integer) session.save(pubuser);
@@ -27,7 +27,7 @@ public class PubUserHibernateDAOImpl implements PubUserHibernateDAO{
 	}
 
 	@Override
-	public int update(PubUser pubuser) {
+	public int update(PubUserVO pubuser) {
 		try {
 			session.beginTransaction();
 			session.update(pubuser);
@@ -44,7 +44,7 @@ public class PubUserHibernateDAOImpl implements PubUserHibernateDAO{
 	public int delete(Integer pubUserID) {
 		try {
 			session.beginTransaction();
-			PubUser pubUser = session.get(PubUser.class,pubUserID);
+			PubUserVO pubUser = session.get(PubUserVO.class,pubUserID);
 			if (pubUser != null) {
 				session.delete(pubUser);
 			}
@@ -59,10 +59,10 @@ public class PubUserHibernateDAOImpl implements PubUserHibernateDAO{
 	}
 
 	@Override
-	public PubUser findByPK(Integer pubUserID) {
+	public PubUserVO findByPK(Integer pubUserID) {
 		try {
 			session.beginTransaction();
-			PubUser pubUser = session.get(PubUser.class,pubUserID);
+			PubUserVO pubUser = session.get(PubUserVO.class,pubUserID);
 			session.getTransaction().commit();
 			return pubUser;
 		} catch (Exception e) {
@@ -73,10 +73,10 @@ public class PubUserHibernateDAOImpl implements PubUserHibernateDAO{
 	}
 
 	@Override
-	public List<PubUser> getAll() {
+	public List<PubUserVO> getAll() {
 		try {
 			session.beginTransaction();
-			List<PubUser> list = session.createQuery("from PubUser",PubUser.class).list();
+			List<PubUserVO> list = session.createQuery("from PubUser",PubUserVO.class).list();
 			session.getTransaction().commit();
 			return list;
 		} catch (Exception e) {
