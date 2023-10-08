@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.Expose;
 import com.tha103.newview.act.model.ActVO;
 
@@ -27,6 +28,7 @@ public class CityAddress {
 	private String cityName;
 	@Expose
 	@OneToMany(mappedBy = "city", cascade=CascadeType.ALL)
+	@JsonIgnore
 	private Set<ActVO> acts;
 	
 	public Integer getActAdressID() {

@@ -106,18 +106,14 @@ public class ActDAOHibernateImpl implements ActDAO {
   
 
     @Override
-    public List<ActVO> getAllWithActPics() {
+    public List<ActVO> getActPics() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
             session.beginTransaction();
-            List<ActVO> list = session.createQuery("from ActVO", ActVO.class).list();
-            // 明确初始化actpics集合
-            for (ActVO act : list) {
-                Hibernate.initialize(act.getActpics());
-            }
+            List<ActVO> list = session.createQuery("select distinct a from ActVO a left join fetch a.actpics", ActVO.class).list();
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
             String json = gson.toJson(list);
-
+            System.out.println(json);
             session.getTransaction().commit();
             return list;
         } catch (Exception e) {
@@ -126,5 +122,6 @@ public class ActDAOHibernateImpl implements ActDAO {
         }
         return null;
     }
+
 
 }

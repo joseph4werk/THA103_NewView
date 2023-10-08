@@ -34,26 +34,26 @@ public class TestHiberateDAO {
 //		dao.insert(act);
 //
 //		// 修改
-		Act act = new Act();
-		CityAddress city = new CityAddress();
-		ActCategory actCategory = new ActCategory();
-		act.setActID(3);
-		act.setActName("David Jr.");
-		act.setActPrice(12345);
-		actCategory.setActCategoryID(1);
-		act.setActCategory(actCategory);
-		act.setPubID(2);
-		act.setActTime(new SimpleDateFormat("yyyy-MM-dd").parse("2018-08-08"));
-		city.setActAdressID(1);
-		act.setCityAddressID(city);
-		act.setActScope(1);
-		act.setActIntroduce("有改到");
-		act.setActContent("有改到");
-		act.setTime(new SimpleDateFormat("HH:mm:ss").parse("12:10:00"));
-		act.setActDate(new SimpleDateFormat("yyyy-MM-dd").parse("2016-08-07"));		
-		act.setApprovalCondition(true);
-		act.setCityAddress("有改到");
-		dao.update(act);
+//		Act act = new Act();
+//		CityAddress city = new CityAddress();
+//		ActCategory actCategory = new ActCategory();
+//		act.setActID(3);
+//		act.setActName("David Jr.");
+//		act.setActPrice(12345);
+//		actCategory.setActCategoryID(1);
+//		act.setActCategory(actCategory);
+//		act.setPubID(2);
+//		act.setActTime(new SimpleDateFormat("yyyy-MM-dd").parse("2018-08-08"));
+//		city.setActAdressID(1);
+//		act.setCityAddressID(city);
+//		act.setActScope(1);
+//		act.setActIntroduce("有改到");
+//		act.setActContent("有改到");
+//		act.setTime(new SimpleDateFormat("HH:mm:ss").parse("12:10:00"));
+//		act.setActDate(new SimpleDateFormat("yyyy-MM-dd").parse("2016-08-07"));		
+//		act.setApprovalCondition(true);
+//		act.setCityAddress("有改到");
+//		dao.update(act);
 //
 //		// 刪除
 //		dao.delete(6);
@@ -75,22 +75,24 @@ public class TestHiberateDAO {
 //		System.out.println("---------------------");
 */
 		// 查詢多筆
-//		List<Act> list = dao.getAll();
-//		for (Act act : list) {
-//			System.out.print(act.getActID() + ",");
-//			System.out.print(act.getActName() + ",");
-//			System.out.print(act.getActPrice() + ",");
-//			System.out.print(act.getActCategoryID().getActCategoryName() + ",");
-//			System.out.print(act.getPubID() + ",");
-//			System.out.print(act.getActTime() + ",");
-//			System.out.print(act.getCityAddressID().getCityName() +",");
-//			System.out.print(act.getActScope() + ",");
-//			System.out.print(act.getActIntroduce() + ",");
-//			System.out.print(act.getTime() + ",");
-//			System.out.print(act.getActDate() + ",");
-//			System.out.print(act.getApprovalCondition() + ",");
-//			System.out.print(act.getCityAddress() + ",");
-//			System.out.println();
-//		}
+//		
+		List<ActVO> list = dao.getAll();
+		
+		for (ActVO act : list) {
+			System.out.print(act.getActID() + ",");
+			System.out.print(act.getActName() + ",");
+			System.out.print(act.getActPrice() + ",");
+			System.out.print(act.getActCategoryID().getActCategoryName() + ",");
+			System.out.print(act.getPublisherVOs().getPubName() + ",");
+			System.out.print(act.getActTime() + ",");
+			System.out.print(act.getCityAddressID().getCityName() +",");
+			System.out.print(act.getActScope() + ",");
+			System.out.print(act.getActIntroduce() + ",");
+			System.out.print(act.getTime() + ",");
+			System.out.print(act.getActDate() + ",");
+			System.out.print(act.getApprovalCondition() + ",");
+			System.out.print(act.getCityAddress() + ",");
+			System.out.println();
+		}
 	}
 }
