@@ -22,53 +22,51 @@ import com.tha103.newview.orders.model.OrdersVO;
 import com.tha103.newview.publisher.model.PublisherVO;
 import com.tha103.newview.usediscount.model.UseDiscountVO;
 
-
-
 @Entity
 @Table(name = "discount")
-public class DiscountVO{
+public class DiscountVO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Expose
 	@Column(name = "discountNO")
 	private Integer discountNO;
-	
+
 	@Expose
 	@Column(name = "discountContent")
 	private String discountContent;
-	
+
 	@Expose
 	@Column(name = "disAmount")
 	private Integer disAmount;
-	
+
 	@Expose
 	@Column(name = "discountCode")
 	private String discountCode;
-	
+
 	@Expose
 	@Column(name = "disStartDate")
 	private Timestamp disStartDate;
-	
+
 	@Expose
 	@Column(name = "disFinishDate")
 	private Timestamp disFinishDate;
-	
+
 	@Expose
 	@OneToMany(mappedBy = "discountVO", fetch = FetchType.EAGER)
 	private Set<UseDiscountVO> useDiscountVOs;
-	
+
 	@Expose
-	@OneToMany(mappedBy = "discountVO", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "discountVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<OrdersVO> ordersVOs;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "pubID", referencedColumnName = "pubID")
 	private PublisherVO publisherVO;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "adminID", referencedColumnName = "adminID")
 	private AdminVO adminVO;
-	
+
 	public DiscountVO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -174,13 +172,10 @@ public class DiscountVO{
 	public String toString() {
 		return "DiscountVO [discountNO=" + discountNO + ", discountContent=" + discountContent + ", disAmount="
 				+ disAmount + ", discountCode=" + discountCode + ", disStartDate=" + disStartDate + ", disFinishDate="
-				+ disFinishDate + ", useDiscountVOs=" + useDiscountVOs + ", ordersVOs=" + ordersVOs + ", publisherVO="
-				+ publisherVO + ", adminVO=" + adminVO + "]";
+				+ disFinishDate + "]";
 	}
+
 	
 	
-	
+
 }
-
-
-

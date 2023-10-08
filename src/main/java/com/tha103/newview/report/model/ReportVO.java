@@ -94,9 +94,10 @@ public class ReportVO {
 	@Override
 	public String toString() {
 		return "ReportVO [reportID=" + reportID + ", reportContent=" + reportContent + ", reportStatus=" + reportStatus
-				+ ", userVO=" + userVO + ", postVO=" + postVO + "]";
+				+ "]";
 	}
 
+	
 	
 
 }

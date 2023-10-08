@@ -69,12 +69,13 @@ public class MyLikeVO{
 	public void setAct(ActVO actVO) {
 		this.actVO = actVO;
 	}
-	
-	
+
 	@Override
 	public String toString() {
-		return "MyLikeVO [myLIkeID=" + myLikeID + ", userVO=" + userVO + ", actVO=" + actVO + "]";
+		return "MyLikeVO [myLikeID=" + myLikeID + "]";
 	}
+	
+	
 	
 	
 }

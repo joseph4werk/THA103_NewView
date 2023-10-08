@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -61,19 +62,19 @@ public class PostVO {
 	private Integer postStatus;
 	
 	@Expose
-	@OneToMany(mappedBy = "postVO" ,cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "postVO" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<ReportVO>reportVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "postVO" ,cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "postVO" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<LikesVO>likesVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "postVO" ,cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "postVO" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<PostPicVO>postPicVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "postVO" , cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "postVO" , cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<PostMessageVO> postMessageVOs;
 
 	@ManyToOne
@@ -257,10 +258,11 @@ public class PostVO {
 	public String toString() {
 		return "PostVO [postID=" + postID + ", postHeader=" + postHeader + ", postDateTime=" + postDateTime
 				+ ", lastEditedTime=" + lastEditedTime + ", postContent=" + postContent + ", disLikeCount="
-				+ disLikeCount + ", likeCount=" + likeCount + ", postStatus=" + postStatus + ", reportVOs=" + reportVOs
-				+ ", likesVOs=" + likesVOs + ", postPicVOs=" + postPicVOs + ", postMessageVOs=" + postMessageVOs
-				+ ", userVO=" + userVO + ", postCategoryVO=" + postCategoryVO + "]";
+				+ disLikeCount + ", likeCount=" + likeCount + ", postStatus=" + postStatus + "]";
 	}
+
+
+
 
 	
 

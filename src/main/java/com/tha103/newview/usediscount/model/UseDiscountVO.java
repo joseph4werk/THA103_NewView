@@ -83,9 +83,12 @@ public class UseDiscountVO{
 
 	@Override
 	public String toString() {
-		return "UseDiscountVO [useDisID=" + useDisID + ", ditUsed=" + ditUsed + ", discountVO=" + discountVO
-				+ ", userVO=" + userVO + "]";
+		return "UseDiscountVO [useDisID=" + useDisID + ", ditUsed=" + ditUsed + "]";
 	}
+
+	
+
+
 	
 
 }

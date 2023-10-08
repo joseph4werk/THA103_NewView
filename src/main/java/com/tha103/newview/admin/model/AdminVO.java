@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,7 +42,7 @@ public class AdminVO {
 	private String adminEmail;
 	
 	@Expose
-	@OneToMany(mappedBy = "adminVO", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "adminVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@OrderBy("adminID")
 	private Set<DiscountVO> discountVOs;
 
@@ -101,10 +102,10 @@ public class AdminVO {
 	@Override
 	public String toString() {
 		return "AdminVO [adminID=" + adminID + ", adminName=" + adminName + ", adminAccount=" + adminAccount
-				+ ", adminPassword=" + adminPassword + ", adminEmail=" + adminEmail + ", discountVOs=" + discountVOs
-				+ "]";
+				+ ", adminPassword=" + adminPassword + ", adminEmail=" + adminEmail + "]";
 	}
+
 	
-	
+
 	
 }

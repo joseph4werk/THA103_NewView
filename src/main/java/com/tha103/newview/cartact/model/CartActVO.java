@@ -81,10 +81,10 @@ public class CartActVO implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "CartActVO [cartActID=" + cartActID + ", cartQuantity=" + cartQuantity + ", userVO=" + userVO
-				+ ", actVO=" + actVO + "]";
+		return "CartActVO [cartActID=" + cartActID + ", cartQuantity=" + cartQuantity + "]";
 	}
 
+	
 	
 
 }

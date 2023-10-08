@@ -75,31 +75,31 @@ public class UserVO {
 	private Set<UseDiscountVO> useDiscountVOs;
 
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<ReportVO> reportVOs;
 
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<LikesVO> likesVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<PostVO> postVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL , fetch = FetchType.EAGER)
 	private Set<PostMessageVO> postMessageVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<CartActVO> cartActVOs;
 
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<OrdersVO> ordersVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<MyLikeVO> myLikeVOs;
 	
 	public UserVO() {
@@ -132,6 +132,8 @@ public class UserVO {
 		this.ordersVOs = ordersVOs;
 		this.myLikeVOs = myLikeVOs;
 	}
+
+
 
 	public Integer getUserID() {
 		return userID;
@@ -282,9 +284,7 @@ public class UserVO {
 		return "UserVO [userID=" + userID + ", userName=" + userName + ", userAccount=" + userAccount
 				+ ", userPassword=" + userPassword + ", userBirth=" + userBirth + ", userCell=" + userCell
 				+ ", userEmail=" + userEmail + ", userNickname=" + userNickname + ", buyAuthority=" + buyAuthority
-				+ ", speakAuthority=" + speakAuthority + ", useDiscountVOs=" + useDiscountVOs + ", reportVOs="
-				+ reportVOs + ", likesVOs=" + likesVOs + ", postVOs=" + postVOs + ", postMessageVOs=" + postMessageVOs
-				+ ", cartActVOs=" + cartActVOs + ", ordersVOs=" + ordersVOs + ", myLikeVOs=" + myLikeVOs + "]";
+				+ ", speakAuthority=" + speakAuthority + "]";
 	}
 	
 //	public UserVO(String userAccount) {

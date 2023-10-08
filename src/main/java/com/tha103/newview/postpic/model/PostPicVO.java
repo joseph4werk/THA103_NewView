@@ -67,11 +67,9 @@ public class PostPicVO{
 
 	@Override
 	public String toString() {
-		return "PostPicVO [postPicID=" + postPicID + ", postPic=" + Arrays.toString(postPic) + ", postVO=" + postVO
-				+ "]";
+		return "PostPicVO [postPicID=" + postPicID + ", postPic=" + Arrays.toString(postPic) + "]";
 	}
-	
-	
+
 	
 	
 

@@ -83,8 +83,7 @@ public class LikesVO {
 
 	@Override
 	public String toString() {
-		return "LikesVO [likeID=" + likeID + ", likeOrNot=" + likeOrNot + ", postVO=" + postVO + ", userVO=" + userVO
-				+ "]";
+		return "LikesVO [likeID=" + likeID + ", likeOrNot=" + likeOrNot + "]";
 	}
 
 }

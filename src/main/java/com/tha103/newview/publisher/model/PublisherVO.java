@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,23 +37,23 @@ public class PublisherVO {
 	private String pubEmail;
 
 	@Expose
-	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL)
-	@OrderBy("pubUserID")
+	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@OrderBy("pubUserID")
 	private Set<PubUserVO> pubUserVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL)
-	@OrderBy("pubUserID")
+	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@OrderBy("pubUserID")
 	private Set<DiscountVO> discountVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL)
-	@OrderBy("pubUserID")
+	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@OrderBy("pubUserID")
 	private Set<OrdersVO> ordersVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL)
-	@OrderBy("pubUserID")
+	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@OrderBy("pubUserID")
 	private Set<ActVO> actVOs;
 
 	public PublisherVO() {
@@ -118,12 +119,10 @@ public class PublisherVO {
 
 	@Override
 	public String toString() {
-		return "PublisherVO [pubID=" + pubID + ", pubName=" + pubName + ", pubEmail=" + pubEmail + ", pubUserVOs="
-				+ pubUserVOs + ", discountVOs=" + discountVOs + ", ordersVOs=" + ordersVOs + ", actVOs=" + actVOs + "]";
+		return "PublisherVO [pubID=" + pubID + ", pubName=" + pubName + ", pubEmail=" + pubEmail + "]";
 	}
 
 	
-
 
 	
 	

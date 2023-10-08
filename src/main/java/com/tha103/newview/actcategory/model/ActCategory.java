@@ -31,22 +31,15 @@ public class ActCategory {
 	@Column(name = "actCategoryName")
 	private String actCategoryName;
 	@Expose
-	@OneToMany(mappedBy = "actCategory", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "actCategory", cascade = CascadeType.ALL)
 	private Set<ActVO> acts;
+
 	
-	
-	
+
 	@Override
 	public String toString() {
-		return "ActCategory [actCategoryID=" + actCategoryID + ", actCategoryName=" + actCategoryName + ", acts=" + acts
-				+ "]";
+		return "ActCategory [actCategoryID=" + actCategoryID + ", actCategoryName=" + actCategoryName + "]";
 	}
-
-
-
-	
-
-
 
 	public ActCategory(Integer actCategoryID, String actCategoryName, Set<ActVO> acts) {
 		super();
@@ -55,46 +48,32 @@ public class ActCategory {
 		this.acts = acts;
 	}
 
-
-
 	public Integer getActCategoryID() {
 		return actCategoryID;
 	}
-
-
 
 	public void setActCategoryID(Integer actCategoryID) {
 		this.actCategoryID = actCategoryID;
 	}
 
-
-
 	public String getActCategoryName() {
 		return actCategoryName;
 	}
-
-
 
 	public void setActCategoryName(String actCategoryName) {
 		this.actCategoryName = actCategoryName;
 	}
 
-
-
 	public Set<ActVO> getActs() {
 		return acts;
 	}
-
-
 
 	public void setActs(Set<ActVO> acts) {
 		this.acts = acts;
 	}
 
-
-
 	public ActCategory() {
-       
-    }
-	
+
+	}
+
 }

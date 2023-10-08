@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -54,7 +55,7 @@ public class OrdersVO {
 	private Integer actQuantity;
 
 	@Expose
-	@OneToMany(mappedBy = "ordersVO", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "ordersVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<OrderListVO> orderListVOs;
 
 	@ManyToOne
@@ -207,10 +208,11 @@ public class OrdersVO {
 	public String toString() {
 		return "OrdersVO [orderID=" + orderID + ", ordTotal=" + ordTotal + ", discount=" + discount + ", discountPrice="
 				+ discountPrice + ", ordTime=" + ordTime + ", ordType=" + ordType + ", actQuantity=" + actQuantity
-				+ ", orderListVOs=" + orderListVOs + ", userVO=" + userVO + ", publisherVO=" + publisherVO
-				+ ", discountVO=" + discountVO + "]";
+				+ "]";
 	}
 
+
+	
 	
 
 }

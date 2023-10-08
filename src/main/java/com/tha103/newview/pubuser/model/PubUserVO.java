@@ -97,9 +97,10 @@ public class PubUserVO {
 	@Override
 	public String toString() {
 		return "PubUserVO [pubUserID=" + pubUserID + ", pubNickname=" + pubNickname + ", pubAccount=" + pubAccount
-				+ ", pubPassword=" + pubPassword + ", pubAuthority=" + pubAuthority + ", publisherVO=" + publisherVO
-				+ "]";
+				+ ", pubPassword=" + pubPassword + ", pubAuthority=" + pubAuthority + "]";
 	}
+
+	
 
 	
 	

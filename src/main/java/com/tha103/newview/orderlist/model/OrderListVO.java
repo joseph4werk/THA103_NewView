@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -70,7 +71,7 @@ public class OrderListVO implements java.io.Serializable {
 	private ActVO actVO;
 	
 	@Expose
-	@OneToMany(mappedBy = "orderListVO", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "orderListVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<ComPicVO> comPicVOs;
 
 	public OrderListVO() {
@@ -196,14 +197,20 @@ public class OrderListVO implements java.io.Serializable {
 		this.comPicVOs = comPicVOs;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "OrderListVO [orderListID=" + orderListID + ", actTotal=" + actTotal + ", QRcodeID="
 				+ Arrays.toString(QRcodeID) + ", OrderListTime=" + OrderListTime + ", reviewContent=" + reviewContent
 				+ ", fiveStarReview=" + fiveStarReview + ", seatRows=" + seatRows + ", seatColumns=" + seatColumns
-				+ ", vacancy=" + vacancy + ", ordersVO=" + ordersVO + ", actVO=" + actVO + ", comPicVOs=" + comPicVOs
-				+ "]";
+				+ ", vacancy=" + vacancy + "]";
 	}
+
+
+
+	
+	
 
 	
 }

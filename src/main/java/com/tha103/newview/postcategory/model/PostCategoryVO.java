@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +28,7 @@ public class PostCategoryVO {
 	private String postCategoryName;
 	
 	@Expose
-	@OneToMany(mappedBy = "postCategoryVO" , cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "postCategoryVO" , cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<PostVO> postVOs;
 	
 	
@@ -77,9 +78,11 @@ public class PostCategoryVO {
 
 	@Override
 	public String toString() {
-		return "PostCategoryVO [postCategoryID=" + postCategoryID + ", postCategoryName=" + postCategoryName
-				+ ", postVOs=" + postVOs + "]";
+		return "PostCategoryVO [postCategoryID=" + postCategoryID + ", postCategoryName=" + postCategoryName + "]";
 	}
+
+
+	
 
 
 	

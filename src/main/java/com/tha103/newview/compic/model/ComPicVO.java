@@ -70,9 +70,10 @@ public class ComPicVO implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "ComPicVO [comPicID=" + comPicID + ", comPic=" + Arrays.toString(comPic) + ", orderListVO=" + orderListVO
-				+ "]";
+		return "ComPicVO [comPicID=" + comPicID + ", comPic=" + Arrays.toString(comPic) + "]";
 	}
+
+	
 
 	
 }

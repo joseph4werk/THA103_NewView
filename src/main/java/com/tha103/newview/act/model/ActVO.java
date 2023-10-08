@@ -99,7 +99,6 @@ public class ActVO {
 	/*主鍵相關表格*/
 	@Expose
 	@OneToMany(mappedBy = "act", cascade=CascadeType.ALL)
-	@JsonIgnore
 	private Set<ActPic> actpics;
 //	@Expose
 //	@OneToMany(mappedBy = "actVO", cascade=CascadeType.ALL)
@@ -118,8 +117,7 @@ public class ActVO {
 		return "Act [actID=" + actID + ", actName=" + actName + ", actPrice=" + actPrice + ", actTime=" + actTime
 				+ ", actScope=" + actScope + ", actIntroduce=" + actIntroduce + ", actContent=" + actContent + ", time="
 				+ time + ", actDate=" + actDate + ", approvalCondition=" + approvalCondition + ", cityAddress="
-				+ cityAddress + ", actCategoryID=" + actCategory + ", pubID=" + publisherVO + ", cityAddressID="
-				+ city + "]";
+				+ cityAddress + "]";
 	}
 
 	public ActVO() {
@@ -285,15 +283,6 @@ public class ActVO {
 		// TODO Auto-generated method stub
 		
 	}
-
-	public Object getActPic() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setActPic(String string) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }
