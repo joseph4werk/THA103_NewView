@@ -4,6 +4,7 @@ import java.util.*;
 
 public interface UserDAO {
 	boolean checkUserAccount(String account);
+	boolean checkUserAccount(String account, String password);
 	public int insert(UserVO userVO);
 	public int update(UserVO userVO);
 	public int delete(Integer userID);

@@ -128,4 +128,40 @@ public class UserDAOImpl implements UserDAO {
 		return false;
 	}
 
+	@Override
+	public boolean checkUserAccount(String account, String password) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		String userPassword;
+		
+		try {
+			session.beginTransaction();
+			
+			String sql = "from UserVO WHERE userAccount = :userAccount ";
+			UserVO user = (UserVO) session.createQuery(sql).setParameter("userAccount", account).uniqueResult();
+			
+			System.out.println(user);
+			
+			// 若不存在使用者帳號為 null -> 回傳 true
+			if(user != null) {
+				// userAccount 已確認 DB 中有此筆資料不需再用變數存放
+				// 判斷 userPassword 是否一致，比對正確回傳 true
+				userPassword = user.getUserPassword();
+				
+				if(!password.equals(userPassword)) {
+					// 傳入密碼與 DB 中密碼不一致 -> 回傳 false
+					return false;
+				}
+				
+				// 比對完成 -> 回傳 true
+				session.getTransaction().commit();
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		// 若使用者不存在得不到值 -> 回傳 false
+		return false;
+	}
+	
 }

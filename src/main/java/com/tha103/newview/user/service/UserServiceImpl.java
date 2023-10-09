@@ -6,11 +6,10 @@ import com.tha103.newview.user.model.UserDAO;
 import com.tha103.newview.user.model.UserDAOImpl;
 import com.tha103.newview.user.model.UserVO;
 
-public class UserServiceImpl implements UserService{
-	
+public class UserServiceImpl implements UserService {
+
 	private UserDAO userdao;
-	
-	
+
 	public UserServiceImpl() {
 		userdao = new UserDAOImpl();
 	}
@@ -19,7 +18,12 @@ public class UserServiceImpl implements UserService{
 	public boolean checkUserAccount(String account) {
 		return userdao.checkUserAccount(account);
 	}
-	
+
+	@Override
+	public boolean checkUserAccount(String account, String password) {
+		return userdao.checkUserAccount(account, password);
+	}
+
 	@Override
 	public int addUser(UserVO userVO) {
 		return userdao.insert(userVO);
