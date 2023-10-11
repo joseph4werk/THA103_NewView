@@ -52,11 +52,11 @@ public class DiscountVO {
 	private Timestamp disFinishDate;
 
 	@Expose
-	@OneToMany(mappedBy = "discountVO", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "discountVO")
 	private Set<UseDiscountVO> useDiscountVOs;
 
 	@Expose
-	@OneToMany(mappedBy = "discountVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "discountVO", cascade = CascadeType.ALL)
 	private Set<OrdersVO> ordersVOs;
 
 	@ManyToOne

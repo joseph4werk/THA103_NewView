@@ -42,7 +42,7 @@ public class AdminVO {
 	private String adminEmail;
 	
 	@Expose
-	@OneToMany(mappedBy = "adminVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "adminVO", cascade = CascadeType.ALL)
 	@OrderBy("adminID")
 	private Set<DiscountVO> discountVOs;
 
