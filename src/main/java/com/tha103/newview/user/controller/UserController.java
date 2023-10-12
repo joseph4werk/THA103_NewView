@@ -60,10 +60,11 @@ public class UserController extends HttpServlet {
 			System.out.println(userVO);
 
 			int addUser = userSvc.addUser(userVO);
-			if (addUser == 1) {
+			if (addUser != 0) {
 				System.out.println(userVO);
 				System.out.println("userAccount: " + account + " 新增成功");
 				out.println("userName: " + name + ",\n" + "userAccount: " + account + ",\n" + "新增成功");
+				out.print(addUser);
 			} else {
 				System.out.println("新增失敗");
 				out.println("新增失敗");

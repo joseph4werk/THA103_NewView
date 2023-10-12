@@ -38,7 +38,9 @@ public class SignInController extends HttpServlet {
 
 		System.out.println(account);
 		System.out.println(password);
-
+		out.println(account+"1");
+		out.println(password);
+		
 		/*************************** 2.開始查詢資料 **********************/
 
 		UserService userSvc = new UserServiceImpl();
