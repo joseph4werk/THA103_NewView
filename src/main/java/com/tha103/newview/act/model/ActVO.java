@@ -33,6 +33,7 @@ public class ActVO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "actID", updatable = false)
+	
 	private Integer actID;
 	@Expose
 	@Column(name = "actName")
@@ -70,8 +71,9 @@ public class ActVO {
 
 	// 搭配TestHQLQueryProperty.java
 	@Expose
-	@Column(columnDefinition = "TINYINT(1)")
+	@Column(columnDefinition = "tinyint(1)")
 	private boolean approvalCondition;
+
 	@Expose
 	@Column(name = "cityAddress")
 	private String cityAddress;
@@ -97,8 +99,9 @@ public class ActVO {
 	
 	
 	/*主鍵相關表格*/
-	@Expose
+	
 	@OneToMany(mappedBy = "act", cascade=CascadeType.ALL)
+	@JsonIgnore
 	private Set<ActPic> actpics;
 //	@Expose
 //	@OneToMany(mappedBy = "actVO", cascade=CascadeType.ALL)
@@ -117,7 +120,8 @@ public class ActVO {
 		return "Act [actID=" + actID + ", actName=" + actName + ", actPrice=" + actPrice + ", actTime=" + actTime
 				+ ", actScope=" + actScope + ", actIntroduce=" + actIntroduce + ", actContent=" + actContent + ", time="
 				+ time + ", actDate=" + actDate + ", approvalCondition=" + approvalCondition + ", cityAddress="
-				+ cityAddress + "]";
+				+ cityAddress + ", actCategoryID=" + actCategory + ", pubID=" + publisherVO + ", cityAddressID="
+				+ city + "]";
 	}
 
 	public ActVO() {
@@ -143,7 +147,7 @@ public class ActVO {
 		this.actCategory = actCategory;
 		this.city = city;
 		this.publisherVO = publisherVO;
-		this.actpics = actpics;
+		
 	}
 
 	public Integer getActID() {
@@ -252,7 +256,15 @@ public class ActVO {
 	public void setActCategory(ActCategory actCategory) {
 		this.actCategory = actCategory;
 	}
+	
 
+	public CityAddress getCity() {
+		return city;
+	}
+
+	public void setCity(CityAddress city) {
+		this.city = city;
+	}
 
 	public PublisherVO getPublisherVOs() {
 		return publisherVO;
@@ -283,6 +295,8 @@ public class ActVO {
 		// TODO Auto-generated method stub
 		
 	}
-	
+
+
+
 
 }

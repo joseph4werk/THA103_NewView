@@ -64,7 +64,7 @@ public class ActPicDAOHibernateImpl implements ActPicDAO{
 		ActPic act = null;
 		try {
 			session.beginTransaction();
-			 act = session.get(ActPic.class, actPicID);
+			act = session.get(ActPic.class, actPicID);
 			session.getTransaction().commit();
 			
 		} catch (Exception e) {
