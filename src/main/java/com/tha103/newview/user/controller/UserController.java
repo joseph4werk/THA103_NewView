@@ -2,6 +2,8 @@ package com.tha103.newview.user.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 
 import javax.servlet.ServletException;
@@ -43,14 +45,38 @@ public class UserController extends HttpServlet {
 		UserService userSvc = new UserServiceImpl();
 		UserVO userVO = new UserVO();
 		System.out.println(account);
+		String hashPassword = null;
 
-		if (userSvc.checkUserAccount(account)) {
+		if (!userSvc.checkUserAccount(account)) {
 			System.out.println("資料庫查無userAccount: " + account + "的使用者");
 
 			// 包裝資料為 UserVO，呼叫 addUser 方法
 			userVO.setUserName(name);
 			userVO.setUserAccount(account);
-			userVO.setUserPassword(password);
+			
+			// 加密密碼 -> MD5
+			try {
+				// 創建 MD5 實體
+				MessageDigest md = MessageDigest.getInstance("MD5");
+				
+				// 轉換原始密碼
+				byte[] bytes = md.digest(password.getBytes());
+				
+				// 將 byte[] 轉為 16 進制 String
+				StringBuilder sb = new StringBuilder();
+				for(byte b: bytes) {
+					sb.append(String.format("%02x", b));
+				}
+				
+				// MD5 加密後的 Password
+				hashPassword = sb.toString();
+				
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
+			
+			// 存入 hashPassword 進資料庫
+			userVO.setUserPassword(hashPassword);
 			userVO.setUserBirth(Date.valueOf(birthdate));
 			userVO.setUserCell(cellphone);
 			userVO.setUserEmail(email);
@@ -74,6 +100,9 @@ public class UserController extends HttpServlet {
 			out.println("使用者已存在");
 		}
 
+		System.out.println("原始密碼: " + password);
+		System.out.println("MD5密碼: " + hashPassword);
+		
 		/***************************************************************/
 
 //		if (name.equals("a")) {

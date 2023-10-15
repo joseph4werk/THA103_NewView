@@ -36,14 +36,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int getUserByPK(int userID) {
-		// TODO Auto-generated method stub
-		return 0;
+	public UserVO getUserByPK(int userID) {
+		return userdao.findByPrimaryKey(userID);
 	}
 
 	@Override
 	public List<UserVO> getAll() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public UserVO getUserByAccount(String account) {
+		return userdao.getUserByAccount(account);
 	}
 }

@@ -118,17 +118,17 @@ public class UserDAOImpl implements UserDAO {
 
 			System.out.println(user);
 
-			// 若不存在使用者帳號為 null -> 回傳 true
+			// 若不存在使用者帳號為 null -> 回傳 false
 			if (user == null) {
 				session.getTransaction().commit();
-				return true;
+				return false;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
-		// 若存在使用者帳號查得到值-> 回傳 false
-		return false;
+		// 若存在使用者帳號查得到值-> 回傳 true
+		return true;
 	}
 
 	@Override
@@ -142,7 +142,8 @@ public class UserDAOImpl implements UserDAO {
 			String sql = "from UserVO WHERE userAccount = :userAccount ";
 			UserVO user = (UserVO) session.createQuery(sql).setParameter("userAccount", account).uniqueResult();
 
-			System.out.println(user);
+			// 檢查是否有取得物件
+//			System.out.println(user);
 
 			// 若不存在使用者帳號為 null -> 回傳 true
 			if (user != null) {
@@ -167,4 +168,22 @@ public class UserDAOImpl implements UserDAO {
 		return false;
 	}
 
+	@Override
+	public UserVO getUserByAccount(String account) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		
+		try {
+			session.beginTransaction();
+			
+			String sql = "from UserVO WHERE userAccount = :userAccount ";
+			UserVO userVO = (UserVO) session.createQuery(sql).setParameter("userAccount", account).uniqueResult();
+			session.getTransaction().commit();
+			
+			return userVO;
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+
+		}
+		return null;
+	}
 }

@@ -251,6 +251,7 @@ $(function () {
 	$("#signIn #commit").on("click", function (e) {
 		// 停止點擊預設事件
 		e.preventDefault();
+//		window.location.href = "member.html";
 		/*  將 sign-in 資料用物件包裝  */
 		let signIn_item = {
 			account: $("#account").val(),
@@ -259,13 +260,18 @@ $(function () {
 		console.log(signIn_item);
 
 		$.ajax({
-			url: "http://localhost:8081/com.tha103.newview/SignIn",
+			url: "SignIn",
 			type: "POST",
 			data: signIn_item,
 			dataType: "json",
 			beforeSend: function () { },
 			success: function (data) {
-				console.log("aaa")
+				console.log(data);
+				if(data.location != null){
+					window.location.href = data.location;
+				}else{
+					window.location.href = "home-03.html";
+				}
 			},
 		});
 

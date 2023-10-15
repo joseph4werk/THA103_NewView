@@ -9,6 +9,7 @@ public interface UserService {
 	public boolean checkUserAccount(String account, String password);
 	public int addUser(UserVO userVO);
 	public int updateUser(UserVO userVO);
-	public int getUserByPK(int userID);
+	public UserVO getUserByPK(int userID);
+	public UserVO getUserByAccount(String account);
 	public List<UserVO> getAll();
 }
