@@ -10,14 +10,69 @@ $(function () {
 
 	/*  將 member 資料用物件包裝  */
 	let member_item = {
-		memberName: "假名字",
-		memberNickname: "假暱稱",
+		name: "假名字",
+		nickname: "假暱稱",
+		email: "test@test.com",
+		birthdate: "2023/09/18",
+		cellphone: "(886) 098 7654 321",
+		location: "NOT IMPORTANT",
+		orders:
+		{
+			publisher: "廠商",
+			activity: "活動名稱",
+			ordersPic: "./assets/img/Bob3.png"
+		},
+		favoriteAct:
+		{
+			publisher: "廠商",
+			activity: "活動名稱",
+			favPic: "./assets/img/kirby_yoyo.png"
+		}
 	};
-	// console.log(member_item1.memberName);
-	// console.log(member_item1.memberNickname);
+	// console.log(member_item);
+
+	$.ajax({
+		url: "MemberPage",
+		type: "GET",
+		// data: member_item,
+		data: { "userID": 4 },
+		dataType: "json",
+		beforeSend: function (xhr) {
+			console.log("beforeSend");
+			console.log(xhr);
+		},
+		success: function (data) {
+
+
+			let h5_memberName_html = "";
+			h5_memberName_html =
+				`
+			<h5 class="mb-1">${data.name}</h5>
+			`;
+			$("#memberName h5").html(h5_memberName_html);
+			h5_memberName_html = "";
+
+			let p_member_html = "";
+			p_member_html +=
+				`
+		<p class="mb-0 font-weight-bold text-sm">${data.nickname}</p>
+		`;
+
+			$("#memberName p").html(p_member_html);
+			p_member_html = "";
+		}, error: function (xhr) {
+			console.log("error");
+			console.log(xhr.responseText);
+		}, complete: function (xhr, data) {
+			console.log("complete");
+			console.log(data);
+			console.log(xhr);
+		}
+	});
+
 
 	/*  標題小字卡-名字  */
-	$("#memberName h5").on("mousemove", function () {
+	$("#memberName h5").on("click", function () {
 		// console.log("aaa");
 		let h5_memberName_html = "";
 
@@ -251,7 +306,14 @@ $(function () {
 	$("#signIn #commit").on("click", function (e) {
 		// 停止點擊預設事件
 		e.preventDefault();
-//		window.location.href = "member.html";
+		// window.location.href = "http://localhost:8081/com.tha103.newview/member.html";
+		// var host = window.location.host;
+		// var path = window.location.pathname;
+		// var endPointURL = host + "/member.html";
+		// console.log(endPointURL);
+		// location.href = "/member.html";
+
+
 		/*  將 sign-in 資料用物件包裝  */
 		let signIn_item = {
 			account: $("#account").val(),
@@ -260,21 +322,36 @@ $(function () {
 		console.log(signIn_item);
 
 		$.ajax({
-			url: "SignIn",
+			url: "http://localhost:8081/com.tha103.newview/SignIn",
 			type: "POST",
 			data: signIn_item,
 			dataType: "json",
-			beforeSend: function () { },
+			beforeSend: function () {
+				console.log("success前->beforeSend");
+			},
 			success: function (data) {
 				console.log(data);
-				if(data.location != null){
-					window.location.href = data.location;
-				}else{
-					window.location.href = "home-03.html";
-				}
+				// login_redirect(data);
+				console.log("成功接data");
+				// alert("登入成功");
+			}, error: function (xhr) {
+				console.log("error");
+				console.log(xhr);
+				location.href = "http://localhost:8081/com.tha103.newview/sign-in.html";
+			}, complete: function (xhr) {
+				console.log("complete");
+				console.log(xhr);
+				// location.href = "http://localhost:8081/com.tha103.newview/member.html";
 			},
 		});
-
+		function login_redirect(data) {
+			if (data != null) {
+				console.log(data);
+				console.log(data.location);
+				console.log(data.account);
+				location.href = "http://localhost:8081/com.tha103.newview/member.html";
+			}
+		};
 	});
 
 
@@ -299,8 +376,8 @@ $(function () {
 		</form>
 	</div>
 	`;
-//	let sign_in_account_val = "";
-//	let sign_in_password_val = "";
+	//	let sign_in_account_val = "";
+	//	let sign_in_password_val = "";
 
 	/*  打完使用者密碼後觸發 change 事件，取得 account, password 的值  */
 	// $("#signIn #password").on("change", function () {
@@ -403,14 +480,13 @@ $(function () {
 			type: "POST",
 			data: signUp_item,
 			dataType: "json",
-			beforeSend: function () { },
 			success: function (data) {
-				console.log("aaa")
-
-
+				console.log("aaa");
 			},
 		});
 	})
+
+
 
 
 	/*  ==================================  ================================== */

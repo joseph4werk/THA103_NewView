@@ -61,12 +61,16 @@ public class LoginFilter extends HttpFilter implements Filter {
 		String account = (String) session.getAttribute("account");
 		if (account == null) {
 			// 紀錄先前網站位置
+//			session.setAttribute("location", "http://localhost:8081/"+req.getRequestURI());
 			session.setAttribute("location", req.getRequestURI());
 			res.sendRedirect(req.getContextPath() + "/sign-in.html");
-			return;
+			System.out.println("網頁重導至 signIn");
+			
 		} else {
+			System.out.println("filter-else");			
 			chain.doFilter(request, response);
 		}
+		
 	}
 
 	/**
