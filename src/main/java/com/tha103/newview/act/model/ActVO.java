@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.Expose;
 import com.tha103.newview.actcategory.model.ActCategory;
 import com.tha103.newview.actpic.model.ActPic;
-import com.tha103.newview.cityAdress.model.CityAddress;
+import com.tha103.newview.cityaddress.model.CityAddress;
 import com.tha103.newview.publisher.model.PublisherVO;
 
 @Entity

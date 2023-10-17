@@ -94,17 +94,17 @@ public class TestHiberateDAO {
 			for (ActPic actPic : actPics) {
 			    System.out.print(actPic.getActPicID() + ",");
 			    
-			    byte[] imageData = actPic.getActPic(); // 获取图像数据
+			    byte[] imageData = actPic.getActPic(); 
 			    
 			    if (imageData != null) {
 			        String base64ImageData = Base64.getEncoder().encodeToString(imageData); // 转换为Base64编码的字符串
 			        System.out.print("有");
 			    } else {
-			        // 处理空图像数据的情况，可以选择跳过或执行其他适当的处理方式
+			       
 			        System.out.println("Image data is null");
 			    }
 			    
-			    // 其他 ActPic 的属性
+			    
 			}
 
 

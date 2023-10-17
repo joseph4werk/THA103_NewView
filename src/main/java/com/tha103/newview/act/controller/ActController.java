@@ -19,7 +19,7 @@ import com.tha103.newview.act.model.ActDAO;
 import com.tha103.newview.act.model.ActDAOHibernateImpl;
 import com.tha103.newview.act.model.ActVO;
 import com.tha103.newview.actcategory.model.ActCategory;
-import com.tha103.newview.cityAdress.model.CityAddress;
+import com.tha103.newview.cityaddress.model.CityAddress;
 
 @WebServlet("/ActData")
 public class ActController extends HttpServlet {
