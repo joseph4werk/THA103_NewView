@@ -2,6 +2,7 @@ package com.tha103.newview.user.service;
 
 import java.util.List;
 
+import com.tha103.newview.orders.model.OrdersVO;
 import com.tha103.newview.user.model.UserDAO;
 import com.tha103.newview.user.model.UserDAOImpl;
 import com.tha103.newview.user.model.UserVO;
@@ -50,4 +51,11 @@ public class UserServiceImpl implements UserService {
 	public UserVO getUserByAccount(String account) {
 		return userdao.getUserByAccount(account);
 	}
+
+	@Override
+	public OrdersVO getOrderByUserID(Integer userID) {
+		return userdao.getOrderByUserID(userID);
+	}
+	
+	
 }

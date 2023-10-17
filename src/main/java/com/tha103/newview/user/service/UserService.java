@@ -2,6 +2,7 @@ package com.tha103.newview.user.service;
 
 import java.util.List;
 
+import com.tha103.newview.orders.model.OrdersVO;
 import com.tha103.newview.user.model.UserVO;
 
 public interface UserService {
@@ -12,4 +13,5 @@ public interface UserService {
 	public UserVO getUserByPK(int userID);
 	public UserVO getUserByAccount(String account);
 	public List<UserVO> getAll();
+	public OrdersVO getOrderByUserID(Integer userID);
 }
