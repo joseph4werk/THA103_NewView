@@ -2,6 +2,7 @@ package com.tha103.newview.usediscount.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,11 +29,11 @@ public class UseDiscountVO{
 	@Column(name = "ditUsed", columnDefinition = "TINYINT")
 	private Integer ditUsed;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "discountNO", referencedColumnName = "discountNO")
 	private DiscountVO discountVO;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userID", referencedColumnName = "userID")
 	private UserVO userVO;
 

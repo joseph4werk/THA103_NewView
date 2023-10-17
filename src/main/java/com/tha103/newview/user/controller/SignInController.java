@@ -82,7 +82,12 @@ public class SignInController extends HttpServlet {
 		HttpSession session = req.getSession();
 		session.setAttribute("account", account);
 		System.out.println("account_Attribute紀錄");
-
+		
+		// 將 userID 放入 session attribute
+		String userID = userSvc.getUserByAccount(account).getUserID().toString();
+		session.setAttribute("userID", userID);
+		
+		data.put("userID", userID);
 		data.put("account", account);
 
 		/*************************** 3.查看有無來源網頁 ******************/

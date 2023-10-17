@@ -32,8 +32,11 @@ public class MemberController extends HttpServlet{
 		HashMap<String, Object> data = new HashMap<>();
 		PrintWriter out = res.getWriter();
 		
-		String userID = req.getParameter("userID");
+//		String userID = req.getParameter("userID");
 		System.out.println("接到 ajax 請求");
+		
+		String userID = (String) req.getSession().getAttribute("userID");
+		System.out.println("session中的userID: " + userID);
 		
 		UserService userSvc = new UserServiceImpl();
 		UserVO userVO = userSvc.getUserByPK(Integer.valueOf(userID));
@@ -41,10 +44,17 @@ public class MemberController extends HttpServlet{
 		
 		String name = userVO.getUserName();
 		String nickname = userVO.getUserNickname();
+		String email = userVO.getUserEmail();
+		String birthdate = userVO.getUserBirth().toString();
+		String cellphone = userVO.getUserCell();
 
 		data.put("userID", userID);
 		data.put("name", name);
 		data.put("nickname", nickname);
+		data.put("email", email);
+		data.put("birthdate", birthdate);
+		data.put("cellphone", cellphone);
+		
 //		System.out.println(data);
 		
 		String json = gson.toJson(data);

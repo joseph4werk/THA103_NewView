@@ -1096,36 +1096,63 @@
         const urlParams = new URLSearchParams(window.location.search);
         const userID = urlParams.get("userID");
 
-        console.log(userID);
+        // console.log(userID);
         $.ajax({
-          url: "http://localhost:8081/com.tha103.newview/MemberPage?userID=4",
+          url: "http://localhost:8081/com.tha103.newview/MemberPage",
           type: "GET",
-          // data: member_item,
-          data: { userID: 4 },
+          data: { userID: userID },
           dataType: "json",
           beforeSend: function (xhr) {
-            console.log("beforeSend");
-            console.log(xhr);
+            // console.log("beforeSend");
+            // console.log(xhr);
           },
           success: function (data) {
             console.log(data.name);
             console.log(data.nickname);
-            let h5_memberName_html = "";
-            h5_memberName_html = `
-			<h5 class="mb-1">e04</h5>
-			`;
-            $("#memberName h5").html(h5_memberName_html);
-            h5_memberName_html = "";
-
-            let p_member_html = "";
-            p_member_html += `
-		<p class="mb-0 font-weight-bold text-sm">${data.nickname}</p>
-		`;
-
-            $("#memberName p").html(p_member_html);
-            p_member_html = "";
+            titleInfo(data);
+            memberInfo(data);
           },
         });
+
+        // 修改標題使用者資訊
+        function titleInfo(data) {
+          let h5_memberName_html = "";
+          h5_memberName_html = `
+		        	<h5 class="mb-1">${data.name}</h5>
+		      	`;
+          $("#memberName h5").html(h5_memberName_html);
+          h5_memberName_html = "";
+
+          let p_member_html = "";
+          p_member_html += `
+		         <p class="mb-0 font-weight-bold text-sm">${data.nickname}</p>
+        		`;
+
+          $("#memberName p").html(p_member_html);
+          p_member_html = "";
+        }
+
+        // 修改會員資訊區
+        function memberInfo(data) {
+          let ul_profile_detail_html = "";
+
+          ul_profile_detail_html += `
+            <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; ${data.name}</li>
+            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">NickName:</strong> &nbsp; ${data.nickname}</li>
+            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; ${data.email}</li>
+            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Birthdate:</strong> &nbsp; ${data.birthdate}</li>
+            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; ${data.cellphone}</li>
+          `;
+
+          $("#memberInfo ul").html(ul_profile_detail_html);
+          ul_profile_detail_html = "";
+        }
+
+        // 修改訂單區
+        function orderInfo(data) {}
+
+        // 修改我的最愛區
+        function favoriteAct(data) {}
       });
     </script>
 
