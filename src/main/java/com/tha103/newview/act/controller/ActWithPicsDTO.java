@@ -17,10 +17,22 @@ public class ActWithPicsDTO {
     private Date time;
     private String actAddress;
     private String cityAddress;
+    private String pubName;
+    private boolean approvalCondition;
     
     
-    
-    
+	public boolean isApprovalCondition() {
+		return approvalCondition;
+	}
+	public void setApprovalCondition(boolean approvalCondition) {
+		this.approvalCondition = approvalCondition;
+	}
+	public String getPubName() {
+		return pubName;
+	}
+	public void setPubName(String pubName) {
+		this.pubName = pubName;
+	}
 	public String getCityAddress() {
 		return cityAddress;
 	}
@@ -97,9 +109,11 @@ public class ActWithPicsDTO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 	public ActWithPicsDTO(Integer actID, Integer actScope, String actName, String actContent, double actPrice,
 			String actIntroduce, List<String> base64Images, String actCategoryName, Date actDate, Date time,
-			String actAddress) {
+			String actAddress, String cityAddress, String pubName, boolean approvalCondition) {
 		super();
 		this.actID = actID;
 		this.actScope = actScope;
@@ -112,9 +126,19 @@ public class ActWithPicsDTO {
 		this.actDate = actDate;
 		this.time = time;
 		this.actAddress = actAddress;
+		this.cityAddress = cityAddress;
+		this.pubName = pubName;
+		this.approvalCondition = approvalCondition;
+	}
+	public String getPublisherVOs() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public String getPubID() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
     
    
 }
-

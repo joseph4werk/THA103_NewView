@@ -28,12 +28,12 @@ public class TestActCategoryHiberateDAO {
 //		System.out.println("---------------------");
 
 		// 查詢多筆
-//		List<ActCategory> list = dao.getAll();
-//		for (ActCategory act : list) {
-//			System.out.print(act.getActCategoryID() + ",");
-//			System.out.print(act.getActCategoryName() + ",");
-//			
-//			System.out.println();
-//		}
+		List<ActCategory> list = dao.getAll();
+		for (ActCategory act : list) {
+			System.out.print(act.getActCategoryID() + ",");
+			System.out.print(act.getActCategoryName() + ",");
+			
+			System.out.println();
+		}
 	}
 }

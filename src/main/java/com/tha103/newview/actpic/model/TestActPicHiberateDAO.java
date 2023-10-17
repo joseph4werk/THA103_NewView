@@ -1,9 +1,5 @@
 package com.tha103.newview.actpic.model;
 
-import com.tha103.newview.actcategory.model.ActCategory;
-import com.tha103.newview.actcategory.model.ActCategoryDAO;
-import com.tha103.newview.actcategory.model.ActCategoryDAOHibernateImpl;
-
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -12,7 +8,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import com.tha103.newview.act.*;
+import com.tha103.newview.act.model.ActVO;
 
 
 public class TestActPicHiberateDAO {
@@ -34,17 +30,22 @@ public class TestActPicHiberateDAO {
 		TestActPicHiberateDAO daoPic = new TestActPicHiberateDAO();
 ////		// 新增
 //		ActPic actPic = new ActPic();
-//	
-//		actPic.setActID(1);
-//		actPic.setActPic(daoPic.gifToByteArray("image/ok2.jpg"));
+//		ActVO act = new ActVO();
+		
+//		act.setActID(2);
+//		actPic.setActID(act);
+//		actPic.setActPic(daoPic.gifToByteArray("images/ok2.jpg"));
 //		dao.insert(actPic);
-//
+////
 //		// 修改
 //		ActPic actPic = new ActPic();
-//		actPic.setActPicID(2);;
+//		ActVO act = new ActVO();
+//		act.setActID(3);
+//		actPic.setActID(act);
+//		actPic.setActPicID(3);
 //		actPic.setActPic(daoPic.gifToByteArray("image/ok2.jpg"));
 //		dao.update(actPic);
-//
+////
 //		// 刪除
 //		dao.delete(5);
 //

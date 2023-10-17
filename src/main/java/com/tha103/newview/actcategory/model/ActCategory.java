@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.Expose;
 import com.tha103.newview.act.model.ActVO;
 
@@ -31,15 +32,23 @@ public class ActCategory {
 	@Column(name = "actCategoryName")
 	private String actCategoryName;
 	@Expose
-	@OneToMany(mappedBy = "actCategory", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "actCategory", cascade=CascadeType.ALL  )
+	
 	private Set<ActVO> acts;
+	
+	
+	
+	@Override
+	public String toString() {
+		return "ActCategory [actCategoryID=" + actCategoryID + ", actCategoryName=" + actCategoryName + ", acts=" + acts
+				+ "]";
+	}
+
+
 
 	
 
-	@Override
-	public String toString() {
-		return "ActCategory [actCategoryID=" + actCategoryID + ", actCategoryName=" + actCategoryName + "]";
-	}
+
 
 	public ActCategory(Integer actCategoryID, String actCategoryName, Set<ActVO> acts) {
 		super();
@@ -48,32 +57,46 @@ public class ActCategory {
 		this.acts = acts;
 	}
 
+
+
 	public Integer getActCategoryID() {
 		return actCategoryID;
 	}
+
+
 
 	public void setActCategoryID(Integer actCategoryID) {
 		this.actCategoryID = actCategoryID;
 	}
 
+
+
 	public String getActCategoryName() {
 		return actCategoryName;
 	}
+
+
 
 	public void setActCategoryName(String actCategoryName) {
 		this.actCategoryName = actCategoryName;
 	}
 
+
+
 	public Set<ActVO> getActs() {
 		return acts;
 	}
+
+
 
 	public void setActs(Set<ActVO> acts) {
 		this.acts = acts;
 	}
 
+
+
 	public ActCategory() {
-
-	}
-
+       
+    }
+	
 }

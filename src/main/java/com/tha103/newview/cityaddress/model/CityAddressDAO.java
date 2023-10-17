@@ -1,4 +1,4 @@
-package com.tha103.newview.cityAdress.model;
+package com.tha103.newview.cityaddress.model;
 
 import java.util.List;
 

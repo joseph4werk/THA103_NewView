@@ -1,4 +1,4 @@
-package com.tha103.newview.cityAdress.model;
+package com.tha103.newview.cityaddress.model;
 
 import java.util.Set;
 
@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -17,6 +18,7 @@ import com.tha103.newview.act.model.ActVO;
 
 @Entity
 @Table(name = "city")
+@NamedQuery(name = "getAllCityAddress", query = "from CityAddress where cityAddressID > :cityAddressID order by cityAddressID desc")
 public class CityAddress {
 	@Expose
 	@Id
@@ -51,7 +53,7 @@ public class CityAddress {
 	}
 	@Override
 	public String toString() {
-		return "cityadress [actAdressID=" + cityAddressID + ", cityName=" + cityName + ", acts=" + acts + "]";
+		return "cityadress [actAddressID=" + cityAddressID + ", cityName=" + cityName + ", acts=" + acts + "]";
 	}
 	public CityAddress() {
 		super();
@@ -62,6 +64,10 @@ public class CityAddress {
 		this.cityAddressID = actAddressID;
 		this.cityName = cityName;
 		this.acts = acts;
+	}
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	

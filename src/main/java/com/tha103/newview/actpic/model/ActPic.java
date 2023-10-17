@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import com.google.gson.annotations.Expose;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tha103.newview.act.model.ActVO;
 import com.tha103.newview.actcategory.model.ActCategory;
 
@@ -15,20 +15,21 @@ import com.tha103.newview.actcategory.model.ActCategory;
 // 配合 TestHQLWithParameter.java
 @NamedQuery(name = "getAllActPics", query = "from ActPic where ActPicID > :ActPicID order by ActPicID desc")
 public class ActPic {
-	@Expose
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "actPicID", updatable = false)
 	private Integer actPicID;
 
 	
-	@Expose
+
 	@Column(name = "actPic", columnDefinition = "LONGBLOB")
+	@JsonIgnore
 	private byte[] actPic;
 
 
 	@ManyToOne
 	@JoinColumn(name = "actID",referencedColumnName = "actID")
+	@JsonIgnore
 	private ActVO act;
 
 
@@ -72,6 +73,7 @@ public class ActPic {
 	public void setActPic(byte[] actPic) {
 		this.actPic = actPic;
 	}
+
 
 	
 

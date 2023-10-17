@@ -1,12 +1,10 @@
 package com.tha103.newview.act.model;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Base64;
 import java.util.List;
+import java.util.Set;
 
-import com.tha103.newview.act.*;
-import com.tha103.newview.actcategory.model.ActCategory;
-import com.tha103.newview.cityAdress.model.CityAddress;
+import com.tha103.newview.actpic.model.ActPic;
 
 public class TestHiberateDAO {
 	public static void main(String[] args) throws Exception {
@@ -76,8 +74,8 @@ public class TestHiberateDAO {
 */
 		// 查詢多筆
 //		
-		List<ActVO> list = dao.getAll();
-		
+		List<ActVO> list = dao. getAllWithAssociations();
+		ActPic actpic = new ActPic();
 		for (ActVO act : list) {
 			System.out.print(act.getActID() + ",");
 			System.out.print(act.getActName() + ",");
@@ -92,7 +90,28 @@ public class TestHiberateDAO {
 			System.out.print(act.getActDate() + ",");
 			System.out.print(act.getApprovalCondition() + ",");
 			System.out.print(act.getCityAddress() + ",");
+			Set<ActPic> actPics = act.getActpics();
+			for (ActPic actPic : actPics) {
+			    System.out.print(actPic.getActPicID() + ",");
+			    
+			    byte[] imageData = actPic.getActPic(); 
+			    
+			    if (imageData != null) {
+			        String base64ImageData = Base64.getEncoder().encodeToString(imageData); // 转换为Base64编码的字符串
+			        System.out.print("有");
+			    } else {
+			       
+			        System.out.println("Image data is null");
+			    }
+			    
+			    
+			}
+
+
+			
 			System.out.println();
 		}
+		
+		
 	}
 }
