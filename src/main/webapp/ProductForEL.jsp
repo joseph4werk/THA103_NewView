@@ -5,7 +5,7 @@
 <%@ page import="com.tha103.newview.act.model.*"%>
 <%@ page import="com.tha103.newview.act.service.*"%>
 <%@ page import="com.tha103.newview.actcategory.model.*"%>
-<%@ page import="com.tha103.newview.cityAdress.model.*"%>
+<%@ page import="com.tha103.newview.cityaddress.model.*"%>
 <%@ page import="com.tha103.newview.publisher.model.*" %>
 <%@ page import="com.tha103.newview.act.controller.*" %>
 <%
