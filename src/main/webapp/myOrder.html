@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>購物車##</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="images/icons/favicon.png" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<!--===============================================================================================-->
+	<style>
+		.table-shopping-cart .column-5 {
+		  width: 172px;
+		  padding-right: px;
+		  text-align: right;
+		  font-size: 16px;
+		}
+		
+		.table-shopping-cart .table_row td {
+		  padding-bottom: 0px;
+		}
+		
+		.table-shopping-cart .table_row td.column-1 {
+		  padding-bottom: 0px;
+		}
+		
+		.p-t-75, .p-tb-75, .p-all-75 {padding-top: 75px;}
+		
+		.p-b-13, .p-tb-13, .p-all-13 {padding-bottom: 13px;}
+		</style>
+	<style>
+		div.tab_container div.tab_contents div.tab {
+			padding: 10px;
+			display: none;
+		}
+
+		div.tab_container div.tab_contents div.tab.-on {
+			display: block;
+		}
+	</style>
+
+	<style>
+		/* 外部容器樣式 */
+		.container1 {
+			width: 100%;
+			/* 使容器充滿父容器的寬度 */
+			text-align: center;
+			/* 文字置中 */
+		}
+
+		/* 文本樣式 */
+		.text1 {
+			font-size: 32px;
+			/* 設定文字大小 */
+			font-weight: bold;
+			/* 加粗文本 */
+		}
+	</style>
+
+
+	<style>
+		.top-space {
+			margin-top: 100px;
+		}
+
+		.table_row1 {
+			height: 80px;
+		}
+
+
+
+		/* 按鈕樣式 */
+		/* 居中按钮的容器 */
+		.center-container {
+			display: flex;
+			justify-content: center;
+			/* 水平居中 */
+			align-items: center;
+			/* 垂直居中 */
+		}
+
+		.button-down1 {
+			padding: 10px 20px;
+			background-color: #555;
+			color: #fff;
+			border: none;
+			border-radius: 6px;
+			cursor: pointer;
+			margin: 0 10px;
+			/* 添加间距以分隔按钮 */
+		}
+
+		button:hover {
+			background-color: #777;
+		}
+	</style>
+
+	<!-- ///彈出表單css -->
+	<style>
+		/* 遮罩層樣式 */
+		.overlay {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.7);
+			/* 使用遮罩層實現半透明背景 */
+			z-index: 1;
+		}
+
+		/* 彈出表單樣式 */
+		.popup-form {
+			display: none;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background-color: #fff;
+			padding: 20px;
+			z-index: 2;
+			width: 300px;
+			/* 自訂表單寬度 */
+			text-align: center;
+			/* 文字置中 */
+			align-items: center;
+		}
+
+		/* 標題樣式 */
+		.form-title {
+			font-size: 18px;
+			font-weight: bold;
+			margin-bottom: 10px;
+		}
+
+		/* 內容樣式 */
+		.form-content {
+			margin-bottom: 20px;
+		}
+
+		/* 確認按鈕樣式 */
+		.confirm-button {
+			padding: 10px 20px;
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body class="animsition">
+	<div class="top-space"></div>
+
+
+
+	<!-- Header -->
+	<header class="header-v3">
+		<!-- Header desktop -->
+		<div class="container-menu-desktop trans-03 mb-6">
+			<div class="wrap-menu-desktop" style="background-color: black;">
+				<nav class="limiter-menu-desktop p-l-45">
+					<!-- Logo desktop -->
+					<a href="#" class="logo" style="color: white; font-size: large; font-weight: bold">
+						<!-- <img src="images/icons/logo-02.png" alt="IMG-LOGO"> -->
+						NewView
+					</a>
+
+					<!-- Menu desktop -->
+					<div class="menu-desktop">
+						<ul class="main-menu" style="font-weight: bold">
+
+							<li>
+								<a href="home-03.html">主頁</a>
+							</li>
+
+							<li>
+								<a href="product.html">活動專區</a>
+							</li>
+
+							<li class="label1" data-label1="hot">
+								<a href="shoping-cart.html">購物車</a>
+							</li>
+
+							<li>
+								<a href="blog.html">討論區</a>
+							</li>
+
+							<li>
+								<a href="about.html">關於我們</a>
+							</li>
+
+							<li>
+								<a href="contact.html">聯絡我們</a>
+							</li>
+
+							<li>
+								<a href="#">常見問題</a>
+							</li>
+						</ul>
+					</div>
+
+					<!-- Icon header -->
+					<div class="wrap-icon-header flex-w flex-r-m h-full">
+						<div class="flex-c-m h-full p-r-25 bor6">
+							<div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 js-show-login">
+								<i class="fa fa-user me-sm-1"></i>
+							</div>
+							<div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart"
+								data-notify="2">
+								<i class="zmdi zmdi-shopping-cart"></i>
+							</div>
+						</div>
+
+
+						<div class="flex-c-m h-full p-lr-19">
+							<div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 js-show-sidebar">
+								<i class="zmdi zmdi-menu"></i>
+							</div>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</div>
+
+		<!-- Header Mobile -->
+		<div class="wrap-header-mobile">
+			<!-- Logo moblie -->
+			<div class="logo-mobile">
+				<a href="home-03.html" style="color: black; font-size: large; font-weight: bold">
+					<!-- <img src="images/icons/logo-01.png" alt="IMG-LOGO"/> -->
+					NewView
+				</a>
+			</div>
+
+			<!-- Icon header -->
+			<div class="wrap-icon-header flex-w flex-r-m h-full m-r-15">
+				<div class="flex-c-m h-full p-r-5">
+					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-login">
+						<i class="fa fa-user me-sm-1"></i>
+					</div>
+					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart"
+						data-notify="2">
+						<i class="zmdi zmdi-shopping-cart"></i>
+					</div>
+				</div>
+			</div>
+
+			<!-- Button show menu -->
+			<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+				<span class="hamburger-box">
+					<span class="hamburger-inner"></span>
+				</span>
+			</div>
+		</div>
+
+		<!-- Menu Mobile -->
+		<div class="menu-mobile">
+			<ul class="main-menu-m" style="font-weight: bold">
+				<li>
+					<a href="home-03.html">主頁</a>
+					<span class="arrow-main-menu-m">
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
+					</span>
+				</li>
+
+				<li>
+					<a href="product.html">活動專區</a>
+				</li>
+
+				<li>
+					<a href="shoping-cart.html" class="label1 rs1" data-label1="hot">購物車</a>
+				</li>
+
+				<li>
+					<a href="blog.html">討論區</a>
+				</li>
+
+				<li>
+					<a href="about.html">關於我們</a>
+				</li>
+
+				<li>
+					<a href="contact.html">聯絡我們</a>
+				</li>
+
+				<li>
+					<a href="#">常見問題</a>
+				</li>
+			</ul>
+		</div>
+
+		<!-- Modal Search -->
+		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+			<button class="flex-c-m btn-hide-modal-search trans-04">
+				<i class="zmdi zmdi-close"></i>
+			</button>
+
+			<form class="container-search-header">
+				<div class="wrap-search-header">
+					<input class="plh0" type="text" name="search" placeholder="Search..." />
+
+					<button class="flex-c-m trans-04">
+						<i class="zmdi zmdi-search"></i>
+					</button>
+				</div>
+			</form>
+		</div>
+	</header>
+	<!-- Cart -->
+	<div class="wrap-header-cart js-panel-cart">
+		<div class="s-full js-hide-cart"></div>
+
+		<div class="header-cart flex-col-l p-l-65 p-r-25">
+			<div class="header-cart-title flex-w flex-sb-m p-b-8">
+				<span class="mtext-103 cl2">
+					購物車
+				</span>
+
+				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
+					<i class="zmdi zmdi-close"></i>
+				</div>
+			</div>
+
+			<div class="header-cart-content flex-w js-pscroll">
+				<ul class="header-cart-wrapitem w-full">
+					<li class="header-cart-item flex-w flex-t m-b-12">
+						<div class="header-cart-item-img">
+							<img src="images/item-cart-04.jpg" alt="IMG">
+						</div>
+
+						<div class="header-cart-item-txt p-t-8">
+							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+								小王子The Little Prince 音樂會-台中場 2022/10/23 19:00
+							</a>
+
+							<span class="header-cart-item-info">
+								1 x $160
+							</span>
+						</div>
+					</li>
+
+					<li class="header-cart-item flex-w flex-t m-b-12">
+						<div class="header-cart-item-img">
+							<img src="images/item-cart-05.jpg" alt="IMG">
+						</div>
+
+						<div class="header-cart-item-txt p-t-8">
+							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+								AI與創造它的科學家 2022/05/03 19:00~21:00
+							</a>
+
+							<span class="header-cart-item-info">
+								1 x $360
+							</span>
+						</div>
+					</li>
+
+
+				</ul>
+
+				<div class="w-full">
+					<div class="header-cart-total w-full p-tb-40">
+						金額: $520
+					</div>
+
+					<div class="header-cart-buttons flex-w w-full">
+						<a href="shoping-cart.html"
+							class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+							查看購物車
+						</a>
+
+						<a href="shoping-cart.html"
+							class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+							前往結帳
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- breadcrumb -->
+
+	<div class="container1">
+		<span class="text1">我的活動</span>
+		<div style="margin: 1%;"></div>
+	</div>
+
+
+
+	<!-- Shoping Cart -->
+	<!-- ///按鈕切換 -->
+	<div class="tab_container">
+
+		<div class="tab_list_block center-container">
+			<ul class="tab_list">
+				<button class="button-down1 tab -on" id="page1Button" style="background-color: #00651e; "
+					data-target="tab1" onclick="changeButtonColor1()">訂單總覽</button>
+				<button class="button-down1 tab" id="page2Button" data-target="tab2"
+					onclick="changeButtonColor2()">歷史訂單</button>
+				<button class="button-down1 tab" id="page3Button" data-target="tab3"
+					onclick="changeButtonColor3()">歷史留言</button>
+			</ul>
+		</div>
+
+		<div class="tab_contents">
+
+			<div class="tab tab1 -on">
+				<form class="bg0 p-t-75 p-b-85">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+								<div class="m-l-25 m-r--38 m-lr-0-xl">
+									<div class="wrap-table-shopping-cart">
+										<table class="table-shopping-cart">
+											<tr class="table_head">
+
+												<th class="column-2" style="text-align: center;">訂單編號</th>
+												<th class="column-2" style="text-align: center;">明細編號</th>
+												<th class="column-2" style="text-align: center;">活動名稱</th>
+												<th class="column-2" style="text-align: center;">金額</th>
+												<th class="column-2" style="text-align: center;">數量</th>
+
+												<th class="column-2" style="text-align: center;">交易日期</th>
+												<th class="column-2" style="text-align: center;">使用優惠</th>
+												<th class="column-2" style="text-align: center;">交易日期</th>
+												<th class="column-2" style="text-align: center;">我的票券</th>
+												<th class="column-2" style="text-align: center;">取消訂單</th>
+
+											</tr>
+
+											<tr class="table_row1">
+												<td class="column-2" style="text-align: center; padding: 0.1%;">123</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">234</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">345</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">500</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">1</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">完成</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">首購</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">
+													2023-12-18</td>
+												<td class="column-7" style="text-align: center; padding: 0.1%;"><button
+														type="button" class="btn btn-dark goticket">票券</button></td>
+												<td class="column-7" style="text-align: center; "><button type="button"
+														class="btn btn-dark show-form-button">取消</button></td>
+
+
+											</tr>
+
+											<tr class="table_row1">
+												<td class="column-2" style="text-align: center; padding: 0.1%;">223</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">334</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">445</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">600</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">1</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">完成</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">生日</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">
+													2023-12-19</td>
+												<td class="column-7" style="text-align: center; padding: 0.1%;"><button
+														type="button" class="btn btn-dark goticket">票券</button></td>
+												<td class="column-7" style="text-align: center; "><button type="button"
+														class="btn btn-dark show-form-button">取消</button></td>
+
+											</tr>
+										</table>
+									</div>
+
+
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+					<div class="page_block" style="text-align: center; margin-bottom: 20px">
+						<ul class="page_list" style="margin:0; padding:0">
+							<li>
+								<a href="">
+									<< </a>
+										<a href="">1</a>
+										<a href="">2</a>
+										<a href="">3</a>
+										<a href="">>></a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			<div class="tab tab2">
+				<form class="bg0 p-t-75 p-b-85">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+								<div class="m-l-25 m-r--38 m-lr-0-xl">
+									<div class="wrap-table-shopping-cart">
+										<table class="table-shopping-cart">
+											<tr class="table_head">
+
+												<th class="column-2" style="text-align: center;">訂單編號</th>
+												<th class="column-2" style="text-align: center;">明細編號</th>
+												<th class="column-2" style="text-align: center;">活動編號</th>
+												<th class="column-2" style="text-align: center;">金額</th>
+												<th class="column-2" style="text-align: center;">數量</th>
+
+												<th class="column-2" style="text-align: center;">訂單狀態</th>
+												<th class="column-2" style="text-align: center;">使用優惠</th>
+												<th class="column-2" style="text-align: center;">交易日期</th>
+												<th class="column-2" style="text-align: center;">發表評論</th>
+
+											</tr>
+
+											<tr class="table_row1">
+												<td class="column-2" style="text-align: center; padding: 0.1%;">123</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">234</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">345</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">500</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">1</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">完成</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">首購</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">
+													2023-12-18</td>
+												<td class="column-7" style="text-align: center; padding: 0.1%;"><button
+														type="button" class="btn btn-dark">評論</button></td>
+
+
+											</tr>
+
+											<tr class="table_row1">
+												<td class="column-2" style="text-align: center; padding: 0.1%;">223</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">334</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">445</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">600</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">1</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">完成</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">生日</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">
+													2023-12-19</td>
+												<td class="column-7" style="text-align: center; padding: 0.1%;"><button
+														type="button" class="btn btn-dark">評論</button></td>
+
+											</tr>
+										</table>
+									</div>
+
+
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+					<div class="page_block" style="text-align: center; margin-bottom: 20px">
+						<ul class="page_list" style="margin:0; padding:0">
+							<li>
+								<a href="">
+									<< </a>
+										<a href="">1</a>
+										<a href="">2</a>
+										<a href="">3</a>
+										<a href="">>></a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			<div class="tab tab3">
+				<form class="bg0 p-t-75 p-b-85">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+								<div class="m-l-25 m-r--38 m-lr-0-xl">
+									<div class="wrap-table-shopping-cart">
+										<table class="table-shopping-cart">
+											<tr class="table_head">
+
+												<th class="column-2" style="text-align: center;">訂單編號</th>
+												<th class="column-2" style="text-align: center;">明細編號</th>
+												<th class="column-2" style="text-align: center;">活動編號</th>
+												<th class="column-2" style="text-align: center;">金額</th>
+												<th class="column-2" style="text-align: center;">數量</th>
+
+												<th class="column-2" style="text-align: center;">評論日期</th>
+												<th class="column-2" style="text-align: center;">評論</th>
+												<th class="column-2" style="text-align: center;">修改評論</th>
+
+											</tr>
+
+											<tr class="table_row1">
+												<td class="column-2" style="text-align: center; padding: 0.1%;">123</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">234</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">345</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">500</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">1</td>
+
+												<td class="column-2" style="text-align: center; padding: 0.1%;">
+													2023-12-18</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">
+													一二三一二三一二三一二三一二三一二三一二三一二三一二三一</td>
+												<td class="column-7" style="text-align: center; padding: 0.1%;"><button
+														type="button" class="btn btn-dark">修改</button></td>
+
+
+											</tr>
+
+											<tr class="table_row1">
+												<td class="column-2" style="text-align: center; padding: 0.1%;">223</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">334</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">445</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">600</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">1</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">
+													2023-12-18</td>
+												<td class="column-2" style="text-align: center; padding: 0.1%;">
+													一二三一二三一二三一二三一二三一二三一二三一二三一二三一二三一二三一二三一二三一二三一二三</td>
+												<td class="column-7" style="text-align: center; padding: 0.1%;"><button
+														type="button" class="btn btn-dark">修改</button></td>
+
+											</tr>
+										</table>
+									</div>
+
+
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+					<div class="page_block" style="text-align: center; margin-bottom: 20px">
+						<ul class="page_list" style="margin:0; padding:0">
+							<li>
+								<a href="">
+									<< </a>
+										<a href="">1</a>
+										<a href="">2</a>
+										<a href="">3</a>
+										<a href="">>></a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+
+
+
+
+
+	<!-- Footer -->
+	<footer class="bg3 p-t-55 p-b-32">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6 col-lg-3 p-b-20">
+					<h4 class="stext-301 cl0 p-b-30">Categories</h4>
+					<ul style="border-right: 1px solid #ccc; padding-right: 20px">
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 脫口秀 </a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 講座 </a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 音樂會 </a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 舞台劇 </a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 演唱會 </a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-20">
+					<h4 class="stext-301 cl0 p-b-30">Help</h4>
+
+					<ul>
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 訂單查詢 </a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 退貨申請 </a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04"> FAQs </a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-20">
+					<h4 class="stext-301 cl0 p-b-30">Newsletter</h4>
+
+					<form>
+						<div class="wrap-input1 w-full p-b-4">
+							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email"
+								placeholder="email@example.com" />
+							<div class="focus-input1 trans-04"></div>
+						</div>
+
+						<div class="p-t-18">
+							<button
+								class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">訂閱電子報</button>
+						</div>
+					</form>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-20">
+					<h4 class="stext-301 cl0 p-b-30">Latest Blog Post</h4>
+					<p class="stext-301 cl7 size-201">Ready to get started?</p>
+					<p class="stext-107 cl7 size-201">
+						Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us
+						on (+1) 96 716 6879
+					</p>
+
+					<div class="p-t-27">
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fa fa-facebook"></i>
+						</a>
+
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fa fa-instagram"></i>
+						</a>
+
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fa fa-pinterest-p"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="p-t-10">
+				<p class="stext-107 cl6 txt-center">
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					Copyright &copy;
+					<script>
+						document.write(new Date().getFullYear());
+					</script>
+					All rights reserved | Made with
+					<i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
+						target="_blank">Colorlib</a> &amp; distributed by
+					<a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+				</p>
+			</div>
+		</div>
+
+	</footer>
+
+
+	<!-- Back to top -->
+	<div class="btn-back-to-top" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="zmdi zmdi-chevron-up"></i>
+		</span>
+	</div>
+
+	<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+	<script>
+		$(".js-select2").each(function () {
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+		})
+	</script>
+	<!--===============================================================================================-->
+	<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script>
+		$('.js-pscroll').each(function () {
+			$(this).css('position', 'relative');
+			$(this).css('overflow', 'hidden');
+			var ps = new PerfectScrollbar(this, {
+				wheelSpeed: 1,
+				scrollingThreshold: 1000,
+				wheelPropagation: false,
+			});
+
+			$(window).on('resize', function () {
+				ps.update();
+			})
+		});
+	</script>
+	<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
+	<!-- ///彈出表單按鈕 -->
+	<!-- 遮罩層 -->
+	<div class="overlay"></div>
+
+	<!-- 彈出表單 -->
+	<div class="popup-form">
+		<h2 class="form-title">請問您確定要取消訂單嗎？</h2>
+		<p class="form-content">
+			請告訴我們取消的原因，讓我們有機會做得更好！
+			成功取消後，您將收到通知，我們將進行退款。
+			期待您能再次使用NEW VIEW讓生活有更多體驗！
+		</p>
+		<!-- 在這裡添加您的自訂表單內容 -->
+
+		<!-- 確認按鈕 -->
+		<button class="confirm-button">確認</button>
+		<button class="close-form-button">再想想</button>
+	</div>
+
+	<script>
+		// JavaScript 代碼
+		const showFormButtons = document.querySelectorAll(".show-form-button");
+		const closeFormButtons = document.querySelectorAll(".close-form-button");
+		const overlay = document.querySelector(".overlay");
+		const popupForm = document.querySelector(".popup-form");
+
+		// 顯示表單函數
+		function showForm() {
+			overlay.style.display = "block";
+			popupForm.style.display = "block";
+		}
+
+		// 關閉表單函數
+		function closeForm() {
+			overlay.style.display = "none";
+			popupForm.style.display = "none";
+		}
+
+		// 點擊按鈕顯示表單
+		showFormButtons.forEach(function (button) {
+			button.addEventListener("click", showForm);
+		});
+
+		// 點擊關閉按鈕或遮罩層關閉表單
+		closeFormButtons.forEach(function (button) {
+			button.addEventListener("click", closeForm);
+		});
+
+		overlay.addEventListener("click", closeForm);
+
+		// 添加確認按鈕的點擊事件處理程序
+		const confirmButtons = document.querySelectorAll(".confirm-button");
+		confirmButtons.forEach(function (button) {
+			button.addEventListener("click", function () {
+				// 在這裡可以添加處理確認按鈕的代碼
+				alert("表單已確認！");
+			});
+		});
+	</script>
+
+	<!-- ///按鈕切換 -->
+	<script>
+
+		document.addEventListener("DOMContentLoaded", function () {
+
+			let all_a = document.querySelectorAll("button.tab");
+			for (let i = 0; i < all_a.length; i++) {
+				all_a[i].addEventListener("click", function (e) {
+					e.preventDefault();
+					//console.log(this);
+					let my_a = this.closest("ul").querySelectorAll("button.tab");
+					//console.log(my_a);
+					my_a.forEach(function (item, j) {
+						//console.log(item);
+						item.classList.remove("-on");
+					});
+					this.classList.add("-on");
+
+					var all_div = document.querySelectorAll("div.tab");
+					for (let i = 0; i < all_div.length; i++) {
+						all_div[i].classList.remove("-on");
+					}
+					//let div_target = this.getAttribute("data-target");
+					document.querySelector("div.tab." + this.getAttribute("data-target")).classList.add("-on");
+
+
+				})
+			}
+
+		})
+
+	</script>
+
+	<!-- ///按鈕切換 改變按鈕顏色*2 -->
+	<script>
+		// JavaScript 代码
+		function changeButtonColor1() {
+			// 获取按钮元素
+			const page1Button = document.getElementById("page1Button");
+			const page2Button = document.getElementById("page2Button");
+			const page3Button = document.getElementById("page3Button");
+
+			// 改变按钮颜色
+			page1Button.style.backgroundColor = "#00651e";
+			page2Button.style.backgroundColor = "#555";
+			page3Button.style.backgroundColor = "#555";
+		}
+	</script>
+
+	<script>
+		// JavaScript 代码
+		function changeButtonColor2() {
+			// 获取按钮元素
+			const button1 = document.getElementById("page1Button");
+			const button2 = document.getElementById("page2Button");
+			const button3 = document.getElementById("page3Button");
+
+			// 改变按钮颜色
+			page1Button.style.backgroundColor = "#555";
+			page2Button.style.backgroundColor = "#00651e";
+			page3Button.style.backgroundColor = "#555";
+		}
+	</script>
+
+	<script>
+		// JavaScript 代码
+		function changeButtonColor3() {
+			// 获取按钮元素
+			const button1 = document.getElementById("page1Button");
+			const button2 = document.getElementById("page2Button");
+			const button3 = document.getElementById("page3Button");
+
+			// 改变按钮颜色
+			page1Button.style.backgroundColor = "#555";
+			page2Button.style.backgroundColor = "#555";
+			page3Button.style.backgroundColor = "#00651e";
+		}
+	</script>
+
+	<script>
+		// 获取具有类名 "goticket" 的所有元素
+		var elements = document.getElementsByClassName("goticket");
+
+		// 遍历元素集合并为每个元素添加事件监听器
+		for (var i = 0; i < elements.length; i++) {
+			elements[i].addEventListener("click", function () {
+				location.href = "myTicket.html"; // 指定跳转链接
+			});
+		}
+	</script>
+
+</body>
+
+</html>
