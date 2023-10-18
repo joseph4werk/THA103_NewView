@@ -2,6 +2,7 @@ package com.tha103.newview.report.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -29,11 +30,11 @@ public class ReportVO {
 	@Column(name = "reportStatus", columnDefinition = "TINYINT")
 	private Integer reportStatus;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userID", referencedColumnName = "userID")
 	private UserVO userVO;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "postID", referencedColumnName = "postID")
 	private PostVO postVO;
 

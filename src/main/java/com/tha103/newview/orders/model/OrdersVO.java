@@ -55,7 +55,7 @@ public class OrdersVO {
 	private Integer actQuantity;
 
 	@Expose
-	@OneToMany(mappedBy = "ordersVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "ordersVO", cascade = CascadeType.ALL)
 	private Set<OrderListVO> orderListVOs;
 
 	@ManyToOne

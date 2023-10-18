@@ -1,5 +1,6 @@
 package com.tha103.newview.user.model;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -22,16 +23,18 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public int insert(UserVO userVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		int userID = 0;
 
 		try {
 			session.beginTransaction();
-			session.saveOrUpdate(userVO);
+//			session.saveOrUpdate(userVO);
+			userID = (int) session.save(userVO);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
-		return 1;
+		return userID;
 	}
 
 	@Override
@@ -115,8 +118,45 @@ public class UserDAOImpl implements UserDAO {
 
 			System.out.println(user);
 
-			// 若不存在使用者帳號為 null -> 回傳 true
+			// 若不存在使用者帳號為 null -> 回傳 false
 			if (user == null) {
+				session.getTransaction().commit();
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		// 若存在使用者帳號查得到值-> 回傳 true
+		return true;
+	}
+
+	@Override
+	public boolean checkUserAccount(String account, String password) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		String userPassword;
+
+		try {
+			session.beginTransaction();
+
+			String sql = "from UserVO WHERE userAccount = :userAccount ";
+			UserVO user = (UserVO) session.createQuery(sql).setParameter("userAccount", account).uniqueResult();
+
+			// 檢查是否有取得物件
+//			System.out.println(user);
+
+			// 若不存在使用者帳號為 null -> 回傳 true
+			if (user != null) {
+				// userAccount 已確認 DB 中有此筆資料不需再用變數存放
+				// 判斷 userPassword 是否一致，比對正確回傳 true
+				userPassword = user.getUserPassword();
+
+				if (!password.equals(userPassword)) {
+					// 傳入密碼與 DB 中密碼不一致 -> 回傳 false
+					return false;
+				}
+
+				// 比對完成 -> 回傳 true
 				session.getTransaction().commit();
 				return true;
 			}
@@ -124,8 +164,26 @@ public class UserDAOImpl implements UserDAO {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
-		// 若存在使用者帳號查得到值-> 回傳 false
+		// 若使用者不存在得不到值 -> 回傳 false
 		return false;
 	}
 
+	@Override
+	public UserVO getUserByAccount(String account) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		
+		try {
+			session.beginTransaction();
+			
+			String sql = "from UserVO WHERE userAccount = :userAccount ";
+			UserVO userVO = (UserVO) session.createQuery(sql).setParameter("userAccount", account).uniqueResult();
+			session.getTransaction().commit();
+			
+			return userVO;
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+
+		}
+		return null;
+	}
 }

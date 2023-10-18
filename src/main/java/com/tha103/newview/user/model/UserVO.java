@@ -71,35 +71,35 @@ public class UserVO {
 	private Integer speakAuthority; // 0/1 = 啟用/未啟用
 
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL )
 	private Set<UseDiscountVO> useDiscountVOs;
 
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL )
 	private Set<ReportVO> reportVOs;
 
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
 	private Set<LikesVO> likesVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
 	private Set<PostVO> postVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL )
 	private Set<PostMessageVO> postMessageVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
 	private Set<CartActVO> cartActVOs;
 
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
 	private Set<OrdersVO> ordersVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
 	private Set<MyLikeVO> myLikeVOs;
 	
 	public UserVO() {
