@@ -2,6 +2,8 @@ package com.tha103.newview.admin.model;
 
 import java.util.List;
 
+import javax.persistence.FetchType;
+
 import org.hibernate.Session;
 
 import com.tha103.util.HibernateUtil;
@@ -29,7 +31,7 @@ public class AdminHibernateDAOImpl implements AdminHibernateDAO{
 	public List<AdminVO> getAll() {
 		try {
 			session.beginTransaction();
-			List<AdminVO> list = session.createQuery("from Admin",AdminVO.class).list();
+			List<AdminVO> list = session.createQuery("from AdminVO",AdminVO.class).list();
 			session.getTransaction().commit();
 			return list;
 		} catch (Exception e) {
@@ -39,5 +41,5 @@ public class AdminHibernateDAOImpl implements AdminHibernateDAO{
 		return null;
 	}
 	
-
+	// fetch = FetchType.EAGER
 }

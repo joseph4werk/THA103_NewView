@@ -43,7 +43,6 @@ public class AdminVO {
 	
 	@Expose
 	@OneToMany(mappedBy = "adminVO", cascade = CascadeType.ALL)
-	@OrderBy("adminID")
 	private Set<DiscountVO> discountVOs;
 
 	public AdminVO() {

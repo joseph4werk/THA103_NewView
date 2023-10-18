@@ -5,22 +5,22 @@ import java.util.Map;
 
 public interface PubUserHibernateDAO {
 	
-	int add(PubUserVO pubUser);
+	public void add(PubUserVO pubUserVO);
 	
-	int update(PubUserVO pubUser);
+	public void update(PubUserVO pubUserVO);
 	
-	int delete(Integer pubUserID);
+	public void delete(Integer pubUserID);
 	
-	PubUserVO findByPK(Integer pubUserID);
+	public PubUserVO findByPK(Integer pubUserID);
 	
-	List<PubUserVO> getAll();
+	public PubUserVO findByAccount(String pubAccount);
 	
-	/*
-	List<PubUser> getByCompositeQuery(Map<String,String>map);
+	public List<PubUserVO> getAll();
+	
+	//萬用複合查詢(傳入參數型態Map)(回傳 List)
+/*
+	public List<PubUser> getByCompositeQuery(Map<String,String>map);
 
-	List<PubUser> getAll(int cueerntPage);
-
-	long getTotal();
-	*/
+*/
 	
 }

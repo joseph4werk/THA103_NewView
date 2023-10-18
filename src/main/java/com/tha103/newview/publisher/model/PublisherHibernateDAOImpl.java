@@ -1,43 +1,48 @@
 package com.tha103.newview.publisher.model;
 
 import java.util.List;
+import java.util.Set;
+
 import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import com.tha103.newview.pubuser.model.PubUserVO;
 import com.tha103.util.HibernateUtil;
 
 public class PublisherHibernateDAOImpl implements PublisherHibernateDAO{
 
+	private static final String GET_ALL_STMT = "from PublisherVO order by pubID";
+	
 	@Override
-	public int add(PublisherVO publisher) {
+	public void add(PublisherVO publisher) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			Integer id = (Integer) session.save(publisher);
+			session.saveOrUpdate(publisher);
 			session.getTransaction().commit();
-			return id;
-		}catch(Exception e) {
-			e.printStackTrace();
+		}catch(Exception ex) {
+			ex.printStackTrace();
 			session.getTransaction().rollback();
+			throw ex;
 		}
-		return -1;
 	}
 
 	@Override
-	public int update(PublisherVO publisher) {
+	public void update(PublisherVO publisher) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
 			session.update(publisher);
 			session.getTransaction().commit();
-			return 1;
-		}catch(Exception e) {
-			e.printStackTrace();
+		}catch(Exception ex) {
+			ex.printStackTrace();
 			session.getTransaction().rollback();
+			throw ex;
 		}
-		return -1;
 	}
 
 	@Override
-	public int delete(Integer pubID) {
+	public void delete(Integer pubID) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
@@ -46,42 +51,49 @@ public class PublisherHibernateDAOImpl implements PublisherHibernateDAO{
 				session.delete(pub);
 			}
 			session.getTransaction().commit();
-			return 1;
-		}catch(Exception e) {
-			e.printStackTrace();
+		}catch(Exception ex) {
+			ex.printStackTrace();
 			session.getTransaction().rollback();
+			throw ex;
 		}
-		return -1;
 	}
 
 	@Override
 	public PublisherVO findByPK(Integer pubID) {
+		PublisherVO publisher = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			PublisherVO pub = session.get(PublisherVO.class,pubID);
+			publisher = (PublisherVO) session.get(PublisherVO.class,pubID);
 			session.getTransaction().commit();
-			return pub;
-		}catch(Exception e) {
-			e.printStackTrace();
+		}catch(Exception ex) {
+			ex.printStackTrace();
 			session.getTransaction().rollback();
+			throw ex;
 		}
-		return null;
+		return publisher;
 	}
 
 	@Override
 	public List<PublisherVO> getAll() {
+		List<PublisherVO> list = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			List<PublisherVO> list = session.createQuery("from Publisher",PublisherVO.class).list();
+			Query<PublisherVO> query = session.createQuery(GET_ALL_STMT,PublisherVO.class);
+			list = query.getResultList();
 			session.getTransaction().rollback();
-			return list;
 		}catch(Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
-		return null;
+		return list;
+	}
+
+	@Override
+	public Set<PubUserVO> getPubuserByPubID(Integer pubID) {
+		Set<PubUserVO> set = findByPK(pubID).getPubUserVOs();
+		return set;
 	}
 
 }

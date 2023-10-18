@@ -4,44 +4,46 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
 import com.tha103.util.HibernateUtil;
 
 
 public class PubUserHibernateDAOImpl implements PubUserHibernateDAO{
+private static final String GET_ALL_STMT = "from PubUserVO order by pubUserID";
 	
-	Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-
 	@Override
-	public int add(PubUserVO pubuser) {
+	public void add(PubUserVO pubUserVO) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			Integer id = (Integer) session.save(pubuser);
+			session.save(pubUserVO);
 			session.getTransaction().commit();
-			return id;
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 			session.getTransaction().rollback();
+			throw ex;
 		}
-		return -1;
 	}
 
 	@Override
-	public int update(PubUserVO pubuser) {
+	public void update(PubUserVO pubUserVO) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			session.update(pubuser);
+			session.update(pubUserVO);
 			session.getTransaction().commit();
-			return 1;
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 			session.getTransaction().rollback();
+			throw ex;
 		}
-		return -1;
 	}
 
+	/*
 	@Override
-	public int delete(Integer pubUserID) {
+	public void delete(Integer pubUserID) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
 			PubUserVO pubUser = session.get(PubUserVO.class,pubUserID);
@@ -49,31 +51,92 @@ public class PubUserHibernateDAOImpl implements PubUserHibernateDAO{
 				session.delete(pubUser);
 			}
 			session.getTransaction().commit();
-			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
 		
-		return -1;
 	}
-
-	@Override
-	public PubUserVO findByPK(Integer pubUserID) {
+	*/
+	
+	public void delete(Integer pubUserID) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			PubUserVO pubUser = session.get(PubUserVO.class,pubUserID);
+			
+//			【此時多方(宜)可採用HQL刪除】
+			Query query = session.createQuery("delete PubUserVO where pubUserID=?0");
+			query.setParameter(0,pubUserID);
+			System.out.println("刪除的筆數=" + query.executeUpdate());
+			
+//			【或此時多方(也)可採用去除關聯關係後，再刪除的方式】
+//			PubUesrVO pubUserVO = new PubUesrVO();
+//			pubUserVO.setPubUesrID(pubUserID);
+//			session.delete(pubUserVO);
 			session.getTransaction().commit();
-			return pubUser;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
-		return null;
 	}
 
 	@Override
+	public PubUserVO findByPK(Integer pubUserID) {
+		PubUserVO pubUserVO = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			pubUserVO = (PubUserVO) session.get(PubUserVO.class,pubUserID);
+			session.getTransaction().commit();
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return pubUserVO;
+	}
+	
+	public PubUserVO findByAccount(String pubAccount) {
+		//List<PubUserVO> pubUserVO = null;
+		//PubUserVO pubUserVO = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		
+		try {
+			session.beginTransaction();
+			String hql = "FROM PubUserVO WHERE pubAccount = :pubAccount";
+			
+			Query<PubUserVO> query = session.createQuery(hql, PubUserVO.class);
+			//Query<PubUserVO> query = session.createQuery(hql,PubUserVO.class);
+			
+			System.out.println(query);
+			
+			query.setParameter("pubAccount",pubAccount);
+			
+			System.out.println(pubAccount);
+			
+			PubUserVO pubuserVO = query.uniqueResult();
+			session.getTransaction().commit();
+			
+			System.out.println("交易成功");
+			System.out.println(pubuserVO);
+			return pubuserVO;
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+			
+			System.out.println("交易失敗");
+			return null;
+		}
+		
+	}
+	
+	/*
+	@Override
 	public List<PubUserVO> getAll() {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
 			List<PubUserVO> list = session.createQuery("from PubUser",PubUserVO.class).list();
@@ -85,61 +148,59 @@ public class PubUserHibernateDAOImpl implements PubUserHibernateDAO{
 		}
 		return null;
 	}
+	*/
 	
-	
-	
+	public List<PubUserVO> getAll() {
+		List<PubUserVO> list = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query<PubUserVO> query = session.createQuery(GET_ALL_STMT, PubUserVO.class);
+			list = query.getResultList();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return list;
+	}
 /*
-
 	@Override
 	public List<PubUser> getByCompositeQuery(Map<String, String> map) {
-		if(map.size() == 0)
-		return getAll();
-		
-		CriteriaBuilder builder = getSession().getCriteriaBuilder();
-		CriteriaQuery<PubUser> criteria = builder.createQuery(PubUser.class);
-		Root<PubUser> root = criteria.from(PubUser.class);
-		
-		List<Predicate> predicates = new ArrayList<>();
-
-		for (Map.Entry<String, String> row : map.entrySet()) {
-			if ("pubNickname".equals(row.getKey())) {
-				predicates.add(builder.like(root.get("pubNickname"), "%" + row.getValue() + "%"));
-			}
-			
-			if ("pubAccount".equals(row.getKey())) {
-				predicates.add(builder.like(root.get("pubAccount"), "%" + row.getValue() + "%"));
-			}
-
+		List<PubUserVO> list = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			list = HibernateUtil_CompositeQuery_PubUser2.getAllC(map);
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
 		}
+		return list;
 
-		criteria.where(builder.and(predicates.toArray(new Predicate[predicates.size()])));
-		criteria.orderBy(builder.asc(root.get("pubUserID")));
-		TypedQuery<PubUser> query = getSession().createQuery(criteria);
-
-		return query.getResultList();
 	}
 */
-/*
-	@Override
-	public List<PubUser> getAll(int cueerntPage) {
-		return null;
-		
-		int first = (currentPage - 1) * PUB_USER_PAGE_MAX_RESULT;
-		return getSession().createQuery("from PubUser",PubUser.class)
-				.setFirstResult(first)
-				.setMaxResults(PUB_USER_PAGE_MAX_RESULT)
-				.list();
-		
-	}
-*/
-/*
-	@Override
-	public long getTotal() {
-		return getSession().createQuery("select count(*) from PubUser", Long.class).uniqueResult();
-	}
 	
-*/	
-
-
+//	@Override錯誤的
+//	public boolean authenticate(String pubAccount, String pubPassword) {
+//		
+//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//		try {
+//			session.beginTransaction();
+//			PubUserVO pubuserVO = (PubUserVO) session.createQuery("FROM pubuser WHERE pubAccount = :pubAccount")
+//					.setParameter("pubAccount",pubAccount)
+//					.uniqueResult();
+//			if(pubuserVO != null && pubuserVO.getPubPassword().equals(pubPassword)) {
+//				session.getTransaction().commit();
+//				return true;
+//			}
+//		} catch (Exception ex) {
+//			session.getTransaction().rollback();
+//			throw ex;
+//		}
+//		return false;
+//	}	
+	
 
 }

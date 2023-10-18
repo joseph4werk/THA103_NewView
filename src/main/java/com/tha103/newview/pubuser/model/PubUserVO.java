@@ -13,7 +13,7 @@ import com.google.gson.annotations.Expose;
 import com.tha103.newview.publisher.model.PublisherVO;
 
 @Entity
-@Table(name="PubUser")
+@Table(name="pubUser")
 public class PubUserVO {
 	@Expose
 	@Id
@@ -40,11 +40,6 @@ public class PubUserVO {
 	@ManyToOne
 	@JoinColumn(name="pubID" ,referencedColumnName ="pubID")
 	private PublisherVO publisherVO;
-
-	public PubUserVO() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 	public Integer getPubUserID() {
 		return pubUserID;
