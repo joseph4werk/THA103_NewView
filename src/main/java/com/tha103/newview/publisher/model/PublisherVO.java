@@ -119,9 +119,7 @@ public class PublisherVO {
 		return "PublisherVO [pubID=" + pubID + ", pubName=" + pubName + ", pubEmail=" + pubEmail + "]";
 	}
 
-	
 
-	
 	
 	
 }
