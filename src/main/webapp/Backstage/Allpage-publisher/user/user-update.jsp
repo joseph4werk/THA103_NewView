@@ -1,14 +1,12 @@
-<%@ page import="com.tha103.newview.pubuser.model.*"%>
-<%@ page import="com.tha103.newview.pubuser.service.*"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.tha103.newview.pubuser.model.*"%>
+<%@ page import="com.tha103.newview.pubuser.service.*"%>
 
 <%
-PubUserVO pubUserVO = (PubUserVO) request.getAttribute("pubUserVO");
-%>
-
-<%
-System.out.println(pubUserVO);
+PubUserVO pubuserVO = (PubUserVO) request.getAttribute("pubuserVO");
+//EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
+System.out.println("pubuserVO=" + pubuserVO);
 %>
 
 <html>
@@ -67,11 +65,11 @@ System.out.println(pubUserVO);
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1>新增使用者</h1>
+							<h1>修改使用者</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="../../index.html">後台首頁</a></li>
+								<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/pub-index.jsp">後台首頁</a></li>
 								<li class="breadcrumb-item active">權限管理</li>
 							</ol>
 						</div>
@@ -92,39 +90,24 @@ System.out.println(pubUserVO);
 				</c:if>
 				<!-- Default box -->
 				<div class="card">
-					<form METHOD="post" action="<%=request.getContextPath()%>/pubuser/pubuser.do" name="addform"
+					<form METHOD="post" action="<%=request.getContextPath()%>/pubuser/pubuser.do" name="form1"
 						style="padding: 30px 0px;">
 						<div class="col-md-10 offset-md-1">
-
-							<jsp:useBean id="pubSvc" scope="page"
-								class="com.tha103.newview.publisher.service.PublisherService" />
 							<div class="form-group">
-								<label for="inputPubID">廠商：</label> <select size="1"
-									name="pubID">
-									<c:forEach var="pub" items="${pubSvc.all}">
-										<option value="${pub.pubID}"
-											${pub.pubID==pub.pubID? 'selected':'' }>${pub.pubName}
-									</c:forEach>
-								</select>
-							</div>
-
-							<div class="form-group">
-								<label for="inputNickname">使用者暱稱：</label> <input type="text"
-									name="pubNickname"
-									value="<%=(pubUserVO == null) ? "小花" : pubUserVO.getPubNickname()%>"
-									id="inputNickname" class="form-control" />
+								<label for="inputPubID">使用者編號：</label> 
+								<input type="text" class="form-control" id="inputPubID" name="pubUserID" value="<%=pubuserVO.getPubUserID()%>"/>	
 							</div>
 							<div class="form-group">
-								<label for="inputAccount">使用者帳號：</label> <input type="text"
-									name="pubAccount"
-									value="<%=(pubUserVO == null) ? "Aa12345" : pubUserVO.getPubAccount()%>"
-									id="inputAccount" class="form-control" />
+								<label for="inputNickname">使用者暱稱：</label> 
+								<input type="text" class="form-control" id="inputNickname" name="pubNickname" value="<%=pubuserVO.getPubNickname() %>"/>	
 							</div>
 							<div class="form-group">
-								<label for="inputPassword">使用者密碼：</label> <input type="text"
-									name="pubPassword"
-									value="<%=(pubUserVO == null) ? "Aa12345" : pubUserVO.getPubPassword()%>"
-									id="inputPassword" class="form-control" />
+								<label for="inputAccount">使用者帳號：</label> 
+								<input type="text" class="form-control" id="inputAccount" name="pubAccount" value="<%=pubuserVO.getPubAccount()%>" />
+							</div>
+							<div class="form-group">
+								<label for="inputPassword">使用者密碼：</label> 
+								<input type="text" class="form-control" id="inputPassword" name="pubPassword" value="<%=pubuserVO.getPubPassword()%>" />
 							</div>
 							<div class="form-group">
 								<label for="inputAuthority">使用權限：</label> <input type="radio"
@@ -135,7 +118,10 @@ System.out.println(pubUserVO);
 									id="pubAuthority" name="pubAuthority" value="0">
 							</div>
 							<div class="form-group">
-								<input type="hidden" name="action" value="add"> 
+								<input type="hidden" name="action" value="update"> 
+								<input type="hidden" name="pubUserID" value="<%=pubuserVO.getPubUserID() %>"> 
+								<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"> 
+								<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
 								<input type="submit" class="btn btn-primary" value="送出">
 							</div>
 						</div>
@@ -145,7 +131,7 @@ System.out.println(pubUserVO);
 			</section>
 			<!-- /.content -->
 		</div>
-				<jsp:include page="../template/footer.jsp" flush="true">
+		<jsp:include page="../template/footer.jsp" flush="true">
 			<jsp:param name="footer" value="footer" />
 		</jsp:include>
 
