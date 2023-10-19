@@ -391,7 +391,7 @@
                     <input type="text" class="form-control" id="verificationCode" placeholder="請輸入驗證碼" aria-label="verification-code" aria-describedby="verification-code-addon" />
                   </div>
                   <div class="text-center">
-                    <button type="button" class="btn bg-gradient-dark w-100 my-4 mb-2">送出</button>
+                    <button type="button" class="btn bg-gradient-dark w-100 my-4 mb-2" id="submit">送出</button>
                   </div>
                 </form>
               </div>
@@ -680,6 +680,32 @@
         </div>
       </div>
     </div>
+
+    <!--===============================================================================================-->
+    <script>
+      $("#submit").on("click", function (e) {
+        e.preventDefault();
+        /*  將 sign-up 資料用物件包裝  */
+        let verificationCode = {
+          verificationCode: $("#verificationCode").val(),
+        };
+        console.log(verificationCode);
+
+        $.ajax({
+          url: "http://localhost:8081/com.tha103.newview/Verify",
+          type: "POST",
+          data: verificationCode,
+          dataType: "json",
+          beforeSend: function (xhr) {},
+          success: function (data) {
+            alert("資料驗證完成，網頁將重新導向至首頁！");
+            location.href = "home-03.html";
+          },
+        });
+      });
+    </script>
+
+    <!--===============================================================================================-->
 
     <!--===============================================================================================-->
     <!-- <script src="vendor/jquery/jquery-3.2.1.min.js"></script> -->
