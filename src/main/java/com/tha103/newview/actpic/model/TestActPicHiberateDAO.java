@@ -10,41 +10,41 @@ import javax.imageio.ImageIO;
 
 import com.tha103.newview.act.model.ActVO;
 
-
 public class TestActPicHiberateDAO {
 	public byte[] gifToByteArray(String gif) throws IOException {
-	    File gifFile = new File(gif);
-	    
-	    BufferedImage image = ImageIO.read(gifFile);
-	    
-	    if (image != null) {
-	        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	        ImageIO.write(image, "gif", baos);
-	        return baos.toByteArray();
-	    } else {
-	        throw new IOException("Can not read .gif");
-	    }
+		File gifFile = new File(gif);
+
+		BufferedImage image = ImageIO.read(gifFile);
+
+		if (image != null) {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(image, "gif", baos);
+			return baos.toByteArray();
+		} else {
+			throw new IOException("Can not read .gif");
+		}
 	}
+
 	public static void main(String[] args) throws Exception {
 		ActPicDAO dao = new ActPicDAOHibernateImpl();
 		TestActPicHiberateDAO daoPic = new TestActPicHiberateDAO();
 ////		// 新增
 //		ActPic actPic = new ActPic();
 //		ActVO act = new ActVO();
-		
+//
 //		act.setActID(2);
 //		actPic.setActID(act);
-//		actPic.setActPic(daoPic.gifToByteArray("images/ok2.jpg"));
+//		actPic.setActPic(daoPic.gifToByteArray("images/bg-01.jpg"));
 //		dao.insert(actPic);
 ////
 //		// 修改
-//		ActPic actPic = new ActPic();
-//		ActVO act = new ActVO();
-//		act.setActID(3);
-//		actPic.setActID(act);
-//		actPic.setActPicID(3);
-//		actPic.setActPic(daoPic.gifToByteArray("image/ok2.jpg"));
-//		dao.update(actPic);
+		ActPic actPic = new ActPic();
+		ActVO act = new ActVO();
+		act.setActID(3);
+		actPic.setActID(act);
+		actPic.setActPicID(3);
+		actPic.setActPic(daoPic.gifToByteArray("images/about-01.jpg"));
+		dao.update(actPic);
 ////
 //		// 刪除
 //		dao.delete(5);
@@ -57,13 +57,13 @@ public class TestActPicHiberateDAO {
 //		System.out.println("---------------------");
 
 		// 查詢多筆
-		List<ActPic> list = dao.getAll();
-		for (ActPic act : list) {
-			System.out.print(act.getActPicID() + ",");
-			System.out.print(act.getActID().getActName() + ",");
-			System.out.print(act.getActPic() + ",");
-			
-			System.out.println();
-		}
+//		List<ActPic> list = dao.getAll();
+//		for (ActPic act : list) {
+//			System.out.print(act.getActPicID() + ",");
+//			System.out.print(act.getActID().getActName() + ",");
+//			System.out.print(act.getActPic() + ",");
+//
+//			System.out.println();
+//		}
 	}
 }

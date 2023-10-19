@@ -21,8 +21,9 @@ public interface ActDAO {
 
 	List<ActVO> getActPics();
 
-	List<ActVO> getAllWithAssociations();
+	
 
 	List<ActCategory> getAllCategories();
+	List<ActVO> getActsWithNameAndAssociations(String actName);
 	
 }
