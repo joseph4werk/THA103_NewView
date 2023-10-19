@@ -35,7 +35,7 @@ public class ActPic {
 
 	@Override
 	public String toString() {
-		return "ActPic [actPicID=" + actPicID + ", actPic=" + Arrays.toString(actPic) + ", act=" + act + "]";
+		return "ActPic [actPicID=" + actPicID + ", actPic=" + Arrays.toString(actPic) + "]";
 	}
 
 	public ActPic(Integer actPicID, byte[] actPic, ActVO act) {

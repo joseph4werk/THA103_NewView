@@ -21,7 +21,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.Expose;
 import com.tha103.newview.actcategory.model.ActCategory;
 import com.tha103.newview.actpic.model.ActPic;
+import com.tha103.newview.cartact.model.CartActVO;
 import com.tha103.newview.cityaddress.model.CityAddress;
+import com.tha103.newview.mylike.model.MyLikeVO;
+import com.tha103.newview.orderlist.model.OrderListVO;
 import com.tha103.newview.publisher.model.PublisherVO;
 
 @Entity
@@ -33,7 +36,6 @@ public class ActVO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "actID", updatable = false)
-	
 	private Integer actID;
 	@Expose
 	@Column(name = "actName")
@@ -71,9 +73,8 @@ public class ActVO {
 
 	// 搭配TestHQLQueryProperty.java
 	@Expose
-	@Column(columnDefinition = "tinyint(1)")
-	private boolean approvalCondition;
-
+	@Column(columnDefinition = "TINYINT")
+	private Integer approvalCondition;
 	@Expose
 	@Column(name = "cityAddress")
 	private String cityAddress;
@@ -99,16 +100,18 @@ public class ActVO {
 	
 	
 	/*主鍵相關表格*/
-	
+	@Expose
 	@OneToMany(mappedBy = "act", cascade=CascadeType.ALL)
-	@JsonIgnore
 	private Set<ActPic> actpics;
-//	@Expose
-//	@OneToMany(mappedBy = "actVO", cascade=CascadeType.ALL)
-//	private Set<OrderListVO> orderListVOs;
-//	@Expose
-//	@OneToMany(mappedBy = "actVO", cascade=CascadeType.ALL)
-//	private Set<MyLikeVO> myLikeVOs;
+	@Expose
+	@OneToMany(mappedBy = "actVO", cascade=CascadeType.ALL)
+	private Set<OrderListVO> orderListVOs;
+	@Expose
+	@OneToMany(mappedBy = "actVO", cascade=CascadeType.ALL)
+	private Set<MyLikeVO> myLikeVOs;
+	@Expose
+	@OneToMany(mappedBy = "actVO", cascade=CascadeType.ALL)
+	private Set<CartActVO> cartActVOs;
 	
 	
 //	@OneToMany(mappedBy = "act")
@@ -120,8 +123,7 @@ public class ActVO {
 		return "Act [actID=" + actID + ", actName=" + actName + ", actPrice=" + actPrice + ", actTime=" + actTime
 				+ ", actScope=" + actScope + ", actIntroduce=" + actIntroduce + ", actContent=" + actContent + ", time="
 				+ time + ", actDate=" + actDate + ", approvalCondition=" + approvalCondition + ", cityAddress="
-				+ cityAddress + ", actCategoryID=" + actCategory + ", pubID=" + publisherVO + ", cityAddressID="
-				+ city + "]";
+				+ cityAddress + "]";
 	}
 
 	public ActVO() {
@@ -129,8 +131,34 @@ public class ActVO {
 
 	
 
+	public CityAddress getCity() {
+		return city;
+	}
+
+	public PublisherVO getPublisherVO() {
+		return publisherVO;
+	}
+
+	public Set<MyLikeVO> getMyLikeVOs() {
+		return myLikeVOs;
+	}
+
+	
+
+	public void setCity(CityAddress city) {
+		this.city = city;
+	}
+
+	public void setPublisherVO(PublisherVO publisherVO) {
+		this.publisherVO = publisherVO;
+	}
+
+	public void setMyLikeVOs(Set<MyLikeVO> myLikeVOs) {
+		this.myLikeVOs = myLikeVOs;
+	}
+
 	public ActVO(Integer actID, String actName, Integer actPrice, Date actTime, Integer actScope, String actIntroduce,
-			String actContent, Date time, Date actDate, boolean approvalCondition, String cityAddress,
+			String actContent, Date time, Date actDate, Integer approvalCondition, String cityAddress,
 			ActCategory actCategory, CityAddress city, PublisherVO publisherVO, Set<ActPic> actpics) {
 		super();
 		this.actID = actID;
@@ -147,7 +175,7 @@ public class ActVO {
 		this.actCategory = actCategory;
 		this.city = city;
 		this.publisherVO = publisherVO;
-		
+		this.actpics = actpics;
 	}
 
 	public Integer getActID() {
@@ -186,7 +214,7 @@ public class ActVO {
 		return actDate;
 	}
 
-	public Boolean getApprovalCondition() {
+	public Integer getApprovalCondition() {
 		return approvalCondition;
 	}
 
@@ -239,7 +267,7 @@ public class ActVO {
 		this.actDate = actDate;
 	}
 
-	public void setApprovalCondition(Boolean approvalCondition) {
+	public void setApprovalCondition(Integer approvalCondition) {
 		this.approvalCondition = approvalCondition;
 	}
 
@@ -256,15 +284,7 @@ public class ActVO {
 	public void setActCategory(ActCategory actCategory) {
 		this.actCategory = actCategory;
 	}
-	
 
-	public CityAddress getCity() {
-		return city;
-	}
-
-	public void setCity(CityAddress city) {
-		this.city = city;
-	}
 
 	public PublisherVO getPublisherVOs() {
 		return publisherVO;
@@ -295,8 +315,6 @@ public class ActVO {
 		// TODO Auto-generated method stub
 		
 	}
-
-
-
+	
 
 }

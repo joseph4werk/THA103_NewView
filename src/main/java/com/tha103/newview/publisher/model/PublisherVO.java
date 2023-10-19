@@ -36,24 +36,24 @@ public class PublisherVO {
 	@Column(name="pubEmail")
 	private String pubEmail;
 
-//	@Expose
-//	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-////	@OrderBy("pubUserID")
-//	private Set<PubUserVO> pubUserVOs;
-//	
-//	@Expose
-//	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-////	@OrderBy("pubUserID")
-//	private Set<DiscountVO> discountVOs;
-	
-//	@Expose
-//	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-////	@OrderBy("pubUserID")
-//	private Set<OrdersVO> ordersVOs;
-//	
 	@Expose
-	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	@OrderBy("pubUserID")
+	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL)
+	@OrderBy("pubUserID")
+	private Set<PubUserVO> pubUserVOs;
+	
+	@Expose
+	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL)
+	@OrderBy("pubUserID")
+	private Set<DiscountVO> discountVOs;
+	
+	@Expose
+	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL)
+	@OrderBy("pubUserID")
+	private Set<OrdersVO> ordersVOs;
+	
+	@Expose
+	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL)
+	@OrderBy("pubUserID")
 	private Set<ActVO> actVOs;
 
 	public PublisherVO() {
