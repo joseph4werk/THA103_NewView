@@ -62,9 +62,10 @@ public class SearchAndListActsWithPicsServlet extends HttpServlet {
         response.setContentType("application/json"); 
         String action = request.getParameter("action");
         String toDelete = request.getParameter("toDelete");
-        System.out.println(toDelete);
+        String pageChange = request.getParameter("pageChange");
+//        System.out.println(toDelete);
         String actIDelete = request.getParameter("actIDelete");
-        System.out.println(action);
+//        System.out.println(action);
         try {
             if ("search".equals(action)) {
                 String actName = request.getParameter("search-product");
@@ -74,6 +75,7 @@ public class SearchAndListActsWithPicsServlet extends HttpServlet {
                     List<ActWithPicsDTO> actWithPicsList = actService.searchActsByName(actName);
 
                     if (!actWithPicsList.isEmpty()) {
+//                    	System.out.println(actWithPicsList);
                         request.setAttribute("actWithPicsList", actWithPicsList); 
                         request.getRequestDispatcher("/SearchNewFile.jsp").forward(request, response);
                     } else {
@@ -101,6 +103,7 @@ public class SearchAndListActsWithPicsServlet extends HttpServlet {
                     request.getRequestDispatcher("ActJSP.jsp").forward(request, response);
                 }
             } else if ("getJsonData".equals(action)) {
+//            	System.out.println(action);
                 handleJsonResponse(request, response);
             }else if ("UP".equals(action)) {
             	 System.out.println(toDelete);
@@ -124,7 +127,7 @@ public class SearchAndListActsWithPicsServlet extends HttpServlet {
                 if (actIDelete != null && !actIDelete.isEmpty()) {
                     try {
                     	System.out.println(actIDelete);
-                        actService.delete(Integer.parseInt(actIDelete));
+//                        actService.delete(Integer.parseInt(actIDelete));
                         response.getWriter().println("Act ID " + actIDelete + " 成功");
                         response.sendRedirect("ActJSP.jsp");
                     } catch (Exception e) {
@@ -135,7 +138,28 @@ public class SearchAndListActsWithPicsServlet extends HttpServlet {
                     response.getWriter().println("Act ID 不能為空");
                 }
             }
-   			        
+            else if ("pageChange".equals(action)) {
+                System.out.println(action);
+                String actIdString = request.getParameter("actID");
+                System.out.println(actIdString);
+                if (actIdString != null) {
+                    Integer actId = Integer.parseInt(actIdString);
+
+                    ActServiceImpl actService = new ActServiceImpl();
+                    ActWithPicsDTO actWithPics = actService.getActWithPicsDTOById(actId);
+
+                    if (actWithPics != null) {
+                     
+                        request.setAttribute("actData", actWithPics);
+
+                       
+                        request.getRequestDispatcher("/product-detail.jsp").forward(request, response);
+                    } else {
+                        response.getWriter().write("No data found for given actID");
+                    }
+                }
+            }
+		        
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,13 +169,14 @@ public class SearchAndListActsWithPicsServlet extends HttpServlet {
     private void handleJsonResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
         List<ActWithPicsDTO> actWithPicsList = new ArrayList<>();
         String actIdStr = request.getParameter("actID");
-        
+        System.out.println( actIdStr);
         Integer actId = null;
 
         if(actIdStr != null) {
             actId = Integer.parseInt(actIdStr);
+            
         }
-        
+        System.out.println(actId);
         ActWithPicsDTO actWithPicsDTO = actService.getActWithPicsDTOById(actId);
         
         if(actWithPicsDTO != null) {
