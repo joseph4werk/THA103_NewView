@@ -349,6 +349,47 @@ public class PubuserServlet extends HttpServlet {
 			}
 		}
 		
+		//複合查詢
+		if("pubuserCompositeQuery".equals(action)) { 
+			
+			//錯誤訊息集合
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			try {
+			/************************* 接收請求參數 **************************/
+			//採用Map<String,String[]> getParameterMap()的方法
+			//注意:an immutable java.util.Map
+			
+			Map<String, String[]> map = req.getParameterMap();
+			System.out.println(map);
+			
+			/************************* 開始查詢資料 **************************/
+			//藉由service使用DAOImpl方法取出資料庫資料
+			PubUserService pubuserSvc = new PubUserService();
+			List<PubUserVO> list = pubuserSvc.getByCompositeQuery(map);
+			System.out.println(list);
+			
+			/************************* 回傳資料路徑 **************************/
+			//資料庫取出的list物件,存入request
+			req.setAttribute("pubuserCompositeQuery", list);
+			// 成功轉交listEmps_ByCompositeQuery.jsp
+			RequestDispatcher successView = req
+					.getRequestDispatcher("/Backstage/Allpage-publisher/user/listEmps_ByCQ.jsp"); 
+			successView.forward(req, resp);
+			
+			/***************************其他可能的錯誤處理*************************************/
+			}catch(Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Backstage/Allpage-publisher/user/user-listAll.jsp");
+				failureView.forward(req, resp);
+			}
+			
+			
+
+			
+		}
+		
 		if("login".equals(action)) {
 			/************************* 接收請求參數 **************************/
 			String pubAccount = req.getParameter("pubAccount").trim();

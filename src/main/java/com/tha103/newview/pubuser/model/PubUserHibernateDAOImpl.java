@@ -1,11 +1,13 @@
 package com.tha103.newview.pubuser.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
+import com.tha103.newview.pubuser.service.PubUserCompositeQuery;
 import com.tha103.util.HibernateUtil;
 
 
@@ -98,6 +100,7 @@ private static final String GET_ALL_STMT = "from PubUserVO order by pubUserID";
 		return pubUserVO;
 	}
 	
+	//for login
 	public PubUserVO findByAccount(String pubAccount) {
 		//List<PubUserVO> pubUserVO = null;
 		//PubUserVO pubUserVO = null;
@@ -107,18 +110,14 @@ private static final String GET_ALL_STMT = "from PubUserVO order by pubUserID";
 			session.beginTransaction();
 			String hql = "FROM PubUserVO WHERE pubAccount = :pubAccount";
 			
-			Query<PubUserVO> query = session.createQuery(hql, PubUserVO.class);
-			//Query<PubUserVO> query = session.createQuery(hql,PubUserVO.class);
-			
+			Query<PubUserVO> query = session.createQuery(hql, PubUserVO.class);			
 			System.out.println(query);
 			
 			query.setParameter("pubAccount",pubAccount);
-			
 			System.out.println(pubAccount);
 			
 			PubUserVO pubuserVO = query.uniqueResult();
 			session.getTransaction().commit();
-			
 			System.out.println("交易成功");
 			System.out.println(pubuserVO);
 			return pubuserVO;
@@ -164,14 +163,15 @@ private static final String GET_ALL_STMT = "from PubUserVO order by pubUserID";
 		}
 		return list;
 	}
-/*
+
 	@Override
-	public List<PubUser> getByCompositeQuery(Map<String, String> map) {
+	public List<PubUserVO> getAllByCQ(Map<String, String[]> map) {
 		List<PubUserVO> list = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			list = HibernateUtil_CompositeQuery_PubUser2.getAllC(map);
+			//取出邏輯另外存在
+			list = PubUserCompositeQuery.getAllCQ(map);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
@@ -180,27 +180,7 @@ private static final String GET_ALL_STMT = "from PubUserVO order by pubUserID";
 		return list;
 
 	}
-*/
-	
-//	@Override錯誤的
-//	public boolean authenticate(String pubAccount, String pubPassword) {
-//		
-//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-//		try {
-//			session.beginTransaction();
-//			PubUserVO pubuserVO = (PubUserVO) session.createQuery("FROM pubuser WHERE pubAccount = :pubAccount")
-//					.setParameter("pubAccount",pubAccount)
-//					.uniqueResult();
-//			if(pubuserVO != null && pubuserVO.getPubPassword().equals(pubPassword)) {
-//				session.getTransaction().commit();
-//				return true;
-//			}
-//		} catch (Exception ex) {
-//			session.getTransaction().rollback();
-//			throw ex;
-//		}
-//		return false;
-//	}	
+
 	
 
 }

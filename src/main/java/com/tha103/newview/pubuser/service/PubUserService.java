@@ -1,6 +1,7 @@
 package com.tha103.newview.pubuser.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.tha103.newview.publisher.model.PublisherVO;
 import com.tha103.newview.pubuser.model.*;
@@ -76,8 +77,8 @@ public class PubUserService {
 		return dao.getAll();
 	}
 
-//	public List<PubUserVO> getAll(Map<String, String[]> map) {
-//	return dao.getAll(map);
-//	}
+	public List<PubUserVO> getByCompositeQuery(Map<String, String[]> map) {
+		return dao.getAllByCQ(map);
+	}
 	
 }

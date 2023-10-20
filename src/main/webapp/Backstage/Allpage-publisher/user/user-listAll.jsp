@@ -107,7 +107,7 @@ System.out.println(list);
 								<div class="form-group">
 									<label>姓名查詢：</label>
 									<div class="input-group">
-										<input type="text" name="pubUserID" value="${param.pubUserID}"
+										<input type="text" name="pubNickname" value="${param.pubNickname}"
 											class="form-control" placeholder="請輸入名字">
 									</div>
 								</div>
