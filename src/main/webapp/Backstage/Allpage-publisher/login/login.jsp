@@ -1,5 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,9 +26,10 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">登入後台</p>
 
-      <form action="../../index.html" method="post">
+      <form ACTION="<%=request.getContextPath()%>/pubuser/pubuser.do" method="post">
+      
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="廠商編號">
+          <input type="text" class="form-control" placeholder="帳號" name="pubAccount">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-edit"></span>
@@ -34,15 +37,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="帳號">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-edit"></span>
-            </div>
-          </div>
-        </div>
-        <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="密碼">
+          <input type="password" class="form-control" placeholder="密碼" name="pubPassword">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -60,6 +55,7 @@
           </div>
           <!-- /.col -->
           <div class="col-4">
+          	<input type="hidden" name="action" value="login"> 
             <button type="submit" class="btn btn-primary btn-block">登入</button>
           </div>
           <!-- /.col -->

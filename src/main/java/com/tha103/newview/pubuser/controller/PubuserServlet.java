@@ -21,7 +21,7 @@ public class PubuserServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+
 		doPost(req, resp);
 	}
 
@@ -218,7 +218,7 @@ public class PubuserServlet extends HttpServlet {
 
 			/************************* 接收請求參數 **************************/
 			try {
-				
+
 				Integer pubUserID = new Integer(req.getParameter("pubUserID").trim());
 				// 檢查請求參數接收
 				System.out.println(pubUserID);
@@ -247,13 +247,12 @@ public class PubuserServlet extends HttpServlet {
 				failureView.forward(req, resp);
 			}
 		}
-		
 
 		if ("getOneForDisplay".equals(action)) {
-	
+
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			
+
 			try {
 				/************************* 接收請求參數 **************************/
 				String str = req.getParameter("pubUserID");
@@ -261,28 +260,28 @@ public class PubuserServlet extends HttpServlet {
 					System.out.println(str);
 					errorMsgs.add("請輸入使用者編號");
 				}
-				
+
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/Backstage/Allpage-publisher/user/user-listAll.jsp");
 					failureView.forward(req, resp);
 					return;
 				}
-				
+
 				Integer pubUserID = null;
 				try {
 					pubUserID = new Integer(str);
-					
-				}catch(Exception e) {
+
+				} catch (Exception e) {
 					errorMsgs.add("使用者編號格式不正確");
 				}
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/Backstage/Allpage-publisher/user/user-listAll.jsp");
 					failureView.forward(req, resp);
-					return;//程式中斷
+					return;// 程式中斷
 				}
-				
+
 				/************************* 開始查詢資料 **************************/
 
 				PubUserService pubUserSvc = new PubUserService();
@@ -292,20 +291,20 @@ public class PubuserServlet extends HttpServlet {
 				if (pubuserVO == null) {
 					errorMsgs.add("查無資料");
 				}
-				
+
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/Backstage/Allpage-publisher/user/user-listAll.jsp");
 					failureView.forward(req, resp);
-					return;//程式中斷
+					return;// 程式中斷
 				}
 				/************************* 回傳資料路徑 **************************/
 				req.setAttribute("pubuserVO", pubuserVO); // 資料庫取出的pubuserVO物件,存入req
 				String url = "/Backstage/Allpage-publisher/user/user-listOne.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, resp);
-				
-				/***************************其他可能的錯誤處理*************************************/
+
+				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
@@ -313,74 +312,121 @@ public class PubuserServlet extends HttpServlet {
 				failureView.forward(req, resp);
 			}
 		}
-		
-		
-		if("getOneForUpdate".equals(action)) {
-			
+
+		if ("getOneForUpdate".equals(action)) {
+
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			
+
 			String requestURL = req.getParameter("requestURL"); // 送出修改的來源網頁路徑
-			
+
 			/************************* 接收請求參數 **************************/
 			try {
 				Integer pubUserID = new Integer(req.getParameter("pubUserID").trim());
 				// 檢查請求參數接收
 				System.out.println(pubUserID);
-				
-				/************************* 開始查詢資料 **************************/	
-				
+
+				/************************* 開始查詢資料 **************************/
+
 				PubUserService pubUserSvc = new PubUserService();
 				PubUserVO pubuserVO = pubUserSvc.getOnePubUser(pubUserID);
 				System.out.println(pubuserVO);
-				
+
 				/************************* 回傳資料路徑 **************************/
 				req.setAttribute("pubuserVO", pubuserVO); // 資料庫取出的pubuserVO物件,存入req
 				String url = "/Backstage/Allpage-publisher/user/user-update.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, resp);
-				
-				/***************************其他可能的錯誤處理*************************************/
+
+				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料取出時失敗:" + e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("requestURL");
+				RequestDispatcher failureView = req.getRequestDispatcher("requestURL");
 				failureView.forward(req, resp);
 			}
 		}
-		
-		if("login".equals(action)) {
+		// 複合查詢
+		if ("pubuserCompositeQuery".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			try {
+				/************************* 接收請求參數 **************************/
+				
+				Map<String, String[]> map = req.getParameterMap();
+				System.out.println("複合查詢接收到的請求為" + map);
+
+				/************************* 開始查詢資料 **************************/
+				
+				// 建立PubUserService 使用其getByCompositeQuery方法
+				PubUserService pubuserSvc = new PubUserService();
+				List<PubUserVO> pulist = pubuserSvc.getByCompositeQuery(map);
+				System.out.println("複合查詢查詢到的資料為" + pulist);
+				
+				/************************* 回傳資料路徑 **************************/
+				req.setAttribute("pulist", pulist); // 資料庫取出的list物件,存入request
+				String url = "/Backstage/Allpage-publisher/user/listusers_ByCQ.jsp";
+				
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				System.out.println("轉交網址至listusers_ByCQ.jsp");
+				System.out.println(successView.toString());
+				
+				successView.forward(req, resp);
+				System.out.println("轉交成功...............");
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("複合查詢出現例外!!");
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Backstage/Allpage-publisher/user/user-listAll.jsp");
+				failureView.forward(req, resp);
+			}
+
+		}
+
+		if ("login".equals(action)) {
 			/************************* 接收請求參數 **************************/
 			String pubAccount = req.getParameter("pubAccount").trim();
 			String pubPassword = req.getParameter("pubPassword").trim();
-			
+
 			System.out.println(pubAccount);
 			System.out.println(pubPassword);
-			
+
 			/************************* 開始查詢資料 **************************/
 			PubUserService pubUserSvc = new PubUserService();
 			System.out.println(pubUserSvc);
-			
+
 			boolean loginSuccessful = pubUserSvc.authenticate(pubAccount, pubPassword);
 			System.err.println(loginSuccessful);
-			
+
 			/************************* 回傳資料路徑 **************************/
-			if(!loginSuccessful) {
+			if (!loginSuccessful) {
 				System.out.println("登入失敗");
-				resp.sendRedirect(req.getContextPath()+"/Backstage/Allpage-publisher/login/login.jsp");
+				resp.sendRedirect(req.getContextPath() + "/Backstage/Allpage-publisher/login/login.jsp");
 				return;
-			}else {
+			} else {
 				System.out.println("登入成功");
 				HttpSession session = req.getSession();
+				String se = session.toString();
+				System.out.println(se);
 				session.setAttribute("pubAccount", pubAccount);
-				resp.sendRedirect(req.getContextPath()+"/Backstage/Allpage-publisher/pub-index.jsp");
+
+				try {
+					String location = (String) session.getAttribute("location");
+					if (location != null) {
+						session.removeAttribute("location"); // *看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+						resp.sendRedirect(location);
+						return;
+					}
+				} catch (Exception ignored) {
+				}
+				resp.sendRedirect(req.getContextPath() + "/Backstage/Allpage-publisher/pub-index.jsp");
+				// *(-->如無來源網頁:則重導至後台首頁)
 			}
-			
+
 		}
-		
-		
-		
-		
+
 	}
 
 }

@@ -13,8 +13,8 @@
 
 	<aside class="main-sidebar sidebar-dark-primary elevation-4">
 		<!-- Brand Logo -->
-		<a href="../index-pub.html" class="brand-link"> <img
-			src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
+		<a href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/pub-index.jsp" class="brand-link"> <img
+			src="<%=request.getContextPath()%>/Backstage/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
 			class="brand-image img-circle elevation-3" style="opacity: .8">
 			<span class="brand-text font-weight-light">NewView</span>
 		</a>
@@ -24,7 +24,7 @@
 			<!-- Sidebar user (optional) -->
 			<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 				<div class="image">
-					<img src="../../dist/img/user2-160x160.jpg"
+					<img src="<%=request.getContextPath()%>/Backstage/dist/img/user2-160x160.jpg"
 						class="img-circle elevation-2" alt="User Image">
 				</div>
 				<div class="info">
@@ -46,17 +46,17 @@
 					</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item"><a
-								href="../activity/activity-list.jsp" class="nav-link"> <i
+								href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/activity/activity-list.jsp" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>
 									<p>活動列表</p>
 							</a></li>
 							<li class="nav-item"><a
-								href="../activity/activity-shelves.jsp" class="nav-link">
+								href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/activity/activity-shelves.jsp" class="nav-link">
 									<i class="far fa-circle nav-icon"></i>
 									<p>活動上/下架</p>
 							</a></li>
 						</ul></li>
-					<li class="nav-item"><a href="../order/order-list.jsp"
+					<li class="nav-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/order/order-list.jsp"
 						class="nav-link"> <i class="nav-icon fas fa-file"></i>
 							<p>訂單管理</p>
 					</a></li>
@@ -68,12 +68,12 @@
 					</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item"><a
-								href="../discount/discount-list.jsp" class="nav-link"> <i
+								href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/discount/discount-list.jsp" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>
 									<p>優惠列表</p>
 							</a></li>
 							<li class="nav-item"><a
-								href="../discount/discount-add.jsp" class="nav-link"> <i
+								href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/discount/discount-add.jsp" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>
 									<p>新增優惠</p>
 							</a></li>
@@ -85,17 +85,17 @@
 							</p>
 					</a>
 						<ul class="nav nav-treeview">
-							<li class="nav-item"><a href="../user/user-list.jsp"
+							<li class="nav-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/user/user-listAll.jsp"
 								class="nav-link"> <i class="far fa-circle nav-icon"></i>
 									<p>使用者列表</p>
 							</a></li>
 							<li class="nav-item"><a
-								href="../user/user-add.jsp" class="nav-link"> <i
+								href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/user/user-add.jsp" class="nav-link"> <i
 									class="far fa-circle nav-icon"></i>
 									<p>新增使用者</p>
 							</a></li>
 						</ul></li>
-					<li class="nav-item"><a href="../login/login.html"
+					<li class="nav-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/login/login.jsp"
 						class="nav-link"> <i class="nav-icon fas fa-file"></i>
 							<p>登出</p>
 					</a></li>
