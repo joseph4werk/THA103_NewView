@@ -706,8 +706,8 @@
           success: function (data) {
             console.log(data);
             loginRedirect(data);
-            console.log("成功接data");
-            alert("登入成功");
+            // console.log("成功接data");
+            // alert("登入成功");
           },
           error: function (xhr) {
             console.log("error");
@@ -721,8 +721,23 @@
           },
         });
         function loginRedirect(data) {
-          if (data != null) {
-            location.href = data.location;
+          switch (data.status) {
+            case "accFailed":
+              alert("帳號錯誤，請重新輸入帳號！");
+              location.href = "sign-in.html";
+              break;
+            case "pswFailed":
+              alert("密碼錯誤，請重新輸入密碼！");
+              location.href = "sign-in.html";
+              break;
+            case "success":
+              alert("登入成功！");
+              location.href = data.location;
+              break;
+            default:
+              alert("看不懂錯在哪，再重登一次吧:-D");
+              location.href = "sign-in.html";
+              break;
           }
         }
       });

@@ -67,7 +67,7 @@ public class LoginFilter extends HttpFilter implements Filter {
 			System.out.println("網頁重導至 signIn");
 			
 		} else {
-			System.out.println("filter-else");			
+			System.out.println("filter-else -> 已登入，請從 session 取得 userID");			
 			chain.doFilter(request, response);
 		}
 		

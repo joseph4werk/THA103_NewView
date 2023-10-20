@@ -696,12 +696,28 @@
           type: "POST",
           data: verificationCode,
           dataType: "json",
-          beforeSend: function (xhr) {},
+          beforeSend: function (xhr) {
+            console.log("beforeSend");
+          },
           success: function (data) {
-            alert("資料驗證完成，網頁將重新導向至首頁！");
-            location.href = "home-03.html";
+            // console.log("success");
+            console.log(data);
+            redirectPath(data);
+          },
+          complete: function (xhr) {
+            console.log("complete");
           },
         });
+        function redirectPath(data) {
+          // alert("function");
+          if (data.status == "failed") {
+            alert("驗證錯誤，請重新輸入！");
+            location.href = "registration-verification.html";
+          } else if (data.status == "succeed") {
+            alert("資料驗證完成，網頁將重新導向至首頁！");
+            location.href = "home-03.html";
+          }
+        }
       });
     </script>
 
@@ -825,6 +841,6 @@
       }
     </script>
     <!-- JavaScript -> Input Data -->
-    <script src="./js/input-data.js"></script>
+    <!-- <script src="./js/input-data.js"></script> -->
   </body>
 </html>

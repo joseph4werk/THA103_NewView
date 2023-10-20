@@ -70,12 +70,21 @@ public class SignInController extends HttpServlet {
 		UserService userSvc = new UserServiceImpl();
 		UserVO userVO = new UserVO();
 
-		if (!userSvc.checkUserAccount(account, password)) {
-			out.println("帳號/密碼無效！");
-			out.println("請重新輸入帳號密碼。");
+		if (userSvc.getUserByAccount(account) == null) {
+			data.put("status", "accFailed");
+			System.out.println(data);
+			String json = gson.toJson(data);
+			out.write(json);
 			return;
 		}
-
+		if (!userSvc.getUserByAccount(account).getUserPassword().equals(password)) {
+			data.put("status", "pswFailed");
+			System.out.println(data);
+			String json = gson.toJson(data);
+			out.write(json);
+			return;
+		}
+		
 		System.out.println("帳號密碼比對成功！");
 		System.out.println("歡迎: " + account + "登入！");
 
@@ -86,7 +95,8 @@ public class SignInController extends HttpServlet {
 		// 將 userID 放入 session attribute
 		String userID = userSvc.getUserByAccount(account).getUserID().toString();
 		session.setAttribute("userID", userID);
-		
+
+		data.put("status", "success");
 		data.put("userID", userID);
 		data.put("account", account);
 
@@ -97,5 +107,35 @@ public class SignInController extends HttpServlet {
 		data.put("location", redirectPath);
 		String json = gson.toJson(data);
 		out.write(json);
+//		}
+
+//		if (!userSvc.checkUserAccount(account, password)) {
+//			out.println("帳號/密碼無效！");
+//			out.println("請重新輸入帳號密碼。");
+//
+//			return;
+//		}
+//
+//		System.out.println("帳號密碼比對成功！");
+//		System.out.println("歡迎: " + account + "登入！");
+//
+//		HttpSession session = req.getSession();
+//		session.setAttribute("account", account);
+//		System.out.println("account_Attribute紀錄");
+//
+//		// 將 userID 放入 session attribute
+//		String userID = userSvc.getUserByAccount(account).getUserID().toString();
+//		session.setAttribute("userID", userID);
+//
+//		data.put("userID", userID);
+//		data.put("account", account);
+//
+//		/*************************** 3.查看有無來源網頁 ******************/
+//		String location = (String) session.getAttribute("location");
+//		session.removeAttribute("location");
+//		String redirectPath = location != null ? location : req.getContextPath() + "/home-03.html";
+//		data.put("location", redirectPath);
+//		String json = gson.toJson(data);
+//		out.write(json);
 	}
 }
