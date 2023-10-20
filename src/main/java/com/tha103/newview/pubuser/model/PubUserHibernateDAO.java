@@ -18,7 +18,7 @@ public interface PubUserHibernateDAO {
 	public List<PubUserVO> getAll();
 	
 	//萬用複合查詢(傳入參數型態Map)(回傳 List)
-	public List<PubUserVO> getAllByCQ(Map<String,String[]>map);
+	public List<PubUserVO> getAllByCQ(Map<String,String>map);
 
 
 	

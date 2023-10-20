@@ -1,18 +1,10 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.tha103.newview.pubuser.service.*"%>
 <%@ page import="com.tha103.newview.pubuser.model.*"%>
+<%@ page import="com.tha103.newview.publisher.model.*"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%
-PubUserService pubUserSvc = new PubUserService();
-List<PubUserVO> list = pubUserSvc.getAll();
-//PubUserVO list = pubUserSvc.getOnePubUser(pubUserID);
-pageContext.setAttribute("list", list);
-
-
-System.out.println(list);
-%>
 
 
 <!DOCTYPE html>
@@ -67,8 +59,8 @@ System.out.println(list);
 			<section class="content">
 
 				<ul>
-
-
+					<jsp:useBean id="pubuserSvc" scope="page"
+						class="com.tha103.newview.pubuser.service.PubUserService" />
 					<li>
 						<form METHOD="post"
 							ACTION="<%=request.getContextPath()%>/pubuser/pubuser.do">
@@ -77,33 +69,17 @@ System.out.println(list);
 								name="action" value="getOneForDisplay">
 						</form>
 					</li>
-
-					<jsp:useBean id="pubuserSvc" scope="page"
-						class="com.tha103.newview.pubuser.service.PubUserService" />
-
 					<li>
 						<form METHOD="post"
 							ACTION="<%=request.getContextPath()%>/pubuser/pubuser.do">
-							<b>選擇使用者姓名：</b> <select name="pubUserID">
-								<c:forEach var="pubUserVO" items="${pubuserSvc.all}">
-									<option value="${pubUserVO.pubUserID}">${pubUserVO.pubNickname}
+							<b>選擇使用者姓名：</b> <select name="pubNickname">
+								<c:forEach var="pubuserVO" items="${pubuserSvc.all}">
+									<option value="${pubuserVO.pubNickname}">${pubuserVO.pubNickname}
 								</c:forEach>
-							</select> <input type="submit" value="送出"> <input type="hidden"
+							</select><input type="submit" value="送出"> <input type="hidden"
 								name="action" value="getOneForDisplay">
 						</form>
 					</li>
-					
-					
-					<li>
-						<form METHOD="post"
-							ACTION="<%=request.getContextPath()%>/pubuser/pubuser.do">
-							<b>選擇權限：</b> <select name="Authority">
-								<c:forEach var="Authority" items="${pubuserSvc.all}">
-									<option value="${pubUserVO.pubAuthority}">${pubUserVO.pubAuthority}
-								</c:forEach>
-							</select> <input type="submit" value="送出"> <input type="hidden"
-								name="action" value="getOneForDisplay">
-						</form>
 				</ul>
 			</section>
 			<section class="content">
@@ -117,8 +93,8 @@ System.out.println(list);
 								<div class="form-group">
 									<label>姓名查詢：</label>
 									<div class="input-group">
-										<input type="text" name="pubNickname" class="form-control"
-											placeholder="請輸入名字">
+										<input type="text" name="pubUserID" value="${param.pubUserID}"
+											class="form-control" placeholder="請輸入名字">
 									</div>
 								</div>
 							</div>
@@ -126,28 +102,26 @@ System.out.println(list);
 								<div class="form-group">
 									<label>使用者編號：</label>
 									<div class="input-group">
-										<input type="text" name="pubUserID"
+										<input type="text" name="pubUserID" value="${param.pubUserID}"
 											class="form-control" placeholder="請輸入編號">
 									</div>
 								</div>
 							</div>
-							
 							<div class="col-5">
 								<div class="form-group">
-									<label>使用者權限：</label><select name="pubAuthority" class="form-control"
-										style="width: 100%">
-										<option value="0">高階權限</option>
-										<option value="1">一般權限</option>
+									<label>使用者權限：</label> <select class="form-control"
+										style="width: 100%;">
+										<option>高階權限</option>
+										<option>一般權限</option>
 									</select>
 								</div>
 							</div>
-							
 							<div class="col-2">
 								<div class="form-group">
 									<label style="padding-bottom: 17px"></label> <a
 										href="<%=request.getContextPath()%>/pubuser/pubuser.do">
-										<button type="submit" class="btn btn-dark" style="width: 100%" >送出</button>
-										<input type="hidden" name="action" value="pubuserCompositeQuery">
+										<button type="submit" class="btn btn-dark" style="width: 100%"
+											value="送出">送出</button>
 									</a>
 								</div>
 							</div>
@@ -156,7 +130,7 @@ System.out.println(list);
 					</div>
 
 				</form>
-				<%-- 萬用複合查詢 --%>
+
 			</section>
 			<!-- Main content -->
 			<section class="content">
@@ -167,10 +141,11 @@ System.out.println(list);
 
 							<div class="card">
 								<!-- /.card-header -->
-								<%@ include file="../pages/page1.file"%>
+
 								<div class="card-body table-responsive p-0">
 									<table class="table table-hover text-nowrap">
 										<thead>
+
 											<tr>
 												<th>使用者編號</th>
 												<th>使用者暱稱</th>
@@ -179,26 +154,27 @@ System.out.println(list);
 												<th style="text-align: center;" colspan="2">操作</th>
 											</tr>
 										</thead>
-										<tbody>
-											<c:forEach var="pu" items="${list}" begin="<%=pageIndex%>"
-												end="<%=pageIndex+rowsPerPage-1%>">
+<%-- 										<% System.out.println((String) request.getAttribute("pulist")); %> --%>
+<%-- 										<% System.out.println((String) request.getAttribute("pubuserCQ")); %> --%>
+										<% System.out.println("ABC"); %>
+										<c:forEach var="pubuserlist" items="${pulist}">
+										
+											<tbody>
 												<tr>
-													<td>${pu.pubUserID}</td>
-													<td>${pu.pubNickname}</td>
-													<td>${pu.pubAccount}</td>
-													<td>${pu.pubAuthority}</td>
+													<td>${pubuserlist.pubUserID}</td>
+													<td>${pubuserlist.pubNickname}</td>
+													<td>${pubuserlist.pubAccount}</td>
+													<td>${pubuserlist.pubAuthority}</td>
 													<td>
 														<Form METHOD="post"
 															ACTION="<%=request.getContextPath()%>/pubuser/pubuser.do">
 															<input type="submit" value="修改"
 																class="btn btn-block btn-success btn-sm"> <input
-																type="hidden" name="pubUserID" value="${pu.pubUserID}">
-															<input type="hidden" name="requestURL"
+																type="hidden" name="pubUserID"
+																value="${pubUserVO.pubUserID}"> <input
+																type="hidden" name="requestURL"
 																value="<%=request.getServletPath()%>"> <input
-																type="hidden" name="whichPage" value="<%=whichPage%>">
-															<input type="hidden" name="action"
-																value="getOneForUpdate">
-
+																type="hidden" name="action" value="getOneForUpdate">
 														</Form>
 													</td>
 													<td>
@@ -206,20 +182,19 @@ System.out.println(list);
 															ACTION="<%=request.getContextPath()%>/pubuser/pubuser.do">
 															<input type="submit" value="刪除"
 																class="btn btn-block btn-danger btn-sm"> <input
-																type="hidden" name="pubUserID" value="${pu.pubUserID}">
-															<input type="hidden" name="requestURL"
+																type="hidden" name="pubUserID"
+																value="${pubUserVO.pubUserID}"> <input
+																type="hidden" name="requestURL"
 																value="<%=request.getServletPath()%>"> <input
-																type="hidden" name="whichPage" value="<%=whichPage%>">
-															<input type="hidden" name="action" value="delete">
+																type="hidden" name="action" value="delete">
 
 														</Form>
 													</td>
 												</tr>
-											</c:forEach>
-										</tbody>
-
+											</tbody>
+										</c:forEach>
+										
 									</table>
-									<%@ include file="../pages/page2.file"%>
 								</div>
 								<!-- /.card-body -->
 							</div>
