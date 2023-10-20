@@ -2,10 +2,6 @@ package com.tha103.newview.user.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -23,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.tha103.newview.user.model.UserVO;
 import com.tha103.newview.user.service.UserService;
 import com.tha103.newview.user.service.UserServiceImpl;
 
