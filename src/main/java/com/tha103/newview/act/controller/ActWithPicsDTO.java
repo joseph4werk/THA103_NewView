@@ -1,6 +1,5 @@
 package com.tha103.newview.act.controller;
 
-import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 
@@ -18,13 +17,21 @@ public class ActWithPicsDTO {
     private String actAddress;
     private String cityAddress;
     private String pubName;
-    private boolean approvalCondition;
+    private Integer approvalCondition;
+    private List<ImageDTO> images;
     
-    
-	public boolean isApprovalCondition() {
+	
+	public Integer getApprovalCondition() {
 		return approvalCondition;
 	}
-	public void setApprovalCondition(boolean approvalCondition) {
+	public List<ImageDTO> getImages() {
+		return images;
+	}
+	public void setImages(List<ImageDTO> images) {
+		this.images = images;
+	}
+	
+	public void setApprovalCondition(Integer approvalCondition) {
 		this.approvalCondition = approvalCondition;
 	}
 	public String getPubName() {
@@ -113,7 +120,7 @@ public class ActWithPicsDTO {
 	
 	public ActWithPicsDTO(Integer actID, Integer actScope, String actName, String actContent, double actPrice,
 			String actIntroduce, List<String> base64Images, String actCategoryName, Date actDate, Date time,
-			String actAddress, String cityAddress, String pubName, boolean approvalCondition) {
+			String actAddress, String cityAddress, String pubName, Integer approvalCondition) {
 		super();
 		this.actID = actID;
 		this.actScope = actScope;
@@ -138,7 +145,9 @@ public class ActWithPicsDTO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 
     
    
 }
+

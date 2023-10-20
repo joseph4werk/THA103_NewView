@@ -61,13 +61,13 @@ public class CityAddressDAOHibernatelmpl implements CityAddressDAO{
 	}
 
 	@Override
-	public CityAddress findByPrimaryKey(Integer ActID) {
+	public CityAddress findByPrimaryKey(Integer CityAddressID) {
 		// TODO Auto-generated method stub
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		CityAddress act = null;
 		try {
 			session.beginTransaction();
-			 act = session.get(CityAddress.class, ActID);
+			 act = session.get(CityAddress.class, CityAddressID);
 			session.getTransaction().commit();
 			
 		} catch (Exception e) {
@@ -79,21 +79,19 @@ public class CityAddressDAOHibernatelmpl implements CityAddressDAO{
 
 	@Override
 	public List<CityAddress> getAll() {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		try {
-			session.beginTransaction();
-			List<CityAddress> list = session.createQuery("from Act", CityAddress.class).list();
-			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-			String json = gson.toJson(list);
-			
-			session.getTransaction().commit();
-			return list;
-		} catch (Exception e) {
-			e.printStackTrace();
-			session.getTransaction().rollback();
-		}
-		return null;
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    try {
+	        session.beginTransaction();
+	        List<CityAddress> list = session.createQuery("from CityAddress", CityAddress.class).list();
+	        session.getTransaction().commit();
+	        return list;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        session.getTransaction().rollback();
+	    }
+	    return null;
 	}
+
 	
 
 }

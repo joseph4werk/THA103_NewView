@@ -1,23 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <%@ page import="java.util.*"%>
 <%@ page import="com.tha103.newview.act.model.*"%>
 <%@ page import="com.tha103.newview.act.service.*"%>
 <%@ page import="com.tha103.newview.actcategory.model.*"%>
 <%@ page import="com.tha103.newview.cityaddress.model.*"%>
-<%@ page import="com.tha103.newview.publisher.model.*" %>
-<%@ page import="com.tha103.newview.act.controller.*" %>
+<%@ page import="com.tha103.newview.publisher.model.*"%>
+<%@ page import="com.tha103.newview.act.controller.*"%>
 <%
-ActService actSvc = new ActServiceImpl();
-List<ActVO> list = actSvc.getAll();
-List<ActCategory> categories = actSvc.getAllCategories();
-List<CityAddress> city = actSvc.getAllCities();
+ActDAOHibernateImpl actDAO = new ActDAOHibernateImpl();
+ActServiceImpl actService = new ActServiceImpl(actDAO);
+List<ActVO> list = actService.getAll();
+List<ActCategory> categories = actService.getAllCategories();
+List<CityAddress> city = actService.getAllCities();
 pageContext.setAttribute("city", city);
 pageContext.setAttribute("list", list);
 pageContext.setAttribute("categories", categories);
-
 %>
+
 <html lang="en">
   <head>
     <title>Product</title>
@@ -129,6 +131,9 @@ pageContext.setAttribute("categories", categories);
     <!--===============================================================================================-->
   </head>
   <body class="animsition">
+  <%
+	request.setCharacterEncoding("UTF-8");
+	%>
     <!-- Header -->
     <header class="header-v4">
       <!-- Header desktop -->
@@ -505,12 +510,19 @@ pageContext.setAttribute("categories", categories);
                 <i class="zmdi zmdi-search"></i>
               </button>
 
+<form method="post" action="<%=request.getContextPath()%>/SearchSe"
+		accept-charset="UTF-8">
+			  <input type="hidden" name="action"
+			value="search" />
               <input
                 class="mtext-107 cl2 size-114 plh2 p-r-15"
                 type="text"
                 name="search-product"
                 placeholder="Search"
+                id="search-product"
               />
+             
+              </form>
             </div>
           </div>
 
@@ -810,155 +822,67 @@ pageContext.setAttribute("categories", categories);
           <!--往上一格活動區-->
           <!--動態測試-->
 
-          <div id="act-container">
+              <div id="act-container">
+        <c:forEach var="actData" items="${actWithPicsList}">
+            <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${actData.actCategoryName} block2">
+                <!-- Block2 -->
+                <div class="block2">
+                    <div class="block2-pic hov-img0">
+                        <img src="" alt="IMG-PRODUCT" id="actImage_${actData.actID}" />
+                        <a href="${actData.cityAddress}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                            活動詳細
+                        </a>
+                    </div>
+                    <div class="block2-txt flex-w flex-t p-t-14">
+                        <p style="font-size: 11px" id="activity-datetime">
+                            活動日期: ${actData.time} <!-- Adjust the attribute name as per your data model -->
+                        </p>
+                        <div class="block2-txt-child1 flex-col-l">
+                            <div style="width: 100%; overflow: hidden">
+                                <div style="float: left">
+                                    <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6" id="activity-name">
+                                        ${actData.actName}
+                                    </a>
+                                </div>
+                                <div style="float: right">
+                                    <span class="stext-105 cl3" id="activity-price">
+                                        TWD ${actData.actPrice}
+                                    </span>
+                                </div>
+                            </div>
+                            <hr style="margin-top: 0" size="8px" align="center" width="100%" />
+                            <div style="width: 100%; overflow: hidden">
+                                <div style="float: left">
+                                    <a href="#">
+                                        <img src="./images/icons/iStock-902788474 (1).png" alt="" />
+                                        ${actData.cityAddress}
+                                    </a>
+                                </div>
+                                <div style="float: right" class="block2-txt-child2 flex-r p-t-3">
+                                    <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" />
+                                        <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
             <!-- 活動空表格 -->
-          </div>
+ <script>
+<c:forEach var="actData" items="${actWithPicsList}">
+var actID = "${actData.actID}";
+var imageUrl = "${pageContext.request.contextPath}/GetImageFromDB?actID=" + actID;
+var actImage = document.getElementById("actImage_" + actID);
 
-          <script>
-           
-            //--------時間格式切割方法----------
-            
-            //--------時間格式切割方法----------
-<%
-request.setCharacterEncoding("UTF-8");
-%>
-
-<c:forEach var="actData" items="${list}">
-            function addAct(
-            		${actData.actName},
-            		${actData.actPrice},
-            		 ${actData.actCategory.actCategoryName},
-            		 ${actData.cityAddressID.cityName},
-            		 ${actData.actScope},
-              imageUrl,
-              cataClass
-            ) {
-              var actContainer = document.getElementById("act-container");
-
-              var actElement = document.createElement("div");
-              actElement.className =
-                "col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item " +
-                cataClass +
-                " block2";
-
-              var formattedDateTime = formatActivityDateTime(activityDateTime);
-
-              actElement.innerHTML = `
-              <!-- Block2 -->
-              <div class="block2">
-                <div class="block2-pic hov-img0">
-                  <img src="${imageUrl}" alt="IMG-PRODUCT" />
-                  <a href="${activityLink}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                    活動詳細
-                  </a>
-                </div>
-
-                <div class="block2-txt flex-w flex-t p-t-14">
-                  <p style="font-size: 11px" id="activity-datetime">
-                    活動日期: ${formattedDateTime}
-                  </p>
-
-                  <div class="block2-txt-child1 flex-col-l">
-                    <div style="width: 100%; overflow: hidden">
-                      <div style="float: left">
-                        <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6" id="activity-name">
-                          ${activityName}
-                        </a>
-                      </div>
-                      <div style="float: right">
-                        <span class="stext-105 cl3" id="activity-price">
-                          TWD ${activityPrice}
-                        </span>
-                      </div>
-                    </div>
-                    <hr style="margin-top: 0" size="8px" align="center" width="100%" />
-                    <div style="width: 100%; overflow: hidden">
-                      <div style="float: left">
-                        <a href="${activityLink}">
-                          <img src="./images/icons/iStock-902788474 (1).png" alt="" />
-                          ${activityAddress}
-                        </a>
-                      </div>
-                      <div style="float: right" class="block2-txt-child2 flex-r p-t-3">
-                        <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                          <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" />
-                          <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            `;
-
-              actContainer.appendChild(actElement);
-            }
-            </c:forEach>
-            //------------------------TEST-------------------------------
-            //數值之後改動態
-            // var userActivityName = "天啊";
-            // var userActivityPrice = "500";
-            // var userActivityDateTime = "2023.09.18 12:00";
-            // var userActivityAddress = "新北市";
-            // var userActivityLink =
-            //   "https://www.google.com/maps/place/%E8%A1%9B%E7%94%9F%E7%A6%8F%E5%88%A9%E9%83%A8%E8%87%BA%E5%8C%97%E9%86%AB%E9%99%A2/@25.0428811,121.4388424,14z/data=!3m1!5s0x3442a8651eb53393:0x60d99ab8a7d7a776!4m6!3m5!1s0x3442a86501f2f86d:0x8c42b695a045371f!8m2!3d25.042883!4d121.4594403!16s%2Fg%2F12nvp6pf9?authuser=0&entry=ttu"; // Replace with the actual link
-            // var userImageUrl = "images/icons/aazt4-zd3be.png";
-            // //--------------------判斷資料有沒有齊全---------------------
-            // if (
-            //   userActivityName &&
-            //   userActivityPrice &&
-            //   userActivityDateTime &&
-            //   userActivityAddress &&
-            //   userActivityLink &&
-            //   userImageUrl
-            // ) {
-            //   addAct(
-            //     userActivityName,
-            //     userActivityPrice,
-            //     userActivityDateTime,
-            //     userActivityAddress,
-            //     userActivityLink,
-            //     userImageUrl
-            //   );
-            // }
-            //--------------每多一筆就多一格-------------------
-            var activityData = [
-              {
-                name: "我好爛",
-                price: "100",
-                dateTime: "2023.09.19 14:00",
-                address: "台北市",
-                link: "https://www.example.com/activity1",
-                imageUrl: "images/icons/aazt4-zd3be.png",
-                cataClass: "women",
-              },
-              {
-                name: "WebSocket 到底怎麼用",
-                price: "50",
-                dateTime: "2023.09.20 10:30",
-                address: "新竹市",
-                link: "https://www.example.com/activity2",
-                imageUrl: "images/icons/aazt4-zd3be.png",
-                cataClass: "men",
-              },
-              // 繼續添加
-            ];
-
-            // 使用迴圈將每筆資料新增到頁面
-            for (var i = 0; i < activityData.length; i++) {
-              var data = activityData[i];
-              addAct(
-                data.name,
-                data.price,
-                data.dateTime,
-                data.address,
-                data.link,
-                data.imageUrl,
-                data.cataClass
-              );
-            }
-            //------------------------TEST-------------------------------
-          </script>
+actImage.src = imageUrl;
+</c:forEach>
+</script>
+        
+          
           <!--動態測試-->
           <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item bag">
             <!-- Block2 -->
@@ -1716,31 +1640,31 @@ request.setCharacterEncoding("UTF-8");
 
     <!--更改 小視窗消息-->
     <script>
-      //第一組
+     
       var imgElement = document.getElementById("img1YA");
 
       var slickDotsElement = document.querySelector(".slick3-dots");
 
-      // 找到该元素下的所有 img 元素
+     
       var imgElements = slickDotsElement.querySelectorAll("img");
 
-      // 确保至少有一个 img 元素
+     
       if (imgElements.length > 0) {
-        // 获取第一个 img 元素
+        
         var firstImgElement = imgElements[0];
-        // 动态设置 img 元素的地址
+       
         firstImgElement.src = "images/icons/" + "iStock-831601850" + ".jpg";
       }
       if (imgElements.length >= 1) {
-        // 获取第一个 img 元素
+    
         var firstImgElement = imgElements[1];
-        // 动态设置 img 元素的地址
+      
         firstImgElement.src = "images/icons/" + "iStock-961709574" + ".jpg";
       }
       if (imgElements.length >= 2) {
-        // 获取第一个 img 元素
+      
         var firstImgElement = imgElements[2];
-        // 动态设置 img 元素的地址
+   
         firstImgElement.src = "images/icons/" + "iStock-461162561" + ".jpg";
       }
       var img1YAa = document.getElementById("img1YAa");

@@ -51,8 +51,8 @@ public class TestHibernateDAO {
 		}
 
 		// 使用 userAccount 查詢單筆
-		boolean notExist = dao.checkUserAccount("test_a");
-		System.out.println("userAccount: test_a is available = " + notExist);
+//		boolean notExist = dao.checkUserAccount("test_a");
+//		System.out.println("userAccount: test_a is available = " + notExist);
 
 	}
 }

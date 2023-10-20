@@ -10,4 +10,5 @@ public interface ActPicDAO {
      void delete(Integer actPicID);
      ActPic findByPrimaryKey(Integer actPicID);
      List<ActPic> getAll();
+     
 }

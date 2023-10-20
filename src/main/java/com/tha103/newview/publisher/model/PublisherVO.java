@@ -43,14 +43,17 @@ public class PublisherVO {
 	
 	@Expose
 	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL)
+	@OrderBy("pubUserID")
 	private Set<DiscountVO> discountVOs;
 	
 	@Expose
 	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL)
+	@OrderBy("pubUserID")
 	private Set<OrdersVO> ordersVOs;
 	
 	@Expose
 	@OneToMany(mappedBy = "publisherVO", cascade = CascadeType.ALL)
+	@OrderBy("pubUserID")
 	private Set<ActVO> actVOs;
 
 	public PublisherVO() {

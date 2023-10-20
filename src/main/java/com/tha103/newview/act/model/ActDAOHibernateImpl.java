@@ -1,17 +1,15 @@
 package com.tha103.newview.act.model;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.tha103.newview.act.controller.ActWithPicsDTO;
 import com.tha103.newview.actcategory.model.ActCategory;
-import com.tha103.newview.actpic.model.ActPic;
 import com.tha103.util.HibernateUtil;
 
 public class ActDAOHibernateImpl implements ActDAO {
@@ -89,10 +87,11 @@ public class ActDAOHibernateImpl implements ActDAO {
                 }
                 
                 if (act.getCityAddress() != null && !act.getCityAddress().isEmpty() &&
-                    !act.getCityAddress().equals(originalAct.getCityAddress())) {
-                    originalAct.setCityAddress(act.getCityAddress());
-                }
-                if (act.getCityAddressID() != null && !act.getCityAddressID().isEmpty() &&
+                	    originalAct.getCityAddress() != null && !originalAct.getCityAddress().isEmpty() &&
+                	    !act.getCityAddress().equals(originalAct.getCityAddress())) {
+                	    originalAct.setCityAddress(act.getCityAddress());
+                	}
+                if (act.getCityAddressID() != null && !act.getCityAddressID().getCityName().isEmpty() &&
                         !act.getCityAddressID().equals(originalAct.getCityAddressID())) {
                         originalAct.setCityAddressID(act.getCityAddressID());
                     }
@@ -137,6 +136,11 @@ public class ActDAOHibernateImpl implements ActDAO {
         try {
             session.beginTransaction();
             act = session.get(ActVO.class, actID);
+
+            if (act != null) {
+                Hibernate.initialize(act.getActpics());  
+            }
+
             session.getTransaction().commit();
 
         } catch (Exception e) {
@@ -145,6 +149,7 @@ public class ActDAOHibernateImpl implements ActDAO {
         }
         return act;
     }
+
 
     @Override
     public List<ActVO> getAll() {
@@ -163,20 +168,21 @@ public class ActDAOHibernateImpl implements ActDAO {
         }
         return null;
     }
-    @Override
-    public List<ActVO> getAllWithAssociations() {
+    public List<ActVO> getActsWithNameAndAssociations(String actName) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
             session.beginTransaction();
             List<ActVO> list = session.createQuery("from ActVO act " +
                     "left join fetch act.actCategory " +
                     "left join fetch act.actpics " +
-                    "left join fetch act.city", ActVO.class)
+                    "left join fetch act.city " +
+                    "where act.actName like :actName", ActVO.class)
+                    .setParameter("actName", "%" + actName + "%")
                     .list();
 
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
             String json = gson.toJson(list);
-
+            list = list.stream().distinct().collect(Collectors.toList());
             session.getTransaction().commit();
             return list;
         } catch (Exception e) {
@@ -185,6 +191,7 @@ public class ActDAOHibernateImpl implements ActDAO {
         }
         return null;
     }
+
 
   
 

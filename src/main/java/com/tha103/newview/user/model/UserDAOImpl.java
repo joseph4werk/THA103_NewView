@@ -15,6 +15,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import com.tha103.newview.orders.model.OrdersVO;
 import com.tha103.util.HibernateUtil;
 import com.tha103.util.Util;
 
@@ -186,4 +187,25 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return null;
 	}
+
+	@Override
+	public OrdersVO getOrderByUserID(Integer userID) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		try {
+			session.beginTransaction();
+			
+			String sql = "from OrdersVO WHERE userID = :userID ";
+			OrdersVO ordersVO = (OrdersVO) session.createQuery(sql).setParameter("userID", userID).uniqueResult();
+			session.getTransaction().commit();
+			
+			return ordersVO;
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+
+		}
+		return null;
+	}
+	
+	
 }

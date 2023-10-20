@@ -10,4 +10,5 @@ public interface ActCategoryDAO {
      void delete(Integer Act);
      ActCategory findByPrimaryKey(Integer actCategoryID);
      List<ActCategory> getAll();
+     
 }

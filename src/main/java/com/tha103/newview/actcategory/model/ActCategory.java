@@ -40,14 +40,8 @@ public class ActCategory {
 	
 	@Override
 	public String toString() {
-		return "ActCategory [actCategoryID=" + actCategoryID + ", actCategoryName=" + actCategoryName + ", acts=" + acts
-				+ "]";
+		return "ActCategory [actCategoryID=" + actCategoryID + ", actCategoryName=" + actCategoryName +  "]";
 	}
-
-
-
-	
-
 
 
 	public ActCategory(Integer actCategoryID, String actCategoryName, Set<ActVO> acts) {
