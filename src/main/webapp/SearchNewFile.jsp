@@ -10,11 +10,11 @@
 <%@ page import="com.tha103.newview.publisher.model.*"%>
 <%@ page import="com.tha103.newview.act.controller.*"%>
 <%
-ActDAOHibernateImpl actDAO = new ActDAOHibernateImpl();
-ActServiceImpl actService = new ActServiceImpl(actDAO);
-List<ActVO> list = actService.getAll();
-List<ActCategory> categories = actService.getAllCategories();
-List<CityAddress> city = actService.getAllCities();
+ActDAO actDAO = new ActDAOHibernateImpl(); 
+ActService actSvc = new ActServiceImpl(actDAO); 
+List<ActVO> list = actSvc.getAll(); 
+List<ActCategory> categories = actSvc.getAllCategories();
+List<CityAddress> city = actSvc.getAllCities();
 pageContext.setAttribute("city", city);
 pageContext.setAttribute("list", list);
 pageContext.setAttribute("categories", categories);
@@ -443,37 +443,49 @@ pageContext.setAttribute("categories", categories);
 
             <button
               class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-              data-filter=".women"
+              data-filter=".talkShow"
             >
               脫口秀
             </button>
 
             <button
               class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-              data-filter=".men"
+              data-filter=".lecture"
             >
               講座
             </button>
 
             <button
               class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-              data-filter=".bag"
+              data-filter=".music"
             >
               音樂會
             </button>
 
             <button
               class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-              data-filter=".shoes"
+              data-filter=".stageShow"
             >
-              舞台劇
+              歌舞秀
             </button>
 
             <button
               class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-              data-filter=".watches"
+              data-filter=".concert"
             >
               演唱會
+            </button>
+             <button
+              class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
+              data-filter=".drama"
+            >
+              戲劇
+            </button>
+             <button
+              class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
+              data-filter=".dance"
+            >
+              舞蹈
             </button>
           </div>
 
@@ -829,7 +841,7 @@ pageContext.setAttribute("categories", categories);
                 <div class="block2">
                     <div class="block2-pic hov-img0">
                         <img src="" alt="IMG-PRODUCT" id="actImage_${actData.actID}" />
-                        <a href="${actData.cityAddress}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                        <a href="${actData.cityAddress}" data-act-id="${actData.actID}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" onclick="showModal(this)">
                             活動詳細
                         </a>
                     </div>
@@ -1371,10 +1383,12 @@ actImage.src = imageUrl;
                   <div class="wrap-slick3-dots"></div>
                   <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
-                  <div class="slick3 gallery-lb">
+                 <div class="slick3 gallery-lb" id="imgHere">
+                  
+                  
                     <div id="img1YA" class="item-slick3" data-thumb="">
                       <div class="wrap-pic-w pos-relative">
-                        <img id="img1YA" src="#" alt="IMG-PRODUCT" />
+                        <img id="img1YAa" src="#" alt="IMG-PRODUCT" />
 
                         <a
                           id="img1YAa"
@@ -1409,16 +1423,19 @@ actImage.src = imageUrl;
                     </div>
 
                     <div
+                     id="img3YAa"
                       class="item-slick3"
                       data-thumb="images/icons/iStock-461162561.jpg"
                     >
                       <div class="wrap-pic-w pos-relative">
                         <img
+                         id="img3YAa"
                           src="images/icons/iStock-461162561.jpg"
                           alt="IMG-PRODUCT"
                         />
 
                         <a
+                         id="img3YAa"
                           class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
                           href="images/icons/iStock-461162561.jpg"
                         >
@@ -1426,7 +1443,13 @@ actImage.src = imageUrl;
                         </a>
                       </div>
                     </div>
+                    
+                    
+                    
                   </div>
+                  
+                  
+                  
                 </div>
               </div>
             </div>
@@ -1640,54 +1663,128 @@ actImage.src = imageUrl;
 
     <!--更改 小視窗消息-->
     <script>
-     
-      var imgElement = document.getElementById("img1YA");
+    function showModal(elem) {
+        var actIdStr = elem.getAttribute("data-act-id");   
+        sendAjaxRequest(actIdStr);
+    }
 
-      var slickDotsElement = document.querySelector(".slick3-dots");
-
-     
-      var imgElements = slickDotsElement.querySelectorAll("img");
-
-     
-      if (imgElements.length > 0) {
+    function sendAjaxRequest(actIdStr) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'SearchSe', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         
-        var firstImgElement = imgElements[0];
-       
-        firstImgElement.src = "images/icons/" + "iStock-831601850" + ".jpg";
-      }
-      if (imgElements.length >= 1) {
-    
-        var firstImgElement = imgElements[1];
-      
-        firstImgElement.src = "images/icons/" + "iStock-961709574" + ".jpg";
-      }
-      if (imgElements.length >= 2) {
-      
-        var firstImgElement = imgElements[2];
-   
-        firstImgElement.src = "images/icons/" + "iStock-461162561" + ".jpg";
-      }
-      var img1YAa = document.getElementById("img1YAa");
-      var img1YAaa = "images/icons/" + "iStock-831601850" + ".jpg";
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                // 處理伺服器返回的數據
+                var response = this.responseText;
+                var data = JSON.parse(response);
+                displayReceivedData(data);
+               
+            } else if (this.readyState == 4) {
+                console.error("Error fetching data");
+            }
+        };
+        
+        xhr.send('action=getJsonData&actID=' + actIdStr);
+    }
 
-      var dynamicImagePath = "images/icons/" + "iStock-831601850" + ".jpg";
-      var dynamicContent = "我改到了YA!!";
-      var dynamicPrice = 320;
-      var castYA = `內容簡介:單口喜劇（英語：Stand-up
-                  comedy）粵語稱棟篤笑，正字為「戙𡰪笑」（dungduksíu），中國大陸和台灣稱為單口喜劇，又稱脫口秀、單人喜劇、站立喜劇等，是一種喜劇表演，通常是由喜劇演員一個人，直接站在觀眾面前，以搞笑方式面對觀眾，使觀眾發笑。
-                  通常是一位喜劇演員站在台上表演喜劇，而且多以語言笑話為主。`;
-      var seatWT1 = "測試規模";
-      var actDate = "1970-01-01";
-      var dynamicLink = "./seat/seatMiddle20X20/seatnotest.html";
-      var linkElement = document.getElementById("dynamic-link");
-      imgElement.src = dynamicImagePath;
-      $("#dynamic-heading").text(dynamicContent);
-      $("#priceYA").text("TWD" + dynamicPrice);
-      $("#castYA").text(castYA);
-      $(".seatWT").text(seatWT1);
-      $(".actDate").text(actDate);
-      linkElement.href = dynamicLink;
-      img1YAa.href = img1YAaa;
+    function displayReceivedData(dataArray) {
+       
+        var data = dataArray[0];
+        var actName = data.actName;
+        var actImages = data.base64Images; 
+        var actPrice = data.actPrice;
+        var actIntroduce = data.actIntroduce;  
+        var actScope = data.actScope;
+        var actDate = data.actDate;
+        var time = data.time;
+        var DateTime = actDate + "  " + time;
+        var actScope = data.actScope;
+        var scale;
+
+        switch (actScope) {
+            case 1:
+                scale = "最小規模";
+                break;
+            case 2:
+                scale = "中等規模";
+                break;
+            case 3:
+                scale = "最大規模";
+                break;
+            default:
+                console.error("未知的規模");
+        }
+    for (var i = 0; i < actImages.length; i++) {
+    	console.log(actImages.length)
+    var base64Image = actImages[i];
+
+    // 構建圖片元素的ID
+    var imgId = "img" + (i + 1) + "YAa";
+
+    // 找到ID的圖片元素
+    var imgElement = document.getElementById(imgId);
+	console.log(imgElement)
+    
+    if (imgElement) {
+        imgElement.src = "data:image/png;base64," + base64Image;
+    }
+}
+       
+        var slickDotsElement = document.querySelector(".slick3-dots");
+        var imgElements = slickDotsElement.querySelectorAll("img");
+        for(var i = 0; i < imgElements.length && i < actImages.length; i++) {
+            imgElements[i].src = "data:image/png;base64," + actImages[i];
+        }
+        for (var i = 0; i < actImages.length; i++) {
+            console.log(actImages.length);
+            var base64Image = actImages[i];
+
+            
+            var imgId = "img" + (i + 1) + "YAa";
+
+            
+            var imgElement = document.getElementById(imgId);
+            console.log(imgElement);
+
+            if (imgElement) {
+                imgElement.src = "data:image/png;base64," + base64Image;
+            }
+
+           
+            var aElement = document.querySelector('a[id="' + imgId + '"]');
+            if (aElement) {
+                aElement.setAttribute("href", "data:image/png;base64," + base64Image);
+            }
+        }
+
+        $("#dynamic-heading").text(actName);
+        $("#priceYA").text("TWD" + actPrice);
+        $("#castYA").text(actIntroduce);
+        $(".seatWT").text(scale);
+        $(".actDate").text(DateTime);
+    }
+    var categoryMapping = {
+    	    "音樂": "music",
+    	    "脫口秀": "talkShow",
+    	    "演唱會": "concert",
+    	    "歌舞秀":"stageShow",
+    	    "講座":"lecture",
+    	    "戲劇":"drama",
+    	    "舞蹈":"dance"
+    	};
+
+    window.onload = function() {
+        var items = document.querySelectorAll('.isotope-item');
+        items.forEach(function(item) {
+            for (var key in categoryMapping) {
+                if (item.classList.contains(key)) {
+                    item.classList.remove(key);
+                    item.classList.add(categoryMapping[key]);
+                }
+            }
+        });
+    };
     </script>
   </body>
 </html>

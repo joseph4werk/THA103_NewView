@@ -58,9 +58,9 @@ public class GetBase64ImageServlet extends HttpServlet {
     	                
     	                response.setContentType("image/jpeg"); 
     	                response.getOutputStream().write(Base64.getDecoder().decode(base64Image));
-    	                System.out.println("Image found for actID: " + actID);
+//    	                System.out.println("Image found for actID: " + actID);
     	            } else {
-    	                System.out.println("No image found for actID: " + actID);
+//    	                System.out.println("No image found for actID: " + actID);
     	                response.setContentType("text/plain");
     	                response.getWriter().write("Image not found");
     	            }
