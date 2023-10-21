@@ -1,34 +1,48 @@
 package com.tha103.newview.postcategory.model;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.Session;
-import com.tha103.util.HibernateUtil;
 
-public class PostCategoryHibernate implements PostCategoryDAO_interface {
-	
+import javax.persistence.Query;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+
+import com.tha103.util.HibernateUtil;
+import com.tha103.util.Util;
+
+public class PostCategoryDAOImpl implements PostCategoryDAO {
+
 	@Override
-	public int add(PostCategoryVO postCategoryVO) {
+	public int insert(PostCategoryVO postCategoryVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
 		try {
 			session.beginTransaction();
-			Integer id = (Integer) session.save(postCategoryVO);
+			session.saveOrUpdate(postCategoryVO);
 			session.getTransaction().commit();
-			return id;
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
-		return -1;
+		return 1;
 	}
 
 	@Override
 	public int update(PostCategoryVO postCategoryVO) {
+
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
 		try {
 			session.beginTransaction();
 			session.update(postCategoryVO);
 			session.getTransaction().commit();
-			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
@@ -38,12 +52,14 @@ public class PostCategoryHibernate implements PostCategoryDAO_interface {
 
 	@Override
 	public int delete(Integer postCategoryID) {
+
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
 		try {
 			session.beginTransaction();
-			PostCategoryVO postcategory = session.get(PostCategoryVO.class, postCategoryID);
-			if (postcategory != null) {
-				session.delete(postcategory);
+			PostCategoryVO postCategory = session.get(PostCategoryVO.class, postCategoryID);
+			if (postCategory != null) {
+				session.delete(postCategory);
 			}
 			session.getTransaction().commit();
 			return 1;
@@ -55,13 +71,15 @@ public class PostCategoryHibernate implements PostCategoryDAO_interface {
 	}
 
 	@Override
-	public PostCategoryVO findByPK(Integer postCategoryID) {
+	public PostCategoryVO findByPrimaryKey(Integer postCategoryID) {
+
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
 		try {
 			session.beginTransaction();
-			PostCategoryVO postcategory = session.get(PostCategoryVO.class, postCategoryID);
+			PostCategoryVO postCategory = session.get(PostCategoryVO.class, postCategoryID);
 			session.getTransaction().commit();
-			return postcategory;
+			return postCategory;
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
@@ -71,7 +89,9 @@ public class PostCategoryHibernate implements PostCategoryDAO_interface {
 
 	@Override
 	public List<PostCategoryVO> getAll() {
+
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
 		try {
 			session.beginTransaction();
 			List<PostCategoryVO> list = session.createQuery("from PostCategoryVO", PostCategoryVO.class).list();
@@ -84,35 +104,6 @@ public class PostCategoryHibernate implements PostCategoryDAO_interface {
 		return null;
 	}
 
-	public static void main(String[] args) {
-		
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		PostCategoryDAO_interface dao = new PostCategoryHibernate();
-		
-		// Insert 
-		PostCategoryVO category1 = new PostCategoryVO();
-		category1.setPostCategoryName("TestA");
-		dao.add(category1);
-		System.out.println("Success!");
-		
-		// Update 
-//		PostCategoryVO category2 = new PostCategoryVO();
-//		category2.setPostCategoryID(10);
-//		category2.setPostCategoryName("TestB");
-//		dao.update(category2);
-//		System.out.println("Success!");
-//		
-//		// Delete 
-//		dao.delete(12);
-//		System.out.println("Success!");
-//		
-//		// FindByPK
-//		PostCategoryVO category4 = new PostCategoryHibernate().findByPK(1);
-//		System.out.println(category4);
-//		
-//		// ListAll	
-//		List<PostCategoryVO> list = new PostCategoryHibernate().getAll();
-//		System.out.println(list);
-
-	}
+	
 }
+

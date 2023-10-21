@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>NewViewForum - doPost</title>
+	<title>NewViewForum - RevisedPost</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--===============================================================================================-->
@@ -455,7 +455,7 @@
 
 	<!-- Title page -->
 	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('./img/banner.jpg');">
-		<h4 class="ltext-105 cl0 txt-center "><strong>讓我們開始寫下你的分享文章吧!</strong></h4>
+		<h4 class="ltext-105 cl0 txt-center "><strong>修改此文章</strong></h4>
 	</section>
 
 
@@ -465,7 +465,7 @@
 			<!-- <div class="flex-w flex-tr"> -->
 			<div class=" bor10 p-lr-60 p-t-55 p-b-70 p-lr-15-lg w-full-md">
 				<form id="postform" action="/com.tha103.newview/DoPostServlet" method="post"
-					enctype="multipart/form-data" name="action" value="add">
+					enctype="multipart/form-data">
 
 					<h4 class="mtext-105 cl2 txt-center p-b-30">
 						填入文章資料
@@ -474,7 +474,20 @@
 
 					<div class="form-group">
 						<label for="userID"><strong>會員編號</strong></label>
-						<input type="text" id="userID" class="form-control" name="userID" placeholder="@userID">
+						<input type="text" id="userID" class="form-control" name="userID" placeholder="@userID"
+							readonly>
+					</div>
+
+					<div class="form-group">
+						<label for="userName"><strong>會員名稱</strong></label>
+						<input type="text" id="userName" class="form-control" name="userID" placeholder="@userID"
+							readonly>
+					</div>
+
+					<div class="form-group">
+						<label for="postID"><strong>文章編號</strong></label>
+						<input type="text" id="postID" class="form-control" name="postID" placeholder="@postID"
+							readonly>
 					</div>
 
 
@@ -516,23 +529,20 @@
 
 					<div>
 						<label for="file"><br><strong>文章圖片(拖曳至下方區塊)</strong></label><br>
+						<input type="file" id="file" name="postPic" style="display: none;">
 						<div class="centered-content">
 							<!-- 第一個拖放區域和預覽區域 -->
-							<input type="file" id="file1" name="postPic1" style="display: none;">
 							<div class="drop_zone" id="drop_zone1"><span class="text">將圖片1拖曳至此處</span></div>
 							<div class="preview" id="preview1"><span class="text">預覽圖</span></div>
 
 							<!-- 第二個拖放區域和預覽區域 -->
-							<input type="file" id="file2" name="postPic2" style="display: none;">
 							<div class="drop_zone" id="drop_zone2"><span class="text">將圖片2拖曳至此處</span></div>
 							<div class="preview" id="preview2"><span class="text">預覽圖</span></div>
 
 							<!-- 第三個拖放區域和預覽區域 -->
-							<input type="file" id="file3" name="postPic3" style="display: none;">
 							<div class="drop_zone" id="drop_zone3"><span class="text">將圖片3拖曳至此處</span></div>
 							<div class="preview" id="preview3"><span class="text">預覽圖</span></div>
 						</div>
-						<div class="invalid-feedback">發文不附圖，此風不可長</div>
 					</div>
 					<br>
 					<br>
@@ -540,7 +550,7 @@
 					<br>
 					<button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
 						type="submit" id="submitpost">
-<!-- 						<input type="hidden" name="action" value="add"> -->
+
 
 						Submit
 					</button>
@@ -673,7 +683,52 @@
 
 	<!--====================================(JS開始)===========================================================-->
 	<script>
-		window.addEventListener("load", function () {
+		document.addEventListener('DOMContentLoaded', () => {
+
+			//-----------------------------------先從前頁獲得既有資料-----------------------------------//
+
+			// 從URL中獲取文章ID
+			const urlParams = new URLSearchParams(window.location.search);
+			const postID = urlParams.get('postID');
+			console.log('postID:', postID);
+
+			// 發送請求到Server
+			$.ajax({
+				type: "GET",
+				url: `http://localhost:8081/com.tha103.newview/GetPostDetailServlet?postID=${postID}`,
+				traditional: true,
+				dataType: "json",
+				success: function (data) {
+					console.log(data);
+					displayPostDetails(data);
+				},
+				error: function (error) {
+					console.error('There was a problem with the AJAX request:', error);
+				}
+			});
+
+			function displayPostDetails(data) {
+				console.log(data);
+				var userID = data.userID;
+				var userName = data.userName;
+				var postID = data.postID;
+				var postHeader = data.postHeader;
+				var postContent = data.postContent;
+				console.log(data.postHeader);
+
+
+			    $('#userID').val(userID);
+			    $('#userName').val(userName);
+			    $('#postID').val(postID);
+			    $('#posttitle').val(postHeader);
+			    $('#postcontent').val(postContent);
+			}
+
+
+			//-----------------------------------開始修改-----------------------------------//
+
+
+			// 初始化變數
 			var the_form = document.getElementById("postform");
 			var btn_submit_el = document.getElementById("submitpost");
 			var preview_els = [];
@@ -716,8 +771,8 @@
 			};
 
 			// 資料送出
-			btn_submit_el.addEventListener("click", function (e) {
-				e.preventDefault();
+			btn_submit_el.addEventListener("click", function () {
+				
 				var form_data = new FormData(the_form);
 
 				// 圖片轉Base64
@@ -725,7 +780,7 @@
 				var img_base64_array = [];
 
 				img_base64_els.forEach(function (img_base64_el) {
-					var img_base64 = img_base64_el.getAttribute("src").substring(22); // 去除圖片前綴字
+					var img_base64 = img_base64_el.getAttribute("src").substring(22);
 					img_base64_array.push(img_base64);
 				});
 
@@ -735,74 +790,36 @@
 
 				// 其他數據
 				form_data.append("userID", document.getElementById("userID").value);
+				form_data.append("postID", document.getElementById("postID").value);
 				form_data.append("posttitle", document.getElementById("posttitle").value);
 				form_data.append("postCategoryID", document.getElementById("postcategory").value);
 				form_data.append("postcontent", document.getElementById("postcontent").value);
-				form_data.append("action", "add");
+				form_data.append("action", "update");
+				alert(form_data);
 				console.log("FormData:", form_data);
-
 				
 				
+				// 發送請求到Server
 				$.ajax({
-					url: `http://localhost:8081/com.tha103.newview/DoPostServlet`, 
+					url: "http://localhost:8081/com.tha103.newview/DoPostServlet",
 					type: "POST",
- 					data: form_data,
+					data: form_data,
 					contentType: false,
 					processData: false,
- 		//			dataType: "json",
 					success: function (data) {
-						console.log(data);
-						alert("文章已新增");
-						location.href = "http://localhost:8081/com.tha103.newview/forum_home.html";
 						// 成功處理後顯示
-						console.log("success");
+						alert("文章修改完成");
+						location.href = "http://localhost:8081/com.tha103.newview/forum_home.html";
 					},
 					error: function (xhr) {
 						console.log("error");
 					}
 				});
-			
-				
-
 			});
 
 		});
 
 	</script>
-	<!--=======================================================(JS開始)========================================-->
-
-
-	<!--===============================================================================================-->
-	<!-- <script> 
-				// p_file_el.addEventListener("change", function (e) {
-		// 	if (this.files.length > 0) {
-		// 		preview_img(this.files[0]);
-		// 	} else {
-		// 		preview_el.innerHTML = '<span class="text">預覽圖</span>';
-		// 	}
-		// });
-
-
-		//上傳檔案顯示
-		const fileInput = document.getElementById('validatedCustomFile');
-		const selectedFileName = document.getElementById('selectedFileName');
-
-		fileInput.addEventListener('change', function () {
-			const fileName = this.value.split('\\').pop(); // 获取文件名
-			selectedFileName.textContent = fileName; // 显示文件名
-		});
-
-			// // 提交事件
-		// document.getElementById('articleForm').addEventListener('submit', function (e) {
-		// 	e.preventDefault(); // 阻止表單默認提交行为
-
-		// 	// 顯示提交成功的弹窗
-		// 	alert('文章已提交！將回到論壇首頁');
-
-		// 	// 關閉彈窗，回到論壇首頁
-		// 	window.location.href = "forum_home.html";
-		// });
-	</script> -->
 	<!--===============================================================================================-->
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 	<!--===============================================================================================-->

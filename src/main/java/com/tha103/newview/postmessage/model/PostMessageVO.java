@@ -36,7 +36,7 @@ public class PostMessageVO {
 	@JoinColumn(name = "postID", referencedColumnName = "postID")
 	private PostVO postVO;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "userID", referencedColumnName = "userID")
 	private UserVO userVO;
 
