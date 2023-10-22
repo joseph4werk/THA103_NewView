@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +56,6 @@ public class GetPostServlet extends HttpServlet {
 				postData.put("postDateTime", post.getPostDateTime().toString());
 				postData.put("lastEditedTime", post.getLastEditedTime().toString());
 				postData.put("postStatus", post.getPostStatus());
-				postData.put("userID", post.getUserVO().getUserID());
 				postData.put("userName", post.getUserVO().getUserName());
 				postData.put("postCategoryID", post.getPostCategoryVO().getPostCategoryID());
 				postData.put("postCategoryName", post.getPostCategoryVO().getPostCategoryName());
@@ -88,7 +86,10 @@ public class GetPostServlet extends HttpServlet {
 			res.getWriter().write(jsonData);
 		}
 
-		// ***********************************ListByLike(尚未修正完成，剩下排序機制)**********************************//
+		
+		
+		
+		// *****************************************ListByLike***********************************************//
 
 		if ("getbylike".equals(action)) {
 			PostDAO dao = new PostDAOImpl();
@@ -114,10 +115,10 @@ public class GetPostServlet extends HttpServlet {
 			System.out.println(posts.get(0).getPostHeader());
 
 			List<Map<String, Object>> postList = new ArrayList<>();
-		
+
 			for (int i = 0; i < Math.min(2, posts.size()); i++) {
-		        PostVO post = posts.get(i);
-		        
+				PostVO post = posts.get(i);
+
 				Map<String, Object> postData = new HashMap<>();
 
 				postData.put("postID", post.getPostID());
@@ -128,7 +129,6 @@ public class GetPostServlet extends HttpServlet {
 				postData.put("postDateTime", post.getPostDateTime().toString());
 				postData.put("lastEditedTime", post.getLastEditedTime().toString());
 				postData.put("postStatus", post.getPostStatus());
-				postData.put("userID", post.getUserVO().getUserID());
 				postData.put("userName", post.getUserVO().getUserName());
 				postData.put("postCategoryID", post.getPostCategoryVO().getPostCategoryID());
 				postData.put("postCategoryName", post.getPostCategoryVO().getPostCategoryName());
@@ -153,49 +153,16 @@ public class GetPostServlet extends HttpServlet {
 
 				postList.add(postData);
 
-				}
-				
-				System.out.println(postList);
-
-				Gson gson = new Gson();
-				String jsonData = gson.toJson(postList);
-				res.getWriter().write(jsonData);
-				System.out.println(jsonData);
 			}
 
-			// ***********************************ListByCategory(尚未修正完成，剩下排序機制)**********************************//
+			System.out.println(postList);
 
+			Gson gson = new Gson();
+			String jsonData = gson.toJson(postList);
+			res.getWriter().write(jsonData);
+			System.out.println(jsonData);
 		}
 
 	}
-//}
 
-// ------------------------------------抓取文章分類(時間區分、類型)列表開始-------------------------------------------//
-//if ("getCompositePostQueryByPage".equals(action)) { // 来自Fourm_home.html的请求
-//
-//	// 1. 接收請求
-//	String page = req.getParameter("page");
-//	int currentPage = (page == null) ? 1 : Integer.parseInt(page);
-//	String orderBy = req.getParameter("orderBy");
-//
-//	// 2. 處理複合查詢條件
-//	Map<String, String[]> map = req.getParameterMap();
-//
-//	// 3. 根據複合查詢條件獲取符合條件的文章總數和文章列表
-//	PostService postService = new PostServiceImpl();
-//	List<PostVO> postList = postService.getPostsByCompositeQuery(map, currentPage, orderBy);
-//	int totalPostCount = postService.getTotalPostCount(map);
-//
-//	// 4. 查詢結果設置屬性中
-//	req.setAttribute("postList", postList);
-//
-//	// 5. 獲取文章總數跟計算頁總數，暫時設計每頁10筆
-//	int totalPages = (int) Math.ceil((double) totalPostCount / 10); // PAGE_SIZE为每页文章数
-//
-//	// 6. 總頁數和當前頁數設置回傳
-//	req.setAttribute("totalPages", totalPages);
-//	req.setAttribute("currentPage", currentPage);
-//
-//	// 7. 返回到Fourm_home.html
-//	return "/fourm_home.html";
-//}
+}

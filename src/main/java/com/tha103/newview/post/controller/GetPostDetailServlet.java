@@ -67,7 +67,6 @@ public class GetPostDetailServlet extends HttpServlet {
 		jsonData.put("postDateTime", post.getPostDateTime().toString());
 		jsonData.put("lastEditedTime", post.getLastEditedTime().toString());
 		jsonData.put("postStatus", post.getPostStatus());
-		jsonData.put("userID", post.getUserVO().getUserID());
 		jsonData.put("userName", post.getUserVO().getUserNickname()); // 作者訊息
 		jsonData.put("userAccount", post.getUserVO().getUserAccount()); // 作者訊息
 		jsonData.put("postPics", postpics); // 圖片訊息

@@ -17,6 +17,8 @@ public interface PostService {
 
 	public List<PostVO> getAll();
 
+	public int getAuthorIDByPostID(int postID);
+
 //	public int getTotalPostCount(Map<String, String[]> map);
 
 //	List<PostVO> getPostsByCompositeQuery(Map<String, String[]> map, int currentPage, String orderBy);
