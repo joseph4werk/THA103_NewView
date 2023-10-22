@@ -39,32 +39,28 @@ public class UpdateUserInfoController extends HttpServlet {
 
 		// 取得資料庫資料
 		UserService userSvc = new UserServiceImpl();
-//		UserVO user = userSvc.getUserByPK(Integer.valueOf(userID));
 
 		// 開始修改資料庫資料
-//		String name = user.getUserName();
-//		String nickname = user.getUserNickname();
-//		String email = user.getUserEmail();
-//		Date birthdate = user.getUserBirth();
-//		String cellphone = user.getUserCell();
 		UserVO user = new UserVO();
 		user.setUserID(Integer.valueOf(userID));
 		user.setUserName(req.getParameter("name"));
-		// 帳號不修改
-		user.setUserAccount((userSvc.getUserByPK(Integer.valueOf(userID)).getUserAccount()));
-		// 密碼不修改
-		user.setUserPassword((userSvc.getUserByPK(Integer.valueOf(userID)).getUserPassword()));
 		user.setUserBirth(Date.valueOf(req.getParameter("birthdate")));
 		user.setUserCell(req.getParameter("cellphone"));
 		user.setUserEmail(req.getParameter("email"));
 		user.setUserNickname(req.getParameter("nickname"));
-		// 權限不修改
+		
+		/******************************************* 不修改區塊 *******************************************/
+		// 帳號
+		user.setUserAccount((userSvc.getUserByPK(Integer.valueOf(userID)).getUserAccount()));
+		// 密碼
+		user.setUserPassword((userSvc.getUserByPK(Integer.valueOf(userID)).getUserPassword()));
+		// 權限
 		user.setBuyAuthority((userSvc.getUserByPK(Integer.valueOf(userID)).getBuyAuthority()));
 		user.setSpeakAuthority((userSvc.getUserByPK(Integer.valueOf(userID)).getSpeakAuthority()));
+		/******************************************* 不修改區塊 *******************************************/
 
-		// 取得 update 回傳值 (-1為失敗)
+		// 開始 update，取得回傳值 (-1為失敗)
 		int updateStatus = userSvc.updateUser(user);
-		System.out.println("updateStatus: " + updateStatus);
 
 		// 回傳 status 參數 (-1 為更新失敗)
 		String status = updateStatus == -1 ? "failed" : "success";

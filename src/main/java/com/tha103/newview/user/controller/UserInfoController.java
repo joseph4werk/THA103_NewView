@@ -29,7 +29,7 @@ public class UserInfoController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
-		HashMap<String, String> data = new HashMap<>();
+		HashMap<String, Object> data = new HashMap<>();
 		HttpSession session = req.getSession();
 		Gson gson = new Gson();
 
@@ -42,11 +42,14 @@ public class UserInfoController extends HttpServlet {
 		UserVO user = userSvc.getUserByPK(Integer.valueOf(userID));
 
 		// 打包給前端做第一次畫面渲染 (秀出原先資料)
+		data.put("account", user.getUserAccount());
 		data.put("name", user.getUserName());
 		data.put("nickname", user.getUserNickname());
 		data.put("email", user.getUserEmail());
 		data.put("birthdate", user.getUserBirth().toString());
 		data.put("cellphone", user.getUserCell());
+		data.put("buyAuthority", user.getBuyAuthority());
+		data.put("speakAuthority", user.getSpeakAuthority());
 
 		// 回傳 json 物件給前端做畫面渲染
 		String json = gson.toJson(data);
