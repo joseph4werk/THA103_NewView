@@ -597,7 +597,7 @@ $(function () {
 
 	/*  ================================== change-personal-info 修改會員基本資料 ================================== */
 	/*  將 change-personal-info 資料用物件包裝  */
-	let changInfo_item = {
+	let changInfoItem = {
 		name: "",
 		nickname: "",
 		email: "",
@@ -648,11 +648,11 @@ $(function () {
 		// console.log(memberInfo_birthdate_html);
 		// console.log(memberInfo_cellphone_html);
 
-		changInfo_item.name = memberInfo_name_html;
-		changInfo_item.nickname = memberInfo_nickname_html;
-		changInfo_item.email = memberInfo_email_html;
-		changInfo_item.birthdate = memberInfo_birthdate_html;
-		changInfo_item.cellphone = memberInfo_cellphone_html;
+		changInfoItem.name = memberInfo_name_html;
+		changInfoItem.nickname = memberInfo_nickname_html;
+		changInfoItem.email = memberInfo_email_html;
+		changInfoItem.birthdate = memberInfo_birthdate_html;
+		changInfoItem.cellphone = memberInfo_cellphone_html;
 		// console.log(changInfo_item)
 	});
 	/*  ================================== change-password 修改密碼 ================================== */
