@@ -48,6 +48,12 @@ public class UserInfoController extends HttpServlet {
 		data.put("email", user.getUserEmail());
 		data.put("birthdate", user.getUserBirth().toString());
 		data.put("cellphone", user.getUserCell());
+		/******************************************* 權限說明 *******************************************/
+		/**
+		 *									1 -> 可購買、可發言
+		 *									2 -> 不可購買、限制發言
+		 */
+		/******************************************* 權限說明 *******************************************/
 		data.put("buyAuthority", user.getBuyAuthority());
 		data.put("speakAuthority", user.getSpeakAuthority());
 
