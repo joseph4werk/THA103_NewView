@@ -30,7 +30,7 @@ public class PostVO {
 	@Id
 	@Expose
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "postID", updatable = false)
+	@Column(name = "postID", updatable = false, insertable = false)
 	private Integer postID;
 	
 	@Expose
@@ -62,19 +62,19 @@ public class PostVO {
 	private Integer postStatus;
 	
 	@Expose
-	@OneToMany(mappedBy = "postVO" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "postVO" ,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	private Set<ReportVO>reportVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "postVO" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "postVO" ,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	private Set<LikesVO>likesVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "postVO" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<PostPicVO>postPicVOs;
+	@OneToMany(mappedBy = "postVO" ,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	private Set<PostPicVO> postPicVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "postVO" , cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "postVO" , cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	private Set<PostMessageVO> postMessageVOs;
 
 	@ManyToOne
@@ -256,7 +256,7 @@ public class PostVO {
 
 	@Override
 	public String toString() {
-		return "PostVO [postID=" + postID + ", postHeader=" + postHeader + ", postDateTime=" + postDateTime
+		return "[postID=" + postID + ", postHeader=" + postHeader + ", postDateTime=" + postDateTime
 				+ ", lastEditedTime=" + lastEditedTime + ", postContent=" + postContent + ", disLikeCount="
 				+ disLikeCount + ", likeCount=" + likeCount + ", postStatus=" + postStatus + "]";
 	}

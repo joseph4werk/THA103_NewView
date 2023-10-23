@@ -32,13 +32,12 @@ public class MemberController extends HttpServlet {
 		Gson gson = new Gson();
 		HashMap<String, Object> data = new HashMap<>();
 		PrintWriter out = res.getWriter();
-
-//		String userID = req.getParameter("userID");
-		System.out.println("接到 ajax 請求");
+		
+//		System.out.println("接到 ajax 請求");
 
 		// 取得 session 中的 userID，載入以下資訊
 		String userID = (String) req.getSession().getAttribute("userID");
-//		System.out.println("session中的userID: " + userID);
+		System.out.println("session中的userID: " + userID);
 
 		// 透過 userID 查詢資料
 		UserService userSvc = new UserServiceImpl();

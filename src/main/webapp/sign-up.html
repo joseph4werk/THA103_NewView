@@ -703,11 +703,14 @@
           data: signUp_item,
           dataType: "json",
           beforeSend: function (xhr) {
+            console.log("beforesend");
             alert("驗證碼寄到您的信箱！");
-            location.href = "registration-verification.html";
           },
           success: function (data) {
             console.log("aaa");
+          },
+          complete: function (xhr) {
+            location.href = "registration-verification.html";
           },
         });
       });
@@ -817,6 +820,6 @@
     <!-- JavaScript -> Input Data -->
     <!-- <script src="./js/input-data.js"></script> -->
     <!-- Ajax -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script> -->
   </body>
 </html>

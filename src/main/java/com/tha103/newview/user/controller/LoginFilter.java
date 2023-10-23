@@ -16,7 +16,11 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet Filter implementation class LoginFilter
  */
+<<<<<<< HEAD
 @WebFilter(urlPatterns = { "/member.html" })
+=======
+@WebFilter(urlPatterns = { "/member.html","/seatchangeWebsocketMiddle.html","/change-personal-info.html", "/my-profile.html", "/change-password.html" })
+>>>>>>> refs/heads/master
 public class LoginFilter extends HttpFilter implements Filter {
 
 	/**
@@ -67,7 +71,7 @@ public class LoginFilter extends HttpFilter implements Filter {
 			System.out.println("網頁重導至 signIn");
 			
 		} else {
-			System.out.println("filter-else");			
+			System.out.println("filter-else -> 已登入，請從 session 取得 userID");			
 			chain.doFilter(request, response);
 		}
 		

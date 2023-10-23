@@ -85,6 +85,18 @@
     .header-v3 {
       background-image: black;
     }
+    
+    #sec3content {
+  	max-height: 3em; /* 设置最大高度，即显示大约3行文本 */
+  	overflow: hidden; /* 隐藏超出最大高度的内容 */
+  	text-overflow: ellipsis; /* 显示省略号 */
+	}
+	
+	#sec4content {
+  	max-height: 3em; /* 设置最大高度，即显示大约3行文本 */
+  	overflow: hidden; /* 隐藏超出最大高度的内容 */
+  	text-overflow: ellipsis; /* 显示省略号 */
+	}
   </style>
 
 
@@ -135,7 +147,7 @@
                 </li>
 
                 <li>
-                  <a href="blog.html">討論區</a>
+                  <a href="forum_home.html">討論區</a>
                 </li>
 
                 <li>
@@ -234,7 +246,7 @@
           </li>
 
           <li>
-            <a href="blog.html">討論區</a>
+            <a href="forum_home.html">討論區</a>
           </li>
 
           <li>
@@ -493,7 +505,7 @@
               <div class="carousel-caption">
                 <h1><strong>脫口秀夯什麼!?</strong></h1>
                 <p>10個你可能會喜歡脫口秀的原因詳解!</p>
-                <p><a class="btn btn-lg btn-primary" href="#"><strong>看更多</strong></a></p>
+                <p><a class="btn btn-lg btn-primary" href=".fourm_home.html"><strong>看更多</strong></a></p>
               </div>
             </div>
           </div>
@@ -544,7 +556,7 @@
               <div class="card mb-4 shadow-sm">
 
                 <a href="#" class="card-body" id="card1">
-                  <img src="./img/post1.jpg" class="d-block w-100" alt="1" id="card1_img">
+                  <img src="./img/nopic.jpg" class="d-block w-100" alt="1" id="card1_img">
                   <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: NO Pictures" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> -->
                 </a>
                 <div class="card-body">
@@ -556,8 +568,8 @@
                     lead-in to additional content. This content is a little bit longer.</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View More</button>
-                      <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
+                      <button type="button" class="btn btn-sm btn-outline-secondary" for="card1_view"><a href="#"
+                          id="card1_view" style=" color: rgb(60, 57, 57);">View More</button>
                     </div>
 
                     <i class="bi bi-hand-thumbs-up"></i>
@@ -604,7 +616,7 @@
             <div class="col-md-4">
               <div class="card mb-4 shadow-sm">
                 <a href="#" class="card-body" id="card2">
-                  <img src="./img/post2.jpg" class="d-block w-100" alt="1" id="card2_img">
+                  <img src="./img/nopic.jpg" class="d-block w-100" alt="1" id="card2_img">
                   <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: NO Pictures" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> -->
                 </a>
                 <div class="card-body">
@@ -617,8 +629,8 @@
                     additional content. This content is a little bit longer.</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View More</button>
-                      <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
+                      <button type="button" class="btn btn-sm btn-outline-secondary" for="card2_view"><a href="#"
+                          id="card2_view" style=" color: rgb(60, 57, 57);">View More</button>
                     </div>
 
                     <i class="bi bi-hand-thumbs-up"></i>
@@ -665,7 +677,7 @@
             <div class="col-md-4">
               <div class="card mb-4 shadow-sm">
                 <a href="#" class="card-body" id="card3">
-                  <img src="./img/post3.jpg" class="d-block w-100" alt="1" id="card3_img">
+                  <img src="./img/nopic.jpg" class="d-block w-100" alt="1" id="card3_img">
                   <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: NO Pictures" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> -->
                 </a>
                 <div class="card-body">
@@ -678,8 +690,8 @@
                     additional content. This content is a little bit longer.</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View More</button>
-                      <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
+                      <button type="button" class="btn btn-sm btn-outline-secondary" for="card3_view"><a href="#"
+                          id="card3_view" style=" color: rgb(60, 57, 57);">View More</button>
                     </div>
 
                     <i class="bi bi-hand-thumbs-up"></i>
@@ -726,21 +738,20 @@
             <div class="col-md-4">
               <div class="card mb-4 shadow-sm">
                 <a href="#" class="card-body" id="card4">
-                  <img src="./img/post3.jpg" class="d-block w-100" alt="1" id="card4_img">
+                  <img src="./img/nopic.jpg" class="d-block w-100" alt="1" id="card4_img">
                   <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: NO Pictures" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> -->
                 </a>
                 <div class="card-body">
-                  <h4 id="card4_posttitle">Title</h4>
+                  <h4 id="card4_posttitle">[2023] 紐約百老匯Broadway 攻略| 10 大推薦音樂劇</h4>
                   <p class="card-text">
 
                   </p>
-                  <p class="card-text" id="card4_content">This is a wider card with supporting text below as a natural
-                    lead-in to
-                    additional content. This content is a little bit longer.</p>
+                  <p class="card-text" id="card4_content">百老匯最膾炙人口的10 大音樂劇 · 1. 歌劇魅影. (The Phantom of the Opera) · 2.
+                    獅子王. (The Lion King) · 3. 阿拉丁. (Aladdin) · </p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View More</button>
-                      <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
+                      <button type="button" class="btn btn-sm btn-outline-secondary" for="card4_view"><a href="#"
+                          id="card4_view" style=" color: rgb(60, 57, 57);">View More</button>
                     </div>
 
                     <i class="bi bi-hand-thumbs-up"></i>
@@ -787,21 +798,20 @@
             <div class="col-md-4">
               <div class="card mb-4 shadow-sm">
                 <a href="#" class="card-body" id="card5">
-                  <img src="./img/post2.jpg" class="d-block w-100" alt="1" id="card5_img">
+                  <img src="./img/nopic.jpg" class="d-block w-100" alt="1" id="card5_img">
                   <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: NO Pictures" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> -->
                 </a>
                 <div class="card-body">
-                  <h4 id="card5_posttitle">Title</h4>
+                  <h4 id="card5_posttitle">走在經典與後現代之間｜2020 年藝術展精選</h4>
                   <p class="card-text">
 
                   </p>
-                  <p class="card-text" id="card5_content">This is a wider card with supporting text below as a natural
-                    lead-in to
-                    additional content. This content is a little bit longer.</p>
+                  <p class="card-text" id="card5_content"> 2020年，眾所周知將踏入嶄新的一個年代。藝術從抽象、現代，再發展到後現代的裝置藝術、互動藝術等，都經歷了很明顯的改變。
+                  </p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View More</button>
-                      <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
+                      <button type="button" class="btn btn-sm btn-outline-secondary" for="card5_view"><a href="#"
+                          id="card5_view" style=" color: rgb(60, 57, 57);">View More</button>
                     </div>
 
                     <i class="bi bi-hand-thumbs-up"></i>
@@ -849,21 +859,19 @@
             <div class="col-md-4">
               <div class="card mb-4 shadow-sm">
                 <a href="#" class="card-body" id="card6">
-                  <img src="./img/post1.jpg" class="d-block w-100" alt="1" id="card6_img">
+                  <img src="./img/nopic.jpg" class="d-block w-100" alt="1" id="card6_img">
                   <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: NO Pictures" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> -->
                 </a>
                 <div class="card-body">
-                  <h4 id="card6_posttitle">Title</h4>
+                  <h4 id="card6_posttitle">北美館《未竟之役：太空．家屋．現代主義》展覽</h4>
                   <p class="card-text">
 
                   </p>
-                  <p class="card-text" id="card6_content">This is a wider card with supporting text below as a natural
-                    lead-in to
-                    additional content. This content is a little bit longer.</p>
+                  <p class="card-text" id="card6_content">北美館年度典藏研究展《未竟之役：太空．家屋．現代主義》，本展以冷戰時期為論述起點，探討1950年美蘇太空競賽</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View More</button>
-                      <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
+                      <button type="button" class="btn btn-sm btn-outline-secondary" for="card6_view"><a href="#"
+                          id="card6_view" style=" color: rgb(60, 57, 57);">View More</button>
                     </div>
 
                     <i class="bi bi-hand-thumbs-up"></i>
@@ -890,7 +898,7 @@
                       <path
                         d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
                     </svg>
-                    <small class="text-muted" id="card6_img">12</small>
+                    <small class="text-muted" id="card6_msg">12</small>
 
 
                     <i class="bi bi-calendar"></i>
@@ -931,50 +939,45 @@
 
       <div class="container">
         <div class="row mb-2">
-          <div class="col-md-6">
-            <div
-              class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative"
-              id="square1">
-              <div class="col p-4 d-flex flex-column position-static">
-                <strong class="d-inline-block mb-2 text-primary" id="square1_cate">World</strong>
-                <h3 class="mb-0" id="square1_title">Featured post</h3>
-                <div class="mb-1 text-muted" id="square1_userID">@username</div>
-                <p class="card-text mb-auto" id="square1_content">This is a wider card with supporting text below as a
-                  natural lead-in to
-                  additional content.</p>
-                <a href="#" class="stretched-link" id="square1_url">Continue reading</a>
-              </div>
-              <div class="col-auto d-none d-lg-block">
-                <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img"
-                  aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                  <title>Placeholder</title>
-                  <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
-                    dy=".3em">Thumbnail</text>
-                </svg>
 
-              </div>
-            </div>
-          </div>
           <div class="col-md-6">
             <div
               class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
               <div class="col p-4 d-flex flex-column position-static">
-                <strong class="d-inline-block mb-2 text-success">Design</strong>
-                <h3 class="mb-0">Post title</h3>
-                <div class="mb-1 text-muted">@username</div>
-                <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional
-                  content.</p>
-                <a href="#" class="stretched-link">Continue reading</a>
+                <strong class="d-inline-block mb-2 text-primary" id="square1_cate">講座</strong>
+                <h3 class="mb-0" id="square1_title">藝文新觀點</h3>
+                <div class="mb-1 text-muted" id="square1_userID">@username</div>
+                <div id="sec3content">
+                <p class="card-text mb-auto" id="square1_content">設計思考聚集了我們許多人，不外乎深受線上線下產品開發、創業產品開發，甚至包括設計人生。</p>
+                </div>
+                <a href="#" class="stretched-link" id="square1_url"
+                  style="color: rgb(76, 63, 35);"><strong>全文未完繼續閱讀...</strong></a>
               </div>
               <div class="col-auto d-none d-lg-block">
-                <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img"
-                  aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                  <title>Placeholder</title>
-                  <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
-                    dy=".3em">Thumbnail</text>
-                </svg>
-
+                <img src="img/forum1.jpg" id="square1_img" class="bd-placeholder-img" width="200" height="250"
+                  alt="Placeholder: Thumbnail" aria-label="Placeholder: Thumbnail">
               </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div
+              class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+              <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-success" id="square2_cate">講座</strong>
+                <h3 class="mb-0" id="square2_title">火鶴的異想世界</h3>
+                <div class="mb-1 text-muted" id="square2_userID">@username</div>
+                 <div id="sec4content">
+                <p class="card-text mb-auto" id="square2_content">喜歡鳥類嗎? 在此作家的世界觀中，火鶴總是給人熱情的象徵</p>
+                </div>
+                <a href="#" class="stretched-link" id="square2_url"
+                  style="color: rgb(76, 63, 35);"><strong>全文未完繼續閱讀...</strong></a>
+              </div>
+              <div class="col-auto d-none d-lg-block">
+                <img src="img/forum2.jpg" id="square2_img" class="bd-placeholder-img" width="200" height="250"
+                  alt="Placeholder: Thumbnail" aria-label="Placeholder: Thumbnail">
+              </div>
+
             </div>
           </div>
         </div>
@@ -986,7 +989,7 @@
       </br>
       </br>
       <DIV style="text-align:center;">
-        <h2>More Post by Category</h2>
+        <h2>更多分類文章</h2>
       </DIV>
       <DIV style="text-align:center;">
         <hr>
@@ -1004,7 +1007,7 @@
               <li class="nav-item" role="presentation">
                 <button class="nav-link active btn btn-lg ding-btn-outline-org ding-fol-border" id="pills-folrec-tab"
                   data-toggle="pill" data-target="#pills-folrec" type="button" role="tab" aria-controls="pills-folrec"
-                  aria-selected="true">all</button>
+                  aria-selected="true">All</button>
               </li>
               <li class="nav-item ml-2" role="presentation">
                 <button class="nav-link btn btn-lg ding-btn-outline-org ding-fol-border" id="pills-folmem-tab"
@@ -1040,19 +1043,19 @@
 
               <!--搜尋-->
               <form class="form-inline mt-0 mt-md-0 text-align:rights">
-                <input class="form-control mr-sm-4" type="text" placeholder="keywords" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <input class="form-control mr-sm-4" type="text" placeholder="請輸入關鍵字" aria-label="Search" style="margin-left: 175px;">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜尋</button>
               </form>
               <span> </span>
               <!--篩選-->
               <div class=" form-inline mt-2 mt-md-0 ms-3" style="margin-left: 20px">
                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"
-                  style="background-color: rgba(13, 129, 69, 0.854); border: rgba(13, 129, 69, 0.854);">filter
+                  style="background-color: rgba(13, 129, 69, 0.854); border: rgba(13, 129, 69, 0.854);">篩選
                   <span class="caret"></span></button>
                 <ul class="dropdown-menu ">
-                  <li><a href="#">default</a></li>
-                  <li><a href="#">Popularity</a></li>
-                  <li><a href="#">Latest</a></li>
+                  <li><a href="#" style="margin-left: 5px;">預設</a></li>
+                  <li><a href="#" style="margin-left: 5px;">最熱門</a></li>
+                  <li><a href="#" style="margin-left: 5px;">由新到舊</a></li>
               </div>
           </div>
           </ul>
@@ -3267,212 +3270,210 @@
       document.addEventListener('DOMContentLoaded', () => {
         console.log('DOMContentLoaded event fired'); // 檢查事件是否被觸發
 
-        // 發起HTTP GET請求到Servlet或Spring控制器
-        // fetch('/your-backend-endpoint') // 替換成後端URL
-        //   .then(response => {
-        //     if (!response.ok) {
-        //       throw new Error('Network response was not ok');
-        //     }
-        //     return response.json(); 
-        //   })
-        //   .catch(error => {
-        //     console.error('There was a problem with the fetch operation:', error);
-        //   });
 
         // 定義 addPost 函數用于更新文章卡片的内容
-        function addPost(currentCardId, postUrl, postimg, posttitle, postcontent, like, dislike, messagenumber, posttime) {
+        function addPost(currentCardId, postUrl, postimg, posttitle, postcontent, urllink, like, dislike, messagenumber, timeDiffString) {
           // 使用 jQuery 更新元素的内容
-          $(`${currentCardId}`).attr('href', postUrl);
+          console.log(postUrl);
+          
+          $(`${currentCardId}`).attr('href',postUrl);
           $(`${currentCardId}_img`).attr('src', postimg);
           $(`${currentCardId}_posttitle`).text(posttitle);
           $(`${currentCardId}_content`).text(postcontent);
+          $(`${currentCardId}_view`).attr('href', postUrl);
           $(`${currentCardId}_like`).text(like);
           $(`${currentCardId}_dislike`).text(dislike);
           $(`${currentCardId}_msg`).text(messagenumber);
-          $(`${currentCardId}_time`).text(posttime);
+          $(`${currentCardId}_time`).text(timeDiffString);
         }
 
 
-        // 添加新文章到陣列的函数
-        function onNewArticle(newArticles) {
+        // 添加新文章到陣列的函數
+        function onNewArticle(data) {
           // 如果文章數量超過最大數量，移除舊文章
-          if (articles.length + newArticles.length > maxArticles) {
-            const numToRemove = articles.length + newArticles.length - maxArticles;
+          if (articles.length + data.length > maxArticles) {
+            const numToRemove = articles.length + data.length - maxArticles;
 
             // 使用 splice 方法移除舊文章
             articles.splice(maxArticles, numToRemove);
 
-            // 还需要移除對應的卡片(card)元素
+            // 需要移除對應的卡片(card)元素
             for (let i = maxArticles; i < maxArticles + numToRemove; i++) {
               const currentCardId = `#card${i + 1}`;
               // 用 jQuery 移除卡片元素
               $(currentCardId).remove();
+          
             }
           }
 
           // 遍歷新文章
-          newArticles.forEach((article, index) => {
-            const currentCardId = `#card${index + 1}`;
+          data.forEach((article, index) => {
+            const currentCardId = `#card${maxArticles - data.length + index + 1}`;
+            const postID = article.postID;
+            const postCategoryID = article.postCategoryID;
+            // 映射和處理數據，將article中的轉換為addPost函數需要的格式
+            const postUrl = `http://localhost:8081/com.tha103.newview/forum_postdetail.html?postID=${postID}&postCategoryID=${postCategoryID}`;
+            const postimg = article.postPic[0];        
+            const posttitle = article.postHeader;  
+            const postcontent = article.postContent;
+            const urllink = postUrl;
+            const like = article.likeCount;
+            const dislike = article.dislikeCount;
+            const messagenumber = article.postMessageIDs.length;
+            const posttime = article.postDateTime;
+            
+            
+            
+            function getTimeDiffString(timestamp) {
+          	  const now = new Date();
+          	  const pastTime = new Date(timestamp);
+
+          	  const timeDiff = now - pastTime;
+          	  const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60)); // 小時差
+          	  const daysDiff = Math.floor(hoursDiff / 24); // 天數差
+
+          	  if (daysDiff > 0) {
+          	    return `${daysDiff} 天前`;
+          	  } else {
+          	    return `${hoursDiff} 小時前`;
+          	  }
+          	}
+            
+            const timeDiffString = getTimeDiffString(posttime);
+           
+            
             addPost(
               currentCardId,
-              article.postUrl,
-              article.postimg,
-              article.posttitle,
-              article.postcontent,
-              article.like,
-              article.dislike,
-              article.messagenumber,
-              article.posttime
+              postUrl,
+              postimg,
+              posttitle,
+              postcontent,
+              urllink,
+              like,
+              dislike,
+              messagenumber,
+              timeDiffString
             );
           });
 
           // 添加新文章到文章陣列開頭
-          articles.unshift(newArticles);
+          articles.push(data);
         }
 
-        // 測試用(模擬文章新增狀況)-要接資料庫
-        // !! 注意 : 原始陣列[7]才會是資料庫最新資料，前面unshift後[0]才是最新的資料 !!
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8081/com.tha103.newview/GetPostServlet?action=getAll",
+            traditional:true,
+            dataType: "json",
+            success: function (data) {      	
+            	    console.log(data);
+            	    onNewArticle(data);
+            },
+            error: function (error) {
+              console.error('There was a problem with the AJAX request:', error);
+            }
+          });
 
-        const newArticles = [
-          {
-            postUrl: "https://imgcdn.cna.com.tw/www/WebPhotos/800/20211028/1200x894_143928289274.jpg",
-            postimg: "https://im.marieclaire.com.tw/m800c533h100b0/assets/mc/202309/650D2C66987281695362150.jpeg",
-            posttitle: "THE哆啦A夢展台北2023以「我心中的哆啦A夢」為主題，全新創作獨具風格的哆啦A夢作品",
-            postcontent: "每個人心中都有一個哆啦A夢！不論男女老少，任何人對哆啦A夢都充滿了不同的想像及期待。這隻名滿天下的貓型機器人，激發了全日本、甚至是全球許多人的夢想，以此為契機《THE哆啦A夢展》便誕生了！",
-            like: 800,
-            dislike: 0,
-            messagenumber: 8,
-            posttime: "1 days ago",
-          },
-          {
-            postUrl: "https://imgcdn.cna.com.tw/www/WebPhotos/800/20211028/1200x894_143928289274.jpg",
-            postimg: "https://imgcdn.cna.com.tw/www/WebPhotos/800/20211028/1200x894_143928289274.jpg",
-            posttitle: "從影業小編到台灣變色龍",
-            postcontent: "「做最精彩的你自己」的白靈、跨年大唱 First Love 主題曲的白冰冰、手機桌面幸運女神美輪明 —— UG is Hot，那個總是出現在大樓屋頂上的人緊追時事梗，彷彿他的衣櫃裡有無限的道具隨手捻來都能搭上。",
-            like: 60,
-            dislike: 3,
-            messagenumber: 8,
-            posttime: "3 days ago",
-          },
-          {
-            postUrl: "https://imgcdn.cna.com.tw/www/WebPhotos/800/20211028/1200x894_143928289274.jpg",
-            postimg: "https://im.marieclaire.com.tw/s800c450h100b0/assets/mc/202309/650D2F3E320EB1695362878.jpeg",
-            posttitle: "2023下半年必看展覽&藝文活動N個特別推薦，一起當文藝青年！",
-            postcontent: "2023文博會是史上展館最多，也是首次跨越單一縣市舉辦的文博會，是目前台灣最大、也是最具代表性的文創大型展覽，匯集國內藝術家、文創品牌、插畫家作品展示及販售自製商品。",
-            like: 60,
-            dislike: 3,
-            messagenumber: 8,
-            posttime: "5 days ago",
-          },
-          {
-            postUrl: "https://imgcdn.cna.com.tw/www/WebPhotos/800/20211028/1200x894_143928289274.jpg",
-            postimg: "https://imgcdn.cna.com.tw/www/WebPhotos/800/20211028/1200x894_143928289274.jpg",
-            posttitle: "從影業小編到台灣變色龍",
-            postcontent: "「做最精彩的你自己」的白靈、跨年大唱 First Love 主題曲的白冰冰、手機桌面幸運女神美輪明 —— UG is Hot，那個總是出現在大樓屋頂上的人緊追時事梗，彷彿他的衣櫃裡有無限的道具隨手捻來都能搭上。",
-            like: 60,
-            dislike: 3,
-            messagenumber: 8,
-            posttime: "3 days ago",
-          },
-          {
-            postUrl: "https://imgcdn.cna.com.tw/www/WebPhotos/800/20211028/1200x894_143928289274.jpg",
-            postimg: "https://im.marieclaire.com.tw/s800c450h100b0/assets/mc/202309/650D2F3E320EB1695362878.jpeg",
-            posttitle: "2023下半年必看展覽&藝文活動N個特別推薦，一起當文藝青年！",
-            postcontent: "2023文博會是史上展館最多，也是首次跨越單一縣市舉辦的文博會，是目前台灣最大、也是最具代表性的文創大型展覽，匯集國內藝術家、文創品牌、插畫家作品展示及販售自製商品。",
-            like: 60,
-            dislike: 3,
-            messagenumber: 8,
-            posttime: "5 days ago",
-          },
-          {
-            postUrl: "https://imgcdn.cna.com.tw/www/WebPhotos/800/20211028/1200x894_143928289274.jpg",
-            postimg: "https://imgcdn.cna.com.tw/www/WebPhotos/800/20211028/1200x894_143928289274.jpg",
-            posttitle: "從影業小編到台灣變色龍",
-            postcontent: "「做最精彩的你自己」的白靈、跨年大唱 First Love 主題曲的白冰冰、手機桌面幸運女神美輪明 —— UG is Hot，那個總是出現在大樓屋頂上的人緊追時事梗，彷彿他的衣櫃裡有無限的道具隨手捻來都能搭上。",
-            like: 60,
-            dislike: 3,
-            messagenumber: 8,
-            posttime: "3 days ago",
-          },
-          {
-            postUrl: "https://imgcdn.cna.com.tw/www/WebPhotos/800/20211028/1200x894_143928289274.jpg",
-            postimg: "https://im.marieclaire.com.tw/s800c450h100b0/assets/mc/202309/650D2F3E320EB1695362878.jpeg",
-            posttitle: "2023下半年必看展覽&藝文活動N個特別推薦，一起當文藝青年！",
-            postcontent: "2023文博會是史上展館最多，也是首次跨越單一縣市舉辦的文博會，是目前台灣最大、也是最具代表性的文創大型展覽，匯集國內藝術家、文創品牌、插畫家作品展示及販售自製商品。",
-            like: 60,
-            dislike: 3,
-            messagenumber: 8,
-            posttime: "5 days ago",
-          },
 
-        ];
-        onNewArticle(newArticles);
+
+        //======================================== Section3文章操作相關 JS =====================================================-->
+
+
+        const maxArticles2 = 2; // 最大文章數量
+        const articles2 = []; // 文章陣列
+
+        // 定義 addPost 函數用于更新文章卡片的内容
+        function addPost2(squareID, category, title, userID, content, url, img) {
+          // 使用 jQuery 更新元素的内容
+          $(`${squareID}_cate`).text(category);
+          $(`${squareID}_title`).text(title);
+          $(`${squareID}_userID`).text(userID);
+          $(`${squareID}_content`).text(content);
+          $(`${squareID}_url`).attr('href', url);
+          $(`${squareID}_img`).attr('src', img);
+        }
+
+        // 添加新文章到陣列的函数
+        function onNewArticle2(data2) {
+        	
+
+        	
+          // 如果文章數量超過最大數量，移除舊文章
+          if (articles2.length + data2.length > maxArticles2) {
+            const numToRemove = articles2.length + data2.length - maxArticles2;
+
+            // 使用 splice 方法移除舊文章
+            articles2.splice(maxArticles2, numToRemove);
+
+            // 还需要移除對應的(square)元素
+            for (let i = maxArticles2; i < maxArticles2 + numToRemove; i++) {
+              const squareID = `#square${i + 1}`;
+              // 用 jQuery 移除卡片元素
+              $(squareID).remove();
+            }
+          }
+
+          // 遍歷新文章
+          data2.forEach((article2, index) => {
+            const squareID = `#square${maxArticles2 - data2.length + index + 1}`;
+            const postID = article2.postID;
+            const postCategoryID = article2.postCategoryID;                  
+            const category = article2.postCategoryName;
+            const title = article2.postHeader; 
+            const userID = article2.userName;
+            const content = article2.postContent;
+            const url = `http://localhost:8081/com.tha103.newview/forum_postdetail.html?postID=${postID}&postCategoryID=${postCategoryID}`;
+            const img = article2.postPic[0]; 
+    
+            addPost2(
+              squareID,
+              category,
+              title,
+              userID,
+              content,
+              url,
+              img,
+            );
+          });
+
+          // 添加新文章到文章陣列開頭
+          articles2.push(data2);
+        }
+      
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8081/com.tha103.newview/GetPostServlet?action=getbylike",
+            dataType: "json",
+            success: function (data2) {      	
+            	    console.log(data2);
+            	    onNewArticle2(data2);
+            },
+            error: function (error) {
+              console.error('There was a problem with the AJAX request:', error);
+            }
+          });
       });
     </script>
-    <!--======================================== Section3文章操作相關 JS =====================================================-->
+    
     <script>
-      const maxArticles2 = 2; // 最大文章數量
-      const articles2 = []; // 文章陣列
+  	const sec3content = document.getElementById("content");
+  	const max3CharCount = 20; // 设置字符数阈值
 
-      document.addEventListener('DOMContentLoaded', () => {
-        console.log('DOMContentLoaded event fired'); // 檢查事件是否被觸發
+  	if (content.textContent.length > max3CharCount) {
+    // 如果文本内容超过字符阈值，则添加省略号
+    content.classList.add("ellipsis");
+ 	 }
+  	
+  	const sec4content = document.getElementById("content");
+  	const max4CharCount = 20; // 设置字符数阈值
 
-        // 定義 addPost 函數用于更新文章卡片的内容
-        function addPost(currentCardId, postUrl, postimg, posttitle, postcontent, like, dislike, messagenumber, posttime) {
-          // 使用 jQuery 更新元素的内容
-          $(`${currentCardId}`).attr('href', postUrl);
-          $(`${currentCardId}_img`).attr('src', postimg);
-          $(`${currentCardId}_posttitle`).text(posttitle);
-          $(`${currentCardId}_content`).text(postcontent);
-          $(`${currentCardId}_like`).text(like);
-          $(`${currentCardId}_dislike`).text(dislike);
-          $(`${currentCardId}_msg`).text(messagenumber);
-          $(`${currentCardId}_time`).text(posttime);
-        }
-
-
-        // 添加新文章到陣列的函数
-        function onNewArticle(newArticles) {
-          // 如果文章數量超過最大數量，移除舊文章
-          if (articles.length + newArticles.length > maxArticles) {
-            const numToRemove = articles.length + newArticles.length - maxArticles;
-
-            // 使用 splice 方法移除舊文章
-            articles.splice(maxArticles, numToRemove);
-
-            // 还需要移除對應的卡片(card)元素
-            for (let i = maxArticles; i < maxArticles + numToRemove; i++) {
-              const currentCardId = `#card${i + 1}`;
-              // 用 jQuery 移除卡片元素
-              $(currentCardId).remove();
-            }
-          }
-
-          // 遍歷新文章
-          newArticles.forEach((article, index) => {
-            const currentCardId = `#card${index + 1}`;
-            addPost(
-              currentCardId,
-              article.postUrl,
-              article.postimg,
-              article.posttitle,
-              article.postcontent,
-              article.like,
-              article.dislike,
-              article.messagenumber,
-              article.posttime
-            );
-          });
-
-          // 添加新文章到文章陣列開頭
-          articles.unshift(newArticles);
-        }
-
-      });
-
-
-
-    </script>
+  	if (content.textContent.length > max4CharCount) {
+    // 如果文本内容超过字符阈值，则添加省略号
+    content.classList.add("ellipsis");
+ 	 }
+  	
+  	
+	</script>
 
     <!--===============================================================================================-->
     <script src="vendor/daterangepicker/moment.min.js"></script>

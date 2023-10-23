@@ -7,7 +7,7 @@ public class TestPubHibernateDAO {
 		PublisherHibernateDAO dao = new PublisherHibernateDAOImpl();
 		
 		//test add OK
-//		PublisherVO pub = new PublisherVO();
+		PublisherVO pub = new PublisherVO();
 //		pub.setPubName("哈哈大笑娛樂公司");
 //		pub.setPubEmail("hahahaha@gmail.com");
 //		dao.add(pub);

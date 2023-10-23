@@ -47,6 +47,7 @@ public class UserDAOImpl implements UserDAO {
 			session.beginTransaction();
 			session.update(userVO);
 			session.getTransaction().commit();
+			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();

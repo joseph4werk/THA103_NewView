@@ -9,297 +9,297 @@ $(function () {
 	// console.log(member_item1[0].memberName);
 
 	/*  將 member 資料用物件包裝  */
-	let member_item = {
-		name: "假名字",
-		nickname: "假暱稱",
-		email: "test@test.com",
-		birthdate: "2023/09/18",
-		cellphone: "(886) 098 7654 321",
-		location: "NOT IMPORTANT",
-		orders:
-		{
-			publisher: "廠商",
-			activity: "活動名稱",
-			ordersPic: "./assets/img/Bob3.png"
-		},
-		favoriteAct:
-		{
-			publisher: "廠商",
-			activity: "活動名稱",
-			favPic: "./assets/img/kirby_yoyo.png"
-		}
-	};
-	// console.log(member_item);
+	// let member_item = {
+	// 	name: "假名字",
+	// 	nickname: "假暱稱",
+	// 	email: "test@test.com",
+	// 	birthdate: "2023/09/18",
+	// 	cellphone: "(886) 098 7654 321",
+	// 	location: "NOT IMPORTANT",
+	// 	orders:
+	// 	{
+	// 		publisher: "廠商",
+	// 		activity: "活動名稱",
+	// 		ordersPic: "./assets/img/Bob3.png"
+	// 	},
+	// 	favoriteAct:
+	// 	{
+	// 		publisher: "廠商",
+	// 		activity: "活動名稱",
+	// 		favPic: "./assets/img/kirby_yoyo.png"
+	// 	}
+	// };
+	// // console.log(member_item);
 
-	$.ajax({
-		url: "MemberPage",
-		type: "GET",
-		// data: member_item,
-		data: { "userID": 4 },
-		dataType: "json",
-		beforeSend: function (xhr) {
-			console.log("beforeSend");
-			console.log(xhr);
-		},
-		success: function (data) {
-
-
-			let h5_memberName_html = "";
-			h5_memberName_html =
-				`
-			<h5 class="mb-1">${data.name}</h5>
-			`;
-			$("#memberName h5").html(h5_memberName_html);
-			h5_memberName_html = "";
-
-			let p_member_html = "";
-			p_member_html +=
-				`
-		<p class="mb-0 font-weight-bold text-sm">${data.nickname}</p>
-		`;
-
-			$("#memberName p").html(p_member_html);
-			p_member_html = "";
-		}, error: function (xhr) {
-			console.log("error");
-			console.log(xhr.responseText);
-		}, complete: function (xhr, data) {
-			console.log("complete");
-			console.log(data);
-			console.log(xhr);
-		}
-	});
+	// $.ajax({
+	// 	url: "MemberPage",
+	// 	type: "GET",
+	// 	// data: member_item,
+	// 	data: { "userID": 4 },
+	// 	dataType: "json",
+	// 	beforeSend: function (xhr) {
+	// 		console.log("beforeSend");
+	// 		console.log(xhr);
+	// 	},
+	// 	success: function (data) {
 
 
-	/*  標題小字卡-名字  */
-	$("#memberName h5").on("click", function () {
-		// console.log("aaa");
-		let h5_memberName_html = "";
+	// 		let h5_memberName_html = "";
+	// 		h5_memberName_html =
+	// 			`
+	// 		<h5 class="mb-1">${data.name}</h5>
+	// 		`;
+	// 		$("#memberName h5").html(h5_memberName_html);
+	// 		h5_memberName_html = "";
 
-		h5_memberName_html = `
-        <h5 class="mb-1">${member_item.memberName}</h5>
-        `;
+	// 		let p_member_html = "";
+	// 		p_member_html +=
+	// 			`
+	// 	<p class="mb-0 font-weight-bold text-sm">${data.nickname}</p>
+	// 	`;
 
-		$("#memberName h5").html(h5_memberName_html);
+	// 		$("#memberName p").html(p_member_html);
+	// 		p_member_html = "";
+	// 	}, error: function (xhr) {
+	// 		console.log("error");
+	// 		console.log(xhr.responseText);
+	// 	}, complete: function (xhr, data) {
+	// 		console.log("complete");
+	// 		console.log(data);
+	// 		console.log(xhr);
+	// 	}
+	// });
 
-		h5_memberName_html = "";
-	});
 
-	$("#memberName p").on("mousemove", function () {
-		// console.log("bbb");
-		let p_member_html = "";
+	// /*  標題小字卡-名字  */
+	// $("#memberName h5").on("click", function () {
+	// 	// console.log("aaa");
+	// 	let h5_memberName_html = "";
 
-		p_member_html += `
-        <p class="mb-0 font-weight-bold text-sm">${member_item.memberNickname}</p>
-        `;
-		$("#memberName p").html(p_member_html);
+	// 	h5_memberName_html = `
+	//     <h5 class="mb-1">${member_item.memberName}</h5>
+	//     `;
 
-		p_member_html = "";
-	});
+	// 	$("#memberName h5").html(h5_memberName_html);
 
-	/*  會員基本資料  */
-	/*  將 memberInfo 資料用物件包裝  */
-	let memberInfo_item = {
-		name: "假名字",
-		nickname: "假暱稱",
-		email: "test@test.com",
-		birthdate: "2023/09/18",
-		cellphone: "(886) 098 7654 321",
-		location: "NOT IMPORTANT",
-	};
-	// console.log(memberInfo_item);
+	// 	h5_memberName_html = "";
+	// });
 
-	$("#memberInfo p").on("mousemove", function () {
-		// console.log("a");
-		let p_profile_html = "";
+	// $("#memberName p").on("mousemove", function () {
+	// 	// console.log("bbb");
+	// 	let p_member_html = "";
 
-		p_profile_html += `
-		<p class="text-sm">我是自介我是自介</p>
-		<p class="text-sm" style = "color : red;">我是自介我是自介</p>
-        `;
-		$("#memberInfo p").html(p_profile_html);
+	// 	p_member_html += `
+	//     <p class="mb-0 font-weight-bold text-sm">${member_item.memberNickname}</p>
+	//     `;
+	// 	$("#memberName p").html(p_member_html);
 
-		p_profile_html = "";
-	});
+	// 	p_member_html = "";
+	// });
 
-	$("#memberInfo ul").on("mousemove", function () {
-		let ul_profile_detail_html = "";
-		// console.log("a");
+	// /*  會員基本資料  */
+	// /*  將 memberInfo 資料用物件包裝  */
+	// let memberInfo_item = {
+	// 	name: "假名字",
+	// 	nickname: "假暱稱",
+	// 	email: "test@test.com",
+	// 	birthdate: "2023/09/18",
+	// 	cellphone: "(886) 098 7654 321",
+	// 	location: "NOT IMPORTANT",
+	// };
+	// // console.log(memberInfo_item);
 
-		ul_profile_detail_html += `
-            <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; ${memberInfo_item.name}</li>
-            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">NickName:</strong> &nbsp; ${memberInfo_item.nickname}</li>
-            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; ${memberInfo_item.email}</li>
-            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Birthdate:</strong> &nbsp; ${memberInfo_item.birthdate}</li>
-            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; ${memberInfo_item.cellphone}</li>
-            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Location:</strong> &nbsp; ${memberInfo_item.location}</li>
-            `;
+	// $("#memberInfo p").on("mousemove", function () {
+	// 	// console.log("a");
+	// 	let p_profile_html = "";
 
-		$("#memberInfo ul").html(ul_profile_detail_html);
-		ul_profile_detail_html = "";
-	});
+	// 	p_profile_html += `
+	// 	<p class="text-sm">我是自介我是自介</p>
+	// 	<p class="text-sm" style = "color : red;">我是自介我是自介</p>
+	//     `;
+	// 	$("#memberInfo p").html(p_profile_html);
 
-	/*  會員訂單  */
-	/*  將 myOrders 資料用陣列物件包裝  */
-	let myOrders_item = [];
+	// 	p_profile_html = "";
+	// });
 
-	/*  用 for each 抓值範例
-	let sort_item = [];
+	// $("#memberInfo ul").on("mousemove", function () {
+	// 	let ul_profile_detail_html = "";
+	// 	// console.log("a");
 
-	$("ul.task_list").children("li").each(function (i, item) {
-		console.log(this)
-		$(this).attr("data-sort", i + 1);
+	// 	ul_profile_detail_html += `
+	//         <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; ${memberInfo_item.name}</li>
+	//         <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">NickName:</strong> &nbsp; ${memberInfo_item.nickname}</li>
+	//         <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; ${memberInfo_item.email}</li>
+	//         <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Birthdate:</strong> &nbsp; ${memberInfo_item.birthdate}</li>
+	//         <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; ${memberInfo_item.cellphone}</li>
+	//         <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Location:</strong> &nbsp; ${memberInfo_item.location}</li>
+	//         `;
 
-		sort_item.push({
-			"item_id": $(this).attr("data-id"),
-			"sort": $(this).attr("data-sort")
-		});
-	});	
-	*/
+	// 	$("#memberInfo ul").html(ul_profile_detail_html);
+	// 	ul_profile_detail_html = "";
+	// });
 
-	myOrders_item.push(
-		{
-			publisher: "廠商",
-			activity: "活動名稱",
-			ordersPic: "./assets/img/Bob3.png",
-		},
-		{
-			publisher: "廠商1",
-			activity: "活動名稱1",
-			ordersPic: "圖片路徑1",
-		}
-	);
-	// console.log(myOrders_item[0]);
+	// /*  會員訂單  */
+	// /*  將 myOrders 資料用陣列物件包裝  */
+	// let myOrders_item = [];
 
-	/*  抓取訂單各物件的元素  */
-	$(myOrders_item).each(function (i, item) {
-		// console.log(this)
-	});
+	// /*  用 for each 抓值範例
+	// let sort_item = [];
 
-	let ul_orders_html = "";
-	$("#myOrders ul").on("click", function () {
-		// console.log("a");
+	// $("ul.task_list").children("li").each(function (i, item) {
+	// 	console.log(this)
+	// 	$(this).attr("data-sort", i + 1);
 
-		/*  只加單筆的情況不用 for each
-		
-		ul_orders_html += `
+	// 	sort_item.push({
+	// 		"item_id": $(this).attr("data-id"),
+	// 		"sort": $(this).attr("data-sort")
+	// 	});
+	// });	
+	// */
 
-			<li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-				<div class="avatar me-3">
-					<img src="./assets/img/Bob3.png" alt="kal" class="border-radius-lg shadow" />
-				</div>
-				<div class="d-flex align-items-start flex-column justify-content-center">
-					<h6 class="mb-0 text-sm">廠商</h6>
-					<p class="mb-0 text-xs">活動名稱</p>
-				</div>
-				<a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" href="javascript:;">訂單詳情</a>
-			</li>
+	// myOrders_item.push(
+	// 	{
+	// 		publisher: "廠商",
+	// 		activity: "活動名稱",
+	// 		ordersPic: "./assets/img/Bob3.png",
+	// 	},
+	// 	{
+	// 		publisher: "廠商1",
+	// 		activity: "活動名稱1",
+	// 		ordersPic: "圖片路徑1",
+	// 	}
+	// );
+	// // console.log(myOrders_item[0]);
 
-		`;
+	// /*  抓取訂單各物件的元素  */
+	// $(myOrders_item).each(function (i, item) {
+	// 	// console.log(this)
+	// });
 
-		$("#myOrders ul").html(ul_orders_html);
+	// let ul_orders_html = "";
+	// $("#myOrders ul").on("click", function () {
+	// 	// console.log("a");
 
-		// ul_orders_html = "";
-		 */
+	// 	/*  只加單筆的情況不用 for each
 
-		/*  預防一大堆訂單
-			圖片 = ordersPic
-			廠商 = publisher
-			活動名稱 = actName
-			可能要data sort方法, ID 排序訂單順序
-		 */
+	// 	ul_orders_html += `
 
-		$.each(myOrders_item, function (i, item) {
-			ul_orders_html += `
-			<ul class="list-group">
-				<li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-					<div class="avatar me-3" id="ordersPic">
-						<img src="${item.ordersPic}" alt="kal" class="border-radius-lg shadow" />
-					</div>
-					<div class="d-flex align-items-start flex-column justify-content-center">
-						<h6 class="mb-0 text-sm" id="publisher">${item.publisher}</h6>
-						<p class="mb-0 text-xs" id="actName">${item.actName}</p>
-					</div>
-					<a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" href="javascript:;">訂單詳情</a>
-				</li>
-			</ul>
-			`;
-		});
-		$("#myOrders ul").html(ul_orders_html);
-		ul_orders_html = "";
-	});
+	// 		<li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+	// 			<div class="avatar me-3">
+	// 				<img src="./assets/img/Bob3.png" alt="kal" class="border-radius-lg shadow" />
+	// 			</div>
+	// 			<div class="d-flex align-items-start flex-column justify-content-center">
+	// 				<h6 class="mb-0 text-sm">廠商</h6>
+	// 				<p class="mb-0 text-xs">活動名稱</p>
+	// 			</div>
+	// 			<a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" href="javascript:;">訂單詳情</a>
+	// 		</li>
 
-	/*  我的最愛  */
-	/*  將 myFavoriteActivities 資料用陣列物件包裝  */
-	let myFavoriteActivities_item = [];
+	// 	`;
 
-	/*  用 for each 抓值範例
-	let sort_item = [];
+	// 	$("#myOrders ul").html(ul_orders_html);
 
-	$("ul.task_list").children("li").each(function (i, item) {
-		console.log(this)
-		$(this).attr("data-sort", i + 1);
+	// 	// ul_orders_html = "";
+	// 	 */
 
-		sort_item.push({
-			"item_id": $(this).attr("data-id"),
-			"sort": $(this).attr("data-sort")
-		});
-	});	
-	*/
+	// 	/*  預防一大堆訂單
+	// 		圖片 = ordersPic
+	// 		廠商 = publisher
+	// 		活動名稱 = actName
+	// 		可能要data sort方法, ID 排序訂單順序
+	// 	 */
 
-	myFavoriteActivities_item.push(
-		{
-			publisher: "廠商",
-			activity: "活動名稱",
-			favPic: "./assets/img/kirby_yoyo.png",
-		},
-		{
-			publisher: "廠商1",
-			activity: "活動名稱1",
-			favPic: "./assets/img/KIRBY.png",
-		},
-		{
-			publisher: "廠商2",
-			activity: "活動名稱2",
-			favPic: "圖片路徑2",
-		}
-	);
-	// console.log(myFavoriteActivities_item);
+	// 	$.each(myOrders_item, function (i, item) {
+	// 		ul_orders_html += `
+	// 		<ul class="list-group">
+	// 			<li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+	// 				<div class="avatar me-3" id="ordersPic">
+	// 					<img src="${item.ordersPic}" alt="kal" class="border-radius-lg shadow" />
+	// 				</div>
+	// 				<div class="d-flex align-items-start flex-column justify-content-center">
+	// 					<h6 class="mb-0 text-sm" id="publisher">${item.publisher}</h6>
+	// 					<p class="mb-0 text-xs" id="actName">${item.actName}</p>
+	// 				</div>
+	// 				<a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" href="javascript:;">訂單詳情</a>
+	// 			</li>
+	// 		</ul>
+	// 		`;
+	// 	});
+	// 	$("#myOrders ul").html(ul_orders_html);
+	// 	ul_orders_html = "";
+	// });
 
-	$("#myFavoriteActivities").on("click", function (e) {
-		let this_pic = $("#myFavoriteActivities:first('div'):first('div'):first('div') img");
-		let div_fav_act_html = "";
-		// console.log(this_pic)
+	// /*  我的最愛  */
+	// /*  將 myFavoriteActivities 資料用陣列物件包裝  */
+	// let myFavoriteActivities_item = [];
 
-		/*  抓取我的最愛各物件的元素  */
-		$(myFavoriteActivities_item).each(function (i, item) {
-			console.log(this);
+	// /*  用 for each 抓值範例
+	// let sort_item = [];
 
-			div_fav_act_html += `
-			<div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-        	    <div class="card card-blog card-plain">
-        	        <div class="position-relative">
-        	            <a class="d-block shadow-xl border-radius-xl">
-        	                <img src="${this.favPic}" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl" />
-        	            </a>
-        	        </div>
-        	        <div class="card-body px-1 pb-0">
-        	            <p class="text-gradient text-dark mb-2 text-sm">Fav #1</p>
-        	            <a href="javascript:;">
-        	                <h5>${this.publisher}</h5>
-        	            </a>
-        	            <p class="mb-4 text-sm">${this.activity}</p>
-        	            <div class="d-flex align-items-center justify-content-between">
-        	                <button type="button" class="btn btn-outline-primary btn-sm mb-0">活動詳情</button>
-			
-        	            </div>
-        	        </div>
-        	    </div>
-        	</div>		
-			`;
-		});
-		$("#myFavoriteActivities").html(div_fav_act_html);
-	});
+	// $("ul.task_list").children("li").each(function (i, item) {
+	// 	console.log(this)
+	// 	$(this).attr("data-sort", i + 1);
+
+	// 	sort_item.push({
+	// 		"item_id": $(this).attr("data-id"),
+	// 		"sort": $(this).attr("data-sort")
+	// 	});
+	// });	
+	// */
+
+	// myFavoriteActivities_item.push(
+	// 	{
+	// 		publisher: "廠商",
+	// 		activity: "活動名稱",
+	// 		favPic: "./assets/img/kirby_yoyo.png",
+	// 	},
+	// 	{
+	// 		publisher: "廠商1",
+	// 		activity: "活動名稱1",
+	// 		favPic: "./assets/img/KIRBY.png",
+	// 	},
+	// 	{
+	// 		publisher: "廠商2",
+	// 		activity: "活動名稱2",
+	// 		favPic: "圖片路徑2",
+	// 	}
+	// );
+	// // console.log(myFavoriteActivities_item);
+
+	// $("#myFavoriteActivities").on("click", function (e) {
+	// 	let this_pic = $("#myFavoriteActivities:first('div'):first('div'):first('div') img");
+	// 	let div_fav_act_html = "";
+	// 	// console.log(this_pic)
+
+	// 	/*  抓取我的最愛各物件的元素  */
+	// 	$(myFavoriteActivities_item).each(function (i, item) {
+	// 		console.log(this);
+
+	// 		div_fav_act_html += `
+	// 		<div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+	//     	    <div class="card card-blog card-plain">
+	//     	        <div class="position-relative">
+	//     	            <a class="d-block shadow-xl border-radius-xl">
+	//     	                <img src="${this.favPic}" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl" />
+	//     	            </a>
+	//     	        </div>
+	//     	        <div class="card-body px-1 pb-0">
+	//     	            <p class="text-gradient text-dark mb-2 text-sm">Fav #1</p>
+	//     	            <a href="javascript:;">
+	//     	                <h5>${this.publisher}</h5>
+	//     	            </a>
+	//     	            <p class="mb-4 text-sm">${this.activity}</p>
+	//     	            <div class="d-flex align-items-center justify-content-between">
+	//     	                <button type="button" class="btn btn-outline-primary btn-sm mb-0">活動詳情</button>
+
+	//     	            </div>
+	//     	        </div>
+	//     	    </div>
+	//     	</div>		
+	// 		`;
+	// 	});
+	// 	$("#myFavoriteActivities").html(div_fav_act_html);
+	// });
 
 	/*  ================================== sign-in 登入 ================================== */
 	/*  ================================== 觸發點擊事件後打包資料，轉交資料 ================================== */
@@ -597,7 +597,7 @@ $(function () {
 
 	/*  ================================== change-personal-info 修改會員基本資料 ================================== */
 	/*  將 change-personal-info 資料用物件包裝  */
-	let changInfo_item = {
+	let changInfoItem = {
 		name: "",
 		nickname: "",
 		email: "",
@@ -648,11 +648,11 @@ $(function () {
 		// console.log(memberInfo_birthdate_html);
 		// console.log(memberInfo_cellphone_html);
 
-		changInfo_item.name = memberInfo_name_html;
-		changInfo_item.nickname = memberInfo_nickname_html;
-		changInfo_item.email = memberInfo_email_html;
-		changInfo_item.birthdate = memberInfo_birthdate_html;
-		changInfo_item.cellphone = memberInfo_cellphone_html;
+		changInfoItem.name = memberInfo_name_html;
+		changInfoItem.nickname = memberInfo_nickname_html;
+		changInfoItem.email = memberInfo_email_html;
+		changInfoItem.birthdate = memberInfo_birthdate_html;
+		changInfoItem.cellphone = memberInfo_cellphone_html;
 		// console.log(changInfo_item)
 	});
 	/*  ================================== change-password 修改密碼 ================================== */

@@ -5,10 +5,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
-
 PubUserService pubUserSvc = new PubUserService();
 List<PubUserVO> list = pubUserSvc.getAll();
+//PubUserVO list = pubUserSvc.getOnePubUser(pubUserID);
 pageContext.setAttribute("list", list);
+
 
 System.out.println(list);
 %>
@@ -66,15 +67,14 @@ System.out.println(list);
 			<section class="content">
 
 				<ul>
-					
-					
+
+
 					<li>
 						<form METHOD="post"
 							ACTION="<%=request.getContextPath()%>/pubuser/pubuser.do">
-							<b>輸入使用者編號：</b> 
-							<input type="text" name="pubUserID"> 
-							<input type="submit" value="送出"> 
-							<input type="hidden" name="action" value="getOneForDisplay">
+							<b>輸入使用者編號：</b> <input type="text" name="pubUserID"> <input
+								type="submit" value="送出"> <input type="hidden"
+								name="action" value="getOneForDisplay">
 						</form>
 					</li>
 
@@ -84,16 +84,26 @@ System.out.println(list);
 					<li>
 						<form METHOD="post"
 							ACTION="<%=request.getContextPath()%>/pubuser/pubuser.do">
-							<b>選擇使用者姓名：</b> 
-							<select name="pubUserID">
+							<b>選擇使用者姓名：</b> <select name="pubUserID">
 								<c:forEach var="pubUserVO" items="${pubuserSvc.all}">
 									<option value="${pubUserVO.pubUserID}">${pubUserVO.pubNickname}
 								</c:forEach>
-							</select>
-							<input type="submit" value="送出"> 
-							<input type="hidden" name="action" value="getOneForDisplay">
+							</select> <input type="submit" value="送出"> <input type="hidden"
+								name="action" value="getOneForDisplay">
 						</form>
 					</li>
+					
+					
+					<li>
+						<form METHOD="post"
+							ACTION="<%=request.getContextPath()%>/pubuser/pubuser.do">
+							<b>選擇權限：</b> <select name="Authority">
+								<c:forEach var="Authority" items="${pubuserSvc.all}">
+									<option value="${pubUserVO.pubAuthority}">${pubUserVO.pubAuthority}
+								</c:forEach>
+							</select> <input type="submit" value="送出"> <input type="hidden"
+								name="action" value="getOneForDisplay">
+						</form>
 				</ul>
 			</section>
 			<section class="content">
@@ -107,8 +117,8 @@ System.out.println(list);
 								<div class="form-group">
 									<label>姓名查詢：</label>
 									<div class="input-group">
-										<input type="text" name="pubUserID" value="${param.pubUserID}"
-											class="form-control" placeholder="請輸入名字">
+										<input type="text" name="pubNickname" class="form-control"
+											placeholder="請輸入名字">
 									</div>
 								</div>
 							</div>
@@ -116,26 +126,28 @@ System.out.println(list);
 								<div class="form-group">
 									<label>使用者編號：</label>
 									<div class="input-group">
-										<input type="text" name="pubUserID" value="${param.pubUserID}"
+										<input type="text" name="pubUserID"
 											class="form-control" placeholder="請輸入編號">
 									</div>
 								</div>
 							</div>
+							
 							<div class="col-5">
 								<div class="form-group">
-									<label>使用者權限：</label> <select class="form-control"
-										style="width: 100%;">
-										<option>高階權限</option>
-										<option>一般權限</option>
+									<label>使用者權限：</label><select name="pubAuthority" class="form-control"
+										style="width: 100%">
+										<option value="0">高階權限</option>
+										<option value="1">一般權限</option>
 									</select>
 								</div>
 							</div>
+							
 							<div class="col-2">
 								<div class="form-group">
 									<label style="padding-bottom: 17px"></label> <a
 										href="<%=request.getContextPath()%>/pubuser/pubuser.do">
-										<button type="submit" class="btn btn-dark" style="width: 100%"
-											value="送出">送出</button>
+										<button type="submit" class="btn btn-dark" style="width: 100%" >送出</button>
+										<input type="hidden" name="action" value="pubuserCompositeQuery">
 									</a>
 								</div>
 							</div>
@@ -144,7 +156,7 @@ System.out.println(list);
 					</div>
 
 				</form>
-
+				<%-- 萬用複合查詢 --%>
 			</section>
 			<!-- Main content -->
 			<section class="content">
@@ -168,8 +180,8 @@ System.out.println(list);
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach var="pu" items="${list}"
-												begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+											<c:forEach var="pu" items="${list}" begin="<%=pageIndex%>"
+												end="<%=pageIndex+rowsPerPage-1%>">
 												<tr>
 													<td>${pu.pubUserID}</td>
 													<td>${pu.pubNickname}</td>
@@ -178,23 +190,28 @@ System.out.println(list);
 													<td>
 														<Form METHOD="post"
 															ACTION="<%=request.getContextPath()%>/pubuser/pubuser.do">
-															<input type="submit" value="修改" class="btn btn-block btn-success btn-sm">
-															<input type="hidden" name="pubUserID" value="${pu.pubUserID}"> 
-															<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> 
-															<input type="hidden" name="whichPage" value="<%=whichPage%>">
-															<input type="hidden" name="action" value="getOneForUpdate">
-															
+															<input type="submit" value="修改"
+																class="btn btn-block btn-success btn-sm"> <input
+																type="hidden" name="pubUserID" value="${pu.pubUserID}">
+															<input type="hidden" name="requestURL"
+																value="<%=request.getServletPath()%>"> <input
+																type="hidden" name="whichPage" value="<%=whichPage%>">
+															<input type="hidden" name="action"
+																value="getOneForUpdate">
+
 														</Form>
 													</td>
 													<td>
 														<Form METHOD="post"
 															ACTION="<%=request.getContextPath()%>/pubuser/pubuser.do">
-															<input type="submit" value="刪除" class="btn btn-block btn-danger btn-sm">
-															<input type="hidden" name="pubUserID" value="${pu.pubUserID}"> 
-															<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> 
-															<input type="hidden" name="whichPage" value="<%=whichPage%>">
+															<input type="submit" value="刪除"
+																class="btn btn-block btn-danger btn-sm"> <input
+																type="hidden" name="pubUserID" value="${pu.pubUserID}">
+															<input type="hidden" name="requestURL"
+																value="<%=request.getServletPath()%>"> <input
+																type="hidden" name="whichPage" value="<%=whichPage%>">
 															<input type="hidden" name="action" value="delete">
-															
+
 														</Form>
 													</td>
 												</tr>
