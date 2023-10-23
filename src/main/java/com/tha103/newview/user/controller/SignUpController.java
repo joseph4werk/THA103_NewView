@@ -19,8 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
 import com.tha103.newview.user.service.UserService;
 import com.tha103.newview.user.service.UserServiceImpl;
+
+import redis.clients.jedis.Jedis;
 
 @WebServlet("/SignUp")
 public class SignUpController extends HttpServlet {
@@ -36,6 +39,8 @@ public class SignUpController extends HttpServlet {
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
 		HttpSession session = req.getSession();
+		Gson gson = new Gson();
+		String json = null;
 
 		/*************************** 1.接收請求參數 **********************/
 		String name = req.getParameter("name");
@@ -52,11 +57,18 @@ public class SignUpController extends HttpServlet {
 		System.out.println(account);
 
 		if (!userSvc.checkUserAccount(account)) {
-			// call sendMail 方法，順便將產生的驗證碼記錄進 sessionAttribute
+			// call sendMail 方法，產生驗證碼
 			String verificationCode = getVerificationCode();
 			sendMail(email, verificationCode);
-			session.setAttribute("verificationCode", verificationCode);
 
+			// 使用 Jedis 將 userAccount 當 key 存入驗證碼的資訊
+			Jedis jedis = new Jedis("localhost");
+			jedis.select(15);
+			jedis.set("UserAccount:" + account, verificationCode);
+			jedis.expire(verificationCode, 600);
+			jedis.close();
+
+			System.out.println("將資料存進 redis 15 DB");
 			System.out.println("usercontroller's verificationCode: " + verificationCode);
 
 			// 將接到的參數存入 session 以提供下之程式(驗證碼)使用
@@ -67,10 +79,17 @@ public class SignUpController extends HttpServlet {
 			session.setAttribute("cellphone", cellphone);
 			session.setAttribute("email", email);
 			session.setAttribute("nickname", nickname);
-
+			
+			json = gson.toJson("success");
+			out.write(json);
+			return;
+			
 		} else {
 			System.out.println("使用者已存在");
 			out.println("使用者已存在");
+			json = gson.toJson("failed");
+			out.write(json);
+			return;
 		}
 	}
 
@@ -100,7 +119,7 @@ public class SignUpController extends HttpServlet {
 			// 設定信中的主旨
 			message.setSubject("NewView 註冊驗證碼");
 			// 設定信中的內容
-			message.setText("您好，歡迎您註冊成為 NewView 會員，請輸入以下驗證碼以完成會員註冊，謝謝。\n\n" + "驗證碼：\n" + verificationCode);
+			message.setText("您好，歡迎您註冊成為 NewView 會員，請輸入以下驗證碼以完成會員註冊，謝謝。\n\n" + "驗證碼：\n[" + verificationCode + "]");
 
 			Transport.send(message);
 			System.out.println("傳送成功!");

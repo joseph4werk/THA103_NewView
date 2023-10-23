@@ -393,7 +393,7 @@
                 <p class="mb-0 text-lead text-black">請填入以下資訊進行註冊</p>
               </div>
               <div class="card-body" id="register">
-                <form role="form text-left">
+                <form role="form text-left" id="regiester_form">
                   <div class="mb-3">
                     <input
                       type="text"
@@ -461,7 +461,7 @@
                       aria-label="Email"
                       aria-describedby="email-addon"
                       required="required"
-                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                      pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
                     />
                   </div>
                   <div class="mb-3">
@@ -486,8 +486,8 @@
                       class="form-control"
                       type="password"
                       placeholder="設定密碼(格式:含英數至少3個字元)"
-                      pattern="{3,}$"
                       required="required"
+                      pattern="^(?=.*[a-zA-Z][0-9])(?=.*).{3,}$"
                       oninput="setCustomValidity('');"
                       oninvalid="setCustomValidity('請輸入正確的密碼格式:含英數至少三個字元');"
                     />
@@ -773,7 +773,7 @@
 
     <!--===============================================================================================-->
     <script>
-      $("#submit").on("click", function (e) {
+      $("#regiester_form").submit(function (e) {
         e.preventDefault();
         /*  將 sign-up 資料用物件包裝  */
         let signUp_item = {
@@ -787,9 +787,6 @@
         };
         console.log(signUp_item);
 
-        $("#myForm").submit();
-        checkInfo(signUp_item);
-
         $.ajax({
           url: "http://localhost:8081/com.tha103.newview/SignUp",
           type: "POST",
@@ -799,12 +796,20 @@
             console.log("beforesend");
           },
           success: function (data) {
-            alert("驗證碼寄到您的信箱！");
-            location.href = "registration-verification.html";
+            redirect(data);
           },
           complete: function (xhr) {},
         });
-        function checkInfo(signUp_item) {}
+        function redirect(data) {
+          switch (data) {
+            case "success":
+              alert("驗證碼已寄到您的信箱，請前往收信並驗證。");
+              location.href = "registration-verification.html";
+              break;
+            case "failed":
+              alert("註冊失敗，請修正後再提交申請！");
+          }
+        }
       });
     </script>
 

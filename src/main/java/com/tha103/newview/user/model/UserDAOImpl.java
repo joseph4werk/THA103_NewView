@@ -35,7 +35,6 @@ public class UserDAOImpl implements UserDAO {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
-		session.getTransaction().commit();
 		return userID;
 	}
 
@@ -53,7 +52,6 @@ public class UserDAOImpl implements UserDAO {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
-		session.getTransaction().commit();
 		return -1;
 	}
 
@@ -74,7 +72,6 @@ public class UserDAOImpl implements UserDAO {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
-		session.getTransaction().commit();
 		return -1;
 	}
 
@@ -110,7 +107,6 @@ public class UserDAOImpl implements UserDAO {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
-		session.getTransaction().commit();
 		return null;
 	}
 
