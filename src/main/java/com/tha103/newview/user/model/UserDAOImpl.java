@@ -35,6 +35,7 @@ public class UserDAOImpl implements UserDAO {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
+		session.getTransaction().commit();
 		return userID;
 	}
 
@@ -52,6 +53,7 @@ public class UserDAOImpl implements UserDAO {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
+		session.getTransaction().commit();
 		return -1;
 	}
 
@@ -72,6 +74,7 @@ public class UserDAOImpl implements UserDAO {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
+		session.getTransaction().commit();
 		return -1;
 	}
 
@@ -89,6 +92,7 @@ public class UserDAOImpl implements UserDAO {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
+		session.getTransaction().commit();
 		return null;
 	}
 
@@ -106,6 +110,7 @@ public class UserDAOImpl implements UserDAO {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
+		session.getTransaction().commit();
 		return null;
 	}
 
@@ -130,6 +135,7 @@ public class UserDAOImpl implements UserDAO {
 			session.getTransaction().rollback();
 		}
 		// 若存在使用者帳號查得到值-> 回傳 true
+		session.getTransaction().commit();
 		return true;
 	}
 
@@ -167,25 +173,27 @@ public class UserDAOImpl implements UserDAO {
 			session.getTransaction().rollback();
 		}
 		// 若使用者不存在得不到值 -> 回傳 false
+		session.getTransaction().commit();
 		return false;
 	}
 
 	@Override
 	public UserVO getUserByAccount(String account) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		
+
 		try {
 			session.beginTransaction();
-			
+
 			String sql = "from UserVO WHERE userAccount = :userAccount ";
 			UserVO userVO = (UserVO) session.createQuery(sql).setParameter("userAccount", account).uniqueResult();
 			session.getTransaction().commit();
-			
+
 			return userVO;
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 
 		}
+		session.getTransaction().commit();
 		return null;
 	}
 
@@ -195,18 +203,63 @@ public class UserDAOImpl implements UserDAO {
 
 		try {
 			session.beginTransaction();
-			
+
 			String sql = "from OrdersVO WHERE userID = :userID ";
 			OrdersVO ordersVO = (OrdersVO) session.createQuery(sql).setParameter("userID", userID).uniqueResult();
 			session.getTransaction().commit();
-			
+
 			return ordersVO;
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 
 		}
+		session.getTransaction().commit();
 		return null;
 	}
-	
-	
+
+	@Override
+	public boolean checkUserAccountByEmail(String email) {
+
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+
+			String sql = "from UserVO WHERE userEmail = :userEmail";
+			UserVO user = (UserVO) session.createQuery(sql).setParameter("userEmail", email).uniqueResult();
+
+//			System.out.println(user);
+
+			// 若不存在使用者為 null -> 回傳 false
+			if (user == null) {
+				session.getTransaction().commit();
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		// 若存在使用者查得到值-> 回傳 true
+		session.getTransaction().commit();
+		return true;
+	}
+
+	@Override
+	public UserVO getUserByEmail(String email) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		try {
+			session.beginTransaction();
+
+			String sql = "from UserVO WHERE userEmail = :userEmail ";
+			UserVO userVO = (UserVO) session.createQuery(sql).setParameter("userEmail", email).uniqueResult();
+			session.getTransaction().commit();
+
+			return userVO;
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+
+		}
+		session.getTransaction().commit();
+		return null;
+	}
 }

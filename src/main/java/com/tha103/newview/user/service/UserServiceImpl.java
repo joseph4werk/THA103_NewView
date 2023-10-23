@@ -55,6 +55,16 @@ public class UserServiceImpl implements UserService {
 	public OrdersVO getOrderByUserID(Integer userID) {
 		return userdao.getOrderByUserID(userID);
 	}
+
+	@Override
+	public boolean checkUserAccountByEmail(String email) {
+		return userdao.checkUserAccountByEmail(email);
+	}
+
+	@Override
+	public UserVO getUserByEmail(String email) {
+		return userdao.getUserByEmail(email);
+	}
 	
 	
 }

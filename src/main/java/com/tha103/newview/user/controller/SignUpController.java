@@ -23,7 +23,7 @@ import com.tha103.newview.user.service.UserService;
 import com.tha103.newview.user.service.UserServiceImpl;
 
 @WebServlet("/SignUp")
-public class UserController extends HttpServlet {
+public class SignUpController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
