@@ -4,11 +4,12 @@ public class SeatInfo {
 	private String userName;
 	private String seatNumber;
 	private String seatType;
-
-	public SeatInfo(String userName, String seatNumber, String seatType) {
+	private String actID;
+	public SeatInfo(String userName, String seatNumber, String seatType,String actID) {
 		this.userName = userName;
 		this.seatNumber = seatNumber;
 		this.seatType = seatType;
+		this.actID = actID;
 	}
 
 	public String getUserName() {
@@ -33,6 +34,14 @@ public class SeatInfo {
 
 	public void setSeatType(String seatType) {
 		this.seatType = seatType;
+	}
+
+	public String getActID() {
+        return actID;
+    }
+
+	public void setActID(String actID) {
+		this.actID = actID;
 	}
 
 	
