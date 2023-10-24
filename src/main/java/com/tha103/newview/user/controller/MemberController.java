@@ -3,6 +3,7 @@ package com.tha103.newview.user.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.tha103.newview.orderlist.model.OrderListVO;
 import com.tha103.newview.orders.model.OrdersVO;
 import com.tha103.newview.user.model.UserVO;
 import com.tha103.newview.user.service.UserService;
@@ -44,6 +46,8 @@ public class MemberController extends HttpServlet {
 		UserVO userVO = userSvc.getUserByPK(Integer.valueOf(userID));
 		OrdersVO ordersVO = userSvc.getOrderByUserID(Integer.valueOf(userID));
 //		System.out.println(userVO);
+		Integer orderID = ordersVO.getOrderID();
+		
 
 		// 取得會員資料
 		String name = userVO.getUserName();
@@ -53,8 +57,8 @@ public class MemberController extends HttpServlet {
 		String cellphone = userVO.getUserCell();
 
 		// 取得訂單資料
-		String pubName = ordersVO.getPublisherVO().getPubName();
-		System.out.println("pubName: " + pubName);
+//		String pubName = ordersVO.getPublisherVO().getPubName();
+//		System.out.println("pubName: " + pubName);
 
 		// 加入 map 中，使用 json 傳遞物件
 		data.put("userID", userID);
@@ -63,8 +67,11 @@ public class MemberController extends HttpServlet {
 		data.put("email", email);
 		data.put("birthdate", birthdate);
 		data.put("cellphone", cellphone);
+		data.put("publisher", publisher);
+		data.put("activity", activity);
+//		data.put("ordersPic", ordersPic);
 
-//		System.out.println(data);
+		System.out.println(data);
 
 		// 使用 out.write() 傳遞 json 格式資料
 		String json = gson.toJson(data);

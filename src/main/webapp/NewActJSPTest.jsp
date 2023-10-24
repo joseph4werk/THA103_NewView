@@ -9,12 +9,16 @@
 <%@ page import="com.tha103.newview.cityaddress.model.*"%>
 <%@ page import="com.tha103.newview.publisher.model.*"%>
 <%@ page import="com.tha103.newview.act.controller.*"%>
+<%@ page import="com.tha103.newview.user.model.*"%>
 <%
 ActDAO actDAO = new ActDAOHibernateImpl();
+UserDAO user = new UserDAOImpl();
 ActService actSvc = new ActServiceImpl(actDAO);
 List<ActVO> list = actSvc.getAll();
+List<UserVO> userlist = user.getAll();
 List<ActCategory> categories = actSvc.getAllCategories();
 List<CityAddress> city = actSvc.getAllCities();
+pageContext.setAttribute("user", userlist);
 pageContext.setAttribute("city", city);
 pageContext.setAttribute("list", list);
 pageContext.setAttribute("categories", categories);
@@ -103,9 +107,24 @@ pageContext.setAttribute("categories", categories);
 <!--===============================================================================================-->
 </head>
 <body class="animsition">
-	<%
-	request.setCharacterEncoding("UTF-8");
-	%>
+
+	
+
+	<table border="1">
+		<tr>
+			<th>User ID</th>
+		</tr>
+
+		<c:if test="${not empty user}">
+			<tr>
+				<td>${user[0].userID}</td>
+				<script>
+					userIDValue = "${user[0].userID}";
+				</script>
+
+			</tr>
+		</c:if>
+	</table>
 	<!-- Header -->
 	<header class="header-v4">
 		<!-- Header desktop -->
@@ -575,53 +594,61 @@ pageContext.setAttribute("categories", categories);
 
 				<div id="act-container">
 					<c:forEach var="actData" items="${list}">
-    <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${actData.actCategory.actCategoryName} block2">
-        <div class="block2">
-            <div class="block2-pic hov-img0">
-                <img src="" alt="IMG-PRODUCT" id="actImage_${actData.actID}" />
-                 <a href="#" data-act-id="${actData.actID}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" onclick="showModal(this)">
-                            活動詳細
-                        </a>
-            </div>
-            <div class="block2-txt flex-w flex-t p-t-14">
-                <p style="font-size: 11px" id="activity-datetime">活動日期:
-                    ${actData.actTime} ${actData.time}</p>
-                <div class="block2-txt-child1 flex-col-l">
-                    <div style="width: 100%; overflow: hidden">
-                        <div style="float: left">
-                            <form action="<%=request.getContextPath()%>/SearchSe" method="post" id="searchForm_${actData.actID}">
-                                <input type="hidden" name="actID" value="${actData.actID}">
-                                <input type="hidden" name="action" value="pageChange">
-                                <a href="javascript:void(0);"
-                                   class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                                   onclick="document.getElementById('searchForm_${actData.actID}').submit();">
-                                   ${actData.actName}
-                                </a>
-                            </form>
-                        </div>
-                        <div style="float: right">
-                            <span class="stext-105 cl3" id="activity-price"> TWD ${actData.actPrice} </span>
-                        </div>
-                    </div>
-                    <hr style="margin-top: 0" size="8px" align="center" width="100%" />
-                    <div style="width: 100%; overflow: hidden">
-                        <div style="float: left">
-                            <a href="#"> <img src="./images/icons/iStock-902788474 (1).png" alt="" />
-                                ${actData.cityAddressID.cityName}
-                            </a>
-                        </div>
-                        <div style="float: right" class="block2-txt-child2 flex-r p-t-3">
-                            <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" />
-                                <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" />
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</c:forEach>
+						<div
+							class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${actData.actCategory.actCategoryName} block2">
+							<div class="block2">
+								<div class="block2-pic hov-img0">
+									<img src="" alt="IMG-PRODUCT" id="actImage_${actData.actID}" />
+									<a href="#" data-act-id="${actData.actID}"
+										class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
+										onclick="showModal(this)"> 活動詳細 </a>
+								</div>
+								<div class="block2-txt flex-w flex-t p-t-14">
+									<p style="font-size: 11px" id="activity-datetime">活動日期:
+										${actData.actTime} ${actData.time}</p>
+									<div class="block2-txt-child1 flex-col-l">
+										<div style="width: 100%; overflow: hidden">
+											<div style="float: left">
+												<form action="<%=request.getContextPath()%>/SearchSe"
+													method="post" id="searchForm_${actData.actID}">
+													<input type="hidden" name="actID" value="${actData.actID}">
+													<input type="hidden" name="action" value="pageChange">
+													<a href="javascript:void(0);"
+														class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
+														onclick="document.getElementById('searchForm_${actData.actID}').submit();">
+														${actData.actName} </a>
+												</form>
+											</div>
+											<div style="float: right">
+												<span class="stext-105 cl3" id="activity-price"> TWD
+													${actData.actPrice} </span>
+											</div>
+										</div>
+										<hr style="margin-top: 0" size="8px" align="center"
+											width="100%" />
+										<div style="width: 100%; overflow: hidden">
+											<div style="float: left">
+												<a href="#"> <img
+													src="./images/icons/iStock-902788474 (1).png" alt="" />
+													${actData.cityAddressID.cityName}
+												</a>
+											</div>
+											<div style="float: right"
+												class="block2-txt-child2 flex-r p-t-3">
+												<a href="#"
+													class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+													<img class="icon-heart1 dis-block trans-04"
+													src="images/icons/icon-heart-01.png" alt="ICON" /> <img
+													class="icon-heart2 dis-block trans-04 ab-t-l"
+													src="images/icons/icon-heart-02.png" alt="ICON" />
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
 				</div>
 				<!-- 活動空表格 -->
 				<script>
@@ -914,9 +941,11 @@ pageContext.setAttribute("categories", categories);
 
 								<div class="flex-w flex-r-m p-b-10">
 									<div class="size-204 flex-w flex-m respon6-next">
-										<button class="seatsTry" >
-											<a id="dynamic-link" href="#">馬上前往購買</a>
+										<button class="seatsTry">
+											<a id="dynamic-link" href="#" data-actid="ActIDValue"
+												data-userid="UserIDValue" onclick=sendDataToServer(packagedData);>馬上前往購買</a>
 										</button>
+
 									</div>
 								</div>
 							</div>
@@ -1059,31 +1088,31 @@ pageContext.setAttribute("categories", categories);
 
 	<!--更改 小視窗消息-->
 	<script>
+		var packagedData;
+		var userIDValue;
 		function showModal(elem) {
 			var actIdStr = elem.getAttribute("data-act-id");
 			sendAjaxRequest(actIdStr);
 		}
 
 		function sendAjaxRequest(actIdStr) {
-			var xhr = new XMLHttpRequest();
-			xhr.open('POST', 'SearchSe', true);
-			xhr.setRequestHeader('Content-type',
-					'application/x-www-form-urlencoded');
-
-			xhr.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					// 處理伺服器返回的數據
-					var response = this.responseText;
-					var data = JSON.parse(response);
-					displayReceivedData(data);
-
-				} else if (this.readyState == 4) {
-					console.error("Error fetching data");
-				}
-			};
-
-			xhr.send('action=getJsonData&actID=' + actIdStr);
+		    $.ajax({
+		        url: 'SearchSe',
+		        type: 'POST',
+		        data: {
+		            action: 'getJsonData',
+		            actID: actIdStr
+		        },
+		        dataType: 'json',
+		        success: function(data) {
+		            displayReceivedData(data);
+		        },
+		        error: function() {
+		            console.error("Error fetching data");
+		        }
+		    });
 		}
+
 
 		function displayReceivedData(dataArray) {
 
@@ -1097,20 +1126,29 @@ pageContext.setAttribute("categories", categories);
 			var time = data.time;
 			var DateTime = actDate + "  " + time;
 			var actScope = data.actScope;
+			var actID = data.actID;
+
 			var scale;
+		
 			
+			
+		
 			switch (actScope) {
+			
 			case 1:
 				scale = "最小規模";
-				
+				$('#dynamic-link').attr('href',
+						'seatChooseWebsocketSmall.jsp?actID=' + actID);
 				break;
 			case 2:
 				scale = "中等規模";
-				$('#dynamic-link').attr('href', 'seatchangeWebsocketMiddle.html');
+				$('#dynamic-link').attr('href',
+						'seatChooseWebsocket.jsp?actID=' + actID);
 				break;
 			case 3:
 				scale = "最大規模";
-				$('#dynamic-link').attr('href', 'seatchangeWebsocketMiddle.html');
+				$('#dynamic-link').attr('href',
+						'seatChooseWebsocketLarge.jsp?actID=' + actID);
 				break;
 			default:
 				console.error("未知的規模");
@@ -1161,6 +1199,25 @@ pageContext.setAttribute("categories", categories);
 			$("#castYA").text(actIntroduce);
 			$(".seatWT").text(scale);
 			$(".actDate").text(DateTime);
+			$('#dynamic-link').attr('data-actid', actID);
+			$('#dynamic-link').attr('data-userid', userIDValue);
+			
+			
+			  packagedData = {
+				        actName: actName,
+				        actImages: actImages,
+				        actPrice: actPrice,
+				        actIntroduce: actIntroduce,
+				        actScope: actScope,
+				        actDate: actDate,
+				        time: time,
+				        DateTime: DateTime,
+				        actID: actID,
+				        scale: scale,
+				        userid: userIDValue  
+				    };
+			 
+			 
 		}
 
 		var categoryMapping = {
@@ -1183,36 +1240,50 @@ pageContext.setAttribute("categories", categories);
 					}
 				}
 			});
-			 
-			 var userID = sessionStorage.getItem('userID');
-			 sessionStorage.setItem('userID',userID );
-				
+
 		};
-	
-function submitForm(actID, action) {
-    var form = document.getElementById('searchForm_' + actID);
-    if (form) {
-        var actIDField = document.createElement("input");
-        actIDField.setAttribute("type", "hidden");
-        actIDField.setAttribute("name", "actID");
-        actIDField.setAttribute("value", actID);
-        
-        var actionField = document.createElement("input");
-        actionField.setAttribute("type", "hidden");
-        actionField.setAttribute("name", "action");
-        actionField.setAttribute("value", action);
-        
-        form.appendChild(actIDField);
-        form.appendChild(actionField);
-        
-        form.submit();
-    }
-}
+
+		function submitForm(actID, action) {
+			var form = document.getElementById('searchForm_' + actID);
+			if (form) {
+				var actIDField = document.createElement("input");
+				actIDField.setAttribute("type", "hidden");
+				actIDField.setAttribute("name", "actID");
+				actIDField.setAttribute("value", actID);
+
+				var actionField = document.createElement("input");
+				actionField.setAttribute("type", "hidden");
+				actionField.setAttribute("name", "action");
+				actionField.setAttribute("value", action);
+
+				form.appendChild(actIDField);
+				form.appendChild(actionField);
+
+				form.submit();
+			}
+		}
+		/*傳送到座位*/
+		
+
+		function sendDataToServer(packagedData) {
+		    $.ajax({
+		        url: 'Seat',
+		        type: 'POST',
+		        contentType: 'application/json',
+		        data: JSON.stringify({
+		            action: "seat",
+		            ...packagedData
+		        }),
+		        success: function(response) {
+		        	 console.error("data is ok");
+		        },
+		        error: function() {
+		            console.error("Error sending data");
+		        }
+		    });
+		}
 
 
-function  showActID() {
-	
-}
-</script>
+	</script>
 </body>
 </html>
