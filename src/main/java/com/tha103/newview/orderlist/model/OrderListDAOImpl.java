@@ -7,7 +7,11 @@ import org.hibernate.Session;
 import com.tha103.util.HibernateUtil;
 
 public class OrderListDAOImpl implements OrderListDAO {
+	
 
+	public  OrderListDAOImpl() {
+	  
+	}
 	@Override
 	public int insert(OrderListVO orderListVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();

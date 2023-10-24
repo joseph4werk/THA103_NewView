@@ -1128,10 +1128,7 @@ pageContext.setAttribute("categories", categories);
 			var actScope = data.actScope;
 			var actID = data.actID;
 
-			var scale;
-		
-			
-			
+			var scale;		
 		
 			switch (actScope) {
 			

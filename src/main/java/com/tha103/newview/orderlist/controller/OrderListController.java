@@ -2,7 +2,6 @@ package com.tha103.newview.orderlist.controller;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.sql.Timestamp;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -25,12 +24,23 @@ import com.tha103.newview.act.service.ActServiceImpl;
 import com.tha103.newview.orderlist.model.OrderListDAO;
 import com.tha103.newview.orderlist.model.OrderListDAOImpl;
 import com.tha103.newview.orderlist.model.OrderListVO;
+import com.tha103.newview.orderlist.service.OrderListService;
+import com.tha103.newview.orderlist.service.OrderListServiceImpl;
 
 @WebServlet("/SeatOrderList")
 public class OrderListController extends HttpServlet {
+	
+	 private static final long serialVersionUID = 1L;
+	    private OrderListService orderListService; 
 
-	private static final long serialVersionUID = 1L;
+	    @Override
+	    public void init() throws ServletException {
+	        super.init();
+	        OrderListDAO orderListDAO = new OrderListDAOImpl();
+	        orderListService = new OrderListServiceImpl(orderListDAO);
+	    }
 
+	    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doPost(request, response);
@@ -38,6 +48,7 @@ public class OrderListController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		OrderListDAO orderListDAO = new OrderListDAOImpl();
 		int seatDataCount = 0;
 		int scope = 0;
@@ -120,13 +131,15 @@ public class OrderListController extends HttpServlet {
 			orderListVO.setActTotal(Total);
 			orderListVO.setOrderListTime(lastEditedTime);
 			orderListVO.setQRcodeID(qrCodeImage);
-
 			orderListVO.setActVO(act);
 			orderListVO.setSeatRows(((int) rowIndex1) + 1);
 			orderListVO.setSeatColumns(seatIndex1);
 			orderListVO.setVacancy(seatNumber+",未使用");
-
-			orderListDAO.insert(orderListVO);
+			if(orderListVO!=null) {
+			int result = orderListService.insert(orderListVO);
+			}else {
+				System.out.println("空值!!!!!!");
+			}
 		}
 	}
 

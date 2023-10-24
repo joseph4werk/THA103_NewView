@@ -59,7 +59,7 @@ public class CartController extends HttpServlet {
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //		var userID = req.getSession().getAttribute("userID");
-		Integer userID = 0;
+		Integer userID = 1;
 		Integer uid = (Integer) req.getSession().getAttribute("userID");
 		if (uid != null) {
 			userID = uid;

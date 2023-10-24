@@ -68,97 +68,108 @@ public class SearchAndListActsWithPicsServlet extends HttpServlet {
 //        System.out.println(action);
         try {
             if ("search".equals(action)) {
-                String actName = request.getParameter("search-product");
-                System.out.println(actName);
+            	 String actName = request.getParameter("search-product");
+            	    System.out.println(actName);
+            	    
+            	    if (actName == null || actName.isEmpty()) {
+            	        request.setAttribute("actNameError", "null");
+            	        request.getRequestDispatcher("NewActJSPTest.jsp").forward(request, response);
+            	        return;
+            	        // 沒有輸入就直接結束          	        
+            	    }
+            	    
+            	    List<ActWithPicsDTO> actWithPicsList = actService.searchActsByName(actName);
 
-                if (actName != null && !actName.isEmpty()) {
-                    List<ActWithPicsDTO> actWithPicsList = actService.searchActsByName(actName);
-
-                    if (!actWithPicsList.isEmpty()) {
-//                    	System.out.println(actWithPicsList);
-                        request.setAttribute("actWithPicsList", actWithPicsList); 
-                        request.getRequestDispatcher("/SearchNewFile.jsp").forward(request, response);
-                    } else {
-                        request.setAttribute("actNameNotFound", "notFound");
-                        request.getRequestDispatcher("NewActJSPTest.jsp").forward(request, response);
-                    }
-                } else {
-                    request.setAttribute("actNameError", "null");
-                    request.getRequestDispatcher("NewActJSPTest.jsp").forward(request, response);
-                }
+            	    if (actWithPicsList.isEmpty()) { 
+            	    	//如果沒找到
+            	        request.setAttribute("actNameNotFound", "notFound");
+            	        request.getRequestDispatcher("NewActJSPTest.jsp").forward(request, response);
+            	    } else {  
+            	    	//有找到
+            	        request.setAttribute("actWithPicsList", actWithPicsList); 
+            	        request.getRequestDispatcher("/SearchNewFile.jsp").forward(request, response);
+            	    }
+            	    
+            	    
             } else if ("update".equals(action)) {
                 String actId = request.getParameter("actId");
-                
-                if (actId != null && !actId.isEmpty()) {
-                    Integer actIdValue = Integer.parseInt(actId);
-                    ActWithPicsDTO actWithPicsDTO = actService.getActWithPicturesById(actIdValue);
 
-                    if (actWithPicsDTO != null) {
-                        List<ActWithPicsDTO> actWithPicsList = Arrays.asList(actWithPicsDTO);
-                        request.setAttribute("actWithPicsList",actWithPicsList);
-                        request.getRequestDispatcher("/update-act.jsp").forward(request, response);
-                    }
-                } else {
+                if (actId == null || actId.isEmpty()) {
                     request.setAttribute("actIdError", "null");
                     request.getRequestDispatcher("ActJSP.jsp").forward(request, response);
+                    return; //沒有輸入就結束
+                }
+
+                Integer actIdValue = Integer.parseInt(actId);
+                ActWithPicsDTO actWithPicsDTO = actService.getActWithPicturesById(actIdValue);
+
+                if (actWithPicsDTO != null) {
+                	//有找到
+                    List<ActWithPicsDTO> actWithPicsList = Arrays.asList(actWithPicsDTO);
+                    request.setAttribute("actWithPicsList", actWithPicsList);
+                    request.getRequestDispatcher("/update-act.jsp").forward(request, response);
                 }
             } else if ("getJsonData".equals(action)) {
 //            	System.out.println(action);
                 handleJsonResponse(request, response);
-            }else if ("UP".equals(action)) {
-            	 System.out.println(toDelete);
-            	if (toDelete != null && !toDelete.isEmpty()) {
-            	    try {
-            	      
-            	      actPicService.deleteActPic(toDelete);
-            	    } catch (NumberFormatException nfe) {
-            	       
-            	        nfe.printStackTrace();
-            	    } catch (Exception e) {
-            	       
-            	        e.printStackTrace();
-            	    }
-            	}
-            	   actUpdateService.updateActAndImages(request,response);
-
-                   
-                   response.sendRedirect("ActJSP.jsp");
-            }else  if ("delete".equals(action)) {
-                if (actIDelete != null && !actIDelete.isEmpty()) {
+            } else if ("UP".equals(action)) {
+                System.out.println(toDelete);
+                
+                if (toDelete != null && !toDelete.isEmpty()) {
+                	//先查看有無刪除動作再決定是否執行 圖片刪除
                     try {
-                    	System.out.println(actIDelete);
-//                        actService.delete(Integer.parseInt(actIDelete));
+                        actPicService.deleteActPic(toDelete);
+                    } catch (NumberFormatException nfe) {
+                        nfe.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                //最後執行修改資料方法
+                actUpdateService.updateActAndImages(request, response);
+                response.sendRedirect("ActJSP.jsp");
+                
+            } else if ("delete".equals(action)) {
+                if (actIDelete != null && !actIDelete.isEmpty()) {                	
+                    try {
+                        System.out.println(actIDelete);
+                        // actService.delete(Integer.parseInt(actIDelete));
                         response.getWriter().println("Act ID " + actIDelete + " 成功");
-                        response.sendRedirect("ActJSP.jsp");
                     } catch (Exception e) {
                         e.printStackTrace();
                         response.getWriter().println("Act ID " + actIDelete + " 失敗");
+                    } finally {
+                        response.sendRedirect("ActJSP.jsp");
                     }
                 } else {
                     response.getWriter().println("Act ID 不能為空");
                 }
-            }
-            else if ("pageChange".equals(action)) {
+            } else if ("pageChange".equals(action)) {
                 System.out.println(action);
                 String actIdString = request.getParameter("actID");
                 System.out.println(actIdString);
+                
                 if (actIdString != null) {
-                    Integer actId = Integer.parseInt(actIdString);
+                    try {
+                        Integer actId = Integer.parseInt(actIdString);
 
-                    ActServiceImpl actService = new ActServiceImpl();
-                    ActWithPicsDTO actWithPics = actService.getActWithPicsDTOById(actId);
+                        ActServiceImpl actService = new ActServiceImpl();
+                        ActWithPicsDTO actWithPics = actService.getActWithPicsDTOById(actId);
 
-                    if (actWithPics != null) {
-                     
-                        request.setAttribute("actData", actWithPics);
-
-                       
-                        request.getRequestDispatcher("/product-detail.jsp").forward(request, response);
-                    } else {
-                        response.getWriter().write("No data found for given actID");
+                        if (actWithPics != null) {
+                            request.setAttribute("actData", actWithPics);
+                            request.getRequestDispatcher("/product-detail.jsp").forward(request, response);
+                        } else {
+                            response.getWriter().write("No data found for given actID");
+                        }
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
+
 		        
             
         } catch (Exception e) {
