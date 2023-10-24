@@ -129,7 +129,7 @@
 							</li>
 
 							<li>
-								<a href="blog.html">討論區</a>
+								<a href="forum_home.html">討論區</a>
 							</li>
 
 							<li>
@@ -229,7 +229,7 @@
 				</li>
 
 				<li>
-					<a href="blog.html">討論區</a>
+					<a href="forum.home">討論區</a>
 				</li>
 
 				<li>
@@ -465,7 +465,7 @@
 			<!-- <div class="flex-w flex-tr"> -->
 			<div class=" bor10 p-lr-60 p-t-55 p-b-70 p-lr-15-lg w-full-md">
 				<form id="postform" action="/com.tha103.newview/DoPostServlet" method="post"
-					enctype="multipart/form-data">
+					enctype="multipart/form-data" name="action" value="update">
 
 					<h4 class="mtext-105 cl2 txt-center p-b-30">
 						填入文章資料
@@ -473,20 +473,13 @@
 
 
 					<div class="form-group">
-						<label for="userID"><strong>會員編號</strong></label>
-						<input type="text" id="userID" class="form-control" name="userID" placeholder="@userID"
-							readonly>
-					</div>
-
-					<div class="form-group">
 						<label for="userName"><strong>會員名稱</strong></label>
-						<input type="text" id="userName" class="form-control" name="userID" placeholder="@userID"
+						<input type="text" id="userName" class="form-control" name="userName" placeholder="@userName"
 							readonly>
 					</div>
 
 					<div class="form-group">
-						<label for="postID"><strong>文章編號</strong></label>
-						<input type="text" id="postID" class="form-control" name="postID" placeholder="@postID"
+						<input type="hidden" id="postID" class="form-control" name="postID" placeholder="@postID"
 							readonly>
 					</div>
 
@@ -550,8 +543,6 @@
 					<br>
 					<button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
 						type="submit" id="submitpost">
-
-
 						Submit
 					</button>
 				</form>
@@ -708,16 +699,13 @@
 			});
 
 			function displayPostDetails(data) {
-				console.log(data);
-				var userID = data.userID;
+
 				var userName = data.userName;
 				var postID = data.postID;
 				var postHeader = data.postHeader;
 				var postContent = data.postContent;
 				console.log(data.postHeader);
 
-
-			    $('#userID').val(userID);
 			    $('#userName').val(userName);
 			    $('#postID').val(postID);
 			    $('#posttitle').val(postHeader);
@@ -772,7 +760,7 @@
 
 			// 資料送出
 			btn_submit_el.addEventListener("click", function () {
-				
+				e.preventDefault();
 				var form_data = new FormData(the_form);
 
 				// 圖片轉Base64
@@ -789,19 +777,17 @@
 
 
 				// 其他數據
-				form_data.append("userID", document.getElementById("userID").value);
 				form_data.append("postID", document.getElementById("postID").value);
 				form_data.append("posttitle", document.getElementById("posttitle").value);
 				form_data.append("postCategoryID", document.getElementById("postcategory").value);
 				form_data.append("postcontent", document.getElementById("postcontent").value);
 				form_data.append("action", "update");
-				alert(form_data);
-				console.log("FormData:", form_data);
+				
 				
 				
 				// 發送請求到Server
 				$.ajax({
-					url: "http://localhost:8081/com.tha103.newview/DoPostServlet",
+					url: `http://localhost:8081/com.tha103.newview/DoPostServlet`,
 					type: "POST",
 					data: form_data,
 					contentType: false,

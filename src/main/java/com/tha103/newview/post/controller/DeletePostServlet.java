@@ -16,7 +16,6 @@ import com.google.gson.Gson;
 import com.tha103.newview.post.service.PostService;
 import com.tha103.newview.post.service.PostServiceImpl;
 
-
 @WebServlet("/DeletePostServlet")
 @MultipartConfig
 public class DeletePostServlet extends HttpServlet {
@@ -33,26 +32,25 @@ public class DeletePostServlet extends HttpServlet {
 		res.setContentType("application/json; charset=UTF-8");
 
 		// ***********************************DeleteByPK**********************************//
-		
+
 		System.out.println(12345);// 接受来自forum_revisedopost.html请求(Ajax)
 		int postID = Integer.parseInt(req.getParameter("postID").trim());
 		PostService postSvc = new PostServiceImpl();
-		int post = postSvc.deletePost(postID);
-		System.out.println("Success to delete Image");	
-		
-		
-		//-----------Json重導---------//
-		
+		postSvc.deletePost(postID);
+		System.out.println("Success to delete Image");
+
+		// -----------Json重導---------//
+
 		HttpSession session = req.getSession();
-		String location =(String) session.getAttribute("location");
+		String location = (String) session.getAttribute("location");
 		session.removeAttribute("location");
-		String redirectPath = location!=null?location :"forum_home.html";
-		
+		String redirectPath = location != null ? location : "forum_home.html";
+
 		Map<String, Object> jsonData = new HashMap<>();
-		jsonData.put("location",redirectPath);
+		jsonData.put("location", redirectPath);
 		Gson gson = new Gson();
 		String json = gson.toJson(jsonData);
 		res.getWriter().write(json);
-					
+
 	}
 }

@@ -114,102 +114,53 @@ public class PostDAOImpl implements PostDAO {
 		return null;
 	}
 
-//	這個DOA裡查詢可以用來排序的發文時間postDateTime、依照likeCount跟disLikeCount加總數字計算出的熱門度以及可以做分類的列表查詢，返回一个 List，其中包含满足查询条件的文章对象，但方法設計中，實際在前端運作時，用戶可以:
-//		1. 使用篩選器: 可選新到舊，舊到新，最熱門，預設新到舊
-//		2.可以關鍵字查詢: 只要輸入隨意的中文字就可以比對文章標題postHeader;輸入數字的話則UserID會被比對，預設不查詢可為空值
-//		3. 有分類頁籤，總共有7大類，每類有不同categoryID ，預設全部
-
-	
-//	@Override
-//	public List<PostVO> getByCompositeQuery(Map<String, String> query, String orderBy, int start, int pageSize) {
-//	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-//
-//	    try {
-//	        session.beginTransaction();
-//
-//	        CriteriaBuilder builder = session.getCriteriaBuilder();
-//	        CriteriaQuery<PostVO> criteria = builder.createQuery(PostVO.class);
-//	        Root<PostVO> root = criteria.from(PostVO.class);
-//
-//	        List<Predicate> predicates = new ArrayList<>();
-//
-//	        // 添加關鍵字搜索（匹配文章標题）
-//	        if (query.containsKey("keyword") && !query.get("keyword").isEmpty()) {
-//	            String keyword = "%" + query.get("keyword") + "%";
-//	            predicates.add(builder.like(root.get("postHeader"), keyword));
-//	        }
-//
-//	        // 添加分類篩選
-//	        if (query.containsKey("categoryID") && !query.get("categoryID").isEmpty()) {
-//	            int categoryID = Integer.parseInt(query.get("categoryID"));
-//	            predicates.add(builder.equal(root.get("postCategoryID"), categoryID));
-//	        }
-//	        
-//	        
-//	        // 根據用戶篩選器選擇排序條件
-//	        if ("newest".equals(orderBy)) {
-//	            criteria.orderBy(builder.desc(root.get("postDateTime")));
-//	        } else if ("oldest".equals(orderBy)) {
-//	            criteria.orderBy(builder.asc(root.get("postDateTime")));
-//	        } else if ("popular".equals(orderBy)) {
-//	            criteria.orderBy(builder.desc(root.get("likeCount").add(root.get("disLikeCount"))));
-//	        }
-//
-//	        criteria.where(builder.and(predicates.toArray(new Predicate[0])));
-//
-//	        TypedQuery<PostVO> typedQuery = session.createQuery(criteria).setFirstResult(start)
-//	                .setMaxResults(pageSize);
-//	        session.getTransaction().commit();
-//	        return typedQuery.getResultList();
-//
-//	    } catch (Exception e) {
-//	        e.printStackTrace();
-//	        session.getTransaction().rollback();
-//
-//	    }
-//	    return null;
-//	}
 
 
-	public int getTotalCountByCompositeQuery(Map<String, String> query) {
+	@Override
+	public List<PostVO> findByCategory(int postCategoryID) {
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-	    
+
 	    try {
 	        session.beginTransaction();
-	        CriteriaBuilder builder = session.getCriteriaBuilder();
-	        CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
-	        Root<PostVO> root = criteria.from(PostVO.class);
-	        
-	        // 構建查詢條件
-	        List<Predicate> predicates = new ArrayList<>();
-	        if (query.containsKey("keyword") && !query.get("keyword").isEmpty()) {
-	            String keyword = "%" + query.get("keyword") + "%";
-	            predicates.add(builder.like(root.get("postHeader"), keyword));
-	        }
-	        if (query.containsKey("categoryID") && !query.get("categoryID").isEmpty()) {
-	            int categoryID = Integer.parseInt(query.get("categoryID"));
-	            predicates.add(builder.equal(root.get("postCategoryID"), categoryID));
-	        }
-	        
-	        // 添加其他條件
-	        
-	        criteria.where(builder.and(predicates.toArray(new Predicate[0])));
-	        
-	        // 使用 count 函數獲取總數
-	        criteria.select(builder.count(root));
-	        
-	        Long count = session.createQuery(criteria).getSingleResult();
+	        // 使用 HQL 查詢
+	        List<PostVO> catelist = session.createQuery("FROM PostVO p WHERE p.postCategoryVO.postCategoryID = :postCategoryID", PostVO.class)
+	                .setParameter("postCategoryID", postCategoryID)
+	                .list();
 	        session.getTransaction().commit();
-	        
-	        // 將 Long 型別轉換為 int 並返回
-	        return count.intValue();
+	        return catelist;
 	    } catch (Exception e) {
-	        session.getTransaction().rollback();
 	        e.printStackTrace();
-	        return 0;
+	        session.getTransaction().rollback();
 	    }
+	    return null;
 	}
 
+	
+	
+	@Override
+	public int getAuthorIDByPostID(int postID) {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+	    try {
+	        session.beginTransaction();
+	        // 使用 HQL 查询
+	        String hql = "SELECT p.userVO.userID FROM PostVO p WHERE p.postID = :postID";
+	        int userID = (int) session.createQuery(hql)
+	                .setParameter("postID", postID)
+	                .uniqueResult();
+	        session.getTransaction().commit();
+	        return userID;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        session.getTransaction().rollback();
+	    }
+	    return 0; // 或者返回其他适当的默认值
+	}
+
+
+	
+	
+	
 	@Override
 	public List<PostVO> getByCompositeQuery(Map<String, String> query, String orderBy, int start, int pageSize) {
 		// TODO Auto-generated method stub
