@@ -569,7 +569,7 @@ var webSocket;
    
 	
 </script>
-<script src="js/monitor.js"></script>
+<script src="js/monitorLarge.js"></script>
 
 
 </html>

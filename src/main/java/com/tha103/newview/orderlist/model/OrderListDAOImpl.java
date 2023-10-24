@@ -14,7 +14,7 @@ public class OrderListDAOImpl implements OrderListDAO {
 
 		try {
 			session.beginTransaction();
-			session.update(orderListVO);
+			session.save(orderListVO);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();

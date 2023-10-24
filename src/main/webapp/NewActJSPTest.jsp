@@ -153,7 +153,7 @@ pageContext.setAttribute("categories", categories);
 							<li><a href="home-03.html">主頁</a>
 								<ul class="sub-menu"></ul></li>
 
-							<li class="active-menu"><a href="product.html">活動專區</a></li>
+							<li class="active-menu"><a href="NewActJSPTest.jsp">活動專區</a></li>
 
 							<li class="label1" data-label1="hot"><a
 								href="shoping-cart.html">購物車</a></li>
@@ -250,7 +250,7 @@ pageContext.setAttribute("categories", categories);
 						class="fa fa-angle-right" aria-hidden="true"></i>
 				</span></li>
 
-				<li><a href="product.html">Shop</a></li>
+				<li><a href="NewACTjspTest.jsp">Shop</a></li>
 
 				<li><a href="shoping-cart.html" class="label1 rs1"
 					data-label1="hot">Features</a></li>

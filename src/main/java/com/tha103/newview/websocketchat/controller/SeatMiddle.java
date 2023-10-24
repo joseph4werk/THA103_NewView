@@ -51,7 +51,7 @@ public class SeatMiddle {
 	}
 
 	private void sendRedisDataToClients(Session userSession) {
-	    try (Jedis jedis = new Jedis("localhost")) {
+	    try (Jedis jedis = new Jedis("localhost",6379)) {
 	        Set<String> keys = jedis.keys("seatData:*");
 	        Gson gson = new Gson();
 	        Long currentDB = jedis.getDB();
@@ -123,7 +123,7 @@ public class SeatMiddle {
 	    Jedis jedis = null;
 //	    System.out.println("Canceled " + seatNumber + " for user: " + userName + "  type  " + seatType + "  Name  " + actName);
 	    try {
-	        jedis = new Jedis("localhost");
+	        jedis = new Jedis("localhost",6379);
 
 	        //  Redis 中得到座位信息
 	        String existingSeatInfo = jedis.hget("seatData:" + actName, seatNumber);
@@ -203,7 +203,7 @@ public class SeatMiddle {
 	    String actID = message.getActID();
 	    Jedis jedis = null;
 	    try {
-	        jedis = new Jedis("localhost");
+	        jedis = new Jedis("localhost",6379);
 
 	        String existingSeatInfo = jedis.hget("seatData:" + actID, seatNumber);
 	        if (existingSeatInfo != null && existingSeatInfo.endsWith(",soldOut")) {
@@ -214,7 +214,7 @@ public class SeatMiddle {
 	        storeSeatInfoInRedis(actID, seatInfo);
 	        storeSeatInfoInMap(actID, seatInfo, userSession); // Session 方法
 //	        System.out.println(actID + "," + userName + "," + seatType + "," + seatNumber);
-	        jedis.expire("seatData:" + actID, 1800);
+	        
 
 	        String updatedSeatInfoMessage = buildUpdatedSeatInfoMessage(actID);
 	        sendMessageToActID(actID, updatedSeatInfoMessage);
@@ -244,7 +244,7 @@ public class SeatMiddle {
 
 		// Redis儲存
 		private void storeSeatInfoInRedis(String actID, SeatInfo seatInfo) {
-		    Jedis jedis = new Jedis("localhost");
+		    Jedis jedis = new Jedis("localhost",6379);
 		    try {
 		        if (!jedis.exists("seatData:" + actID)) {
 		            jedis.hset("seatData:" + actID, seatInfo.getSeatNumber(), seatInfo.getUserName() + "," + seatInfo.getSeatType());
@@ -326,7 +326,7 @@ public class SeatMiddle {
 	private void deleteSeatsByUserNameALL(String actID, String userName,Session session ) {
 	    Jedis jedis = null;
 	    try {
-	        jedis = new Jedis("localhost");
+	        jedis = new Jedis("localhost",6379);
 
 	        // 離線刪除 所有相關
 	        Map<String, String> seatData = jedis.hgetAll("seatData:" + actID);
@@ -377,7 +377,7 @@ public class SeatMiddle {
 	}
 
 	public static void deleteSeatsByUserName(String actID, String targetUserName) {
-	    try (Jedis jedis = new Jedis("localhost")) {
+	    try (Jedis jedis = new Jedis("localhost",6379)) {
 	        String cursor = "0";
 	        Pipeline pipeline = jedis.pipelined();
 
@@ -417,7 +417,7 @@ public class SeatMiddle {
 	    Map<String, String> modifiedSeatsData = new HashMap<>(); //儲存已修改數據
 
 	    try {
-	        jedis = new Jedis("localhost");
+	        jedis = new Jedis("localhost",6379);
 	        Map<String, String> seatsData = jedis.hgetAll("seatData:" + actID);
 
 	        for (Map.Entry<String, String> entry : seatsData.entrySet()) {
@@ -469,8 +469,8 @@ public class SeatMiddle {
 	        for (Map.Entry<String, String> entry : modifiedSeatsData.entrySet()) {
 	            String seatNumber = entry.getKey();
 	            String seatData = entry.getValue();
-	            postDataBuilder.append("&seatNumber=").append(URLEncoder.encode(seatNumber, "UTF-8"));
-	            postDataBuilder.append("&seatData=").append(URLEncoder.encode(seatData, "UTF-8"));
+	            postDataBuilder.append("&seatNumber_").append(URLEncoder.encode(seatNumber, "UTF-8"));
+	            postDataBuilder.append("&seatData_").append(URLEncoder.encode(seatData, "UTF-8"));
 	        }
 	        
 	        postDataBuilder.append("&modificationCount=").append(modificationCount); 

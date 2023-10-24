@@ -5,6 +5,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.tha103.newview.act.model.*"%>
 <%@ page import="com.tha103.newview.act.service.*"%>
+
 <%@ page import="com.tha103.newview.actcategory.model.*"%>
 <%@ page import="com.tha103.newview.cityaddress.model.*"%>
 <%@ page import="com.tha103.newview.publisher.model.*"%>
@@ -14,6 +15,7 @@
 ActWithPicsDTO actData = (ActWithPicsDTO) request.getAttribute("actData");
 List<String> base64Images = actData.getBase64Images();
 Integer scope = actData.getActScope();
+
 %>
 
 <html lang="en">
@@ -428,7 +430,7 @@ div .seatsTry a {
 
 							<div class="seatsV">
 								<button class="seatsTry">
-									<a href="./seat/中等規模 20X20/seatnotest.html">馬上前往購買</a>
+									<a id="dynamic-link" href="./seat/中等規模 20X20/seatnotest.html">馬上前往購買</a>
 								</button>
 							</div>
 						</div>
@@ -1348,19 +1350,26 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 var actScope = ${actData.actScope};
+var actID = ${actData.actID};
 var scale;
 switch (actScope) {
-    case 1:
-        scale = "最小規模";
-        break;
-    case 2:
-        scale = "中等規模";
-        break;
-    case 3:
-        scale = "最大規模";
-        break;
-    default:
-        console.error("未知的規模");
+case 1:
+	scale = "最小規模";
+	$('#dynamic-link').attr('href',
+			'seatChooseWebsocketSmall.jsp?actID=' + actID);
+	break;
+case 2:
+	scale = "中等規模";
+	$('#dynamic-link').attr('href',
+			'seatChooseWebsocket.jsp?actID=' + actID);
+	break;
+case 3:
+	scale = "最大規模";
+	$('#dynamic-link').attr('href',
+			'seatChooseWebsocketLarge.jsp?actID=' + actID);
+	break;
+default:
+	console.error("未知的規模");
 }
 
 $(".seatWT").text(scale);
