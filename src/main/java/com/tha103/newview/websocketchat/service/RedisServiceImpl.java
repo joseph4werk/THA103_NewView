@@ -10,10 +10,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.websocket.Session;
 
 import com.tha103.newview.user.jedis.JedisPoolUtil;
+import com.tha103.newview.websocketchat.model.SeatInfo;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import seatModel.SeatInfo;
 
 public class RedisServiceImpl implements RedisService{
 

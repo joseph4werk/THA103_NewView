@@ -5,7 +5,7 @@ import java.util.Set;
 
 import javax.websocket.Session;
 
-import seatModel.SeatInfo;
+import com.tha103.newview.websocketchat.model.SeatInfo;
 
 public interface RedisService {
 	Set<SeatInfo> fetchSeatInfoFromRedis(Session userSession);

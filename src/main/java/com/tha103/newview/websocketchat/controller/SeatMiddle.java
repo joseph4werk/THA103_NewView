@@ -29,13 +29,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.tha103.newview.user.jedis.JedisPoolUtil;
+import com.tha103.newview.websocketchat.model.Message;
+import com.tha103.newview.websocketchat.model.SeatInfo;
 import com.tha103.newview.websocketchat.service.RedisService;
 import com.tha103.newview.websocketchat.service.RedisServiceImpl;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import seatModel.Message;
-import seatModel.SeatInfo;
 
 @ServerEndpoint("/WebSocketChatWeb/{userName}/{actID}")
 public class SeatMiddle {
