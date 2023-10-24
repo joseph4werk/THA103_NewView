@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
+import com.tha103.newview.user.jedis.JedisPoolUtil;
 import com.tha103.newview.user.service.UserService;
 import com.tha103.newview.user.service.UserServiceImpl;
 
@@ -59,13 +60,14 @@ public class SignUpController extends HttpServlet {
 		if (!userSvc.checkUserAccount(account)) {
 			// call sendMail 方法，產生驗證碼
 			String verificationCode = getVerificationCode();
-			sendMail(email, verificationCode);
+			// 開新的 Thread 寄 mail (不然很慢==)
+			new Thread(() -> sendMail(email, verificationCode)).start();
 
 			// 使用 Jedis 將 userAccount 當 key 存入驗證碼的資訊
-			Jedis jedis = new Jedis("localhost");
+			Jedis jedis = JedisPoolUtil.getJedisPool().getResource();
 			jedis.select(15);
 			jedis.set("UserAccount:" + account, verificationCode);
-			jedis.expire(verificationCode, 600);
+			jedis.expire("UserAccount:" + account, 600);
 			jedis.close();
 
 			System.out.println("將資料存進 redis 15 DB");

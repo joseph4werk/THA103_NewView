@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
+import com.tha103.newview.user.jedis.JedisPoolUtil;
 import com.tha103.newview.user.model.UserVO;
 import com.tha103.newview.user.service.UserService;
 import com.tha103.newview.user.service.UserServiceImpl;
@@ -48,7 +49,7 @@ public class VerifyController extends HttpServlet {
 		String verificationCodeFromWeb = req.getParameter("verificationCode");
 		
 		// 從 redis 取得驗證碼
-		Jedis jedis = new Jedis("localhost");
+		Jedis jedis = JedisPoolUtil.getJedisPool().getResource();
 		jedis.select(15);
 		String verificationCodeFromRedis = jedis.get("UserAccount:" + (String) session.getAttribute("newAccount"));
 		System.out.println("verificationCodeFromWeb: " + verificationCodeFromRedis);
