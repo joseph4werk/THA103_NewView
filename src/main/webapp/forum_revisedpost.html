@@ -759,7 +759,7 @@
 			};
 
 			// 資料送出
-			btn_submit_el.addEventListener("click", function () {
+			btn_submit_el.addEventListener("click", function (e) {
 				e.preventDefault();
 				var form_data = new FormData(the_form);
 
@@ -783,7 +783,7 @@
 				form_data.append("postcontent", document.getElementById("postcontent").value);
 				form_data.append("action", "update");
 				
-				
+				console.log(form_data);
 				
 				// 發送請求到Server
 				$.ajax({
