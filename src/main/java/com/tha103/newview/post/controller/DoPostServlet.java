@@ -5,22 +5,17 @@ import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
+
 import com.tha103.newview.post.model.PostVO;
 import com.tha103.newview.post.service.PostService;
 import com.tha103.newview.post.service.PostServiceImpl;
@@ -52,7 +47,6 @@ public class DoPostServlet extends HttpServlet {
 
 			
 			/**************************************** 1.接受請求參數 ************************************/
-			Integer userID = Integer.valueOf(req.getParameter("userID"));
 			String postHeader = req.getParameter("postHeader").trim();
 			Integer postCategoryID = Integer.valueOf(req.getParameter("postCategoryID"));
 			String postContent = req.getParameter("postContent");
@@ -89,6 +83,11 @@ public class DoPostServlet extends HttpServlet {
 
 			PostVO postVO = new PostVO();
 			UserVO userVO = new UserVO();
+			
+			// 用Session獲取用戶的userID
+			String userIDString = (String) req.getSession().getAttribute("userID");
+			Integer userID = Integer.parseInt(userIDString);
+			
 			userVO.setUserID(userID);
 			postVO.setUserVO(userVO);
 
@@ -119,6 +118,11 @@ public class DoPostServlet extends HttpServlet {
 
 		}
 
+		
+		
+		
+		
+		
 		// ------------------------------------修改開始-------------------------------------------//
 
 		if ("update".equals(action)) { // 接受来自forum_revisedopost.html请求(Ajax)
@@ -162,7 +166,7 @@ public class DoPostServlet extends HttpServlet {
 
 			if (existingPost != null) {
 
-				// 更新帖子的其他信息
+				// 更新資料
 				existingPost.setPostHeader(postHeader);
 				existingPost.setPostContent(postContent);
 				existingPost.setLastEditedTime(lastEditedTime);
@@ -172,11 +176,11 @@ public class DoPostServlet extends HttpServlet {
 				existingPost.setPostCategoryVO(postCategoryVO);
 
 				
-				// 删除现有帖子相关的图片数据
+				// 刪除圖片
 				PostPicService postpicSvc = new PostPicServiceImpl();
 				postpicSvc.deletePostPic(postID);
 				
-				// 添加新的图片数据
+				// 添加圖片
 				Set<PostPicVO> set = new LinkedHashSet<>();
 				for (byte[] b : imageBytesList) {
 					PostPicVO pVO = new PostPicVO();
@@ -188,60 +192,15 @@ public class DoPostServlet extends HttpServlet {
 
 				// 更新實體資料
 				postSvc.updatePost(existingPost);
-				out.println("Success to add Image");
 
 			} else {
 				// 處理主鍵不存在的情况
 				out.println("Post with ID " + postID + " not found.");
 			}
+			
+			System.out.println("---------------END---------------");
 
 		}
-
-		// ------------------------------------讚跟檢舉功能合併-------------------------------------------//
-
-		if ("Like".equals(action)) {
-			// 接收點讚參數
-			Integer postID = Integer.valueOf(req.getParameter("postID"));
-			Integer likeCount = Integer.valueOf(req.getParameter("likeCount"));
-
-			// 執行點讚操作，更新資料庫
-			PrintWriter out = res.getWriter();
-			PostService postSvc = new PostServiceImpl();
-			PostVO existingPost = postSvc.getPostByPK(postID);
-
-			if (existingPost != null) {
-				existingPost.setLikeCount(likeCount);
-				// 更新數據實體
-				postSvc.updatePost(existingPost);
-				out.println("Like operation was successful");
-			} else {
-				out.println("PostID = " + postID + " not found.");
-			}
-
-		} else if ("Dislike".equals(action)) {
-			// 接收點讚參數
-			Integer postID = Integer.valueOf(req.getParameter("postID"));
-			Integer disLikeCount = Integer.valueOf(req.getParameter("disLikeCount"));
-
-			// 執行點讚操作，更新資料庫
-			PrintWriter out = res.getWriter();
-			PostService postSvc = new PostServiceImpl();
-			PostVO existingPost = postSvc.getPostByPK(postID);
-
-			if (existingPost != null) {
-				existingPost.setDisLikeCount(disLikeCount);
-				// 更新數據實體
-				postSvc.updatePost(existingPost);
-				out.println("DisLike operation was successful");
-			} else {
-				out.println("PostID = " + postID + " not found.");
-			}
-		} else if ("Report".equals(action)) {
-			// 晚點寫
-		} else {
-			// 未知操作
-			PrintWriter out = res.getWriter();
-			out.println("Unsupported action: " + action);
-		}
+		
 	}
 }

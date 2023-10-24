@@ -48,73 +48,8 @@ public class PostServiceImpl implements PostService {
 		return postdao.getAll();
 	}
 
-//	@Override
-//	public List<PostVO> getPostsByCompositeQuery(Map<String, String[]> map, int currentPage, String orderBy) {
-//	    // 確保 orderBy 參數在方法中可用
-//	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-//	    Map<String, String> query = new HashMap<>();
-//	    // Map.Entry即代表一組key-value
-//	    Set<Map.Entry<String, String[]>> entry = map.entrySet();
-//
-//	    for (Map.Entry<String, String[]> row : entry) {
-//	        String key = row.getKey();
-//	        // 請求參數包含Action，做去除動作
-//	        if ("action".equals(key)) {
-//	            continue;
-//	        }
-//	        // 若是value為空表示沒有查詢條件
-//	        String value = row.getValue()[0];
-//	        if (value == null || value.isEmpty()) {
-//	            continue;
-//	        }
-//	        query.put(key, value);
-//	    }
-//
-//	    try {
-//	        session.beginTransaction();
-//	        // 計算分頁起始位置
-//	        int start = (currentPage - 1) * PAGE_SIZE;
-//	        List<PostVO> list = postdao.getByCompositeQuery(query, orderBy, start, PAGE_SIZE);
-//	        session.getTransaction().commit();
-//	        return list;
-//	    } catch (Exception e) {
-//	        session.getTransaction().rollback();
-//	        e.printStackTrace();
-//	        return null;
-//	    }
-//	}
-
-//	@Override
-//	public int getTotalPostCount(Map<String, String[]> map) {
-//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-//		Map<String, String> query = new HashMap<>();
-//		// Map.Entry即代表一组key-value
-//		Set<Map.Entry<String, String[]>> entry = map.entrySet();
-//
-//		for (Map.Entry<String, String[]> row : entry) {
-//			String key = row.getKey();
-//			// 請求參數包含Action，做去除動作
-//			if ("action".equals(key)) {
-//				continue;
-//			}
-//			// 若是value為空表示沒有查詢條件
-//			String value = row.getValue()[0];
-//			if (value == null || value.isEmpty()) {
-//				continue;
-//			}
-//			query.put(key, value);
-//		}
-//
-//		try {
-//			session.beginTransaction();
-//			int total = postdao.getTotalCountByCompositeQuery(query);
-//			session.getTransaction().commit();
-//			return total;
-//		} catch (Exception e) {
-//			session.getTransaction().rollback();
-//			e.printStackTrace();
-//			return 0;
-//		}
-//	}
-
+	@Override
+	public int getAuthorIDByPostID(int postID) {
+		return postdao.getAuthorIDByPostID(postID);
+	}
 }

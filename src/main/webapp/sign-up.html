@@ -393,31 +393,121 @@
                 <p class="mb-0 text-lead text-black">請填入以下資訊進行註冊</p>
               </div>
               <div class="card-body" id="register">
-                <form role="form text-left">
+                <form role="form text-left" id="regiester_form">
                   <div class="mb-3">
-                    <input type="text" class="form-control" id="name" placeholder="請輸入名字" aria-label="Name" aria-describedby="name-addon" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      placeholder="請輸入名字(中/英文至少三字元，不可包含標點符號、數字)"
+                      aria-label="Name"
+                      aria-describedby="name-addon"
+                      required="required"
+                      pattern="^[\u4e00-\u9fa5a-zA-Z]{2,10}$"
+                      oninput="setCustomValidity('');"
+                      oninvalid="setCustomValidity('請輸入正確的姓名格式:中/英至少三個字元');"
+                      ;
+                    />
                   </div>
                   <div class="mb-3">
-                    <input type="text" class="form-control" id="account" placeholder="請輸入帳號" aria-label="Account" aria-describedby="account-addon" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="account"
+                      placeholder="請輸入帳號"
+                      aria-label="Account"
+                      aria-describedby="account-addon"
+                      required="required"
+                      pattern="^(?=.*[a-zA-Z])(?=.*).{3,}$"
+                      oninput="setCustomValidity('');"
+                      oninvalid="setCustomValidity('請輸入正確的帳號格式:至少三個英文字元');"
+                      ;
+                    />
                   </div>
                   <div class="mb-3">
-                    <input type="password" class="form-control" id="password" placeholder="請輸入密碼" aria-label="Password" aria-describedby="password-addon" />
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="birthdate"
+                      placeholder="請輸入生日"
+                      aria-label="Birthdate"
+                      aria-describedby="birthdate-addon"
+                      required="required"
+                      min="1900-01-01"
+                      max="2023-10-23"
+                    />
                   </div>
                   <div class="mb-3">
-                    <input type="date" class="form-control" id="birthdate" placeholder="請輸入生日" aria-label="Birthdate" aria-describedby="birthdate-addon" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="cellphone"
+                      placeholder="請輸入電話"
+                      aria-label="Cellphone"
+                      aria-describedby="cellphone-addon"
+                      required="required"
+                      pattern="09\d{8}"
+                      oninput="setCustomValidity('');"
+                      oninvalid="setCustomValidity('請輸入正確的電話格式:須以09開頭，共十碼數字');"
+                      ;
+                    />
                   </div>
                   <div class="mb-3">
-                    <input type="text" class="form-control" id="cellphone" placeholder="請輸入電話" aria-label="Cellphone" aria-describedby="cellphone-addon" />
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      placeholder="請輸入Email"
+                      aria-label="Email"
+                      aria-describedby="email-addon"
+                      required="required"
+                      pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                    />
                   </div>
                   <div class="mb-3">
-                    <input type="email" class="form-control" id="email" placeholder="請輸入Email" aria-label="Email" aria-describedby="email-addon" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nickname"
+                      placeholder="請輸入暱稱"
+                      aria-label="Nickname"
+                      aria-describedby="nickname-addon"
+                      required="required"
+                      pattern="^(?=.*[a-zA-Z])(?=.*).{3,}$"
+                      oninput="setCustomValidity('');"
+                      oninvalid="setCustomValidity('請輸入正確的暱稱格式:至少三個字元');"
+                      ;
+                    />
                   </div>
-                  <div class="mb-3">
-                    <input type="text" class="form-control" id="nickname" placeholder="請輸入暱稱" aria-label="Nickname" aria-describedby="nickname-addon" />
+                  <div class="form-group">
+                    <input
+                      id="password"
+                      name="password"
+                      class="form-control"
+                      type="password"
+                      placeholder="設定密碼(格式:含英數至少3個字元)"
+                      required="required"
+                      pattern="^(?=.*[a-zA-Z][0-9])(?=.*).{3,}$"
+                      oninput="setCustomValidity('');"
+                      oninvalid="setCustomValidity('請輸入正確的密碼格式:含英數至少三個字元');"
+                    />
                   </div>
-                  <div class="text-center">
+                  <div class="form-group">
+                    <input
+                      id="ConfirmPassword"
+                      name="ConfirmPassword"
+                      class="form-control"
+                      type="password"
+                      placeholder="確認密碼"
+                      required="required"
+                      oninput="setCustomValidity('');"
+                      onchange="if($('#password').val()!=$('#ConfirmPassword').val()){setCustomValidity('密碼不吻合');}"
+                    />
+                  </div>
+                  <!-- <div class="text-center">
                     <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2" id="submit">取得驗證碼</button>
-                  </div>
+                  </div> -->
+                  <input type="submit" value="取得驗證碼" class="btn bg-gradient-dark w-100 my-4 mb-2" />
                   <p class="text-sm mt-3 mb-0">已經有帳號了? <a href="./sign-in.html" class="text-dark font-weight-bolder">點我登入</a></p>
                 </form>
               </div>
@@ -683,7 +773,7 @@
 
     <!--===============================================================================================-->
     <script>
-      $("#submit").on("click", function (e) {
+      $("#regiester_form").submit(function (e) {
         e.preventDefault();
         /*  將 sign-up 資料用物件包裝  */
         let signUp_item = {
@@ -704,15 +794,22 @@
           dataType: "json",
           beforeSend: function (xhr) {
             console.log("beforesend");
-            alert("驗證碼寄到您的信箱！");
           },
           success: function (data) {
-            console.log("aaa");
+            redirect(data);
           },
-          complete: function (xhr) {
-            location.href = "registration-verification.html";
-          },
+          complete: function (xhr) {},
         });
+        function redirect(data) {
+          switch (data) {
+            case "success":
+              alert("驗證碼已寄到您的信箱，請前往收信並驗證。");
+              location.href = "registration-verification.html";
+              break;
+            case "failed":
+              alert("註冊失敗，請修正後再提交申請！");
+          }
+        }
       });
     </script>
 
