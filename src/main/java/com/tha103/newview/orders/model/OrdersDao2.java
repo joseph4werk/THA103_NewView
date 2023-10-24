@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface OrdersDao2 {
 	
-	List<OrdersVO> selectByUserID(Integer userID);
+	List<Orders> selectByUserID(Integer userID);
 }

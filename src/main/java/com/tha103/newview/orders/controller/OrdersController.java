@@ -19,7 +19,6 @@ public class OrdersController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Gson gson = new GsonBuilder()
 			.setDateFormat("yyyy/MM/dd")
-			.excludeFieldsWithoutExposeAnnotation()
 			.create();
 	private OrdersService2 service;
 
@@ -33,14 +32,6 @@ public class OrdersController extends HttpServlet {
 //		var userID = req.getSession().getAttribute("userID");
 		var userID = 2;
 		var list = service.findByUserID(userID);
-		
-//		if (list != null && !list.isEmpty()) {
-//			list.forEach(vo -> {
-//				vo.getOrderListVOs().forEach(ol -> {
-//					ol.setOrdersVO(null);
-//				});
-//			});
-//		}
 		resp.setContentType("application/json; charset=utf-8");
 		resp.getWriter().write(gson.toJson(list));
 		HibernateUtil.getSessionFactory().getCurrentSession().getTransaction().commit();

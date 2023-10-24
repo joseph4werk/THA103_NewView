@@ -9,15 +9,13 @@ import com.tha103.util.HibernateUtil;
 public class OrdersDaoImpl2 implements OrdersDao2 {
 
 	@Override
-	public List<OrdersVO> selectByUserID(Integer userID) {
+	public List<Orders> selectByUserID(Integer userID) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			var list = session.createQuery("FROM OrdersVO WHERE userID = :userID", OrdersVO.class)
+			return session.createQuery("FROM Orders WHERE userID = :userID", Orders.class)
 					.setParameter("userID", userID)
 					.list();
-//			session.getTransaction().commit();
-			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
