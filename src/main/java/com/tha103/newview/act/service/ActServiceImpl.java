@@ -25,7 +25,7 @@ public class ActServiceImpl implements ActService {
 	Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	
 	public ActServiceImpl() {
-	    
+		actDAO = new ActDAOHibernateImpl();
 	}
 	public ActServiceImpl(ActDAO actDAO) {
 	    this.actDAO = actDAO;
@@ -124,6 +124,7 @@ public class ActServiceImpl implements ActService {
 	        }
 
 	        actWithPicsDTO.setActDate(act.getActDate());
+	        actWithPicsDTO.setActTime(act.getActTime());
 	        actWithPicsDTO.setTime(act.getTime());
 	        actWithPicsDTO.setActID(act.getActID());
 	        actWithPicsDTO.setBase64Images(base64Images); 
@@ -148,26 +149,30 @@ public class ActServiceImpl implements ActService {
 	    try {
 	       
 	        ActDAO actDAO = new ActDAOHibernateImpl();
-	        ActVO act = actDAO.findByPrimaryKey(actIdValue);
+	        ActVO act = actDAO.findByPrimaryKey(actIdValue); //使用actID取得 ActVO
+	        System.out.println("service找到的資料:" + act);
 
 	        if (act != null) {
-	            Set<ActPic> actPics = act.getActpics();
-	            List<ImageDTO> imageDataList = new ArrayList<>();
-	            for (ActPic pic : actPics) {
+	            Set<ActPic> actPics = act.getActpics(); //DAO方法取得活動資訊及圖片(json格式)
+	            List<ImageDTO> imageDataList = new ArrayList<>(); //創建ImageDTO用於儲存圖片
+	            for (ActPic pic : actPics) { //遍歷活動相關的圖片集合
 	                if (pic.getActPic() != null) {
-	                    byte[] picBytes = pic.getActPic();
+	                    byte[] picBytes = pic.getActPic(); //獲取圖片的位元組
+	                    //將圖片轉為Base64，以便在前端顯示
 	                    String base64Image = Base64.getEncoder().encodeToString(picBytes);
 
 	                    ImageDTO imageData = new ImageDTO();
 	                    imageData.setBase64Image(base64Image);
 	                    imageData.setActPicID(pic.getActPicID());
-
+	                    
+	                    //將ImageDTO添加到圖片訊息的列表中
 	                    imageDataList.add(imageData);
 	                }
 	            }
 
 	            actWithPicsDTO = new ActWithPicsDTO();
 	            actWithPicsDTO.setActDate(act.getActDate());
+	            actWithPicsDTO.setActTime(act.getActTime());
 	            actWithPicsDTO.setTime(act.getTime());
 	            actWithPicsDTO.setActID(act.getActID());
 	            actWithPicsDTO.setActScope(act.getActScope());

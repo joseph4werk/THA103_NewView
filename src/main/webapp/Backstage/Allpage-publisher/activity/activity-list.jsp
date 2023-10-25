@@ -1,4 +1,23 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.tha103.newview.act.model.*"%>
+<%@ page import="com.tha103.newview.act.service.*"%>
+<%@ page import="com.tha103.newview.actcategory.model.*"%>
+<%@ page import="com.tha103.newview.cityaddress.model.*"%>
+<%@ page import="com.tha103.newview.publisher.model.*"%>
+<%@ page import="com.tha103.newview.act.controller.*"%>
+<%
+ActDAO actDAO = new ActDAOHibernateImpl();
+ActService actSvc = new ActServiceImpl(actDAO);
+List<ActVO> list = actSvc.getAll();
+List<ActCategory> categories = actSvc.getAllCategories();
+List<CityAddress> city = actSvc.getAllCities();
+pageContext.setAttribute("city", city);
+pageContext.setAttribute("list", list);
+pageContext.setAttribute("categories", categories);
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,9 +31,9 @@
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <!-- Font Awesome -->
 <link rel="stylesheet"
-	href="../../plugins/fontawesome-free/css/all.min.css">
+	href="<%=request.getContextPath()%>/Backstage/plugins/fontawesome-free/css/all.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/dist/css/adminlte.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -118,69 +137,41 @@
 										<thead>
 											<tr>
 												<th>活動編號</th>
-												<th>預覽圖</th>
-												<th>活動類別</th>
 												<th>活動名稱</th>
-												<th>審核狀態</th>
+												<th>活動價格</th>
+												<th>活動類別</th>
+												<th>活動日期</th>
+												<th>活動時間</th>
+												<th>活動縣市</th>
 												<th style="text-align: center;">操作</th>
 											</tr>
 										</thead>
 										<tbody>
+										<c:forEach var="actData" items="${list}">
 											<tr>
-												<td>183</td>
-												<td>圖片</td>
-												<td>音樂劇</td>
-												<td><span class="tag tag-success">小王子經典配樂</span></td>
-												<td>已通過</td>
+												<td>${actData.actID}</td>
+												<td>${actData.actName}</td>
+												<td>${actData.actPrice}</td>
+												<td>${actData.actCategory.actCategoryName}</td>
+												<td>${actData.actDate}</td>
+												<td>${actData.time}</td>
+												<td>${actData.cityAddressID.cityName}</td>
 												<td>
-													<button type="button"
-														class="btn btn-block btn-success btn-sm">詳情</button>
+													<Form method="post" action="<%=request.getContextPath()%>/act/act.do">
+														<button type="submit" class="btn btn-block btn-success btn-sm">修改</button>
+														<input type="hidden" name="action" value="update" />
+														<input type="hidden" name="actId" value="${actData.actID}" />
+													</Form>
+												</td>
+												<td>
+													<form method="post" action="<%=request.getContextPath()%>/act/act.do">
+														<button type="submit" class="btn btn-block btn-danger btn-sm">刪除</button>
+														<input type="hidden" name="action" value="delete" />
+														<input type="hidden" name="actIDelete" value="${actData.actID}" />
+													</Form>
 												</td>
 											</tr>
-											<tr>
-												<td>183</td>
-												<td>圖片</td>
-												<td>音樂劇</td>
-												<td><span class="tag tag-success">小王子經典配樂</span></td>
-												<td>已通過</td>
-												<td>
-													<button type="button"
-														class="btn btn-block btn-success btn-sm">詳情</button>
-												</td>
-											</tr>
-											<tr>
-												<td>183</td>
-												<td>圖片</td>
-												<td>音樂劇</td>
-												<td><span class="tag tag-success">小王子經典配樂</span></td>
-												<td>已通過</td>
-												<td>
-													<button type="button"
-														class="btn btn-block btn-success btn-sm">詳情</button>
-												</td>
-											</tr>
-											<tr>
-												<td>183</td>
-												<td>圖片</td>
-												<td>音樂劇</td>
-												<td><span class="tag tag-success">小王子經典配樂</span></td>
-												<td>已通過</td>
-												<td>
-													<button type="button"
-														class="btn btn-block btn-success btn-sm">詳情</button>
-												</td>
-											</tr>
-											<tr>
-												<td>183</td>
-												<td>圖片</td>
-												<td>音樂劇</td>
-												<td><span class="tag tag-success">小王子經典配樂</span></td>
-												<td>已通過</td>
-												<td>
-													<button type="button"
-														class="btn btn-block btn-success btn-sm">詳情</button>
-												</td>
-											</tr>
+										</c:forEach>
 										</tbody>
 									</table>
 								</div>
@@ -207,13 +198,24 @@
 	<!-- ./wrapper -->
 
 	<!-- jQuery -->
-	<script src="../../plugins/jquery/jquery.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Backstage/plugins/jquery/jquery.min.js"></script>
 	<!-- Bootstrap 4 -->
-	<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Backstage/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- AdminLTE App -->
-	<script src="../../dist/js/adminlte.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Backstage/dist/js/adminlte.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
-	<script src="../../dist/js/demo.js"></script>
+	<script src="<%=request.getContextPath()%>/Backstage/dist/js/demo.js"></script>
+		<script>
+		<c:forEach var="actData" items="${list}">
+		var actID = "${actData.actID}";
+		var imageUrl = "${pageContext.request.contextPath}/GetImageFromDB?actID="
+				+ actID;
+		var imageContainer = document.getElementById("imageContainer_" + actID);
+		var actImage = document.getElementById("actImage_" + actID);
+
+		actImage.src = imageUrl;
+		</c:forEach>
+	</script>
 </body>
 
 </html>

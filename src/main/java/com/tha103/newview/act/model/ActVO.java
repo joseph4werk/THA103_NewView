@@ -118,18 +118,22 @@ public class ActVO {
 //    private List<ActPic> actPics;
 //以上為資料設定  以下為方法
 
+	
 	@Override
 	public String toString() {
-		return "Act [actID=" + actID + ", actName=" + actName + ", actPrice=" + actPrice + ", actTime=" + actTime
+		return "ActVO [actID=" + actID + ", actName=" + actName + ", actPrice=" + actPrice + ", actTime=" + actTime
 				+ ", actScope=" + actScope + ", actIntroduce=" + actIntroduce + ", actContent=" + actContent + ", time="
 				+ time + ", actDate=" + actDate + ", approvalCondition=" + approvalCondition + ", cityAddress="
-				+ cityAddress + "]";
+				+ cityAddress + ", actCategory=" + actCategory + ", city=" + city + ", publisherVO=" + publisherVO
+				+ ", actpics=" + actpics + ", orderListVOs=" + orderListVOs + ", myLikeVOs=" + myLikeVOs
+				+ ", cartActVOs=" + cartActVOs + "]";
 	}
+	
 
 	public ActVO() {
 	}
 
-	
+
 
 	public CityAddress getCity() {
 		return city;

@@ -2,9 +2,11 @@ package com.tha103.newview.act.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -94,21 +97,18 @@ public class TheActServlet extends HttpServlet {
 
 				/********** 查詢資料 **********/
 				Integer actIdValue = Integer.parseInt(actId); // 參數轉為int
-				ActWithPicsDTO actWithPicsDTO = actService.getActWithPicturesById(actIdValue); // 至資料庫找資料
-				List<ActWithPicsDTO> actWithPicsList = Arrays.asList(actWithPicsDTO);
+				ActWithPicsDTO actWithPicsDTO = actService.getActWithPicturesById(actIdValue); //至資料庫找資料整個活動&圖片的資料
+				List<ActWithPicsDTO> actWithPicsList = Arrays.asList(actWithPicsDTO); //將查詢结果 轉換為一個包含單個元素的的列表
 
 				if (actWithPicsDTO != null) {
 					req.setAttribute("actWithPicsList", actWithPicsList); // 資料庫取出的list物件,存入request集合
 
-//                    String url = "/Backstage/Allpage-publisher/activity/activity-list.jsp";
-//                    RequestDispatcher successView = req.getRequestDispatcher(url);
-//                    successView.forward(req, resp);
-					req.getRequestDispatcher("/Backstage/Allpage-publisher/activity/activity-update.jsp").forward(req,
+					req.getRequestDispatcher("/Backstage/Allpage-publisher/activity/activity-list.jsp").forward(req,
 							resp); // 執行完畢後，轉交回送出修改的來源網頁
 				}
 			} else {
 				req.setAttribute("actIdError", "null");
-				req.getRequestDispatcher("ActJSP.jsp").forward(req, resp);
+				req.getRequestDispatcher("/Backstage/Allpage-publisher/pub-index.jsp").forward(req, resp);
 			}
 		}
 
@@ -221,56 +221,19 @@ public class TheActServlet extends HttpServlet {
 				resp.getWriter().println("Act ID 不能為空"); // 回應其他錯誤訊息
 			}
 		}
-		
-		
-		
 
 		if ("addAct".equals(action)) {
-			String actName = (req.getParameter("actName") != null && !req.getParameter("actName").isEmpty())
-					? req.getParameter("actName")
-					: "Default Act Name";
-			System.out.println(actName);
-			String actPriceStr = (req.getParameter("actPrice") != null
-					&& !req.getParameter("actPrice").isEmpty()) ? req.getParameter("actPrice") : "1000";
-			String actCategoryIDStr = (req.getParameter("actCategory") != null
-					&& !req.getParameter("actCategory").isEmpty()) ? req.getParameter("actCategory") : "1";
 
-			System.out.println(actCategoryIDStr);
+			/********** 收到請求參數 **********/
+			String toDelete = req.getParameter("toDelete");
 
-			String publisherName = (req.getParameter("publisher") != null
-					&& !req.getParameter("publisher").isEmpty()) ? req.getParameter("publisher") : "1";
-			String actTimeStr = (req.getParameter("time") != null && !req.getParameter("time").isEmpty())
-					? req.getParameter("time")
-					: "12:00:00";
-			String cityIDStr = (req.getParameter("cityName") != null && !req.getParameter("cityName").isEmpty())
-					? req.getParameter("cityName")
-					: "1";
-			String actIntroduce = (req.getParameter("actIntroduce") != null
-					&& !req.getParameter("actIntroduce").isEmpty()) ? req.getParameter("actIntroduce") : "未輸入";
-			String actDateStr = (req.getParameter("actDate") != null && !req.getParameter("actDate").isEmpty())
-					? req.getParameter("actDate")
-					: "1970-01-01";
-			String actTimeDate = (req.getParameter("actTime") != null && !req.getParameter("actTime").isEmpty())
-					? req.getParameter("actTime")
-					: "1970-01-01";
-			String approvalConditionStr = (req.getParameter("approvalCondition") != null
-					&& !req.getParameter("approvalCondition").isEmpty()) ? req.getParameter("approvalCondition")
-							: "0";
-			String actContent = (req.getParameter("actContent") != null
-					&& !req.getParameter("actContent").isEmpty()) ? req.getParameter("actContent")
-							: "Default Act Content";
-			String actScope = (req.getParameter("actScope") != null && !req.getParameter("actScope").isEmpty())
-					? req.getParameter("actScope")
-					: "1";
-			String actActAddress = (req.getParameter("actActAddress") != null
-					&& !req.getParameter("actActAddress").isEmpty()) ? req.getParameter("actActAddress")
-							: "Default actActAddress";
-			String pubID = (req.getParameter("pubID") != null && !req.getParameter("pubID").isEmpty())
-					? req.getParameter("pubID")
-					: "1";
+			String actName = req.getParameter("actName").trim();
+			Integer actPriceStr = Integer.parseInt(req.getParameter("actPrice"));
+
+			String actTimeStr = req.getParameter("actTime");
 			Date actTime = null;
 			if (actTimeStr != null && !actTimeStr.isEmpty()) {
-				SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+				SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd");
 				try {
 					actTime = timeFormat.parse(actTimeStr);
 				} catch (Exception e) {
@@ -278,6 +241,22 @@ public class TheActServlet extends HttpServlet {
 				}
 			}
 
+			Integer actScope = Integer.parseInt(req.getParameter("actScope"));
+			String actIntroduce = req.getParameter("actIntroduce").trim();
+			String actContent = req.getParameter("actContent").trim();
+
+			String timeStr = req.getParameter("time");
+			Date time = null;
+			if (timeStr != null && !timeStr.isEmpty()) {
+				SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+				try {
+					time = timeFormat.parse(timeStr);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+			String actDateStr = req.getParameter("actDate");
 			Date actDate = null;
 			if (actDateStr != null && !actDateStr.isEmpty()) {
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -288,33 +267,50 @@ public class TheActServlet extends HttpServlet {
 				}
 			}
 
-			ActVO act = new ActVO();
-			ActCategory actC = new ActCategory();
-			CityAddress city = new CityAddress();
-			PublisherVO pub = new PublisherVO();
-			act.setActID(act.getActID());
-			city.setActAdressID(Integer.parseInt(cityIDStr));
-			act.setActName(actName);
-			act.setActPrice(Integer.parseInt(actPriceStr));
-			actC.setActCategoryID(Integer.parseInt(actCategoryIDStr));
-			act.setActCategory(actC);
-			pub.setPubID(Integer.parseInt(pubID));
-			act.setPublisherVOs(pub);
-			act.setActTime(actTime);
-			act.setTime(actTime);
-			act.setActScope(Integer.parseInt(actScope));
-			act.setActContent(actContent);
-			act.setCityAddressID(city);
+			String approvalConditionStr = (req.getParameter("approvalCondition") != null
+					&& !req.getParameter("approvalCondition").isEmpty()) ? req.getParameter("approvalCondition") : "0";
+			String actActAddress = req.getParameter("cityAddress").trim();
 
+			String actCategoryIDStr = (req.getParameter("actCategory") != null
+					&& !req.getParameter("actCategory").isEmpty()) ? req.getParameter("actCategory") : "1";
+			String pubID = (req.getParameter("pubID") != null && !req.getParameter("pubID").isEmpty())
+					? req.getParameter("pubID")
+					: "1";			
+			String cityIDStr = (req.getParameter("cityName") != null && !req.getParameter("cityName").isEmpty())
+					? req.getParameter("cityName")
+					: "1";
+
+
+			/********** Package data **********/
+			ActVO act = new ActVO();
+			act.setActName(actName);
+			act.setActPrice(actPriceStr);
+			act.setActTime(actTime);
+			act.setActScope(actScope);
 			act.setActIntroduce(actIntroduce);
+			act.setActContent(actContent);
+			act.setTime(time);
 			act.setActDate(actDate);
 			act.setApprovalCondition(Integer.parseInt(approvalConditionStr));
 			act.setCityAddress(actActAddress);
 
+			ActCategory actC = new ActCategory();
+			actC.setActCategoryID(Integer.parseInt(actCategoryIDStr));
+			act.setActCategory(actC);
+
+			PublisherVO pub = new PublisherVO();
+			pub.setPubID(Integer.parseInt(pubID));
+			act.setPublisherVOs(pub);
+
+			CityAddress city = new CityAddress();
+			city.setActAdressID(Integer.parseInt(cityIDStr));
+			act.setCityAddressID(city);
+
 			// 獲取上傳的圖片
+			/*
 			Part filePart = req.getPart("actImage");
 			System.out.println(filePart);
-			;
+
 			if (filePart != null) {
 				InputStream fileContent = filePart.getInputStream();
 				byte[] imageData = new byte[fileContent.available()];
@@ -330,6 +326,37 @@ public class TheActServlet extends HttpServlet {
 			} else {
 				System.out.println("No image data received");
 			}
+			*/
+			
+			
+			//測試獲取多張上傳的圖片
+			Collection<Part> fileParts = req.getParts();
+			Set<ActPic> actPics = new HashSet<>();
+
+			System.out.println(fileParts);
+
+			for(Part filePart : fileParts) {
+				if (filePart.getName().startsWith("actImage")) {
+					
+					//處理每個上傳的圖片					
+					InputStream fileContent = filePart.getInputStream();
+					byte[] imageData = new byte[fileContent.available()];
+					fileContent.read(imageData);
+					
+					ActPic actPic = new ActPic();
+					actPic.setActID(act);
+					actPic.setActPic(imageData);
+					System.out.println("Received image data: " + imageData.length + " bytes");
+					//Set<ActPic> actPics = new HashSet<>();
+					actPics.add(actPic);
+					
+				}else {
+					System.out.println("No image data received");
+				}
+			}
+			act.setActpics(actPics);
+
+			
 
 			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 			try {
@@ -357,8 +384,9 @@ public class TheActServlet extends HttpServlet {
 				// 關閉 Session
 				session.close();
 			}
-			req.getRequestDispatcher("/Backstage/Allpage-publisher/activity/activity-list.jsp").forward(req,resp);
-			//resp.sendRedirect("/Backstage/Allpage-publisher/activity/activity-list.jsp");
+			String url = "/Backstage/Allpage-publisher/activity/activity-list.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, resp);
 		}
 
 	}
