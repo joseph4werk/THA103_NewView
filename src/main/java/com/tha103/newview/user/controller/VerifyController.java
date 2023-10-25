@@ -15,9 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
+import com.tha103.newview.user.jedis.JedisPoolUtil;
 import com.tha103.newview.user.model.UserVO;
 import com.tha103.newview.user.service.UserService;
 import com.tha103.newview.user.service.UserServiceImpl;
+
+import redis.clients.jedis.Jedis;
 
 @WebServlet("/Verify")
 public class VerifyController extends HttpServlet {
@@ -41,14 +44,17 @@ public class VerifyController extends HttpServlet {
 		UserService userSvc = new UserServiceImpl();
 		UserVO userVO = new UserVO();
 
-		// 從 session 取得驗證碼
-		String verificationCode = (String) session.getAttribute("verificationCode");
 
 		// 取得前端傳遞之驗證碼
 		String verificationCodeFromWeb = req.getParameter("verificationCode");
-		System.out.println("verifyController's verificationCode: " + verificationCode);
-		System.out.println("verificationCodeFromWeb: " + verificationCodeFromWeb);
-
+		
+		// 從 redis 取得驗證碼
+		Jedis jedis = JedisPoolUtil.getJedisPool().getResource();
+		jedis.select(15);
+		String verificationCodeFromRedis = jedis.get("UserAccount:" + (String) session.getAttribute("newAccount"));
+		System.out.println("verificationCodeFromWeb: " + verificationCodeFromRedis);
+		
+		
 		// 取得前端傳來之birthdate
 		String birthdate = (String) session.getAttribute("birthdate");
 
@@ -92,7 +98,7 @@ public class VerifyController extends HttpServlet {
 
 
 		// 比對驗證碼
-		if (!verificationCodeFromWeb.equals(verificationCode)) {
+		if (!verificationCodeFromRedis.equals(verificationCodeFromWeb)) {
 			// 錯誤時回傳錯誤狀態 + 前端渲染提示訊息 + 重導向
 			String redirectPath = req.getRequestURI() + "/registration-verification.html";
 			data.put("status", "failed");
@@ -105,6 +111,8 @@ public class VerifyController extends HttpServlet {
 			if (addUser != 0) {
 				System.out.println(userVO);
 				System.out.println("userAccount: " + (String) session.getAttribute("newAccount") + " 新增成功");
+				// 成功驗證，刪除 redis 中儲存的驗證碼
+				jedis.del("UserAccount:" + (String) session.getAttribute("newAccount"));
 			} else {
 				System.out.println("新增失敗");
 			}

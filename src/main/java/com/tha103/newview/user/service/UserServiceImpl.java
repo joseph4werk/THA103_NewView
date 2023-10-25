@@ -32,8 +32,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int updateUser(UserVO userVO) {
-		// TODO Auto-generated method stub
-		return 0;
+		return userdao.update(userVO);
 	}
 
 	@Override
@@ -55,6 +54,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public OrdersVO getOrderByUserID(Integer userID) {
 		return userdao.getOrderByUserID(userID);
+	}
+
+	@Override
+	public boolean checkUserAccountByEmail(String email) {
+		return userdao.checkUserAccountByEmail(email);
+	}
+
+	@Override
+	public UserVO getUserByEmail(String email) {
+		return userdao.getUserByEmail(email);
 	}
 	
 	

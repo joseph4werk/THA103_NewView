@@ -1,26 +1,25 @@
 package com.tha103.newview.post.model;
 
-import java.util.List;
-import java.util.Map;
-
+import java.util.*;
 
 public interface PostDAO {
+	
+	public int insert(PostVO postVO);
 
-	int insert(PostVO entity);
+	public int update(PostVO postVO);
 
-	int update(PostVO entity);
+	public int delete(Integer postID);
+
+	PostVO findByPrimaryKey(Integer postID);
 	
-	int delete(Integer id);
-	 
-	PostVO getById(Integer id);
-	
-	List<PostVO> getAll();
-	
-	List<PostVO> getByCompositeQuery(Map<String, String> map);
-	
-	List<PostVO> getAll(int currentPage);
-	
-	long getTotal();
+	public List<PostVO> findByCategory(int postCategoryID);
+
+	public List<PostVO> getAll();
+
+	List<PostVO> getByCompositeQuery(Map<String, String> query, String orderBy, int start, int pageSize);
+
+	public int getAuthorIDByPostID(int postID);
+
 	
 
 	
