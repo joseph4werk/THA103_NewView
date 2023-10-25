@@ -135,12 +135,12 @@ public class ActDAOHibernateImpl implements ActDAO {
         ActVO act = null;
         try {
             session.beginTransaction();
-            act = session.get(ActVO.class, actID);
+            act = session.get(ActVO.class, actID); //使用actID取得ActVO
 
             if (act != null) {
                 Hibernate.initialize(act.getActpics());  
             }
-
+            
             session.getTransaction().commit();
 
         } catch (Exception e) {
@@ -200,11 +200,18 @@ public class ActDAOHibernateImpl implements ActDAO {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
             session.beginTransaction();
+            
+            //連結ActVO實體和其關連的圖片訊息 一次或取資訊；list() 方法將查询结果轉換為 List<ActVO> 
             List<ActVO> list = session.createQuery("select distinct a from ActVO a left join fetch a.actpics", ActVO.class).list();
+            
+            //創建一个Gson將資料轉換成JSON格式；排除没有使用Gson註解標記字段
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+            
             String json = gson.toJson(list);
             System.out.println(json);
             session.getTransaction().commit();
+            
+            //返回活動相關的資訊及圖片(json格式) list
             return list;
         } catch (Exception e) {
             e.printStackTrace();

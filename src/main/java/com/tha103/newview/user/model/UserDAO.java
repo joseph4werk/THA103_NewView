@@ -3,6 +3,7 @@ package com.tha103.newview.user.model;
 import java.util.*;
 
 import com.tha103.newview.orders.model.OrdersVO;
+import com.tha103.newview.publisher.model.PublisherVO;
 
 public interface UserDAO {
 	boolean checkUserAccount(String account);
@@ -18,4 +19,9 @@ public interface UserDAO {
 	// 萬用複合查詢(傳入參數型態Map)(回傳List)
 //	public List<UserVO> getAll(Map<String, String[]> map);
 	public OrdersVO getOrderByUserID(Integer userID);
+//	public Optional<OrdersVO> getOrderByUserID(Integer userID);
+	public List<Object[]> getPublisherNameByUserID(Integer userID);
+	public List<Object[]> getActPicIDByUserID(Integer userID);
+	public List<Object[]> getActNameByUserID(Integer userID);
+	public List<Object[]> getMyLikeByUserID(Integer userID);
 }
