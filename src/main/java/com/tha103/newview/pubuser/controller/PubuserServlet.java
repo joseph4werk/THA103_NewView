@@ -5,6 +5,8 @@ import java.util.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -428,5 +430,21 @@ public class PubuserServlet extends HttpServlet {
 		}
 
 	}
+
+	public void GetPubuserInfo(ServletRequest req, ServletResponse res,String account) throws ServletException, IOException {
+		//將DAO裡的找到的資訊存入pubuserVO
+		PubUserService pubuserSvc = new PubUserService();
+		PubUserVO pubuserVO = pubuserSvc.getByAccountInfo(account);
+		
+		//將pubuserVO的資料存入session
+		HttpSession session = ((HttpServletRequest) req).getSession();
+		session.setAttribute("pubuserVO", pubuserVO);
+		
+		//將pubID存入session裡
+		session.setAttribute("pubID",pubuserVO.getPublisherVO().getPubID());
+	}
+	
+	
+	
 
 }
