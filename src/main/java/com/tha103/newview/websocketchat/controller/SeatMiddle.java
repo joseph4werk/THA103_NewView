@@ -7,7 +7,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -31,10 +30,10 @@ import com.google.gson.JsonSyntaxException;
 import com.tha103.newview.user.jedis.JedisPoolUtil;
 import com.tha103.newview.websocketchat.model.Message;
 import com.tha103.newview.websocketchat.model.SeatInfo;
+import com.tha103.newview.websocketchat.service.RedisListener;
 import com.tha103.newview.websocketchat.service.RedisService;
 import com.tha103.newview.websocketchat.service.RedisServiceImpl;
 
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 @ServerEndpoint("/WebSocketChatWeb/{userName}/{actID}")
@@ -197,10 +196,10 @@ public class SeatMiddle {
 	private void deleteSeatsByUserNameALL(String actID, String userName, Session session) {
 	    // 離線刪除 所有相關
 		cancelSeatPurchase(actID, userName);
-	    // 推送更新后的座位信息
+	    // 推送更新後的座位信息
 	    sendSeatInfoToActIDUsers(actID, session);
 	}
-	//調用該方法, 尋找出soldOut, 把不是的都刪除
+	
 	
 	// 調用該方法時, 會將用戶目前 所選擇座位狀態更改為soldOut, 並向前端發送消息
 	public static void markSeatsAsSoldOutByUserName(String actID, String targetUserName) {
@@ -298,7 +297,10 @@ public class SeatMiddle {
 		}
 		userIdToUserNameMap.put(userSession.getId(), userName);
 		userSession.getUserProperties().put("actID", actID);
-
+		 executorService.submit(() -> {
+			 //使用其他線呈 來執行監聽器(可能會改位置)
+	            RedisListener.start();
+	        });
 //	      System.out.println("WebSocket connected - userName: " + userName + ", actID: " + actID);
 
 		sendRedisDataToClients(userSession);
@@ -342,6 +344,8 @@ public class SeatMiddle {
 				} else if ("soldOut".equals(messageType)) {
 					// 用戶決定購買, 將座位更改為已賣出,發送回前端
 					markSeatsAsSoldOutByUserName(senderActID, messageObject.getUserName());
+				}else if("inCart".equals(messageType)) {
+					redisService.markSeatsInRedisAndDB1(senderActID,messageObject.getUserName());
 				}
 			}
 		} catch (JsonSyntaxException e) {

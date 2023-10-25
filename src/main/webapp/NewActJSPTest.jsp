@@ -1282,5 +1282,31 @@ pageContext.setAttribute("categories", categories);
 
 
 	</script>
+	
+	 <script type="text/javascript">
+        // 在頁面加載完成後執行
+        $(document).ready(function() {
+            var toggleState = 0; // 初始化狀態為0
+
+            // 當按鈕被點擊時
+            $("#toggleButton").click(function(e) {
+                e.preventDefault(); // 防止<a>標籤的默認行為
+
+                // 切換狀態
+                toggleState = 1 - toggleState;
+
+                // 根據狀態切換圖片
+                if (toggleState === 1) {
+                    // 當狀態為1時，顯示第一張圖片
+                    $(this).find(".icon-heart1").show();
+                    $(this).find(".icon-heart2").hide();
+                } else {
+                    // 當狀態為0時，顯示第二張圖片
+                    $(this).find(".icon-heart1").hide();
+                    $(this).find(".icon-heart2").show();
+                }
+            });
+        });
+    </script>
 </body>
 </html>

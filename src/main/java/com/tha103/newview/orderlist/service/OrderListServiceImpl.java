@@ -2,16 +2,17 @@ package com.tha103.newview.orderlist.service;
 
 import java.util.List;
 
-import com.tha103.newview.act.model.ActDAO;
 import com.tha103.newview.orderlist.model.OrderListDAO;
+import com.tha103.newview.orderlist.model.OrderListDAOImpl;
 import com.tha103.newview.orderlist.model.OrderListVO;
 
 public class OrderListServiceImpl implements OrderListService{
 	  private OrderListDAO orderListDAO;
 
-	    public OrderListServiceImpl(OrderListDAO orderListDAO) {
-	        this.orderListDAO = orderListDAO;
-	    }
+	  public OrderListServiceImpl() {
+		    this.orderListDAO = new OrderListDAOImpl();
+		}
+
 	@Override
 	public int insert(OrderListVO orderListVO) {
 		// TODO Auto-generated method stub
@@ -41,5 +42,16 @@ public class OrderListServiceImpl implements OrderListService{
 		// TODO Auto-generated method stub
 		return orderListDAO.getAll();
 	}
+	@Override
+	public Integer findUserIDByOrderIDAndActID(Integer orderID, Integer actID) {
+		// TODO Auto-generated method stub
+		return orderListDAO.findUserIDByOrderIDAndActID(orderID,actID);
+	}
 
+	@Override
+	public List<Integer> findOrderIDsByActID(Integer actID) {
+		// TODO Auto-generated method stub
+		return orderListDAO.findOrderIDsByActID(actID);
+	}
+ 
 }

@@ -165,5 +165,57 @@ public class RedisServiceImpl implements RedisService{
 		        }
 		    }
 		}
+		//購物車使用方法, 改為db1複製資料
+		public Map<String, String> markSeatsInRedisAndDB1(String actID, String targetUserName) {
+		    Jedis jedis = null;
+		    Map<String, String> modifiedSeatsData = new HashMap<>();
+
+		    int seatExpirationTime = 20; // 設定座位的過期時間
+
+		    try {
+		        jedis = JedisPoolUtil.getJedisPool().getResource();
+
+		        // 從主數據庫（db0）獲取座位數據
+		        Map<String, String> seatsData = jedis.hgetAll("seatData:" + actID);
+
+		        for (Map.Entry<String, String> entry : seatsData.entrySet()) {
+		            String seatNumber = entry.getKey();
+		            String seatInfo = entry.getValue();
+
+		            String[] seatInfoParts = seatInfo.split(",");
+		            String userName = seatInfoParts[0];
+		            String actName = seatInfoParts[1];
+		            String seatType = seatInfoParts[2];
+
+		            if (userName.equals(targetUserName) && seatType.equals("buy")) {
+		                // 將 "buy" 標記的座位狀態改為 "inCart"
+		                String newSeatInfoCart = seatNumber + "," + actName + ",buy";
+
+		                // 切換到 db1
+		                jedis.select(1);
+
+		                // 為每個座位設定一個單獨的 key，並設定 TTL
+		                String seatKey = "cart:" + targetUserName + ":" + actID + ":" + seatNumber;
+		                jedis.set(seatKey, newSeatInfoCart);
+		                jedis.expire(seatKey, seatExpirationTime);
+
+		                // 切回主數據庫（db0）並刪除原本標記為 "buy" 的座位
+		                jedis.select(0);
+		                
+
+		                modifiedSeatsData.put(seatNumber, newSeatInfoCart);
+		            }
+		        }
+		    } finally {
+		        if (jedis != null) {
+		            jedis.close();
+		        }
+		    }
+
+		    return modifiedSeatsData;
+		}
+
+
+
 
 }

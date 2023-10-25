@@ -15,5 +15,6 @@ public interface RedisService {
 	void deleteSeatDataFromRedis(String actID, String seatNumber, String userName);
 	Map<String, String> markSeatsInRedis(String actID, String targetUserName);
 	Map<String, String> getSeatDataFromRedis(String actID);	
+	 Map<String, String> markSeatsInRedisAndDB1(String actID, String targetUserName);
 	
 }

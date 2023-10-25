@@ -37,7 +37,7 @@ public class OrderListController extends HttpServlet {
 	    public void init() throws ServletException {
 	        super.init();
 	        OrderListDAO orderListDAO = new OrderListDAOImpl();
-	        orderListService = new OrderListServiceImpl(orderListDAO);
+	        this.orderListService = new OrderListServiceImpl();
 	    }
 
 	    
@@ -49,7 +49,7 @@ public class OrderListController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		OrderListDAO orderListDAO = new OrderListDAOImpl();
+		
 		int seatDataCount = 0;
 		int scope = 0;
 		Integer Total = null;
@@ -116,12 +116,15 @@ public class OrderListController extends HttpServlet {
 			case 1:
 				rowIndex1 = Math.ceil(seatNumberInt / 20);
 				seatIndex1 = seatNumberInt % 10 == 0 ? 10 : seatNumberInt % 10;
+				break;
 			case 2:
 				rowIndex1 = Math.ceil(seatNumberInt / 20);
 				seatIndex1 = seatNumberInt % 20 == 0 ? 20 : seatNumberInt % 20;
+				break;
 			case 3:
 				rowIndex1 = Math.ceil(seatNumberInt / 30);
 				seatIndex1 = seatNumberInt % 30 == 0 ? 30 : seatNumberInt % 30;
+				break;
 			}
 			System.out.println("Received rowIndex1: " + rowIndex1);
 			System.out.println("Received seatIndex1: " + seatIndex1);
