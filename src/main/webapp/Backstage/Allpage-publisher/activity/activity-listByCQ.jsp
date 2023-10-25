@@ -31,9 +31,9 @@ pageContext.setAttribute("categories", categories);
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <!-- Font Awesome -->
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/Backstage/plugins/fontawesome-free/css/all.min.css">
+	href="../../plugins/fontawesome-free/css/all.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/dist/css/adminlte.min.css">
+<link rel="stylesheet" href="../../dist/css/adminlte.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -157,17 +157,17 @@ pageContext.setAttribute("categories", categories);
 												<td>${actData.time}</td>
 												<td>${actData.cityAddressID.cityName}</td>
 												<td>
-													<Form method="post" action="<%=request.getContextPath()%>/act/act.do">
+													<Form method="post" action="<%=request.getContextPath()%>/SearchSe"	accept-charset="UTF-8">
 														<button type="submit" class="btn btn-block btn-success btn-sm">修改</button>
 														<input type="hidden" name="action" value="update" />
-														<input type="hidden" name="actId" value="${actData.actID}" />
+														<input type="hidden" name="actID" value="${actData.actID}" />
 													</Form>
 												</td>
 												<td>
-													<form method="post" action="<%=request.getContextPath()%>/act/act.do">
+													<form method="post" action="<%=request.getContextPath()%>/SearchSe" accept-charset="UTF-8">
 														<button type="submit" class="btn btn-block btn-danger btn-sm">刪除</button>
 														<input type="hidden" name="action" value="delete" />
-														<input type="hidden" name="actIDelete" value="${actData.actID}" />
+														<input type="hidden" name="actID" value="${actData.actID}" />
 													</Form>
 												</td>
 											</tr>
@@ -198,13 +198,13 @@ pageContext.setAttribute("categories", categories);
 	<!-- ./wrapper -->
 
 	<!-- jQuery -->
-	<script src="<%=request.getContextPath()%>/Backstage/plugins/jquery/jquery.min.js"></script>
+	<script src="../../plugins/jquery/jquery.min.js"></script>
 	<!-- Bootstrap 4 -->
-	<script src="<%=request.getContextPath()%>/Backstage/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- AdminLTE App -->
-	<script src="<%=request.getContextPath()%>/Backstage/dist/js/adminlte.min.js"></script>
+	<script src="../../dist/js/adminlte.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
-	<script src="<%=request.getContextPath()%>/Backstage/dist/js/demo.js"></script>
+	<script src="../../dist/js/demo.js"></script>
 		<script>
 		<c:forEach var="actData" items="${list}">
 		var actID = "${actData.actID}";
