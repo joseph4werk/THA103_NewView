@@ -189,8 +189,9 @@ public class RedisServiceImpl implements RedisService{
 
 		            if (userName.equals(targetUserName) && seatType.equals("buy")) {
 		                // 將 "buy" 標記的座位狀態改為 "inCart"
-		                String newSeatInfoCart = seatNumber + "," + actName + ",buy";
-
+		                String newSeatInfoCart = seatNumber + "," + actName + ",soldOut";
+		                String newSeatInfo = userName + "," + actName + ",soldOut";
+		                jedis.hset("seatData:" + actID, seatNumber, newSeatInfo);
 		                // 切換到 db1
 		                jedis.select(1);
 
@@ -199,7 +200,7 @@ public class RedisServiceImpl implements RedisService{
 		                jedis.set(seatKey, newSeatInfoCart);
 		                jedis.expire(seatKey, seatExpirationTime);
 
-		                // 切回主數據庫（db0）並刪除原本標記為 "buy" 的座位
+		                
 		                jedis.select(0);
 		                
 
