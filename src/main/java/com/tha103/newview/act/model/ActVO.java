@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -101,7 +102,7 @@ public class ActVO {
 	
 	/*主鍵相關表格*/
 	@Expose
-	@OneToMany(mappedBy = "act", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "act", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<ActPic> actpics;
 	@Expose
 	@OneToMany(mappedBy = "actVO", cascade=CascadeType.ALL)
