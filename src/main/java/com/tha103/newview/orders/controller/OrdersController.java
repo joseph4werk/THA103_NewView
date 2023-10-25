@@ -29,8 +29,13 @@ public class OrdersController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		var userID = req.getSession().getAttribute("userID");
-		var userID = 2;
+		Integer userID = 0;
+		Integer uid = (Integer) req.getSession().getAttribute("userID");
+		if (uid != null) {
+			userID = uid;
+		} else {
+			userID = 1;
+		}
 		var list = service.findByUserID(userID);
 		resp.setContentType("application/json; charset=utf-8");
 		resp.getWriter().write(gson.toJson(list));

@@ -24,6 +24,7 @@ public class CartController extends HttpServlet {
 	public void init() throws ServletException {
 		service = new CartServiceImpl();
 	}
+
 //public static void main(String[] args) {
 //	CartController CartController = new CartController();
 //	CartController.doGet(null, null);
@@ -34,7 +35,9 @@ public class CartController extends HttpServlet {
 		Integer uid = (Integer) req.getSession().getAttribute("userID");
 		if (uid != null) {
 			userID = uid;
-		}else {userID = 1;}
+		} else {
+			userID = 1;
+		}
 		System.out.println(uid);
 		var cartList = service.findCartList(userID);
 		resp.setContentType("application/json; charset=utf-8");
@@ -47,7 +50,9 @@ public class CartController extends HttpServlet {
 		Integer uid = (Integer) req.getSession().getAttribute("userID");
 		if (uid != null) {
 			userID = uid;
-		}else {userID = 1;}
+		} else {
+			userID = 1;
+		}
 		var actID = Integer.parseInt(req.getParameter("actID"));
 		var result = service.removeCart(actID, userID);
 
@@ -63,7 +68,9 @@ public class CartController extends HttpServlet {
 		Integer uid = (Integer) req.getSession().getAttribute("userID");
 		if (uid != null) {
 			userID = uid;
-		}else {userID = 1;}
+		} else {
+			userID = 1;
+		}
 		var reqBody = gson.fromJson(req.getReader(), JsonObject.class);
 		String discountCode = reqBody.get("discountCode").getAsString();
 		var value = service.disAmountValue(discountCode, userID);
