@@ -104,7 +104,7 @@ public class ActVO {
 	@Expose
 	@OneToMany(mappedBy = "act", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<ActPic> actpics;
-	@Expose
+//	@Expose
 	@OneToMany(mappedBy = "actVO", cascade=CascadeType.ALL)
 	private Set<OrderListVO> orderListVOs;
 	@Expose
@@ -320,6 +320,20 @@ public class ActVO {
 		// TODO Auto-generated method stub
 		
 	}
-	
 
+	public Set<OrderListVO> getOrderListVOs() {
+		return orderListVOs;
+	}
+
+	public void setOrderListVOs(Set<OrderListVO> orderListVOs) {
+		this.orderListVOs = orderListVOs;
+	}
+
+	public Set<CartActVO> getCartActVOs() {
+		return cartActVOs;
+	}
+
+	public void setCartActVOs(Set<CartActVO> cartActVOs) {
+		this.cartActVOs = cartActVOs;
+	}
 }
