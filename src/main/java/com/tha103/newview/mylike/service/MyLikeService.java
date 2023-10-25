@@ -1,6 +1,7 @@
 package com.tha103.newview.mylike.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.tha103.newview.act.model.ActVO;
 import com.tha103.newview.mylike.model.MyLikeDAO;
@@ -64,4 +65,14 @@ public class MyLikeService{
 	public List<MyLikeVO> getAll() {
 		return myLikeDao.getAll();
 	}
+	
+	public int findMyLikeIDByUserIDAndActID(Integer userID, Integer actID) {
+	    Integer myLikeID = myLikeDao.findMyLikeIDByUserIDAndActID(userID, actID);
+	    return (myLikeID != null) ? 1 : 0;
+	}
+	
+	public List<Map<String, Integer>> findMyLikeIDsByUserID(Integer userID) {
+	    return myLikeDao.findMyLikeIDsByUserID(userID);
+	}
+
 }

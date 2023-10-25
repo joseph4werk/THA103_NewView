@@ -1,8 +1,12 @@
 package com.tha103.newview.mylike.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import com.tha103.newview.act.model.ActVO;
 import com.tha103.newview.user.model.UserVO;
@@ -95,8 +99,56 @@ public class MyLikeDAOImpl implements MyLikeDAO{
 		return null;
 		
 	}
+	@Override
+	public Integer findMyLikeIDByUserIDAndActID(Integer userID, Integer actID) {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    try {
+	        session.beginTransaction();
+	        Query<Integer> query = session.createQuery("SELECT myLikeID FROM MyLikeVO WHERE user.userID = :userID AND act.actID = :actID", Integer.class);
+	        query.setParameter("userID", userID);
+	        query.setParameter("actID", actID);
+	        Integer myLikeID = query.uniqueResult();
+	        session.getTransaction().commit();
+	        return myLikeID;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        session.getTransaction().rollback();
+	    }
+	    return null;
+	}
+	@Override
+	public List<Map<String, Integer>> findMyLikeIDsByUserID(Integer userID) {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    try {
+	        session.beginTransaction();
+	        
+	       
+	        Query<Object[]> query = session.createQuery("SELECT myLike.myLikeID, myLike.actVO.actID FROM MyLikeVO myLike WHERE myLike.userVO.userID = :userID", Object[].class);
+	        query.setParameter("userID", userID);
+	        List<Object[]> results = query.list();
+	        
+	        List<Map<String, Integer>> myLikeIDsWithActID = new ArrayList<>();
+	        for (Object[] result : results) {
+	            Integer myLikeID = (Integer) result[0];
+	            Integer actID = (Integer) result[1];
+	            
+	            Map<String, Integer> entry = new HashMap<>();
+	            entry.put("myLikeID", myLikeID);
+	            entry.put("actID", actID);
+	            myLikeIDsWithActID.add(entry);
+	        }
+	        
+	        session.getTransaction().commit();
+	        return myLikeIDsWithActID;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        session.getTransaction().rollback();
+	    }
+	    return null;
+	}
 
-	
+
+
 	public static void main(String[] args) {
 		MyLikeDAO dao = new MyLikeDAOImpl();
 

@@ -108,7 +108,7 @@ pageContext.setAttribute("categories", categories);
 </head>
 <body class="animsition">
 
-	
+
 
 	<table border="1">
 		<tr>
@@ -578,10 +578,13 @@ pageContext.setAttribute("categories", categories);
 										<a href="#"
 											class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
 											<img class="icon-heart1 dis-block trans-04"
+											data-act-id="YOUR_ACT_ID"
 											src="images/icons/icon-heart-01.png" alt="ICON" /> <img
 											class="icon-heart2 dis-block trans-04 ab-t-l"
+											data-act-id="YOUR_ACT_ID"
 											src="images/icons/icon-heart-02.png" alt="ICON" />
 										</a>
+
 									</div>
 								</div>
 							</div>
@@ -636,12 +639,14 @@ pageContext.setAttribute("categories", categories);
 											<div style="float: right"
 												class="block2-txt-child2 flex-r p-t-3">
 												<a href="#"
-													class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-													<img class="icon-heart1 dis-block trans-04"
+													class="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
+													data-act-id="${actData.actID}"> <img
+													class="icon-heart1 dis-block trans-04"
 													src="images/icons/icon-heart-01.png" alt="ICON" /> <img
 													class="icon-heart2 dis-block trans-04 ab-t-l"
 													src="images/icons/icon-heart-02.png" alt="ICON" />
 												</a>
+
 											</div>
 										</div>
 									</div>
@@ -943,7 +948,8 @@ pageContext.setAttribute("categories", categories);
 									<div class="size-204 flex-w flex-m respon6-next">
 										<button class="seatsTry">
 											<a id="dynamic-link" href="#" data-actid="ActIDValue"
-												data-userid="UserIDValue" onclick=sendDataToServer(packagedData);>馬上前往購買</a>
+												data-userid="UserIDValue"
+												onclick=sendDataToServer(packagedData);>馬上前往購買</a>
 										</button>
 
 									</div>
@@ -1282,31 +1288,78 @@ pageContext.setAttribute("categories", categories);
 
 
 	</script>
-	
-	 <script type="text/javascript">
+
+	<script type="text/javascript">
         // 在頁面加載完成後執行
-        $(document).ready(function() {
-            var toggleState = 0; // 初始化狀態為0
+      $(document).ready(function() {
+    	  var userID = 1;
 
-            // 當按鈕被點擊時
-            $("#toggleButton").click(function(e) {
-                e.preventDefault(); // 防止<a>標籤的默認行為
+    	    // 每個按鈕都有一個不同的actID
+    	   $(".btn-addwish-b2").each(function() {
+    var actID = $(this).data("act-id");
+    var link = $(this); 
 
-                // 切換狀態
-                toggleState = 1 - toggleState;
+    $.ajax({
+        type: "POST",
+        url: "LikuSoDesu",
+        data: {
+            action: "desu",
+            actID: actID,
+            userID: userID
+        },
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
 
-                // 根據狀態切換圖片
-                if (toggleState === 1) {
-                    // 當狀態為1時，顯示第一張圖片
-                    $(this).find(".icon-heart1").show();
-                    $(this).find(".icon-heart2").hide();
+            var likeIDsArray = response.likeIDs;
+            var actIDs = likeIDsArray.map(item => item.actID);
+            console.log(actIDs + " " + actID);
+            var isFavorite = actIDs.includes(actID);          
+            if (isFavorite) {
+                link.addClass("js-addedwish-b2"); 
+                console.log("有愛心");
+            } else {
+                link.removeClass("js-addedwish-b2"); 
+                console.log("沒愛心");
+            }
+        },
+        error: function(error) {
+            console.log("Error:", error);
+        }
+    });
+});
+
+
+
+
+    // 當按鈕被點擊時，執行Ajax請求切換狀態
+    $("#toggleButton").click(function(e) {
+        e.preventDefault(); // 防止<a>標籤的默認行為
+
+        // 執行Ajax請求將用戶ID和收藏狀態發送到伺服器
+        $.ajax({
+            type: 'POST',
+            url: 'your-server-url', // 替換為伺服器端接收請求的URL
+            data: { userID: "YOUR_USER_ID", isFavorite: !isFavorite }, // 切換收藏狀態
+            success: function(response) {
+                // 在伺服器響應成功後執行相應的操作
+
+                // 切換圖標的顯示
+                if (isFavorite) {
+                    $(".icon-heart1").hide();
+                    $(".icon-heart2").show();
                 } else {
-                    // 當狀態為0時，顯示第二張圖片
-                    $(this).find(".icon-heart1").hide();
-                    $(this).find(".icon-heart2").show();
+                    $(".icon-heart1").show();
+                    $(".icon-heart2").hide();
                 }
-            });
+
+                // 更新收藏狀態
+                isFavorite = !isFavorite;
+            }
         });
+    });
+});
+
     </script>
 </body>
 </html>
