@@ -11,6 +11,7 @@ import org.springframework.web.method.annotation.AbstractNamedValueMethodArgumen
 
 import com.tha103.newview.orders.model.OrdersVO;
 import com.tha103.newview.user.dto.MyLikeActDTO;
+import com.tha103.newview.user.dto.OrderDTO;
 import com.tha103.util.HibernateUtil;
 
 public class TestHibernateDAO {
@@ -70,8 +71,8 @@ public class TestHibernateDAO {
 //		Optional<OrdersVO> op = dao.getOrderByUserID(userID);
 //		OrdersVO ordersVO = op.get();
 //		System.out.println(op);
-		OrdersVO ordersVO = dao.getOrderByUserID(userID);
-		System.out.println(ordersVO);
+//		OrdersVO ordersVO = dao.getOrderByUserID(userID);
+//		System.out.println(ordersVO);
 
 //		UserVO userVO = new UserVO();
 //		OrdersVO ordersVO = new OrdersVO();
@@ -127,7 +128,9 @@ public class TestHibernateDAO {
 //		System.out.println(dto.get(0));
 		
 		MyLikeActDTO myLikeActDTO = new MyLikeActDTO(1);
+		OrderDTO orderDTO = new OrderDTO(userID);
 		System.out.println(myLikeActDTO);
+		System.out.println(orderDTO);
 		
 		
 

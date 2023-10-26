@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Sign-up</title>
+    <title>帳號啟用</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--===============================================================================================-->
@@ -103,6 +103,7 @@
             <!-- Icon header -->
             <div class="wrap-icon-header flex-w flex-r-m h-full">
               <div class="flex-c-m h-full p-r-25 bor6">
+                <a href="#" style="color: white; margin-right: 15px">登出</a>
                 <div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 js-show-login">
                   <i class="fa fa-user me-sm-1"></i>
                 </div>
@@ -236,7 +237,7 @@
             </li>
 
             <li class="p-b-13">
-              <a href="member.html" class="stext-102 cl2 hov-cl1 trans-04"> 會員中心 </a>
+              <a href="#" class="stext-102 cl2 hov-cl1 trans-04"> 會員中心 </a>
             </li>
 
             <li class="p-b-13">
@@ -383,139 +384,32 @@
     <!-- ===================================================== -->
     <!-- ***************************************************** -->
 
-    <section class="mb-6 mt-5 p-t-250">
+    <div class="page-header" style="position: relative; display: flex; justify-content: center; align-items: center">
       <div class="container">
-        <div class="row mt-lg-n10 mt-md-n11 mt-n10">
-          <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
-            <div class="card z-index-0">
-              <div class="card-header text-center pt-4">
-                <h5>註冊</h5>
-                <p class="mb-0 text-lead text-black">請填入以下資訊進行註冊</p>
+        <div class="row">
+          <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto mb-5">
+            <div class="card card-plain mt-8 mb-5" style="box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05); padding-top: 10px">
+              <div class="card-header pb-0 text-left bg-transparent">
+                <h5>啟用帳號</h5>
+                <p class="text-lead text-black mb-0">驗證碼已發送至您的註冊信箱，請輸入驗證碼完成帳號啟用</p>
               </div>
-              <div class="card-body" id="register">
-                <form role="form text-left" id="regiester_form">
-                  <div class="mb-3">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="name"
-                      placeholder="請輸入名字(中/英文至少三字元，不可包含標點符號、數字)"
-                      aria-label="Name"
-                      aria-describedby="name-addon"
-                      required="required"
-                      pattern="^[\u4e00-\u9fa5a-zA-Z]{2,10}$"
-                      oninput="setCustomValidity('');"
-                      oninvalid="setCustomValidity('請輸入正確的姓名格式:中/英至少三個字元');"
-                      ;
-                    />
+              <div class="card-body mt-0">
+                <form role="form">
+                  <label>Verification-code</label>
+                  <a href="#" id="sendVerificationCode" class="btn bg-outline-dark btn-sm pull-right" tabindex="-1" role="button" aria-disabled="true" style="padding: 8px">重新取得驗證碼</a>
+                  <div class="mb-2 mt-1">
+                    <input type="text" class="form-control" id="verificationCode" placeholder="請輸入驗證碼" aria-label="verification-code" aria-describedby="verification-code-addon" />
                   </div>
-                  <div class="mb-3">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="account"
-                      placeholder="請輸入帳號"
-                      aria-label="Account"
-                      aria-describedby="account-addon"
-                      required="required"
-                      pattern="^(?=.*[a-zA-Z])(?=.*).{3,}$"
-                      oninput="setCustomValidity('');"
-                      oninvalid="setCustomValidity('請輸入正確的帳號格式:至少三個英文字元');"
-                      ;
-                    />
+                  <div class="text-center">
+                    <button type="button" class="btn bg-gradient-dark w-100 my-4 mb-2" id="submit">送出</button>
                   </div>
-                  <div class="mb-3">
-                    <input
-                      type="date"
-                      class="form-control"
-                      id="birthdate"
-                      placeholder="請輸入生日"
-                      aria-label="Birthdate"
-                      aria-describedby="birthdate-addon"
-                      required="required"
-                      min="1900-01-01"
-                      max="2023-10-23"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="cellphone"
-                      placeholder="請輸入電話"
-                      aria-label="Cellphone"
-                      aria-describedby="cellphone-addon"
-                      required="required"
-                      pattern="09\d{8}"
-                      oninput="setCustomValidity('');"
-                      oninvalid="setCustomValidity('請輸入正確的電話格式:須以09開頭，共十碼數字');"
-                      ;
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="email"
-                      placeholder="請輸入Email"
-                      aria-label="Email"
-                      aria-describedby="email-addon"
-                      required="required"
-                      pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="nickname"
-                      placeholder="請輸入暱稱"
-                      aria-label="Nickname"
-                      aria-describedby="nickname-addon"
-                      required="required"
-                      pattern="^(?=.*[a-zA-Z])(?=.*).{3,}$"
-                      oninput="setCustomValidity('');"
-                      oninvalid="setCustomValidity('請輸入正確的暱稱格式:至少三個字元');"
-                      ;
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      id="password"
-                      name="password"
-                      class="form-control"
-                      type="password"
-                      placeholder="設定密碼(格式:含英數至少3個字元)"
-                      required="required"
-                      pattern="^(?=.*[a-zA-Z][0-9])(?=.*).{3,}$"
-                      oninput="setCustomValidity('');"
-                      oninvalid="setCustomValidity('請輸入正確的密碼格式:含英數至少三個字元');"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      id="ConfirmPassword"
-                      name="ConfirmPassword"
-                      class="form-control"
-                      type="password"
-                      placeholder="確認密碼"
-                      required="required"
-                      oninput="setCustomValidity('');"
-                      onchange="if($('#password').val()!=$('#ConfirmPassword').val()){setCustomValidity('密碼不吻合');}"
-                    />
-                  </div>
-                  <!-- <div class="text-center">
-                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2" id="submit">取得驗證碼</button>
-                  </div> -->
-                  <input type="submit" value="取得驗證碼" class="btn bg-gradient-dark w-100 my-4 mb-2" />
-                  <p class="text-sm mt-3 mb-0">已經有帳號了? <a href="./sign-in.html" class="text-dark font-weight-bolder">點我登入</a></p>
                 </form>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
     <!-- ===================================================== -->
 
@@ -773,42 +667,39 @@
 
     <!--===============================================================================================-->
     <script>
-      $("#regiester_form").submit(function (e) {
+      $("#submit").on("click", function (e) {
         e.preventDefault();
         /*  將 sign-up 資料用物件包裝  */
-        let signUp_item = {
-          name: $("#name").val(),
-          account: $("#account").val(),
-          password: $("#password").val(),
-          birthdate: $("#birthdate").val(),
-          cellphone: $("#cellphone").val(),
-          email: $("#email").val(),
-          nickname: $("#nickname").val(),
+        let verificationCode = {
+          verificationCode: $("#verificationCode").val(),
         };
-        console.log(signUp_item);
+        console.log(verificationCode);
 
         $.ajax({
-          url: "http://localhost:8081/com.tha103.newview/SignUp",
+          url: "http://localhost:8081/com.tha103.newview/Verify",
           type: "POST",
-          data: signUp_item,
+          data: verificationCode,
           dataType: "json",
           beforeSend: function (xhr) {
-            console.log("beforesend");
+            console.log("beforeSend");
           },
           success: function (data) {
-            redirect(data);
+            // console.log("success");
+            console.log(data);
+            redirectPath(data);
           },
-          complete: function (xhr) {},
+          complete: function (xhr) {
+            console.log("complete");
+          },
         });
-        function redirect(data) {
-          console.log(data);
-          switch (data.status) {
-            case "success":
-              alert("驗證碼已寄到您的信箱，請前往收信並驗證。");
-              location.href = "registration-verification.html";
-              break;
-            case "failed":
-              alert("註冊失敗，帳號已重複，請修正後再提交申請！");
+        function redirectPath(data) {
+          // alert("function");
+          if (data.status == "failed") {
+            alert("驗證錯誤，請重新輸入！");
+            location.href = "registration-verification.html";
+          } else if (data.status == "success") {
+            alert("資料驗證完成，網頁將重新導向至首頁！");
+            location.href = "home-03.html";
           }
         }
       });
@@ -899,6 +790,26 @@
       });
     </script>
     <!--===============================================================================================-->
+    <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script>
+      $(".js-pscroll").each(function () {
+        $(this).css("position", "relative");
+        $(this).css("overflow", "hidden");
+        var ps = new PerfectScrollbar(this, {
+          wheelSpeed: 1,
+          scrollingThreshold: 1000,
+          wheelPropagation: false,
+        });
+
+        $(window).on("resize", function () {
+          ps.update();
+        });
+      });
+    </script>
+    <!--===============================================================================================-->
+    <script src="js/main.js"></script>
+
+    <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
     <!--   Core JS Files   -->
     <script src="./assets/js/core/popper.min.js"></script>
     <script src="./assets/js/core/bootstrap.min.js"></script>
@@ -913,11 +824,7 @@
         Scrollbar.init(document.querySelector("#sidenav-scrollbar"), options);
       }
     </script>
-    <!--===============================================================================================-->
-    <script src="js/main.js"></script>
     <!-- JavaScript -> Input Data -->
     <!-- <script src="./js/input-data.js"></script> -->
-    <!-- Ajax -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script> -->
   </body>
 </html>
