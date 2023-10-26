@@ -165,7 +165,7 @@ pageContext.setAttribute("categories", categories);
                 </li>
 
                 <li class="active-menu">
-                  <a href="product.html">活動專區</a>
+                  <a href="NewActJSPTest.jsp">活動專區</a>
                 </li>
 
                 <li class="label1" data-label1="hot">
@@ -290,7 +290,7 @@ pageContext.setAttribute("categories", categories);
           </li>
 
           <li>
-            <a href="product.html">Shop</a>
+            <a href="NewActJSP.jsp">Shop</a>
           </li>
 
           <li>
@@ -852,9 +852,15 @@ pageContext.setAttribute("categories", categories);
                         <div class="block2-txt-child1 flex-col-l">
                             <div style="width: 100%; overflow: hidden">
                                 <div style="float: left">
-                                    <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6" id="activity-name">
-                                        ${actData.actName}
-                                    </a>
+                                    <form action="<%=request.getContextPath()%>/SearchSe"
+													method="post" id="searchForm_${actData.actID}">
+													<input type="hidden" name="actID" value="${actData.actID}">
+													<input type="hidden" name="action" value="pageChange">
+													<a href="javascript:void(0);"
+														class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
+														onclick="document.getElementById('searchForm_${actData.actID}').submit();">
+														${actData.actName} </a>
+												</form>
                                 </div>
                                 <div style="float: right">
                                     <span class="stext-105 cl3" id="activity-price">
@@ -972,247 +978,10 @@ actImage.src = imageUrl;
             </div>
           </div>
 
-          <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item shoes">
-            <!-- Block2 -->
-            <div class="block2">
-              <div class="block2-pic hov-img0">
-                <img
-                  src="images/icons/00301812.202110180187M.jpg"
-                  alt="IMG-PRODUCT"
-                />
+         
 
-                <a
-                  href="#"
-                  class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                >
-                  活動詳細
-                </a>
-              </div>
-
-              <div class="block2-txt flex-w flex-t p-t-14">
-                <p style="font-size: 11px">活動日期:2023.12.12(一)8:00</p>
-
-                <div class="block2-txt-child1 flex-col-l">
-                  <div style="width: 100%; overflow: hidden">
-                    <div style="float: left">
-                      <a
-                        href="product-detail.html"
-                        class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                      >
-                        睡著的舞台劇
-                      </a>
-                    </div>
-                    <div style="float: right">
-                      <span class="stext-105 cl3"> TWD 300 </span>
-                    </div>
-                  </div>
-                  <hr
-                    style="margin-top: 0"
-                    size="8px"
-                    align="center"
-                    width="100%"
-                  />
-                  <div style="width: 100%; overflow: hidden">
-                    <div style="float: left">
-                      <a
-                        href="https://www.google.com/maps/@25.0356163,121.4798943,15z?authuser=0&entry=ttu"
-                      >
-                        <img
-                          src="./images/icons/iStock-902788474 (1).png"
-                          alt=""
-                        />
-                        台北市</a
-                      >
-                    </div>
-                    <div
-                      style="float: right"
-                      class="block2-txt-child2 flex-r p-t-3"
-                    >
-                      <a
-                        href="#"
-                        class="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                      >
-                        <img
-                          class="icon-heart1 dis-block trans-04"
-                          src="images/icons/icon-heart-01.png"
-                          alt="ICON"
-                        />
-
-                        <img
-                          class="icon-heart2 dis-block trans-04 ab-t-l"
-                          src="images/icons/icon-heart-02.png"
-                          alt="ICON"
-                        />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item men">
-            <!-- Block2 -->
-            <div class="block2">
-              <div class="block2-pic hov-img0">
-                <img src="images/iStock-1482843353.jpg" alt="IMG-PRODUCT" />
-
-                <a
-                  href="#"
-                  class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                >
-                  活動詳細
-                </a>
-              </div>
-
-              <div class="block2-txt flex-w flex-t p-t-14">
-                <p style="font-size: 11px">活動日期:2023.12.12(一)8:00</p>
-
-                <div class="block2-txt-child1 flex-col-l">
-                  <div style="width: 100%; overflow: hidden">
-                    <div style="float: left">
-                      <a
-                        href="product-detail.html"
-                        class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                      >
-                        莫名其妙講座
-                      </a>
-                    </div>
-                    <div style="float: right">
-                      <span class="stext-105 cl3"> TWD 200 </span>
-                    </div>
-                  </div>
-                  <hr
-                    style="margin-top: 0"
-                    size="8px"
-                    align="center"
-                    width="100%"
-                  />
-                  <div style="width: 100%; overflow: hidden">
-                    <div style="float: left">
-                      <a
-                        href="https://www.google.com/maps/@25.0356163,121.4798943,15z?authuser=0&entry=ttu"
-                      >
-                        <img
-                          src="./images/icons/iStock-902788474 (1).png"
-                          alt=""
-                        />
-                        台北市</a
-                      >
-                    </div>
-                    <div
-                      style="float: right"
-                      class="block2-txt-child2 flex-r p-t-3"
-                    >
-                      <a
-                        href="#"
-                        class="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                      >
-                        <img
-                          class="icon-heart1 dis-block trans-04"
-                          src="images/icons/icon-heart-01.png"
-                          alt="ICON"
-                        />
-
-                        <img
-                          class="icon-heart2 dis-block trans-04 ab-t-l"
-                          src="images/icons/icon-heart-02.png"
-                          alt="ICON"
-                        />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item watches">
-            <!-- Block2 -->
-            <div class="block2">
-              <div class="block2-pic hov-img0">
-                <img src="images/icons/97928.jpg" alt="IMG-PRODUCT" />
-
-                <a
-                  href="#"
-                  class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                >
-                  活動詳細
-                </a>
-              </div>
-
-              <div class="block2-txt flex-w flex-t p-t-14">
-                <p style="font-size: 11px">活動日期:2023.12.12(一)8:00</p>
-
-                <div class="block2-txt-child1 flex-col-l">
-                  <div style="width: 100%; overflow: hidden">
-                    <div style="float: left">
-                      <a
-                        href="product-detail.html"
-                        class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                      >
-                        永遠搶不到的演唱會
-                      </a>
-                    </div>
-                    <div style="float: right">
-                      <span class="stext-105 cl3"> TWD 900 </span>
-                    </div>
-                  </div>
-                  <hr
-                    style="margin-top: 0"
-                    size="8px"
-                    align="center"
-                    width="100%"
-                  />
-                  <div style="width: 100%; overflow: hidden">
-                    <div style="float: left">
-                      <a
-                        href="https://www.google.com/maps/@25.0356163,121.4798943,15z?authuser=0&entry=ttu"
-                      >
-                        <img
-                          src="./images/icons/iStock-902788474 (1).png"
-                          alt=""
-                        />
-                        台北市</a
-                      >
-                    </div>
-                    <div
-                      style="float: right"
-                      class="block2-txt-child2 flex-r p-t-3"
-                    >
-                      <a
-                        href="#"
-                        class="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                      >
-                        <img
-                          class="icon-heart1 dis-block trans-04"
-                          src="images/icons/icon-heart-01.png"
-                          alt="ICON"
-                        />
-
-                        <img
-                          class="icon-heart2 dis-block trans-04 ab-t-l"
-                          src="images/icons/icon-heart-02.png"
-                          alt="ICON"
-                        />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Load more -->
-        <div class="flex-c-m flex-w w-full p-t-45">
-          <a
-            href="#"
-            class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04"
-          >
-            Load More
-          </a>
-        </div>
+       
+        
       </div>
     </div>
 
@@ -1494,7 +1263,8 @@ actImage.src = imageUrl;
                   <div class="flex-w flex-r-m p-b-10">
                     <div class="size-204 flex-w flex-m respon6-next">
                       <button class="seatsTry">
-                        <a id="dynamic-link" href="#">馬上前往購買</a>
+                        					<a id="dynamic-link" href="#" data-actid="ActIDValue"
+												data-userid="UserIDValue" onclick=sendDataToServer(packagedData);>馬上前往購買</a>
                       </button>
                     </div>
                   </div>
@@ -1703,17 +1473,23 @@ actImage.src = imageUrl;
         var scale;
 
         switch (actScope) {
-            case 1:
-                scale = "最小規模";
-                break;
-            case 2:
-                scale = "中等規模";
-                break;
-            case 3:
-                scale = "最大規模";
-                break;
-            default:
-                console.error("未知的規模");
+        case 1:
+			scale = "最小規模";
+			$('#dynamic-link').attr('href',
+					'seatChooseWebsocketSmall.jsp?actID=' + actID);
+			break;
+		case 2:
+			scale = "中等規模";
+			$('#dynamic-link').attr('href',
+					'seatChooseWebsocket.jsp?actID=' + actID);
+			break;
+		case 3:
+			scale = "最大規模";
+			$('#dynamic-link').attr('href',
+					'seatChooseWebsocketLarge.jsp?actID=' + actID);
+			break;
+		default:
+			console.error("未知的規模");
         }
     for (var i = 0; i < actImages.length; i++) {
     	console.log(actImages.length)
@@ -1785,6 +1561,8 @@ actImage.src = imageUrl;
             }
         });
     };
+    
+    
     </script>
   </body>
 </html>

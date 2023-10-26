@@ -1,4 +1,4 @@
-package seatModel;
+package com.tha103.newview.websocketchat.model;
 
 public class SeatInfo {
 	private String userName;

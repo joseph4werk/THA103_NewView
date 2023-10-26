@@ -99,7 +99,7 @@ public class UserVO {
 	private Set<OrdersVO> ordersVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<MyLikeVO> myLikeVOs;
 	
 	public UserVO() {

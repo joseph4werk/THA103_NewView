@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.Query;
 
@@ -16,6 +17,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.tha103.newview.orders.model.OrdersVO;
+import com.tha103.newview.publisher.model.PublisherVO;
 import com.tha103.util.HibernateUtil;
 import com.tha103.util.Util;
 
@@ -213,6 +215,61 @@ public class UserDAOImpl implements UserDAO {
 		return null;
 	}
 
+//	@Override
+//	public Optional<OrdersVO> getOrderByUserID(Integer userID) {
+//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//		OrdersVO ordersVO = null;
+//		
+//		try {
+//			session.beginTransaction();
+//
+//			String sql = "from OrdersVO WHERE userID = :userID ";
+//			ordersVO = (OrdersVO) session.createQuery(sql).setParameter("userID", userID).uniqueResult();
+//			
+//			session.getTransaction().commit();
+//
+//		} catch (Exception e) {
+//			session.getTransaction().rollback();
+//
+//		}
+//		return (ordersVO == null) ? Optional.empty() : Optional.of(ordersVO);
+//	}
+
+	public List<Object[]> getActPicIDByUserID(Integer userID) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		try {
+			session.beginTransaction();
+
+//			List<Object[]> list2 = session.createNativeQuery("SELECT ap.ActPicID FROM user u "
+//					+ "JOIN orders o ON u.userid = o.userid "
+//					+ "JOIN orderlist ol ON o.orderID = ol.orderID "
+//					+ "JOIN act a ON ol.actID = a.actID "
+//					+ "JOIN actpic ap ON a.actID = ap.actID; ").list();
+
+//			List<Object[]> list2 = session.createNativeQuery("SELECT ap.ActPicID FROM user u "
+//					+ "JOIN orders o ON u.userid = o.userid "
+//					+ "JOIN orderlist ol ON o.orderID = ol.orderID "
+//					+ "JOIN act a ON ol.actID = a.actID "
+//					+ "JOIN actpic ap ON a.actID = ap.actID "
+//					+ "WHERE a.actID = ap.actID and u.userid = 1; ").list();
+
+			List<Object[]> list = session.createNativeQuery("SELECT ap.ActPicID FROM user u "
+					+ "JOIN orders o ON u.userid = o.userid " + "JOIN orderlist ol ON o.orderID = ol.orderID "
+					+ "JOIN act a ON ol.actID = a.actID " + "JOIN actpic ap ON a.actID = ap.actID "
+					+ "WHERE a.actID = ap.actID and u.userid = :userID ").setParameter("userID", userID).list();
+
+			session.getTransaction().commit();
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} finally {
+			HibernateUtil.shutdown();
+		}
+		return null;
+	}
+
 	@Override
 	public boolean checkUserAccountByEmail(String email) {
 
@@ -256,6 +313,80 @@ public class UserDAOImpl implements UserDAO {
 
 		}
 		session.getTransaction().commit();
+		return null;
+	}
+
+	@Override
+	public List<Object[]> getPublisherNameByUserID(Integer userID) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		try {
+			session.beginTransaction();
+
+			List<Object[]> list = session.createNativeQuery("SELECT p.pubname FROM user u "
+					+ "JOIN orders o ON u.userid = o.userid "
+					+ "JOIN publisher p ON o.pubID = p.pubID "
+					+ "where o.pubID = p.pubID and u.userID = :userID ")
+					.setParameter("userID", userID).list();
+			
+			session.getTransaction().commit();
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} finally {
+			HibernateUtil.shutdown();
+		}
+		return null;
+	}
+	
+	public List<Object[]> getActNameByUserID(Integer userID) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		try {
+			session.beginTransaction();
+
+			List<Object[]> list = session.createNativeQuery
+					("SELECT a.actName FROM user u "
+							+ "JOIN orders o ON u.userid = o.userid "
+							+ "JOIN orderlist ol ON o.orderID = ol.orderID "
+							+ "JOIN act a ON ol.actID = a.actID "
+							+ "WHERE ol.actID = a.actID and u.userid = :userID ")
+					.setParameter("userID", userID).list();
+			
+			session.getTransaction().commit();
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} finally {
+			HibernateUtil.shutdown();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Object[]> getMyLikeByUserID(Integer userID) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		try {
+			session.beginTransaction();
+
+			List<Object[]> list = session.createNativeQuery
+					("SELECT ml.userID, u.userName, a.actName, a.actIntroduce FROM myLike ml "
+							+ "JOIN act a ON ml.actID = a.actID "
+							+ "JOIN user u ON ml.userID = u.userID "
+							+ "WHERE ml.userID = :userID ")
+					.setParameter("userID", userID).list();
+			
+			session.getTransaction().commit();
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} finally {
+			HibernateUtil.shutdown();
+		}
 		return null;
 	}
 }

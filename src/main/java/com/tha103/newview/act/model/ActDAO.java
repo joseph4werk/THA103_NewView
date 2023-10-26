@@ -20,10 +20,10 @@ public interface ActDAO {
 	List<ActVO> getAll();
 
 	List<ActVO> getActPics();
-
 	
 
 	List<ActCategory> getAllCategories();
 	List<ActVO> getActsWithNameAndAssociations(String actName);
+
 	
 }

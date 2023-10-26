@@ -24,7 +24,7 @@ public class CartActVO implements java.io.Serializable {
 	@Column(name = "cartActID")
 	private Integer cartActID;
 
-	@Expose
+//	@Expose
 	@Column(name = "cartQuantity")
 	private Integer cartQuantity;
 

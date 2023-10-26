@@ -1,17 +1,15 @@
-package com.tha103.newview.orderlist.model;
+package com.tha103.newview.orderlist.service;
 
 import java.util.List;
 
+import com.tha103.newview.orderlist.model.OrderListVO;
 
-public interface OrderListDAO {
+public interface OrderListService {
 	public int insert(OrderListVO orderListVO);
 	public int update(OrderListVO orderListVO);
-	public int delete(Integer orderID);
+	public int delete(Integer orderListID);
 	public OrderListVO findeByPrimaryKey(Integer orderListID);
 	public List<OrderListVO> getAll();
 	Integer findUserIDByOrderIDAndActID(Integer orderID, Integer actID);
 	List<Integer> findOrderIDsByActID(Integer actID);
-//	 萬用複合查詢(傳入參數型態Map)(回傳List)
-//	public List<OrderListVO> getAll(Map<String, String[]> map);
-
 }
