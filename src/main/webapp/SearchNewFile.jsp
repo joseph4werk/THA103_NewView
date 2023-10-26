@@ -752,84 +752,7 @@ pageContext.setAttribute("categories", categories);
           <!--動態增加測試-->
 
           <!--往下一格活動區-->
-          <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-            <!-- Block2 -->
-            <div class="block2">
-              <div class="block2-pic hov-img0">
-                <img
-                  src="images/icons/iStock-831601850.jpg"
-                  alt="IMG-PRODUCT"
-                />
-
-                <a
-                  href="#"
-                  class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                >
-                  活動詳細
-                </a>
-              </div>
-
-              <div class="block2-txt flex-w flex-t p-t-14">
-                <p style="font-size: 11px">活動日期:2023.12.12(一)8:00</p>
-
-                <div class="block2-txt-child1 flex-col-l">
-                  <div style="width: 100%; overflow: hidden">
-                    <div style="float: left">
-                      <a
-                        href="product-detail.html"
-                        class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                      >
-                        誰的脫口秀
-                      </a>
-                    </div>
-                    <div style="float: right">
-                      <span class="stext-105 cl3"> TWD 300 </span>
-                    </div>
-                  </div>
-                  <hr
-                    style="margin-top: 0"
-                    size="8px"
-                    align="center"
-                    width="100%"
-                  />
-                  <div style="width: 100%; overflow: hidden">
-                    <div style="float: left">
-                      <a
-                        href="https://www.google.com/maps/@25.0356163,121.4798943,15z?authuser=0&entry=ttu"
-                      >
-                        <img
-                          src="./images/icons/iStock-902788474 (1).png"
-                          alt=""
-                        />
-                        台北市</a
-                      >
-                    </div>
-                    <div
-                      style="float: right"
-                      class="block2-txt-child2 flex-r p-t-3"
-                    >
-                      <a
-                        href="#"
-                        class="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                      >
-                        <img
-                          class="icon-heart1 dis-block trans-04"
-                          src="images/icons/icon-heart-01.png"
-                          alt="ICON"
-                        />
-
-                        <img
-                          class="icon-heart2 dis-block trans-04 ab-t-l"
-                          src="images/icons/icon-heart-02.png"
-                          alt="ICON"
-                        />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        
 
           <!--往上一格活動區-->
           <!--動態測試-->
@@ -840,14 +763,14 @@ pageContext.setAttribute("categories", categories);
                 <!-- Block2 -->
                 <div class="block2">
                     <div class="block2-pic hov-img0">
-                        <img src="" alt="IMG-PRODUCT" id="actImage_${actData.actID}" />
+                        <img src="" alt="IMG-PRODUCT" id="actImage_${actData.actID}" width="285px" height="285px"  />
                         <a href="${actData.cityAddress}" data-act-id="${actData.actID}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1" onclick="showModal(this)">
                             活動詳細
                         </a>
                     </div>
                     <div class="block2-txt flex-w flex-t p-t-14">
                         <p style="font-size: 11px" id="activity-datetime">
-                            活動日期: ${actData.time} <!-- Adjust the attribute name as per your data model -->
+                            活動日期: ${actData.time} 
                         </p>
                         <div class="block2-txt-child1 flex-col-l">
                             <div style="width: 100%; overflow: hidden">
@@ -898,90 +821,8 @@ var actImage = document.getElementById("actImage_" + actID);
 
 actImage.src = imageUrl;
 </c:forEach>
-</script>
-        
-          
-          <!--動態測試-->
-          <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item bag">
-            <!-- Block2 -->
-            <div class="block2">
-              <div class="block2-pic hov-img0">
-                <img src="images/iStock-489518962.jpg" alt="IMG-PRODUCT" />
-
-                <a
-                  href="#"
-                  class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                >
-                  活動詳細
-                </a>
-              </div>
-
-              <div class="block2-txt flex-w flex-t p-t-14">
-                <p style="font-size: 11px">活動日期:2023.12.12(一)8:00</p>
-
-                <div class="block2-txt-child1 flex-col-l">
-                  <div style="width: 100%; overflow: hidden">
-                    <div style="float: left">
-                      <a
-                        href="product-detail.html"
-                        class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                      >
-                        哪裡的音樂會
-                      </a>
-                    </div>
-                    <div style="float: right">
-                      <span class="stext-105 cl3"> TWD 500 </span>
-                    </div>
-                  </div>
-                  <hr
-                    style="margin-top: 0"
-                    size="8px"
-                    align="center"
-                    width="100%"
-                  />
-                  <div style="width: 100%; overflow: hidden">
-                    <div style="float: left">
-                      <a
-                        href="https://www.google.com/maps/@25.0356163,121.4798943,15z?authuser=0&entry=ttu"
-                      >
-                        <img
-                          src="./images/icons/iStock-902788474 (1).png"
-                          alt=""
-                        />
-                        台北市</a
-                      >
-                    </div>
-                    <div
-                      style="float: right"
-                      class="block2-txt-child2 flex-r p-t-3"
-                    >
-                      <a
-                        href="#"
-                        class="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                      >
-                        <img
-                          class="icon-heart1 dis-block trans-04"
-                          src="images/icons/icon-heart-01.png"
-                          alt="ICON"
-                        />
-
-                        <img
-                          class="icon-heart2 dis-block trans-04 ab-t-l"
-                          src="images/icons/icon-heart-02.png"
-                          alt="ICON"
-                        />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-         
-
-       
-        
+</script>               
+          <!--動態測試-->     
       </div>
     </div>
 
@@ -1271,41 +1112,7 @@ actImage.src = imageUrl;
                 </div>
 
                 <!--  -->
-                <div class="flex-w flex-m p-l-100 p-t-40 respon7">
-                  <div class="flex-m bor9 p-r-10 m-r-11">
-                    <a
-                      href="#"
-                      class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
-                      data-tooltip="Add to Wishlist"
-                    >
-                      <i class="zmdi zmdi-favorite"></i>
-                    </a>
-                  </div>
-
-                  <a
-                    href="#"
-                    class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                    data-tooltip="Facebook"
-                  >
-                    <i class="fa fa-facebook"></i>
-                  </a>
-
-                  <a
-                    href="#"
-                    class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                    data-tooltip="Twitter"
-                  >
-                    <i class="fa fa-twitter"></i>
-                  </a>
-
-                  <a
-                    href="#"
-                    class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                    data-tooltip="Google Plus"
-                  >
-                    <i class="fa fa-google-plus"></i>
-                  </a>
-                </div>
+             
               </div>
             </div>
           </div>
@@ -1464,7 +1271,7 @@ actImage.src = imageUrl;
         var actName = data.actName;
         var actImages = data.base64Images; 
         var actPrice = data.actPrice;
-        var actIntroduce = data.actIntroduce;  
+        var actIntroduce = data.actContent;  
         var actScope = data.actScope;
         var actDate = data.actDate;
         var time = data.time;

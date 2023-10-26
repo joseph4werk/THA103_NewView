@@ -438,25 +438,7 @@ div .seatsTry a {
 				</div>
 
 				<!--  -->
-				<div class="flex-w flex-m p-l-100 p-t-40 respon7">
-					<div class="flex-m bor9 p-r-10 m-r-11">
-						<a href="#"
-							class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
-							data-tooltip="Add to Wishlist"> <i class="zmdi zmdi-favorite"></i>
-						</a>
-					</div>
-
-					<a href="#"
-						class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-						data-tooltip="Facebook"> <i class="fa fa-facebook"></i>
-					</a> <a href="#"
-						class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-						data-tooltip="Twitter"> <i class="fa fa-twitter"></i>
-					</a> <a href="#"
-						class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-						data-tooltip="Google Plus"> <i class="fa fa-google-plus"></i>
-					</a>
-				</div>
+				
 			</div>
 		</div>
 		</div>
@@ -467,14 +449,12 @@ div .seatsTry a {
 				<!-- Nav tabs -->
 				<ul class="nav nav-tabs" role="tablist">
 					<li class="nav-item p-b-10"><a class="nav-link active"
-						data-toggle="tab" href="#description" role="tab">Description</a></li>
+						data-toggle="tab" href="#description" role="tab">活動詳細</a></li>
+
+					
 
 					<li class="nav-item p-b-10"><a class="nav-link"
-						data-toggle="tab" href="#information" role="tab">Additional
-							information</a></li>
-
-					<li class="nav-item p-b-10"><a class="nav-link"
-						data-toggle="tab" href="#reviews" role="tab">Reviews (1)</a></li>
+						data-toggle="tab" href="#reviews" role="tab">活動評論 (1)</a></li>
 				</ul>
 
 				<!-- Tab panes -->
@@ -483,7 +463,7 @@ div .seatsTry a {
 					<div class="tab-pane fade show active" id="description"
 						role="tabpanel">
 						<div class="how-pos2 p-lr-15-md">
-							<p class="stext-102 cl6">${actData.actContent }</p>
+							<p class="stext-102 cl6">${actData.actIntroduce }</p>
 						</div>
 					</div>
 
@@ -1131,26 +1111,7 @@ div .seatsTry a {
 							</div>
 
 							<!--  -->
-							<div class="flex-w flex-m p-l-100 p-t-40 respon7">
-								<div class="flex-m bor9 p-r-10 m-r-11">
-									<a href="#"
-										class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
-										data-tooltip="Add to Wishlist"> <i
-										class="zmdi zmdi-favorite"></i>
-									</a>
-								</div>
-
-								<a href="#"
-									class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-									data-tooltip="Facebook"> <i class="fa fa-facebook"></i>
-								</a> <a href="#"
-									class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-									data-tooltip="Twitter"> <i class="fa fa-twitter"></i>
-								</a> <a href="#"
-									class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-									data-tooltip="Google Plus"> <i class="fa fa-google-plus"></i>
-								</a>
-							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -1319,7 +1280,7 @@ $(document).ready(function(){
 	        var reviewContainer = $("#reviewIn");
 	        var numberOfItems = response.length;
 	        var reviewsTabLink = $(".nav-link[data-toggle='tab'][href='#reviews']");
-	        reviewsTabLink.text("Reviews (" + numberOfItems + ")");
+	        reviewsTabLink.text("活動評論 (" + numberOfItems + ")");
 	        // 遍歷 response 中的每個評論
 	        $.each(response, function(index, item) {
 	            console.log("Order ID: " + item.orderID);
@@ -1332,7 +1293,7 @@ $(document).ready(function(){
 	            var commentBlock = $("<div class='flex-w flex-t p-b-68'></div>");
 
 	            // 創建評論中的圖像元素
-	            var imageElement = $("<div class='wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6'><img src='images/avatar-01.jpg' alt='AVATAR' /></div>");
+	            var imageElement = $("<div class='wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6'><img src='images/05_68473.jpg' alt='AVATAR' /></div>");
 
 	            // 創建評論中的文本元素
 	            var textElement = $("<div class='size-207'></div>");

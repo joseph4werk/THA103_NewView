@@ -537,62 +537,7 @@ pageContext.setAttribute("categories", categories);
 					<!-- 初始空值 -->
 				</div>
 				<!--動態增加測試-->
-
-				<!--往下一格活動區-->
-				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-					<!-- Block2 -->
-					<div class="block2">
-						<div class="block2-pic hov-img0">
-							<img src="images/icons/iStock-831601850.jpg" alt="IMG-PRODUCT" />
-
-							<a href="https://www.youtube.com/"
-								class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								活動詳細 </a>
-						</div>
-
-						<div class="block2-txt flex-w flex-t p-t-14">
-							<p style="font-size: 11px">活動日期:2023.12.12(一)8:00</p>
-
-							<div class="block2-txt-child1 flex-col-l">
-								<div style="width: 100%; overflow: hidden">
-									<div style="float: left">
-										<a href="product-detail.html"
-											class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-											誰的脫口秀 </a>
-									</div>
-									<div style="float: right">
-										<span class="stext-105 cl3"> TWD 300 </span>
-									</div>
-								</div>
-								<hr style="margin-top: 0" size="8px" align="center" width="100%" />
-								<div style="width: 100%; overflow: hidden">
-									<div style="float: left">
-										<a
-											href="https://www.google.com/maps/@25.0356163,121.4798943,15z?authuser=0&entry=ttu">
-											<img src="./images/icons/iStock-902788474 (1).png" alt="" />
-											台北市
-										</a>
-									</div>
-									<div style="float: right"
-										class="block2-txt-child2 flex-r p-t-3">
-										<a href="#"
-											class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-											<img class="icon-heart1 dis-block trans-04"
-											data-act-id="YOUR_ACT_ID"
-											src="images/icons/icon-heart-01.png" alt="ICON" /> <img
-											class="icon-heart2 dis-block trans-04 ab-t-l"
-											data-act-id="YOUR_ACT_ID"
-											src="images/icons/icon-heart-02.png" alt="ICON" />
-										</a>
-
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!--往上一格活動區-->
+				
 				<!--動態測試-->
 
 				<div id="act-container">
@@ -601,7 +546,7 @@ pageContext.setAttribute("categories", categories);
 							class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${actData.actCategory.actCategoryName} block2">
 							<div class="block2">
 								<div class="block2-pic hov-img0">
-									<img src="" alt="IMG-PRODUCT" id="actImage_${actData.actID}" />
+									<img src="" alt="IMG-PRODUCT" id="actImage_${actData.actID}" width ="285px" height="285px"/>
 									<a href="#" data-act-id="${actData.actID}"
 										class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
 										onclick="showModal(this)"> 活動詳細 </a>
@@ -671,54 +616,7 @@ pageContext.setAttribute("categories", categories);
 				<!--動態測試-->
 
 
-				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item watches">
-					<!-- Block2 -->
-					<div class="block2">
-						<div class="block2-pic hov-img0">
-							<img src="images/icons/97928.jpg" alt="IMG-PRODUCT" /> <a
-								href="#"
-								class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								活動詳細 </a>
-						</div>
-
-						<div class="block2-txt flex-w flex-t p-t-14">
-							<p style="font-size: 11px">活動日期:2023.12.12(一)8:00</p>
-
-							<div class="block2-txt-child1 flex-col-l">
-								<div style="width: 100%; overflow: hidden">
-									<div style="float: left">
-										<a href="product-detail.html"
-											class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-											永遠搶不到的演唱會 </a>
-									</div>
-									<div style="float: right">
-										<span class="stext-105 cl3"> TWD 900 </span>
-									</div>
-								</div>
-								<hr style="margin-top: 0" size="8px" align="center" width="100%" />
-								<div style="width: 100%; overflow: hidden">
-									<div style="float: left">
-										<a
-											href="https://www.google.com/maps/@25.0356163,121.4798943,15z?authuser=0&entry=ttu">
-											<img src="./images/icons/iStock-902788474 (1).png" alt="" />
-											台北市
-										</a>
-									</div>
-									<div style="float: right"
-										class="block2-txt-child2 flex-r p-t-3">
-										<a href="#"
-											class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-											<img class="icon-heart1 dis-block trans-04"
-											src="images/icons/icon-heart-01.png" alt="ICON" /> <img
-											class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="images/icons/icon-heart-02.png" alt="ICON" />
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+			
 			</div>
 
 			<!-- Load more -->
@@ -957,26 +855,7 @@ pageContext.setAttribute("categories", categories);
 							</div>
 
 							<!--  -->
-							<div class="flex-w flex-m p-l-100 p-t-40 respon7">
-								<div class="flex-m bor9 p-r-10 m-r-11">
-									<a href="#"
-										class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
-										data-tooltip="Add to Wishlist"> <i
-										class="zmdi zmdi-favorite"></i>
-									</a>
-								</div>
-
-								<a href="#"
-									class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-									data-tooltip="Facebook"> <i class="fa fa-facebook"></i>
-								</a> <a href="#"
-									class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-									data-tooltip="Twitter"> <i class="fa fa-twitter"></i>
-								</a> <a href="#"
-									class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-									data-tooltip="Google Plus"> <i class="fa fa-google-plus"></i>
-								</a>
-							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -1126,7 +1005,7 @@ pageContext.setAttribute("categories", categories);
 			var actName = data.actName;
 			var actImages = data.base64Images;
 			var actPrice = data.actPrice;
-			var actIntroduce = data.actIntroduce;
+			var actContent = data.actContent;
 			var actScope = data.actScope;
 			var actDate = data.actDate;
 			var time = data.time;
@@ -1199,7 +1078,7 @@ pageContext.setAttribute("categories", categories);
 
 			$("#dynamic-heading").text(actName);
 			$("#priceYA").text("TWD" + actPrice);
-			$("#castYA").text(actIntroduce);
+			$("#castYA").text(actContent);
 			$(".seatWT").text(scale);
 			$(".actDate").text(DateTime);
 			$('#dynamic-link').attr('data-actid', actID);
@@ -1210,7 +1089,7 @@ pageContext.setAttribute("categories", categories);
 				        actName: actName,
 				        actImages: actImages,
 				        actPrice: actPrice,
-				        actIntroduce: actIntroduce,
+				        actContent: actContent,
 				        actScope: actScope,
 				        actDate: actDate,
 				        time: time,
@@ -1295,7 +1174,7 @@ pageContext.setAttribute("categories", categories);
     	  var userID = 1;
 
     	    // 每個按鈕都有一個不同的actID
-    	   $(".btn-addwish-b2").each(function() {
+ $(".btn-addwish-b2").each(function() {
     var actID = $(this).data("act-id");
     var link = $(this); 
 
@@ -1335,12 +1214,12 @@ pageContext.setAttribute("categories", categories);
     // 當按鈕被點擊時，執行Ajax請求切換狀態
     $("#toggleButton").click(function(e) {
         e.preventDefault(); // 防止<a>標籤的默認行為
-
+		var actID = ${actData.actID}
         // 執行Ajax請求將用戶ID和收藏狀態發送到伺服器
         $.ajax({
             type: 'POST',
-            url: 'your-server-url', // 替換為伺服器端接收請求的URL
-            data: { userID: "YOUR_USER_ID", isFavorite: !isFavorite }, // 切換收藏狀態
+            url: 'LikuSoDesu', // 替換為伺服器端接收請求的URL
+            data: { userID: actID, isFavorite: !isFavorite }, // 切換收藏狀態
             success: function(response) {
                 // 在伺服器響應成功後執行相應的操作
 

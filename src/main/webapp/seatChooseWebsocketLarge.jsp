@@ -17,7 +17,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" href="css/seatChoose.css" type="text/css" />
+<link rel="stylesheet" href="css/seatChooseLarge.css" type="text/css" />
 </head>
 
 <body onload="connect();" onunload="disconnect();">
@@ -32,15 +32,10 @@
 	<c:out value="${sessionScope.actName}" />
 	<br>
 	<h3 id="statusOutput" class="statusOutput"></h3>
-	<textarea id="messagesArea" class="panel message-area" readonly></textarea>
+	
 	<div class="panel input-area">
 		<input id="userName" class="text-field" type="text"
-			placeholder="User name" " /> <input id="message" class="text-field"
-			type="text" placeholder="Message"
-			onkeydown="if (event.keyCode == 13) sendMessage();" /> <input
-			type="submit" id="sendMessage" class="button" value="Send"
-			onclick="sendMessage();" /> <input type="button" id="connect"
-			class="button" value="Connect" onclick="connect();" />
+			placeholder="User name" " />
 	</div>
 
 

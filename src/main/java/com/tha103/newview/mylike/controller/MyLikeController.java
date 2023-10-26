@@ -45,7 +45,7 @@ public class MyLikeController extends HttpServlet {
         	for (Map<String, Integer> entry : myLikeIDsWithActID) {
         	    Integer myLikeID = entry.get("myLikeID");
         	    Integer actIDIn = entry.get("actID");
-        	    System.out.println("MyLikeID: " + myLikeID + ", ActID: " + actIDIn);
+        	   
         	}
             JsonObject jsonResponse = new JsonObject();                    
             Gson gson = new Gson();
