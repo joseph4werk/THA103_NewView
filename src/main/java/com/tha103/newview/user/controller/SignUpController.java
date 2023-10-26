@@ -125,7 +125,6 @@ public class SignUpController extends HttpServlet {
 		// 新增 user，取得新 user 回傳之用戶編號 PK
 		int addUser = userSvc.addUser(userVO);
 		if (addUser != 0) {
-//				System.out.println(userVO);
 			
 			// 將 userID, account 存進session
 			session.setAttribute("userID", String.valueOf(addUser));
@@ -139,43 +138,6 @@ public class SignUpController extends HttpServlet {
 			out.write(json);
 			return;
 		}
-
-//		if (!userSvc.checkUserAccount(account)) {
-//			// call sendMail 方法，產生驗證碼
-//			String verificationCode = getVerificationCode();
-//			// 開新的 Thread 寄 mail (不然很慢==)
-//			new Thread(() -> sendMail(email, verificationCode)).start();
-//
-//			// 使用 Jedis 將 userAccount 當 key 存入驗證碼的資訊
-//			Jedis jedis = JedisPoolUtil.getJedisPool().getResource();
-//			jedis.select(15);
-//			jedis.set("UserAccount:" + account, verificationCode);
-//			jedis.expire("UserAccount:" + account, 600);
-//			jedis.close();
-//
-//			System.out.println("將資料存進 redis 15 DB");
-//			System.out.println("usercontroller's verificationCode: " + verificationCode);
-//
-//			// 將接到的參數存入 session 以提供下之程式(驗證碼)使用
-//			session.setAttribute("name", name);
-//			session.setAttribute("newAccount", account);
-//			session.setAttribute("password", password);
-//			session.setAttribute("birthdate", birthdate);
-//			session.setAttribute("cellphone", cellphone);
-//			session.setAttribute("email", email);
-//			session.setAttribute("nickname", nickname);
-//			
-//			json = gson.toJson("success");
-//			out.write(json);
-//			return;
-//			
-//		} else {
-//			System.out.println("使用者已存在");
-//			out.println("使用者已存在");
-//			json = gson.toJson("failed");
-//			out.write(json);
-//			return;
-//		}
 	}
 
 	public void sendMail(String to, String verificationCode) {

@@ -55,35 +55,16 @@ public class MemberController extends HttpServlet {
 		OrdersVO ordersVO = userSvc.getOrderByUserID(Integer.valueOf(userID));
 		System.out.println(userVO);
 
-
 		// 回傳 status -> hasNoOrders '預設'沒訂單
 		data.put("status", "hasNoOrders");
 		if (ordersVO != null) {
 			OrderDTO orderDTO = new OrderDTO(Integer.valueOf(userID));
 			data.put("orders", orderDTO);
-			
-//			// 取得活動名稱
-//			List<Object[]> listActName = userSvc.getActNameByUserID(Integer.valueOf(userID));
-//
-//			// 取得廠商名稱
-//			List<Object[]> listPubName = userSvc.getPublisherNameByUserID(Integer.valueOf(userID));
-//
-//			// 取得活動圖片ID
-//			List<Object[]> listActPicID = userSvc.getActPicIDByUserID(Integer.valueOf(userID));
-//			ActPicDAO actPicDAO = new ActPicDAOHibernateImpl();
-//			ActPic actPicVO = actPicDAO.findByPrimaryKey(1);
-//			byte[] actPic = actPicVO.getActPic();
-//
-//			// 將活動、廠商名稱、活動圖片 ID 回傳給前端
-//			data.put("activity", listActName.get(0));
-//			data.put("publisher", listPubName.get(0));
-//			// 傳遞 base64 圖片給前端渲染
-//			data.put("ordersPic", Base64.getEncoder().encodeToString(actPic));
-//
-//			// 回傳 status -> hasOrders，'覆蓋'原先無訂單的 status
+
+			// 回傳 status -> hasOrders，'覆蓋'原先無訂單的 status
 			data.put("status", "hasOrders");
 		}
-		
+
 		// 取得我的最愛資料
 		MyLikeActDTO myLikeActDTO = new MyLikeActDTO(Integer.valueOf(userID));
 		data.put("mylike", myLikeActDTO);
