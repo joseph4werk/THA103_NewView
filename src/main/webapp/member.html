@@ -615,8 +615,8 @@
                 <span class="nav-link-text ms-1">啟用帳號</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./change-password.html">
+            <li class="nav-item" id="signout">
+              <a class="nav-link" href="#">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                   <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <title>spaceship</title>
@@ -1295,6 +1295,35 @@
       $(document).ready(function () {
         if ($("#myOrders li").length === 0) {
           $("#noOrdersMessage").show();
+        }
+      });
+    </script>
+
+    <!--===============================================================================================-->
+
+    <!-- 登出 -->
+    <script>
+      $("#signout").on("click", function (e) {
+        e.preventDefault();
+        $.ajax({
+          url: "http://localhost:8081/com.tha103.newview/LogOut",
+          type: "POST",
+          dataType: "json",
+          beforeSend: function (xhr) {
+            console.log("beforeSend");
+          },
+          success: function (data) {
+            console.log(data);
+            redirect(data);
+          },
+          complete: function (xhr) {
+            console.log("complete");
+          },
+        });
+        function redirect(data) {
+          console.log(data);
+          alert("帳號已登出，畫面將轉導至首頁");
+          location.href = "home-03.html";
         }
       });
     </script>

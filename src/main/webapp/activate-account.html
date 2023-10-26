@@ -703,6 +703,28 @@
           }
         }
       });
+
+      $("#sendVerificationCode").on("click", function (e) {
+        e.preventDefault();
+        console.log("click sendCode again");
+
+        $.ajax({
+          url: "http://localhost:8081/com.tha103.newview/SendVerificationCode",
+          type: "POST",
+          dataType: "json",
+          beforeSend: function (xhr) {
+            console.log("beforeSend");
+          },
+          success: function (data) {
+            console.log("success");
+            console.log(data);
+            alert("驗證碼已重新發送至您的註冊信箱，請將驗證碼填入下方資訊欄！");
+          },
+          complete: function (xhr) {
+            console.log("completed");
+          },
+        });
+      });
     </script>
 
     <!--===============================================================================================-->
