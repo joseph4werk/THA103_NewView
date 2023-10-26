@@ -1,8 +1,10 @@
 package com.tha103.newview.user.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.tha103.newview.orders.model.OrdersVO;
+import com.tha103.newview.publisher.model.PublisherVO;
 import com.tha103.newview.user.model.UserDAO;
 import com.tha103.newview.user.model.UserDAOImpl;
 import com.tha103.newview.user.model.UserVO;
@@ -56,6 +58,11 @@ public class UserServiceImpl implements UserService {
 		return userdao.getOrderByUserID(userID);
 	}
 
+//	@Override
+//	public Optional<OrdersVO> getOrderByUserID(Integer userID) {
+//		return userdao.getOrderByUserID(userID);
+//	}
+	
 	@Override
 	public boolean checkUserAccountByEmail(String email) {
 		return userdao.checkUserAccountByEmail(email);
@@ -64,6 +71,26 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserVO getUserByEmail(String email) {
 		return userdao.getUserByEmail(email);
+	}
+
+	@Override
+	public List<Object[]> getPublisherNameByUserID(Integer userID) {
+		return userdao.getPublisherNameByUserID(userID);
+	}
+
+	@Override
+	public List<Object[]> getActPicIDByUserID(Integer userID) {
+		return userdao.getActPicIDByUserID(userID);
+	}
+
+	@Override
+	public List<Object[]> getActNameByUserID(Integer userID) {
+		return userdao.getActNameByUserID(userID);
+	}
+
+	@Override
+	public List<Object[]> getMyLikeByUserID(Integer userID) {
+		return userdao.getMyLikeByUserID(userID);
 	}
 	
 	

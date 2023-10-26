@@ -1,18 +1,22 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.tha103.newview.act.model.*"%>
 <%@ page import="com.tha103.newview.act.service.*"%>
-<%@ page import="com.tha103.newview.actcategory.model.*"%>
-<%@ page import="com.tha103.newview.cityaddress.model.*"%>
-<%@ page import="com.tha103.newview.publisher.model.*"%>
 <%@ page import="com.tha103.newview.act.controller.*"%>
+<%@ page import="java.util.*, java.text.SimpleDateFormat"%>
+<%@ page import="com.tha103.newview.cityaddress.model.*"%>
+<%@ page import="com.tha103.newview.actcategory.model.*"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 ActDAO actDAO = new ActDAOHibernateImpl();
 ActService actSvc = new ActServiceImpl(actDAO);
+
 List<ActVO> list = actSvc.getAll();
 List<ActCategory> categories = actSvc.getAllCategories();
 List<CityAddress> city = actSvc.getAllCities();
+
 pageContext.setAttribute("city", city);
 pageContext.setAttribute("list", list);
 pageContext.setAttribute("categories", categories);
@@ -84,7 +88,7 @@ pageContext.setAttribute("categories", categories);
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1>活動上/下架</h1>
+							<h1>修改活動</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
@@ -97,154 +101,168 @@ pageContext.setAttribute("categories", categories);
 				<!-- /.container-fluid -->
 			</section>
 			<section class="content">
-				<form method="post"
-					action="<%=request.getContextPath()%>/act/act.do"
-					enctype="multipart/form-data" accept-charset="UTF-8"
-					enctype="multipart/form-data">
-					<div class="row">
-						<div class="col-md-10 offset-md-1">
-							<div class="form-group row">
-								<div class="col-md-6">
-									<label for="actCategory">活動類別：</label> <select
-										name="actCategory" class="form-control" style="width: 100%;">
-										<c:forEach var="category" items="${categories}">
-											<option value="${category.actCategoryID}">${category.actCategoryName}</option>
-										</c:forEach>
-									</select>
-								</div>
-								<div class="col-md-6">
-									<label for="actScope">活動規模：</label> <select name="actScope"
-										class="form-control" style="width: 100%;">
-										<option value="1" ${actData.actScope == '1' ? 'selected' : ''}>大：可容納
-											900 人</option>
-										<option value="2" ${actData.actScope == '2' ? 'selected' : ''}>中：可容納
-											400 人</option>
-										<option value="3" ${actData.actScope == '3' ? 'selected' : ''}>小：可容納
-											100 人</option>
-									</select>
-								</div>
-							</div>
-							<div class="form-group row">
-								<div class="col-md-6">
-									<label for="actPrice">活動價格：</label> <input name="actPrice"
-										type="text" class="form-control" />
-								</div>
-								<div class="col-md-6">
-									<label for="actTime">活動下架日期：</label>
-									<div class="input-group date" id="actTime"
-										data-target-input="nearest">
-										<input type="text" name="actTime"
-											class="form-control datetimepicker-input"
-											data-target="#actTime" />
-										<div class="input-group-append" data-target="#actTime"
-											data-toggle="datetimepicker">
-											<div class="input-group-text">
-												<i class="fa fa-calendar"></i>
+				<c:if test="${not empty actWithPicsList}">
+					<form method="post" action="<%=request.getContextPath()%>/act/act.do" enctype="multipart/form-data" accept-charset="UTF-8" onsubmit="prepareDelete();">
+						
+						<div class="row">
+							<c:forEach items="${actWithPicsList}" var="actData">
+								<div class="col-md-10 offset-md-1">
+									<div class="form-group row">
+										<div class="col-md-6">
+											<input type="hidden" name="actId" value="${actData.actID}" />
+											<label for="actCategory">活動類別：</label> <select
+												name="actCategory" class="form-control" style="width: 100%;">
+												<c:forEach var="category" items="${categories}">
+													<option value="${category.actCategoryID}">${category.actCategoryName}</option>
+												</c:forEach>
+											</select>
+										</div>
+										<div class="col-md-6">
+											<label for="actScope">活動規模：</label> <select name="actScope"
+												class="form-control" style="width: 100%;">
+												<option value="1"
+													${actData.actScope == '1' ? 'selected' : ''}>大：可容納
+													900 人</option>
+												<option value="2"
+													${actData.actScope == '2' ? 'selected' : ''}>中：可容納
+													400 人</option>
+												<option value="3"
+													${actData.actScope == '3' ? 'selected' : ''}>小：可容納
+													100 人</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-md-6">
+											<label for="actPrice">活動價格：</label> <input name="actPrice"
+												value="${actData.actPrice}" type="text" class="form-control" />
+										</div>
+										<div class="col-md-6">
+											<label for="actTime">活動下架日期：</label>
+											<div class="input-group date" id="actTime"
+												data-target-input="nearest">
+												<input type="text" name="actTime" value="${actData.actTime}"
+													class="form-control datetimepicker-input"
+													data-target="#actTime" />
+												<div class="input-group-append" data-target="#actTime"
+													data-toggle="datetimepicker">
+													<div class="input-group-text">
+														<i class="fa fa-calendar"></i>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							</div>
-							<div class="form-group row">
-								<div class="col-md-6">
-									<label for="time">活動時間：</label>
-									<div class="input-group date" id="time"
-										data-target-input="nearest">
-										<input type="text" name="time"
-											class="form-control datetimepicker-input" data-target="#time" />
-										<div class="input-group-append" data-target="#time"
-											data-toggle="datetimepicker">
-											<div class="input-group-text">
-												<i class="far fa-clock"></i>
+									<div class="form-group row">
+										<div class="col-md-6">
+											<label for="time">活動時間：</label>
+											<div class="input-group date" id="time"
+												data-target-input="nearest">
+												<input type="text" name="time" value="${actData.time}"
+													class="form-control datetimepicker-input"
+													data-target="#time" />
+												<div class="input-group-append" data-target="#time"
+													data-toggle="datetimepicker">
+													<div class="input-group-text">
+														<i class="far fa-clock"></i>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<label for="actDate">活動日期：</label>
+											<div class="input-group date" id="actDate"
+												data-target-input="nearest">
+												<input type="text" name="actDate" value="${actData.actDate}"
+													class="form-control datetimepicker-input"
+													data-target="#actDate" />
+												<div class="input-group-append" data-target="#actDate"
+													data-toggle="datetimepicker">
+													<div class="input-group-text">
+														<i class="far fa-calendar-alt"></i>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="col-md-6">
-									<label for="actDate">活動日期：</label>
-									<div class="input-group date" id="actDate"
-										data-target-input="nearest">
-										<input type="text" name="actDate"
-											class="form-control datetimepicker-input"
-											data-target="#actDate" />
-										<div class="input-group-append" data-target="#actDate"
-											data-toggle="datetimepicker">
-											<div class="input-group-text">
-												<i class="far fa-calendar-alt"></i>
+									<div class="form-group">
+										<label for="actName">活動名稱：</label> <input name="actName"
+											value="${actData.actName}" type="text" class="form-control" />
+									</div>
+									<div class="form-group row">
+										<div class="col-md-4">
+											<label for="cityName">活動縣市：</label> <select
+												class="form-control" style="width: 100%;">
+												<c:forEach var="cityItem" items="${city}">
+													<option value="${cityItem.actAdressID}">${cityItem.cityName}</option>
+												</c:forEach>
+											</select>
+										</div>
+										<div class="col-md-8">
+											<label for="cityAddress">地址：</label> <input type="text"
+												name="cityAddress" value="${actData.cityAddress}"
+												class="form-control" />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="actIntroduce">活動簡介：</label>
+										<textarea name="actIntroduce" class="form-control" rows="3">${actData.actIntroduce}</textarea>
+									</div>
+
+
+									<div class="form-group row">
+										<div class="col-md-12 ">
+											<div class="card card-body table-responsive p-0">
+												<table class="table table-hover text-nowrap">
+													<thead>
+														<tr>
+															<th style="text-align: center">圖片</th>
+															<th style="text-align: center">操作</th>
+														</tr>
+													</thead>
+													<c:forEach items="${actData.images}" var="imageData" varStatus="status">
+													<tbody>
+														<tr>
+															<th style="text-align: center;vertical-align: middle;">
+																<img src="data:image/gif;base64,${imageData.base64Image}" alt="Image" style="width: 200px"/>
+															</th>
+															<th style="text-align: center;vertical-align: middle;">
+																<input type="hidden" name="imageIndex" value="${status.index}" />
+																<input type="hidden" name="imageId_${status.index}" value="${imageData.actPicID}" />
+																<input type="file" name="imageNEW_${status.index}" />
+															</th>
+														</tr>
+													</tbody>
+													</c:forEach>
+												</table>
 											</div>
 										</div>
 									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="actName">活動名稱：</label> <input name="actName"
-									type="text" class="form-control" />
-							</div>
-							<div class="form-group row">
-								<div class="col-md-4">
-									<label for="cityName">活動縣市：</label> <select
-										class="form-control" style="width: 100%;">
-										<c:forEach var="cityItem" items="${city}">
-											<option value="${cityItem.actAdressID}">${cityItem.cityName}</option>
-										</c:forEach>
-									</select>
-								</div>
-								<div class="col-md-8">
-									<label for="cityAddress">地址：</label> <input type="text"
-										name="cityAddress" class="form-control" />
-								</div>
-							</div>
+								
+									<!-- /.card-header -->
+									<label for="summernote">活動內容：</label>
+									<textarea name="actContent" id="summernote">${actData.actContent}</textarea>
 
-							<div class="form-group">
-								<label for="actIntroduce">活動簡介：</label>
-								<textarea name="actIntroduce" class="form-control" rows="3"
-									placeholder="請輸入活動簡介"></textarea>
-							</div>
-							<div class="form-group row">
-
-								<div class="col-md-12 ">
-									<label for="actImage">上傳圖片：</label>
-									<div class="card card-body table-responsive p-0">
-										<table class="table table-hover text-nowrap">
-											<thead>
-												<tr>
-													<th>圖片一</th>
-													<th>圖片二</th>
-													<th>圖片三</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<th><input type="file" name="actImage1" accept="image/*" /></th>
-													<th><input type="file" name="actImage2" accept="image/*" /></th>
-													<th><input type="file" name="actImage3" accept="image/*" /></th>
-												</tr>
-											</tbody>
-										</table>
+									<div class="form-group">
+										<input type="submit" class="btn btn-primary" value="送出">
+										<input type="hidden" name="action" value="UP">
 									</div>
 								</div>
-							</div>
-							<!-- /.card-header -->
-							<label for="summernote">活動內容：</label>
-							<textarea name="actContent" id="summernote"></textarea>
-
-							<div class="form-group">
-								<input type="submit" class="btn btn-primary" value="送出">
-								<input type="hidden" name="action" value="addAct">
-							</div>
+								<!-- /.col-->
 						</div>
-						<!-- /.col-->
-					</div>
-					<!-- ./row -->
-					<%
-					if ("actNameSame".equals(session.getAttribute("actNameError"))) {
-					%>
-					<span style="color: red;">該活動名稱已經存在</span>
-					<%
-					session.removeAttribute("actNameError");
-					}
-					%>
-				</form>
+						<!-- ./row -->
+						<%
+						if ("actNameSame".equals(session.getAttribute("actNameError"))) {
+						%>
+						<span style="color: red;">該活動名稱已經存在</span>
+						<%
+						session.removeAttribute("actNameError");
+						}
+						%>
+						</c:forEach>
+					</form>
+				</c:if>
 			</section>
 		</div>
 

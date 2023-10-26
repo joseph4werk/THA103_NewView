@@ -1,8 +1,10 @@
 package com.tha103.newview.user.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.tha103.newview.orders.model.OrdersVO;
+import com.tha103.newview.publisher.model.PublisherVO;
 import com.tha103.newview.user.model.UserVO;
 
 public interface UserService {
@@ -16,4 +18,9 @@ public interface UserService {
 	public UserVO getUserByEmail(String email);
 	public List<UserVO> getAll();
 	public OrdersVO getOrderByUserID(Integer userID);
+//	public Optional<OrdersVO> getOrderByUserID(Integer userID);
+	public List<Object[]> getActPicIDByUserID(Integer userID);
+	public List<Object[]> getPublisherNameByUserID(Integer userID);
+	public List<Object[]> getActNameByUserID(Integer userID);
+	public List<Object[]> getMyLikeByUserID(Integer userID);
 }
