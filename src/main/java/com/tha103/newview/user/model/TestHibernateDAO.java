@@ -1,17 +1,14 @@
 package com.tha103.newview.user.model;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver;
 
-import com.tha103.newview.orders.model.OrdersVO;
-import com.tha103.newview.user.dto.MyLikeActDTO;
-import com.tha103.newview.user.dto.OrderDTO;
+import com.tha103.newview.post.model.PostVO;
+import com.tha103.newview.post.service.PostService;
+import com.tha103.newview.post.service.PostServiceImpl;
+import com.tha103.newview.user.dto.HotPostDTO;
 import com.tha103.util.HibernateUtil;
 
 public class TestHibernateDAO {
@@ -127,12 +124,24 @@ public class TestHibernateDAO {
 //		}
 //		System.out.println(dto.get(0));
 		
-		MyLikeActDTO myLikeActDTO = new MyLikeActDTO(1);
-		OrderDTO orderDTO = new OrderDTO(userID);
-		System.out.println(myLikeActDTO);
-		System.out.println(orderDTO);
+//		MyLikeActDTO myLikeActDTO = new MyLikeActDTO(1);
+//		OrderDTO orderDTO = new OrderDTO(userID);
+//		System.out.println(myLikeActDTO);
+//		System.out.println(orderDTO);
 		
+//		List<HomeDTO> homeList= new ArrayList<>();
+//		ActService actSvc = new ActServiceImpl();
+//		List<ActVO> actVOs = actSvc.getAll();
+//		for(ActVO actVO : actVOs) {
+//			HomeDTO homeDTO = new HomeDTO(actVO);
+//			homeList.add(homeDTO);
+//		}
+//		System.out.println(homeList);
 		
+		PostService postSvc = new PostServiceImpl();
+		List<PostVO> postVOs = postSvc.getAll();
+		HotPostDTO hotPostDTO = new HotPostDTO(postVOs);
+		System.out.println(hotPostDTO);
 
 
 		// Optional<> 測試
