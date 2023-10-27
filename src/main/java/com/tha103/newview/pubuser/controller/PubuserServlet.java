@@ -410,10 +410,17 @@ public class PubuserServlet extends HttpServlet {
 			} else {
 				System.out.println("登入成功");
 				HttpSession session = req.getSession();
-				String se = session.toString();
-				System.out.println(se);
 				session.setAttribute("pubAccount", pubAccount);
 
+				//將DAO裡的找到的資訊存入pubuserVO
+				PubUserService pubuserSvc = new PubUserService();
+				PubUserVO pubuserVO = pubuserSvc.getByAccountInfo(pubAccount);
+				
+				//將pubuserVO的資料存入session
+				session.setAttribute("pubuserVO", pubuserVO);
+				//將pubID存入session裡
+				session.setAttribute("pubID",pubuserVO.getPublisherVO().getPubID());
+				
 				try {
 					String location = (String) session.getAttribute("location");
 					if (location != null) {
@@ -431,18 +438,7 @@ public class PubuserServlet extends HttpServlet {
 
 	}
 
-	public void GetPubuserInfo(ServletRequest req, ServletResponse res,String account) throws ServletException, IOException {
-		//將DAO裡的找到的資訊存入pubuserVO
-		PubUserService pubuserSvc = new PubUserService();
-		PubUserVO pubuserVO = pubuserSvc.getByAccountInfo(account);
-		
-		//將pubuserVO的資料存入session
-		HttpSession session = ((HttpServletRequest) req).getSession();
-		session.setAttribute("pubuserVO", pubuserVO);
-		
-		//將pubID存入session裡
-		session.setAttribute("pubID",pubuserVO.getPublisherVO().getPubID());
-	}
+
 	
 	
 	

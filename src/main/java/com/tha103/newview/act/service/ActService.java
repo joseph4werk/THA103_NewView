@@ -26,6 +26,7 @@ public interface ActService {
 	ActWithPicsDTO getActWithPicturesById(Integer actIdValue);
 	ActWithPicsDTO getActWithPicsDTOById(Integer actId);
 	
-	
+	//use to publisher backstage by Mandy
+	public List<ActVO> getActByPub(Integer pubID);
 	
 }

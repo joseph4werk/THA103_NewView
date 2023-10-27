@@ -8,14 +8,23 @@
 <%@ page import="com.tha103.newview.publisher.model.*"%>
 <%@ page import="com.tha103.newview.act.controller.*"%>
 <%
+Integer pubID = (Integer) session.getAttribute("pubID");
+if(pubID == null){
+	response.sendRedirect("/Backstage/Allpage-publisher/user/user-listAll.jsp");
+	return;
+}
+
 ActDAO actDAO = new ActDAOHibernateImpl();
 ActService actSvc = new ActServiceImpl(actDAO);
-List<ActVO> list = actSvc.getAll();
+List<ActVO> list = actSvc.getActByPub(pubID);
+// List<ActVO> list = actSvc.getAll();
+pageContext.setAttribute("list", list);
+
 List<ActCategory> categories = actSvc.getAllCategories();
+pageContext.setAttribute("categories", categories);
+
 List<CityAddress> city = actSvc.getAllCities();
 pageContext.setAttribute("city", city);
-pageContext.setAttribute("list", list);
-pageContext.setAttribute("categories", categories);
 %>
 
 <!DOCTYPE html>
@@ -161,6 +170,7 @@ pageContext.setAttribute("categories", categories);
 														<button type="submit" class="btn btn-block btn-success btn-sm">修改</button>
 														<input type="hidden" name="action" value="update" />
 														<input type="hidden" name="actId" value="${actData.actID}" />
+														
 													</Form>
 												</td>
 												<td>
@@ -205,17 +215,7 @@ pageContext.setAttribute("categories", categories);
 	<script src="<%=request.getContextPath()%>/Backstage/dist/js/adminlte.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
 	<script src="<%=request.getContextPath()%>/Backstage/dist/js/demo.js"></script>
-		<script>
-		<c:forEach var="actData" items="${list}">
-		var actID = "${actData.actID}";
-		var imageUrl = "${pageContext.request.contextPath}/GetImageFromDB?actID="
-				+ actID;
-		var imageContainer = document.getElementById("imageContainer_" + actID);
-		var actImage = document.getElementById("actImage_" + actID);
 
-		actImage.src = imageUrl;
-		</c:forEach>
-	</script>
 </body>
 
 </html>

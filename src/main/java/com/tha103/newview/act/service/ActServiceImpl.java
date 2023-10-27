@@ -234,6 +234,11 @@ public class ActServiceImpl implements ActService {
 	    }
 	    return actWithPicsDTO;
 	}
+	
+	//use to publisher backstage by Mandy
+	public List<ActVO> getActByPub(Integer pubID){
+		return actDAO.getActByPubID(pubID);
+	}
 
 	
 }

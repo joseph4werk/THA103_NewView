@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -91,10 +92,15 @@ public class ActDAOHibernateImpl implements ActDAO {
                 	    !act.getCityAddress().equals(originalAct.getCityAddress())) {
                 	    originalAct.setCityAddress(act.getCityAddress());
                 	}
-                if (act.getCityAddressID() != null && !act.getCityAddressID().getCityName().isEmpty() &&
-                        !act.getCityAddressID().equals(originalAct.getCityAddressID())) {
-                        originalAct.setCityAddressID(act.getCityAddressID());
-                    }
+//                if (act.getCityAddressID() != null && !act.getCityAddressID().getCityName().isEmpty() &&
+//                        !act.getCityAddressID().equals(originalAct.getCityAddressID())) {
+//                        originalAct.setCityAddressID(act.getCityAddressID());
+//                    }
+                
+                if (act.getCityAddressID() != null &&
+                	    !act.getCityAddressID().equals(originalAct.getCityAddressID())) {
+                	    originalAct.setCityAddressID(act.getCityAddressID());
+                	}
                 
                 if (act.getActCategory() != null && !act.getActCategory().equals(originalAct.getActCategory())) {
                     originalAct.setActCategory(act.getActCategory());
@@ -131,7 +137,7 @@ public class ActDAOHibernateImpl implements ActDAO {
 
     @Override
     public ActVO findByPrimaryKey(Integer actID) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         ActVO act = null;
         try {
             session.beginTransaction();
@@ -235,8 +241,23 @@ public class ActDAOHibernateImpl implements ActDAO {
         return null;
     }
 
-
-   
+  //use to publisher backstage by Mandy
+	public List<ActVO> getActByPubID(Integer pubID){
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			String hql = "FROM ActVO AS a WHERE a.publisherVO.pubID = :pubID";
+			Query<ActVO> query = session.createQuery(hql,ActVO.class);
+			query.setParameter("pubID", pubID);
+			List<ActVO> result = query.getResultList();
+			session.getTransaction().commit();
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return null;
+	}
 
 
 

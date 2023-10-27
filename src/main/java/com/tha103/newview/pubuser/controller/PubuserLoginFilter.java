@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-//@WebFilter(urlPatterns = 
-//{ "/Backstage/Allpage-publisher/activity/*",
-//"/Backstage/Allpage-publisher/discount/*",
-//"/Backstage/Allpage-publisher/order/*",
-//"/Backstage/Allpage-publisher/pages/*",
-//"/Backstage/Allpage-publisher/user/*"})
+@WebFilter(urlPatterns = 
+{ "/Backstage/Allpage-publisher/activity/*",
+"/Backstage/Allpage-publisher/discount/*",
+"/Backstage/Allpage-publisher/order/*",
+"/Backstage/Allpage-publisher/pages/*",
+"/Backstage/Allpage-publisher/user/*"})
 public class PubuserLoginFilter implements Filter{
 	
 	private FilterConfig config;
