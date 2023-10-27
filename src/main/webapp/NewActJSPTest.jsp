@@ -401,8 +401,9 @@ pageContext.setAttribute("categories", categories);
 
 				<!-- Search product -->
 				<div class="dis-none panel-search w-full p-t-10 p-b-15">
-					<div class="bor8 dis-flex p-l-15">
-						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+					<div class="bor8 dis-flex p-l-15" id="outerDiv">
+						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04"
+							id="search-button">
 							<i class="zmdi zmdi-search"></i>
 						</button>
 
@@ -412,7 +413,6 @@ pageContext.setAttribute("categories", categories);
 							<input type="hidden" name="action" value="search" /> <input
 								class="mtext-107 cl2 size-114 plh2 p-r-15" type="text"
 								name="search-product" placeholder="Search" id="search-product" />
-
 						</form>
 					</div>
 				</div>
@@ -537,7 +537,7 @@ pageContext.setAttribute("categories", categories);
 					<!-- 初始空值 -->
 				</div>
 				<!--動態增加測試-->
-				
+
 				<!--動態測試-->
 
 				<div id="act-container">
@@ -546,8 +546,9 @@ pageContext.setAttribute("categories", categories);
 							class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${actData.actCategory.actCategoryName} block2">
 							<div class="block2">
 								<div class="block2-pic hov-img0">
-									<img src="" alt="IMG-PRODUCT" id="actImage_${actData.actID}" width ="285px" height="285px"/>
-									<a href="#" data-act-id="${actData.actID}"
+									<img src="" alt="IMG-PRODUCT" id="actImage_${actData.actID}"
+										width="285px" height="285px" /> <a href="#"
+										data-act-id="${actData.actID}"
 										class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
 										onclick="showModal(this)"> 活動詳細 </a>
 								</div>
@@ -616,7 +617,7 @@ pageContext.setAttribute("categories", categories);
 				<!--動態測試-->
 
 
-			
+
 			</div>
 
 			<!-- Load more -->
@@ -855,7 +856,7 @@ pageContext.setAttribute("categories", categories);
 							</div>
 
 							<!--  -->
-							
+
 						</div>
 					</div>
 				</div>
@@ -975,6 +976,7 @@ pageContext.setAttribute("categories", categories);
 	<script>
 		var packagedData;
 		var userIDValue;
+		console.log(packagedData+",  "+userIDValue)
 		function showModal(elem) {
 			var actIdStr = elem.getAttribute("data-act-id");
 			sendAjaxRequest(actIdStr);
@@ -1013,7 +1015,7 @@ pageContext.setAttribute("categories", categories);
 			var actScope = data.actScope;
 			var actID = data.actID;
 			var scale;		
-		
+			console.log(actID+", "+actName);
 			switch (actScope) {
 			
 			case 1:
@@ -1206,7 +1208,19 @@ pageContext.setAttribute("categories", categories);
         }
     });
 });
+    	    
+    //搜尋點擊優化	    
+ var outerDiv = document.getElementById('outerDiv');
+ var searchInput = document.getElementById('search-product');
+ outerDiv.addEventListener('click', function() {  
+     searchInput.focus();
+ });
 
+ var searchButton = document.getElementById('search-button');
+ searchButton.addEventListener('click', function(event) {
+     event.preventDefault();
+     searchInput.focus();
+ });
 
 
 
@@ -1237,7 +1251,29 @@ pageContext.setAttribute("categories", categories);
         });
     });
 });
+        
+        //查詢沒有結果
+      var actNameNotFound = '<%=request.getAttribute("actNameNotFound")%>';
+    var searchInput = document.getElementById('search-product');
 
+    if (actNameNotFound === 'notFound') {
+        searchInput.style.color = 'red';
+        searchInput.value = '沒有您要的相關活動';
+		//如果要輸入時 自動清空
+        searchInput.addEventListener('focus', function() {
+            if (searchInput.value === '沒有您要的相關活動') {
+                searchInput.value = '';
+                searchInput.style.color = 'black'; 
+            }
+        });
+
+        // 判斷用戶是否要重新查詢
+        searchInput.addEventListener('input', function() {
+            if (searchInput.value !== '沒有您要的相關活動') {
+                searchInput.style.color = 'black'; // 將字體轉黑色
+            }
+        });
+    }
     </script>
 </body>
 </html>
