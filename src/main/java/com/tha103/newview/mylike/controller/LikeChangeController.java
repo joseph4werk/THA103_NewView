@@ -49,7 +49,7 @@ public class LikeChangeController extends HttpServlet {
             if(userIDStr != null && actIDStr != null ) {
             	//找到是否有相關資料
             	int likeOrNot = myLikeService.findMyLikeIDByUserIDAndActID(userID, actID);
-            	System.err.println(likeOrNot);
+            	
             	switch(likeOrNot) {
             	case 1:
             		 Integer myLikeID = myLikeService.findMyLikeIDByUserIDAndActIDforDe(userID, actID);

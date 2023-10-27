@@ -381,7 +381,7 @@ pageContext.setAttribute("categories", categories);
 				</div>
 
 				<div class="flex-w flex-c-m m-tb-10">
-					
+
 
 					<div
 						class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
@@ -577,12 +577,14 @@ pageContext.setAttribute("categories", categories);
 											</div>
 											<div style="float: right"
 												class="block2-txt-child2 flex-r p-t-3">
-												<a href="#" 
-  												class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" 
-   												data-act-id="${actData.actID}" 
-  				 								onclick="sendLikeChangeRequest(this);">
-    											<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" />
-    											<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" />
+												<a href="#"
+													class="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
+													data-act-id="${actData.actID}"
+													onclick="sendLikeChangeRequest(this);"> <img
+													class="icon-heart1 dis-block trans-04"
+													src="images/icons/icon-heart-01.png" alt="ICON" /> <img
+													class="icon-heart2 dis-block trans-04 ab-t-l"
+													src="images/icons/icon-heart-02.png" alt="ICON" />
 												</a>
 
 
@@ -909,30 +911,32 @@ pageContext.setAttribute("categories", categories);
 			e.preventDefault();
 		});
 
-		$(".js-addwish-b2").each(
-				function() {
-					var nameProduct = $(this).parent().parent().parent().find(
-							".js-name-b2").html();
-					$(this).on("click", function() {
-						swal(nameProduct, "已加入我的最愛 !", "success");
+		$(".js-addwish-b2").off("click");
 
-						$(this).addClass("js-addedwish-b2");
-						$(this).off("click");
-					});
-				});
+		// 處理click事件
+		function handleButtonClick(link, nameProduct) {
+		    var isLiked = link.hasClass("js-addedwish-b2");
 
-		$(".js-addwish-detail").each(
-				function() {
-					var nameProduct = $(this).parent().parent().parent().find(
-							".js-name-detail").html();
+		    if (isLiked) {
+		        swal(nameProduct, "已取消我的最愛 !", "success");
+		        link.removeClass("js-addedwish-b2");
+		    } else {
+		        swal(nameProduct, "已加入我的最愛 !", "success");
+		        link.addClass("js-addedwish-b2");
+		    }
+		}
 
-					$(this).on("click", function() {
-						swal(nameProduct, "已加入我的最愛 !", "success");
+		$(".js-addwish-b2").each(function() {
+		    var link = $(this);
+		    var nameProduct = link.parent().parent().parent().find(".js-name-b2").html();
 
-						$(this).addClass("js-addedwish-detail");
-						$(this).off("click");
-					});
-				});
+		    link.on("click", function() {
+		        
+		        handleButtonClick(link, nameProduct);
+		    });
+		});
+
+		
 
 		/*---------------------------------------------*/
 
@@ -1170,7 +1174,7 @@ pageContext.setAttribute("categories", categories);
     	    // 每個按鈕都有一個不同的actID
  $(".btn-addwish-b2").each(function() {
     var actID = $(this).data("act-id");
-    var link = $(this); 
+    var link = $(this);
 
     $.ajax({
         type: "POST",
@@ -1187,14 +1191,18 @@ pageContext.setAttribute("categories", categories);
             var likeIDsArray = response.likeIDs;
             var actIDs = likeIDsArray.map(item => item.actID);
             console.log(actIDs + " " + actID);
-            var isFavorite = actIDs.includes(actID);          
+            var isFavorite = actIDs.includes(actID);
+
             if (isFavorite) {
-                link.addClass("js-addedwish-b2"); 
+                link.addClass("js-addedwish-b2");
                 console.log("有愛心");
             } else {
-                link.removeClass("js-addedwish-b2"); 
+                link.removeClass("js-addedwish-b2");
                 console.log("沒愛心");
             }
+
+            // 在Ajax成功後 呼叫
+            handleButtonClick(link, nameProduct);
         },
         error: function(error) {
             console.log("Error:", error);

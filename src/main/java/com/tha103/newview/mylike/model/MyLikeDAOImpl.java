@@ -50,20 +50,33 @@ public class MyLikeDAOImpl implements MyLikeDAO{
 
 	@Override
 	public void delete(Integer myLikeID) {
-		
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		try {
-			session.beginTransaction();
-			MyLikeVO myLike = session.get(MyLikeVO.class, myLikeID);
-			if (myLike != null) {
-				session.delete(myLike);
-			}
-			session.getTransaction().commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-			session.getTransaction().rollback();
-		}			
-		return;
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    try {
+	        session.beginTransaction();
+	        MyLikeVO myLike = session.get(MyLikeVO.class, myLikeID);
+	        if (myLike != null) {
+	            // 先刪除user引用
+	            UserVO userVO = myLike.getUser();
+	            if (userVO != null) {
+	                userVO.getMyLikeVOs().remove(myLike);
+	                myLike.setUser(null);
+	            }
+
+	            // 再刪除 act引用
+	            ActVO actVO = myLike.getAct();
+	            if (actVO != null) {
+	                actVO.getMyLikeVOs().remove(myLike);
+	                myLike.setAct(null);
+	            }
+
+	            // 最後删除MyLikeVO
+	            session.delete(myLike);
+	        }
+	        session.getTransaction().commit();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        session.getTransaction().rollback();
+	    }
 	}
 
 	@Override
