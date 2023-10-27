@@ -590,12 +590,15 @@ pageContext.setAttribute("categories", categories);
 												class="block2-txt-child2 flex-r p-t-3">
 												<a href="#"
 													class="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-													data-act-id="${actData.actID}"> <img
+													data-act-id="${actData.actID}"
+													onclick="sendLikeChangeRequest(this);"> <img
 													class="icon-heart1 dis-block trans-04"
 													src="images/icons/icon-heart-01.png" alt="ICON" /> <img
 													class="icon-heart2 dis-block trans-04 ab-t-l"
 													src="images/icons/icon-heart-02.png" alt="ICON" />
 												</a>
+
+
 											</div>
 										</div>
 									</div>
@@ -904,40 +907,37 @@ pageContext.setAttribute("categories", categories);
 
 		<script src="vendor/sweetalert/sweetalert.min.js"></script>
 		<script>
-      $(".js-addwish-b2, .js-addwish-detail").on("click", function (e) {
-        e.preventDefault();
-      });
+      
 
-      $(".js-addwish-b2").each(function () {
-        var nameProduct = $(this)
-          .parent()
-          .parent()
-          .parent()
-          .find(".js-name-b2")
-          .html();
-        $(this).on("click", function () {
-          swal(nameProduct, "已加入我的最愛 !", "success");
+      $(".js-addwish-b2, .js-addwish-detail").on("click", function(e) {
+			e.preventDefault();
+		});
 
-          $(this).addClass("js-addedwish-b2");
-          $(this).off("click");
-        });
-      });
+		$(".js-addwish-b2").off("click");
 
-      $(".js-addwish-detail").each(function () {
-        var nameProduct = $(this)
-          .parent()
-          .parent()
-          .parent()
-          .find(".js-name-detail")
-          .html();
+		// 處理click事件
+		function handleButtonClick(link, nameProduct) {
+		    var isLiked = link.hasClass("js-addedwish-b2");
 
-        $(this).on("click", function () {
-          swal(nameProduct, "已加入我的最愛 !", "success");
+		    if (isLiked) {
+		        swal(nameProduct, "已取消我的最愛 !", "success");
+		        link.removeClass("js-addedwish-b2");
+		    } else {
+		        swal(nameProduct, "已加入我的最愛 !", "success");
+		        link.addClass("js-addedwish-b2");
+		    }
+		}
 
-          $(this).addClass("js-addedwish-detail");
-          $(this).off("click");
-        });
-      });
+		$(".js-addwish-b2").each(function() {
+		    var link = $(this);
+		    var nameProduct = link.parent().parent().parent().find(".js-name-b2").html();
+
+		    link.on("click", function() {
+		        
+		        handleButtonClick(link, nameProduct);
+		    });
+		});
+
 
       /*---------------------------------------------*/
 
@@ -1157,43 +1157,71 @@ pageContext.setAttribute("categories", categories);
 	        }
 	    });
 	}
-    </script>
+    
+		$(".btn-addwish-b2").each(function() {
+		    var actID = $(this).data("act-id");
+		    var link = $(this);
 
-		<script type="text/javascript">
-     $(".btn-addwish-b2").each(function() {
-        var actID = $(this).data("act-id");
-        console.log(actID)
-        var link = $(this); 
+		    $.ajax({
+		        type: "POST",
+		        url: "LikuSoDesu",
+		        data: {
+		            action: "desu",
+		            actID: actID,
+		            userID:userIDValue
+		        },
+		        dataType: "json",
+		        success: function(response) {
+		            console.log(response);
 
-        $.ajax({
-            type: "POST",
-            url: "LikuSoDesu",
-            data: {
-                action: "desu",
-                actID: actID,
-                userID: userIDValue 
-            },
-            dataType: "json",
-            success: function(response) {
-                console.log(response);
+		            var likeIDsArray = response.likeIDs;
+		            var actIDs = likeIDsArray.map(item => item.actID);
+		            console.log(actIDs + " " + actID);
+		            var isFavorite = actIDs.includes(actID);
 
-                var likeIDsArray = response.likeIDs;
-                var actIDs = likeIDsArray.map(item => item.actID);
-                console.log(actIDs + ", " + actID);
-                var isFavorite = actIDs.includes(actID);          
-                if (isFavorite) {
-                    link.addClass("js-addedwish-b2"); 
-                    console.log("有愛心");
-                } else {
-                    link.removeClass("js-addedwish-b2"); 
-                    console.log("沒愛心");
-                }
-            },
-            error: function(error) {
-                console.log("Error:", error);
-            }
-        });
-    });
+		            if (isFavorite) {
+		                link.addClass("js-addedwish-b2");
+		                console.log("有愛心");
+		            } else {
+		                link.removeClass("js-addedwish-b2");
+		                console.log("沒愛心");
+		            }
+
+		            // 在Ajax成功後 呼叫
+		            handleButtonClick(link, nameProduct);
+		        },
+		        error: function(error) {
+		            console.log("Error:", error);
+		        }
+		    });
+		});
+     
+   //我的最愛切換送交
+     function sendLikeChangeRequest(element) {    
+         var actIDchange = $(element).data("act-id");              
+         var userIDC =1;
+
+         
+         $.ajax({
+             type: "POST",
+             url: "likeChange",  
+             data: {
+                 actID: actIDchange,
+                 userID: userIDC
+             },
+             dataType: "json",
+             success: function(response) {
+                 
+                 console.log(response);
+             },
+             error: function(error) {
+                 console.log("Error:", error);
+             }
+         });
+         
+         //禁止標籤動作 
+         return false;
+     }
      </script>
 </body>
 </html>
