@@ -7,7 +7,7 @@ public interface MyLikeDAO {
 	
 	public int insert(MyLikeVO MyLikeVO);
     public int update(MyLikeVO MyLikeVO);
-    public int delete(Integer myLikeID);
+    public void delete(Integer myLikeID);
     public MyLikeVO findByPrimaryKey(Integer myLikeID);
     public List<MyLikeVO> getAll();
     Integer findMyLikeIDByUserIDAndActID(Integer userID, Integer actID);

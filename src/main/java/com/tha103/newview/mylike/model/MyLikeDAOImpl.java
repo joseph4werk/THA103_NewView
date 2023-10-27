@@ -49,7 +49,7 @@ public class MyLikeDAOImpl implements MyLikeDAO{
 	}
 
 	@Override
-	public int delete(Integer myLikeID) {
+	public void delete(Integer myLikeID) {
 		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
@@ -63,7 +63,7 @@ public class MyLikeDAOImpl implements MyLikeDAO{
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}			
-		return -1;
+		return;
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class MyLikeDAOImpl implements MyLikeDAO{
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    try {
 	        session.beginTransaction();
-	        Query<Integer> query = session.createQuery("SELECT myLikeID FROM MyLikeVO WHERE user.userID = :userID AND act.actID = :actID", Integer.class);
+	        Query<Integer> query = session.createQuery("SELECT myLikeID FROM MyLikeVO WHERE userVO.userID = :userID AND actVO.actID = :actID", Integer.class);
 	        query.setParameter("userID", userID);
 	        query.setParameter("actID", actID);
 	        Integer myLikeID = query.uniqueResult();

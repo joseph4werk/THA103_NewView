@@ -153,46 +153,46 @@ public class SeatMiddle {
 			}
 			public void cancelSeatPurchase(String actID, String userName) {
 			    List<PurchasedSeatInfo> seatsToRemove = new ArrayList<>();
-			    List<SeatInfo> seatInfoToSend = new ArrayList<>(); // 用于收集要发送的座位信息
+			    List<SeatInfo> seatInfoToSend = new ArrayList<>(); // 用收集要發送的座位信息
 			    
-			    // 删除purchasedSeatInfoSet中符合条件的数据，并将它们添加到要发送的列表中
+			    // 删除purchasedSeatInfoSet中符合的數據
 			    for (PurchasedSeatInfo seatInfo : purchasedSeatInfoSet) {
 			        if (seatInfo.getActID().equals(actID) && seatInfo.getUserName().equals(userName)) {
 			            seatsToRemove.add(seatInfo);
 			            
-			            // 在循环内部创建要发送的 SeatInfo 对象
+			            
 			            String seatNumber = seatInfo.getSeatNumber();
 			            String seatType = seatInfo.getSeatType();
 			            SeatInfo seatInfoSend = new SeatInfo(userName, seatNumber, actID + ",cancel", actID);
 			            
-			            // 打印座位信息
+			          
 			            System.out.println("ActID: " + actID + ", UserName: " + userName + ", SeatNumber: " + seatNumber + ", SeatType: " + seatType);
 			            
-			            // 添加 seatInfoSend 到要发送的列表中
+			            // 添加 seatInfoSend 列表中
 			            seatInfoToSend.add(seatInfoSend);
 			        }
 			    }
 			    
-			    // 从purchasedSeatInfoSet中移除符合条件的数据
+			    // 从purchasedSeatInfoSet中移除符合條件的資料
 			    purchasedSeatInfoSet.removeAll(seatsToRemove);
 
-			    // 执行Redis取消操作
+			    // Redis取消操作
 			    for (PurchasedSeatInfo seatInfo : seatsToRemove) {
 			        String seatNumber = seatInfo.getSeatNumber();
 			        redisService.performRedisCancelOperations(actID, userName, seatNumber);
 			    }
 			    
-			    // 将收集好的座位信息转换为 JSON
+			    // 轉換 JSON
 			    Gson gson = new Gson();
 			    String seatInfoJson = gson.toJson(seatInfoToSend);
 			    
-			    // 发送座位信息到前端
+			    // 發送消息
 			    sendSeatInfoToClient(seatInfoJson);
 			}
 
-			// 发送座位信息到前端
+			// 座位信息到前端
 			private void sendSeatInfoToClient(String seatInfoJson) {
-			    // 获取所有连接的 Session，并将 JSON 数据发送到每个 Session
+			    
 			    for (Session session : connectedSessions) {
 			        if (session.isOpen()) {
 			            session.getAsyncRemote().sendText(seatInfoJson);

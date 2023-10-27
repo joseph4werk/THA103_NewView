@@ -381,14 +381,7 @@ pageContext.setAttribute("categories", categories);
 				</div>
 
 				<div class="flex-w flex-c-m m-tb-10">
-					<div
-						class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
-						<i
-							class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
-						<i
-							class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-						Filter
-					</div>
+					
 
 					<div
 						class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
@@ -584,14 +577,14 @@ pageContext.setAttribute("categories", categories);
 											</div>
 											<div style="float: right"
 												class="block2-txt-child2 flex-r p-t-3">
-												<a href="#"
-													class="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-													data-act-id="${actData.actID}"> <img
-													class="icon-heart1 dis-block trans-04"
-													src="images/icons/icon-heart-01.png" alt="ICON" /> <img
-													class="icon-heart2 dis-block trans-04 ab-t-l"
-													src="images/icons/icon-heart-02.png" alt="ICON" />
+												<a href="#" 
+  												class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" 
+   												data-act-id="${actData.actID}" 
+  				 								onclick="sendLikeChangeRequest(this);">
+    											<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON" />
+    											<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON" />
 												</a>
+
 
 											</div>
 										</div>
@@ -1273,6 +1266,57 @@ pageContext.setAttribute("categories", categories);
                 searchInput.style.color = 'black'; // 將字體轉黑色
             }
         });
+    }
+    function sendLikeChangeRequest(element) {    
+        var actID = $(element).data("act-id");              
+        var userID = $('#userID').val();
+
+        
+        $.ajax({
+            type: "POST",
+            url: "likeChange",  
+            data: {
+                actID: actID,
+                userID: userID
+            },
+            dataType: "json",
+            success: function(response) {
+                
+                console.log(response);
+            },
+            error: function(error) {
+                console.log("Error:", error);
+            }
+        });
+        
+        //禁止標籤動作 
+        return false;
+    }
+    //我的最愛切換送交
+    function sendLikeChangeRequest(element) {    
+        var actIDchange = $(element).data("act-id");              
+        var userIDC =1;
+
+        
+        $.ajax({
+            type: "POST",
+            url: "likeChange",  
+            data: {
+                actID: actIDchange,
+                userID: userIDC
+            },
+            dataType: "json",
+            success: function(response) {
+                
+                console.log(response);
+            },
+            error: function(error) {
+                console.log("Error:", error);
+            }
+        });
+        
+        //禁止標籤動作 
+        return false;
     }
     </script>
 </body>

@@ -88,8 +88,8 @@ pageContext.setAttribute("categories", categories);
 }
 
 .bor8.dis-flex.p-l-15 input[type="text"] {
-            width: 100%;
-        }
+	width: 100%;
+}
 
 .seatsTry {
 	border: 1px solid #f4f4f4;
@@ -128,7 +128,9 @@ pageContext.setAttribute("categories", categories);
 
 			</tr>
 		</c:if>
+		
 	</table>
+	
 	<!-- Header -->
 	<header class="header-v4">
 		<!-- Header desktop -->
@@ -186,8 +188,7 @@ pageContext.setAttribute("categories", categories);
 
 						<a href="#"
 							class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
-							data-notify="0"> <i
-							class="zmdi zmdi-favorite-outline"></i>
+							data-notify="0"> <i class="zmdi zmdi-favorite-outline"></i>
 						</a>
 					</div>
 				</nav>
@@ -198,8 +199,8 @@ pageContext.setAttribute("categories", categories);
 		<div class="wrap-header-mobile">
 			<!-- Logo moblie -->
 			<div class="logo-mobile">
-				<a href="index.html"><img
-					src="images/icons/logo-01.png" alt="IMG-LOGO" /></a>
+				<a href="index.html"><img src="images/icons/logo-01.png"
+					alt="IMG-LOGO" /></a>
 			</div>
 
 			<!-- Icon header -->
@@ -217,8 +218,7 @@ pageContext.setAttribute("categories", categories);
 
 				<a href="#"
 					class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti"
-					data-notify="0"> <i
-					class="zmdi zmdi-favorite-outline"></i>
+					data-notify="0"> <i class="zmdi zmdi-favorite-outline"></i>
 				</a>
 			</div>
 
@@ -250,8 +250,7 @@ pageContext.setAttribute("categories", categories);
 			<ul class="main-menu-m">
 				<li><a href="index.html">Home</a>
 					<ul class="sub-menu-m">
-						<li><a href="index.html">Homepage 1</a></li>
-						<li><a href="home-02.html">Homepage 2</a></li>
+						
 						<li><a href="home-03.html">Homepage 3</a></li>
 					</ul> <span class="arrow-main-menu-m"> <i
 						class="fa fa-angle-right" aria-hidden="true"></i>
@@ -388,14 +387,7 @@ pageContext.setAttribute("categories", categories);
 				</div>
 
 				<div class="flex-w flex-c-m m-tb-10">
-					<div
-						class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
-						<i
-							class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
-						<i
-							class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-						Filter
-					</div>
+
 
 					<div
 						class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
@@ -597,8 +589,9 @@ pageContext.setAttribute("categories", categories);
 											<div style="float: right"
 												class="block2-txt-child2 flex-r p-t-3">
 												<a href="#"
-													class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-													<img class="icon-heart1 dis-block trans-04"
+													class="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
+													data-act-id="${actData.actID}"> <img
+													class="icon-heart1 dis-block trans-04"
 													src="images/icons/icon-heart-01.png" alt="ICON" /> <img
 													class="icon-heart2 dis-block trans-04 ab-t-l"
 													src="images/icons/icon-heart-02.png" alt="ICON" />
@@ -613,14 +606,15 @@ pageContext.setAttribute("categories", categories);
 				</div>
 				<!-- 活動空表格 -->
 				<script>
-<c:forEach var="actData" items="${actWithPicsList}">
-var actID = "${actData.actID}";
-var imageUrl = "${pageContext.request.contextPath}/GetImageFromDB?actID=" + actID;
-var actImage = document.getElementById("actImage_" + actID);
+				<c:forEach var="actData" items="${actWithPicsList}">
+				
+				var actID = "${actData.actID}";
+				var imageUrl = "${pageContext.request.contextPath}/GetImageFromDB?actID=" + actID;
+				var actImage = document.getElementById("actImage_" + actID);
 
-actImage.src = imageUrl;
-</c:forEach>
-</script>
+				actImage.src = imageUrl;
+				</c:forEach>
+				</script>
 				<!--動態測試-->
 			</div>
 		</div>
@@ -768,8 +762,7 @@ actImage.src = imageUrl;
 												<img id="img1YAa" src="#" alt="IMG-PRODUCT" /> <a
 													id="img1YAa"
 													class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-													href="#"> <i
-													class="fa fa-expand"></i>
+													href="#"> <i class="fa fa-expand"></i>
 												</a>
 											</div>
 										</div>
@@ -778,11 +771,10 @@ actImage.src = imageUrl;
 											data-thumb="images/icons/iStock-961709574.jpg">
 											<div class="wrap-pic-w pos-relative">
 												<img id="img2YAa" src="images/icons/iStock-961709574.jpg"
-													alt="IMG-PRODUCT" /> <a
-													id="img2YAa"
+													alt="IMG-PRODUCT" /> <a id="img2YAa"
 													class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-													href="images/icons/iStock-961709574.jpg">
-													<i class="fa fa-expand"></i>
+													href="images/icons/iStock-961709574.jpg"> <i
+													class="fa fa-expand"></i>
 												</a>
 											</div>
 										</div>
@@ -791,11 +783,10 @@ actImage.src = imageUrl;
 											data-thumb="images/icons/iStock-461162561.jpg">
 											<div class="wrap-pic-w pos-relative">
 												<img id="img3YAa" src="images/icons/iStock-461162561.jpg"
-													alt="IMG-PRODUCT" /> <a
-													id="img3YAa"
+													alt="IMG-PRODUCT" /> <a id="img3YAa"
 													class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-													href="images/icons/iStock-461162561.jpg">
-													<i class="fa fa-expand"></i>
+													href="images/icons/iStock-461162561.jpg"> <i
+													class="fa fa-expand"></i>
 												</a>
 											</div>
 										</div>
@@ -1146,6 +1137,9 @@ actImage.src = imageUrl;
         searchInput.focus();
     });
 
+   
+    
+    
     function sendDataToServer(packagedData) {
 	    $.ajax({
 	        url: 'Seat',
@@ -1164,5 +1158,42 @@ actImage.src = imageUrl;
 	    });
 	}
     </script>
+
+		<script type="text/javascript">
+     $(".btn-addwish-b2").each(function() {
+        var actID = $(this).data("act-id");
+        console.log(actID)
+        var link = $(this); 
+
+        $.ajax({
+            type: "POST",
+            url: "LikuSoDesu",
+            data: {
+                action: "desu",
+                actID: actID,
+                userID: userIDValue 
+            },
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+
+                var likeIDsArray = response.likeIDs;
+                var actIDs = likeIDsArray.map(item => item.actID);
+                console.log(actIDs + ", " + actID);
+                var isFavorite = actIDs.includes(actID);          
+                if (isFavorite) {
+                    link.addClass("js-addedwish-b2"); 
+                    console.log("有愛心");
+                } else {
+                    link.removeClass("js-addedwish-b2"); 
+                    console.log("沒愛心");
+                }
+            },
+            error: function(error) {
+                console.log("Error:", error);
+            }
+        });
+    });
+     </script>
 </body>
 </html>
