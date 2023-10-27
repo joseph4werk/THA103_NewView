@@ -562,7 +562,7 @@ for (let row = 1; row <= 10; row++) {
    
 	
 </script>
-<script src="js/monitor.js"></script>
+<script src="js/monitorSmall.js"></script>
 
 
 </html>

@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -101,9 +102,9 @@ public class ActVO {
 	
 	/*主鍵相關表格*/
 	@Expose
-	@OneToMany(mappedBy = "act", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "act", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<ActPic> actpics;
-	@Expose
+//	@Expose
 	@OneToMany(mappedBy = "actVO", cascade=CascadeType.ALL)
 	private Set<OrderListVO> orderListVOs;
 	@Expose
@@ -319,6 +320,20 @@ public class ActVO {
 		// TODO Auto-generated method stub
 		
 	}
-	
 
+	public Set<OrderListVO> getOrderListVOs() {
+		return orderListVOs;
+	}
+
+	public void setOrderListVOs(Set<OrderListVO> orderListVOs) {
+		this.orderListVOs = orderListVOs;
+	}
+
+	public Set<CartActVO> getCartActVOs() {
+		return cartActVOs;
+	}
+
+	public void setCartActVOs(Set<CartActVO> cartActVOs) {
+		this.cartActVOs = cartActVOs;
+	}
 }

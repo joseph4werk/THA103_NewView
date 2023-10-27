@@ -565,11 +565,41 @@ var webSocket;
 			statusOutput.innerHTML = newStatus;
 		}
 	 /*購買 相關*/
-	
+	document.addEventListener('DOMContentLoaded', (event) => {
+    var cartButton = document.querySelector('.cart');
+    cartButton.addEventListener('click', function () {
+        var selectElement = document.getElementById("act");
+        var selectedActivity = selectElement.options[selectElement.selectedIndex].text;
+        var userName = inputUserName.value.trim();
+        console.log('我還在考慮~')
+        const message = {
+            userName: userName,	      
+            seatNumber: seatNumber,
+            type: "inCart",
+            actID: actID,
+        };
+
+        var userInfoJSON = JSON.stringify(message);
+
+        if (webSocket.readyState === WebSocket.OPEN) {
+            webSocket.send(userInfoJSON);
+            console.log('傳送成功~');
+        } else {
+            console.error('WebSocket is not open. Unable to send message.');
+        }
+
+        userType = "buyAc";
+    });
+});
+
+		function updateStatus(newStatus) {
+			statusOutput.innerHTML = newStatus;
+		}
+   
    
 	
 </script>
-<script src="js/monitor.js"></script>
+<script src="js/monitorLarge.js"></script>
 
 
 </html>

@@ -43,13 +43,10 @@ public class ActUpdateServiceImpl implements ActUpdateService {
             String actCategoryID = request.getParameter("actCategory");
             String publisherName = request.getParameter("publisher");
             String actTimeStr = request.getParameter("time");
-            String cityID = request.getParameter("cityName");
-            
+            String cityID = request.getParameter("cityName");          
             String actIntroduce = request.getParameter("actIntroduce");
             String actDate = request.getParameter("actDate");
             String approvalConditionStr = request.getParameter("approvalCondition");
-
-           
 
             Integer actID = Integer.parseInt(actIdStr);
             Integer actPrice = (int) Double.parseDouble(actPriceStr);
