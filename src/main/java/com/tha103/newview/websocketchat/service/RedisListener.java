@@ -38,7 +38,7 @@ class KeyExpiredListener extends JedisPubSub {
             String userName = parts[1];
             String actID = parts[2];
             String seatNumber = parts[3];
-            String value = userName + "," + actID + ",soldOut";
+            String value = userName + "," + actID + ",inCart";
             System.out.println("seatData:" + actID + "," + seatNumber + "," + value);
 
             deleteSeatData(actID, seatNumber);

@@ -121,14 +121,14 @@ public class RedisServiceImpl implements RedisService{
 		        for (Map.Entry<String, String> entry : seatsData.entrySet()) {
 		            String seatNumber = entry.getKey();
 		            String seatInfo = entry.getValue();
-
+		            System.out.println(seatNumber+"   "+seatInfo);
 		            String[] seatInfoParts = seatInfo.split(",");
 		            String userName = seatInfoParts[0];
-		            String actName = seatInfoParts[1];
-		            String seatType = seatInfoParts[2];
+		           
+		            String seatType = seatInfoParts[1];
 
 		            if (userName.equals(targetUserName) && !seatType.equals("soldOut")) {
-		                String newSeatInfo = userName + "," + actName + ",soldOut";
+		                String newSeatInfo = userName + "," + actID + ",soldOut";
 		                jedis.hset("seatData:" + actID, seatNumber, newSeatInfo);
 		                modifiedSeatsData.put(seatNumber, newSeatInfo);
 		            }
@@ -189,8 +189,8 @@ public class RedisServiceImpl implements RedisService{
 
 		            if (userName.equals(targetUserName) && seatType.equals("buy")) {
 		                // 將 "buy" 標記的座位狀態改為 "inCart"
-		                String newSeatInfoCart = seatNumber + "," + actName + ",soldOut";
-		                String newSeatInfo = userName + "," + actName + ",soldOut";
+		                String newSeatInfoCart = seatNumber + "," + actName + ",inCart";
+		                String newSeatInfo = userName + "," + actName + ",inCart";
 		                jedis.hset("seatData:" + actID, seatNumber, newSeatInfo);
 		                // 切換到 db1
 		                jedis.select(1);
@@ -198,12 +198,8 @@ public class RedisServiceImpl implements RedisService{
 		                // 為每個座位設定一個單獨的 key，並設定 TTL
 		                String seatKey = "cart:" + targetUserName + ":" + actID + ":" + seatNumber;
 		                jedis.set(seatKey, newSeatInfoCart);
-		                jedis.expire(seatKey, seatExpirationTime);
-
-		                
-		                jedis.select(0);
-		                
-
+		                jedis.expire(seatKey, seatExpirationTime);		                
+		                jedis.select(0);		                
 		                modifiedSeatsData.put(seatNumber, newSeatInfoCart);
 		            }
 		        }

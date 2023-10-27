@@ -117,7 +117,7 @@ pageContext.setAttribute("categories", categories);
 
 		<c:if test="${not empty user}">
 			<tr>
-				<td>${user[0].userID}</td>
+				<td>${user[1].userID}</td>
 				<script>
 					userIDValue = "${user[0].userID}";
 				</script>
