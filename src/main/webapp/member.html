@@ -1240,15 +1240,16 @@
 
         // 修改我的最愛區
         function favoriteAct(data) {
-          console.log(data.mylike);
-          if (!data.mylike.actName.length == 0) {
-            $(data.mylike).each(function (index, element) {
-              let none = "";
-              if (index > 3) {
-                none = "display:none";
-              }
-              let div_fav_html = `
-            <div class="card card-blog card-plain" ${none}>
+          // console.log(data.mylike);
+          if (data.mylike[0].actName == null) {
+            return;
+          }
+
+          let div_fav_html = "";
+          $(data.mylike).each(function (index, element) {
+            // console.log(element);
+            div_fav_html = `
+            <div class="card card-blog card-plain">
               <div class="position-relative">
                 <a class="d-block shadow-xl border-radius-xl">
                   <img src="data:image/*;base64,${element.actPic}" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl" />
@@ -1281,11 +1282,8 @@
             </div>
             `;
 
-              $(".likeActOrder").eq(index).html(div_fav_html);
-              console.log($(".likeActOrder").eq(index));
-            });
-            return;
-          }
+            $(".likeActOrder").eq(index).html(div_fav_html);
+          });
         }
       });
     </script>

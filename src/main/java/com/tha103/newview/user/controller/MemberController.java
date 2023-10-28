@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +20,7 @@ import com.tha103.newview.act.service.ActPicServiceImpl;
 import com.tha103.newview.actpic.model.ActPic;
 import com.tha103.newview.actpic.model.ActPicDAO;
 import com.tha103.newview.actpic.model.ActPicDAOHibernateImpl;
+import com.tha103.newview.mylike.model.MyLikeVO;
 import com.tha103.newview.orders.model.OrdersVO;
 import com.tha103.newview.user.dto.MyLikeActDTO;
 import com.tha103.newview.user.dto.OrderDTO;
@@ -53,7 +56,7 @@ public class MemberController extends HttpServlet {
 		UserService userSvc = new UserServiceImpl();
 		UserVO userVO = userSvc.getUserByPK(Integer.valueOf(userID));
 		OrdersVO ordersVO = userSvc.getOrderByUserID(Integer.valueOf(userID));
-		System.out.println(userVO);
+//		System.out.println(userVO);
 
 		// 回傳 status -> hasNoOrders '預設'沒訂單
 		data.put("status", "hasNoOrders");
@@ -66,8 +69,13 @@ public class MemberController extends HttpServlet {
 		}
 
 		// 取得我的最愛資料
-		MyLikeActDTO myLikeActDTO = new MyLikeActDTO(Integer.valueOf(userID));
-		data.put("mylike", myLikeActDTO);
+		Set<MyLikeVO> myLikeVOs = userVO.getMyLikeVOs();
+		
+		List<MyLikeActDTO> myLikeActList = myLikeVOs.stream()
+				.map(a -> new MyLikeActDTO(a))
+				.collect(Collectors.toList());
+		
+		data.put("mylike", myLikeActList);
 
 		// 檢查啟用狀態 -> 從 redis 取得驗證碼
 		Jedis jedis = JedisPoolUtil.getJedisPool().getResource();
@@ -91,7 +99,7 @@ public class MemberController extends HttpServlet {
 		data.put("cellphone", cellphone);
 		data.put("activate", activate);
 
-		System.out.println(data);
+//		System.out.println(data);
 
 		// 使用 out.write() 傳遞 json 格式資料
 		String json = gson.toJson(data);
