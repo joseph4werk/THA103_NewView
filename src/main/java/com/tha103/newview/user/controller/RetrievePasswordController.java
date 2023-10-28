@@ -60,7 +60,7 @@ public class RetrievePasswordController extends HttpServlet {
 		// 比對成功，寄驗證信給前端傳來之 email + 驗證信 + 驗證碼 + 新密碼 (亂數8碼)，回傳 status -> success
 		String verificationCode = getVerificationCode();
 		String newPassword = getVerificationCode();
-		sendMail(email, verificationCode, newPassword);
+		new Thread(() -> sendMail(email, verificationCode, newPassword)).start();
 
 		// 取得 userVO，更新資料
 		Integer userID = userSvc.getUserByEmail(email).getUserID();
