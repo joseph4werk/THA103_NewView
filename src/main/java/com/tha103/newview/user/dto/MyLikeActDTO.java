@@ -5,11 +5,8 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Set;
 
-import com.tha103.newview.act.model.ActVO;
 import com.tha103.newview.actpic.model.ActPic;
 import com.tha103.newview.mylike.model.MyLikeVO;
-import com.tha103.newview.user.model.UserVO;
-import com.tha103.newview.user.service.UserServiceImpl;
 
 public class MyLikeActDTO {
 

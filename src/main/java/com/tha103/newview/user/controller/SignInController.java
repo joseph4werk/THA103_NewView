@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
-import com.tha103.newview.user.model.UserVO;
 import com.tha103.newview.user.service.UserService;
 import com.tha103.newview.user.service.UserServiceImpl;
 
@@ -38,7 +37,6 @@ public class SignInController extends HttpServlet {
 
 		/*************************** 1.接收請求參數 **********************/
 		// 取得 json 物件資料
-		String signInItem = "";
 		String account = req.getParameter("account");
 		String password = req.getParameter("password");
 
@@ -68,7 +66,6 @@ public class SignInController extends HttpServlet {
 
 		/*************************** 2.開始查詢資料 **********************/
 		UserService userSvc = new UserServiceImpl();
-		UserVO userVO = new UserVO();
 
 		if (userSvc.getUserByAccount(account) == null) {
 			data.put("status", "accFailed");

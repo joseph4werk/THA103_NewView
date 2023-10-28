@@ -2,7 +2,6 @@ package com.tha103.newview.user.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -15,11 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.tha103.newview.act.service.ActPicService;
-import com.tha103.newview.act.service.ActPicServiceImpl;
-import com.tha103.newview.actpic.model.ActPic;
-import com.tha103.newview.actpic.model.ActPicDAO;
-import com.tha103.newview.actpic.model.ActPicDAOHibernateImpl;
 import com.tha103.newview.mylike.model.MyLikeVO;
 import com.tha103.newview.orders.model.OrdersVO;
 import com.tha103.newview.user.dto.MyLikeActDTO;
@@ -56,7 +50,6 @@ public class MemberController extends HttpServlet {
 		UserService userSvc = new UserServiceImpl();
 		UserVO userVO = userSvc.getUserByPK(Integer.valueOf(userID));
 		OrdersVO ordersVO = userSvc.getOrderByUserID(Integer.valueOf(userID));
-//		System.out.println(userVO);
 
 		// 回傳 status -> hasNoOrders '預設'沒訂單
 		data.put("status", "hasNoOrders");

@@ -39,7 +39,4 @@ public class HotActDTO {
 	public String toString() {
 		return "HomeDTO [actID=" + actID + ", actName=" + actName + ", actPic=" + actPic + "]";
 	}
-	
-	
-
 }
