@@ -435,12 +435,29 @@ public class PubuserServlet extends HttpServlet {
 			}
 
 		}
+		
+		
+		if ("logout".equals(action)) {
+			/************************* 接收請求參數 **************************/
+			String logout = req.getParameter("logout");
+			System.out.println(logout);
+			
+			HttpSession session = req.getSession();
+			session.invalidate();
+
+	        System.out.println("已清除");
+	        resp.sendRedirect(req.getContextPath() + "/Backstage/Allpage-publisher/login/login.jsp");
+	        System.out.println("已導向");
+
+		}
+		
+		
+		
+		
+		
+		
+		
 
 	}
-
-
-	
-	
-	
 
 }
