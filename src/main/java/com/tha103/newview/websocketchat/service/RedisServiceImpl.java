@@ -16,7 +16,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 public class RedisServiceImpl implements RedisService{
-
+ 
     private final JedisPool jedisPool;
   
 
@@ -124,7 +124,7 @@ public class RedisServiceImpl implements RedisService{
 		        for (Map.Entry<String, String> entry : seatsData.entrySet()) {
 		            String seatNumber = entry.getKey();
 		            String seatInfo = entry.getValue();
-		            System.out.println(seatNumber + "   " + seatInfo);
+//		            System.out.println(seatNumber + "   " + seatInfo);
 		            String[] seatInfoParts = seatInfo.split(",");
 		            String userName = seatInfoParts[0];
 		            String seatType = seatInfoParts[1];
@@ -243,6 +243,29 @@ public class RedisServiceImpl implements RedisService{
 		    return modifiedSeatsData;
 		}
 
+		public Map<String, String> findSeatsByActIDAndUserName(String actID, String userName) {
+		    Jedis jedis = null;
+		    Map<String, String> result = new HashMap<>();
+		    try {
+		        jedis = JedisPoolUtil.getJedisPool().getResource();
+		        jedis.select(3); 
+		        Map<String, String> allSeats = jedis.hgetAll("seatData:" + actID);
+		        for (Map.Entry<String, String> entry : allSeats.entrySet()) {
+		            if (entry.getValue().startsWith(userName + "," + actID)) {
+		                result.put(entry.getKey(), entry.getValue());
+		            }else {
+		            	System.out.println("沒找到");
+		            }
+		        }
+		    } finally {
+		        if (jedis != null) {
+		            jedis.close();
+		        }
+		    }
+		    return result;
+		}
+
+		
 
 
 

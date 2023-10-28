@@ -623,32 +623,19 @@
 												<tr class="table_row">
 													<td class="column-1">
 														<div class="how-itemcart1">
-															<img src="images/item-cart-04.jpg" alt="IMG">
+															<img src="images/item-cart-04.jpg" alt="IMG" id="actImg">
 														</div>
 													</td>
-													<td class="column-2">Fresh Strawberries</td>
-													<td class="column-3 num-price">$ 36.00</td>
-													<td class="column-4" style="font-size: large;text-align: center;">1
+													<td class="column-2" id="actNameIn">Fresh Strawberries</td>
+													<td class="column-3 num-price" id="actPrice">$ 36.00</td>
+													<td class="column-4" style="font-size: large;text-align: center;" id="actCount">1
 														<input class="mtext-104 cl3 txt-center num-product"
 															type="hidden" name="num-product1" value="1">
 													</td>
-													<td class="column-5 num-total">$ 36.00</td>
+													<td class="column-5 num-total" id="actTotal">$ 36.00</td>
 												</tr>
 
-												<tr class="table_row">
-													<td class="column-1">
-														<div class="how-itemcart1">
-															<img src="images/item-cart-05.jpg" alt="IMG">
-														</div>
-													</td>
-													<td class="column-2">Lightweight Jacket</td>
-													<td class="column-3 num-price">$ 16.00</td>
-													<td class="column-4" style="font-size: large;text-align: center;">1
-														<input class="mtext-104 cl3 txt-center num-product"
-															type="hidden" name="num-product2" value="1" readonly>
-													</td>
-													<td class="column-5 num-total">$ 16.00</td>
-												</tr>
+											
 											</table>
 										</div>
 									</div>
@@ -671,7 +658,7 @@
 											<div class="col-md-4">
 												<div class="form-group">
 													<label for="actName">活動名稱</label>
-													<input id="orderTel" type="text" class="form-control"
+													<input id="actNameInOrder" type="text" class="form-control"
 														placeholder="default" readonly>
 												</div>
 											</div>
@@ -679,14 +666,14 @@
 											<div class="col-md-3">
 												<div class="form-group">
 													<label for="startTime">開始時間</label>
-													<input id="orderName" type="text" class="form-control"
+													<input id="actTimeInOrder" type="text" class="form-control"
 														placeholder="default" readonly>
 												</div>
 											</div>
 											<div class="col-md-3">
 												<div class="form-group">
 													<label for="lastname">結束時間</label>
-													<input id="orderBirth" type="text" class="form-control"
+													<input id="actEnd" type="text" class="form-control"
 														placeholder="default" readonly>
 												</div>
 											</div>
@@ -695,7 +682,7 @@
 											<div class="col-md-12">
 												<div class="form-group">
 													<label for="country">活動地址</label>
-													<input id="orderMail" type="text" class="form-control"
+													<input id="actAddress" type="text" class="form-control"
 														placeholder="default" readonly>
 												</div>
 											</div>
@@ -933,6 +920,7 @@
 	<!--===============================================================================================-->
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="vendor/bootstrap/js/popper.js"></script>
@@ -986,6 +974,140 @@
 			});
 
 		});
+	</script>
+	<script>
+	 $(document).ready(function () {
+	        // 在頁面載入完成後自動觸發Ajax請求
+	        var userID = "1";
+	        
+	        // 使用Ajax發送POST請求
+	        $.ajax({
+	            type: "POST",
+	            url: "ordersSearch", 
+	            data: {
+	                userID: userID
+	            },
+	            success: function (response) {
+	                // 請求成功時執行的操作
+	                console.log("成功啦~~：", response);
+	                
+	                var userIDValue =response.userID;
+	                var userIDInput = document.getElementById("userID");
+	                userIDInput.value = userIDValue;
+	                
+	                var userNameValue =response.userName;
+	                var userNameInput = document.getElementById("orderName");
+	                userNameInput.value = userNameValue;
+	                
+	                var timestampInMillis = response.userBirth;
+	                var date = new Date(timestampInMillis);
+	                var year = date.getFullYear();
+	                var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 月份從0開始~
+	                var day = date.getDate().toString().padStart(2, '0');
+	                var formattedDate = year + '-' + month + '-' + day;
+	                var userBirthValue =formattedDate;
+	                var userBirthInput = document.getElementById("orderBirth");
+	                userBirthInput.value = userBirthValue;
+	                
+	                var userTelValue =response.userCell;
+	                var userTelInput = document.getElementById("orderTel");
+	                userTelInput.value = userTelValue;
+	                
+	                var userMailValue =response.userEmail;
+	                var userMailInput = document.getElementById("orderMail");
+	                userMailInput.value = userMailValue;
+	                
+	                var userMailValue =response.userEmail;
+	                var userMailInput = document.getElementById("orderMail");
+	                userMailInput.value = userMailValue;
+	                
+	                
+	            },
+	            error: function (xhr, status, error) {
+                
+	                console.error("錯誤：", error);
+	            }
+	        });
+	    });
+	 
+	 $(document).ready(function() {
+         $.ajax({
+             url: "Makabaka", 
+             type: "POST", 
+             success: function(response) {
+                
+                 console.log("Servlet：", response);
+                 console.log(response.actWithPics.actName);
+                 //活動名稱
+                 var newText = response.actWithPics.actName;
+             	 var tdElement = document.getElementById('actNameIn');
+                 tdElement.textContent = newText;
+                 //活動價錢
+                 var newPrice = response.actWithPics.actPrice;
+             	 var tdPrice = document.getElementById('actPrice');
+                 tdPrice.textContent = newPrice;
+                 //活動數量
+                 var newCount = response.totalSeatsReceived;
+             	 var tdCount = document.getElementById('actCount');
+                 tdCount.textContent = newCount;
+                 //活動總價錢
+                 var newTotal = newPrice*newCount;
+             	 var tdTotal = document.getElementById('actTotal');
+                 tdTotal.textContent = newTotal;
+                 //活動圖片
+                 var base64Image = response.actWithPics.images[0].base64Image; 
+                 $("#actImg").attr("src", "data:image/jpeg;base64," + base64Image);
+                 //活動ID
+                 var newActID = response.actWithPics.actID;
+                 $("#actID").val(newActID);
+                 //活動名稱
+                 var newActName = response.actWithPics.actName;               
+                 $("#actNameInOrder").val(newActName);
+                 //活動時間
+                 var actTimeInOrder = response.actWithPics.actTime;               
+                 $("#actTimeInOrder").val(actTimeInOrder);
+                 
+                 
+                 //活動結束時間,規格制定
+                 var dateString = actTimeInOrder;
+                 var dateParts = dateString.match(/(\d+)月 (\d+), (\d+)/); 
+                 var year = parseInt(dateParts[3], 10);
+                 var month = parseInt(dateParts[1], 10) - 1; 
+                 var day = parseInt(dateParts[2], 10);               
+                 var dateObj = new Date(year, month, day);
+                 dateObj.setDate(dateObj.getDate() - 7);
+                 var resultDateString = (dateObj.getMonth() + 1) + "月 " + dateObj.getDate() + ", " + dateObj.getFullYear();                       
+                 $("#actEnd").val(resultDateString);
+                 //活動地址
+                 var actAddress = response.actWithPics.actAddress;               
+                 $("#actAddress").val(actAddress);
+                 
+                
+                 //座位
+                 var seatNumbers = response.allSeatNumbers; 
+                 var seatDiv = $("div.form-group > div");
+                 seatDiv.empty();
+                 for (var i = 0; i < seatNumbers.length; i++) {
+                     var seatNumber = seatNumbers[i];
+                     var seatHtml = '<p>座位' + (i+1) + '<input id="seat' + (i+1) + '" type="text" class="form-control" value="' + seatNumber + '" readonly></p>';
+                     seatDiv.append(seatHtml);
+                 }
+                 
+                 //活動原始總價錢
+                 $("#firstPrice").val(newTotal);
+                 
+                 
+                 
+             },
+             error: function(xhr, status, error) {
+                 
+                 console.error("Ajax錯誤：", error);
+             }
+         });
+     });
+		
+	 
+              
 	</script>
 	<!--===============================================================================================-->
 </body>
