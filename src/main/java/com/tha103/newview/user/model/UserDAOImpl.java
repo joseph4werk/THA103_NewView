@@ -30,7 +30,6 @@ public class UserDAOImpl implements UserDAO {
 
 		try {
 			session.beginTransaction();
-//			session.saveOrUpdate(userVO);
 			userID = (int) session.save(userVO);
 			session.getTransaction().commit();
 		} catch (Exception e) {
@@ -121,8 +120,6 @@ public class UserDAOImpl implements UserDAO {
 			String sql = "from UserVO WHERE userAccount = :userAccount ";
 			UserVO user = (UserVO) session.createQuery(sql).setParameter("userAccount", account).uniqueResult();
 
-			System.out.println(user);
-
 			// 若不存在使用者帳號為 null -> 回傳 false
 			if (user == null) {
 				session.getTransaction().commit();
@@ -147,9 +144,6 @@ public class UserDAOImpl implements UserDAO {
 
 			String sql = "from UserVO WHERE userAccount = :userAccount ";
 			UserVO user = (UserVO) session.createQuery(sql).setParameter("userAccount", account).uniqueResult();
-
-			// 檢查是否有取得物件
-//			System.out.println(user);
 
 			// 若不存在使用者帳號為 null -> 回傳 true
 			if (user != null) {
@@ -215,44 +209,11 @@ public class UserDAOImpl implements UserDAO {
 		return null;
 	}
 
-//	@Override
-//	public Optional<OrdersVO> getOrderByUserID(Integer userID) {
-//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-//		OrdersVO ordersVO = null;
-//		
-//		try {
-//			session.beginTransaction();
-//
-//			String sql = "from OrdersVO WHERE userID = :userID ";
-//			ordersVO = (OrdersVO) session.createQuery(sql).setParameter("userID", userID).uniqueResult();
-//			
-//			session.getTransaction().commit();
-//
-//		} catch (Exception e) {
-//			session.getTransaction().rollback();
-//
-//		}
-//		return (ordersVO == null) ? Optional.empty() : Optional.of(ordersVO);
-//	}
-
 	public List<Object[]> getActPicIDByUserID(Integer userID) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
 		try {
 			session.beginTransaction();
-
-//			List<Object[]> list2 = session.createNativeQuery("SELECT ap.ActPicID FROM user u "
-//					+ "JOIN orders o ON u.userid = o.userid "
-//					+ "JOIN orderlist ol ON o.orderID = ol.orderID "
-//					+ "JOIN act a ON ol.actID = a.actID "
-//					+ "JOIN actpic ap ON a.actID = ap.actID; ").list();
-
-//			List<Object[]> list2 = session.createNativeQuery("SELECT ap.ActPicID FROM user u "
-//					+ "JOIN orders o ON u.userid = o.userid "
-//					+ "JOIN orderlist ol ON o.orderID = ol.orderID "
-//					+ "JOIN act a ON ol.actID = a.actID "
-//					+ "JOIN actpic ap ON a.actID = ap.actID "
-//					+ "WHERE a.actID = ap.actID and u.userid = 1; ").list();
 
 			List<Object[]> list = session.createNativeQuery("SELECT ap.ActPicID FROM user u "
 					+ "JOIN orders o ON u.userid = o.userid " + "JOIN orderlist ol ON o.orderID = ol.orderID "
@@ -280,7 +241,6 @@ public class UserDAOImpl implements UserDAO {
 			String sql = "from UserVO WHERE userEmail = :userEmail";
 			UserVO user = (UserVO) session.createQuery(sql).setParameter("userEmail", email).uniqueResult();
 
-//			System.out.println(user);
 
 			// 若不存在使用者為 null -> 回傳 false
 			if (user == null) {
