@@ -204,8 +204,7 @@ public class ActServiceImpl implements ActService {
 	 
 	    ActDAO actDAO = new ActDAOHibernateImpl(); 
 	    ActVO act = actDAO.findByPrimaryKey(actId);
-
-	  
+	   
 	    if(act != null) {
 	        actWithPicsDTO.setActDate(act.getActDate());	     
 	        actWithPicsDTO.setTime(act.getTime());
@@ -220,6 +219,7 @@ public class ActServiceImpl implements ActService {
 	        actWithPicsDTO.setCityAddress(act.getCityAddressID().getCityName());
 	        actWithPicsDTO.setPubName(act.getPublisherVOs().getPubName());
 	        actWithPicsDTO.setApprovalCondition(act.getApprovalCondition());
+	        actWithPicsDTO.setActCategoryID(act.getActCategory().getActCategoryID());
 	        
 	        Set<ActPic> actPics = act.getActpics();
 	        List<String> base64Images = new ArrayList<>();
@@ -233,6 +233,46 @@ public class ActServiceImpl implements ActService {
 	        actWithPicsDTO.setBase64Images(base64Images);
 	    }
 	    return actWithPicsDTO;
+	}
+	@Override
+	public List<ActWithPicsDTO> searchActsByCategory(Integer actCategoryID) {
+	    List<ActVO> searchResults = actDAO.getActsByCategoryID(actCategoryID);
+
+	    List<ActWithPicsDTO> actWithPicsList = new ArrayList<>();
+
+	    for (ActVO act : searchResults) {
+	        ActWithPicsDTO actWithPicsDTO = new ActWithPicsDTO();
+	        Set<ActPic> actPics = act.getActpics();
+	        List<String> base64Images = new ArrayList<>(); 
+
+	        for (ActPic pic : actPics) {
+	            if (pic.getActPic() != null) {
+	                byte[] picBytes = pic.getActPic();
+	                String base64Image = Base64.getEncoder().encodeToString(picBytes);
+	                base64Images.add(base64Image); 
+	            } else {
+	                System.out.println("NULL");
+	            }
+	        }
+
+	        actWithPicsDTO.setActDate(act.getActDate());
+	        actWithPicsDTO.setActTime(act.getActTime());
+	        actWithPicsDTO.setTime(act.getTime());
+	        actWithPicsDTO.setActID(act.getActID());
+	        actWithPicsDTO.setBase64Images(base64Images); 
+	        actWithPicsDTO.setActScope(act.getActScope());
+	        actWithPicsDTO.setActName(act.getActName());
+	        actWithPicsDTO.setActContent(act.getActContent());
+	        actWithPicsDTO.setActPrice(act.getActPrice());
+	        actWithPicsDTO.setActIntroduce(act.getActIntroduce());
+	        actWithPicsDTO.setActCategoryName(act.getActCategoryID().getActCategoryName());
+	        actWithPicsDTO.setActAddress(act.getCityAddress());
+	        actWithPicsDTO.setCityAddress(act.getCityAddressID().getCityName());
+	        actWithPicsDTO.setApprovalCondition(act.getApprovalCondition());
+	        actWithPicsList.add(actWithPicsDTO);
+	    }
+
+	    return actWithPicsList;
 	}
 
 	

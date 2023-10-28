@@ -1202,6 +1202,7 @@ pageContext.setAttribute("categories", categories);
             }
 
             // 在Ajax成功後 呼叫
+            
             handleButtonClick(link, nameProduct);
         },
         error: function(error) {
@@ -1275,31 +1276,7 @@ pageContext.setAttribute("categories", categories);
             }
         });
     }
-    function sendLikeChangeRequest(element) {    
-        var actID = $(element).data("act-id");              
-        var userID = $('#userID').val();
-
-        
-        $.ajax({
-            type: "POST",
-            url: "likeChange",  
-            data: {
-                actID: actID,
-                userID: userID
-            },
-            dataType: "json",
-            success: function(response) {
-                
-                console.log(response);
-            },
-            error: function(error) {
-                console.log("Error:", error);
-            }
-        });
-        
-        //禁止標籤動作 
-        return false;
-    }
+ 
     //我的最愛切換送交
     function sendLikeChangeRequest(element) {    
         var actIDchange = $(element).data("act-id");              
