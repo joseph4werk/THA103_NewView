@@ -137,7 +137,7 @@ public class OrderListController extends HttpServlet {
 			orderListVO.setActVO(act);
 			orderListVO.setSeatRows(((int) rowIndex1) + 1);
 			orderListVO.setSeatColumns(seatIndex1);
-			orderListVO.setVacancy(seatNumber+",未使用");
+			orderListVO.setVacancy(seatNumber+",0");
 			if(orderListVO!=null) {
 			int result = orderListService.insert(orderListVO);
 			}else {
