@@ -12,6 +12,7 @@ public class ActWithPicsDTO {
     private String actIntroduce;
     private List<String> base64Images;
     private String actCategoryName;
+    private Integer actCategoryID;
     private Date actDate;
     private Date actTime;
     private Date time;
@@ -22,6 +23,14 @@ public class ActWithPicsDTO {
     private List<ImageDTO> images;
     
 	
+    
+    
+	public Integer getActCategoryID() {
+		return actCategoryID;
+	}
+	public void setActCategoryID(Integer actCategoryID) {
+		this.actCategoryID = actCategoryID;
+	}
 	public Integer getApprovalCondition() {
 		return approvalCondition;
 	}

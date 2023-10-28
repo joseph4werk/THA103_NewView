@@ -70,7 +70,7 @@ public class MyLikeServlet extends HttpServlet{
 					}
 					
 					/***************************2.***************************************/
-					MyLikeService myLikeSvc = new MyLikeService();
+					MyLikeServiceImpl myLikeSvc = new MyLikeServiceImpl();
 					myLikeVO = myLikeSvc.insertMyLike(userVO, actVO);
 					
 					/***************************3.Send the Success view**********/
@@ -93,7 +93,7 @@ public class MyLikeServlet extends HttpServlet{
 				Integer myLikeID = Integer.valueOf(req.getParameter("myLikeID"));
 				
 				/***************************2.***************************************/
-				MyLikeService myLikeSvc = new MyLikeService();
+				MyLikeServiceImpl myLikeSvc = new MyLikeServiceImpl();
 				myLikeSvc.deleteMyLike(myLikeID);
 				
 				/***************************3.Send the Success view***********/								

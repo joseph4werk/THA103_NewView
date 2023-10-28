@@ -12,6 +12,12 @@ public class SeatInfo {
 		this.actID = actID;
 	}
 
+	@Override
+	public String toString() {
+		return "SeatInfo [userName=" + userName + ", seatNumber=" + seatNumber + ", seatType=" + seatType + ", actID="
+				+ actID + "]";
+	}
+
 	public String getUserName() {
 		return userName;
 	}

@@ -240,8 +240,26 @@ public class ActDAOHibernateImpl implements ActDAO {
         }
         return null;
     }
+    //透過類別尋找
+    @Override
+    public List<ActVO> getActsByCategoryID(Integer actCategoryID) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        try {
+            session.beginTransaction();            
+            List<ActVO> acts = session.createQuery(
+                    "SELECT act FROM ActVO act WHERE actVO.actCategory.actCategoryID = :categoryID", ActVO.class)
+                    .setParameter("categoryID", actCategoryID)
+                    .list();
+            
+            session.getTransaction().commit();
+            return acts;
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
+        return null;
+    }
 
-  //use to publisher backstage by Mandy
 	public List<ActVO> getActByPubID(Integer pubID){
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {

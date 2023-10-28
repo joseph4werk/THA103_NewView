@@ -1,16 +1,14 @@
 package com.tha103.newview.user.model;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver;
 
-import com.tha103.newview.orders.model.OrdersVO;
-import com.tha103.newview.user.dto.MyLikeActDTO;
+import com.tha103.newview.post.model.PostVO;
+import com.tha103.newview.post.service.PostService;
+import com.tha103.newview.post.service.PostServiceImpl;
+import com.tha103.newview.user.dto.HotPostDTO;
 import com.tha103.util.HibernateUtil;
 
 public class TestHibernateDAO {
@@ -70,8 +68,8 @@ public class TestHibernateDAO {
 //		Optional<OrdersVO> op = dao.getOrderByUserID(userID);
 //		OrdersVO ordersVO = op.get();
 //		System.out.println(op);
-		OrdersVO ordersVO = dao.getOrderByUserID(userID);
-		System.out.println(ordersVO);
+//		OrdersVO ordersVO = dao.getOrderByUserID(userID);
+//		System.out.println(ordersVO);
 
 //		UserVO userVO = new UserVO();
 //		OrdersVO ordersVO = new OrdersVO();
@@ -126,9 +124,19 @@ public class TestHibernateDAO {
 //		}
 //		System.out.println(dto.get(0));
 		
-		MyLikeActDTO myLikeActDTO = new MyLikeActDTO(1);
-		System.out.println(myLikeActDTO);
+//		MyLikeActDTO myLikeActDTO = new MyLikeActDTO(1);
+//		OrderDTO orderDTO = new OrderDTO(userID);
+//		System.out.println(myLikeActDTO);
+//		System.out.println(orderDTO);
 		
+//		List<HomeDTO> homeList= new ArrayList<>();
+//		ActService actSvc = new ActServiceImpl();
+//		List<ActVO> actVOs = actSvc.getAll();
+//		for(ActVO actVO : actVOs) {
+//			HomeDTO homeDTO = new HomeDTO(actVO);
+//			homeList.add(homeDTO);
+//		}
+//		System.out.println(homeList);
 		
 
 
