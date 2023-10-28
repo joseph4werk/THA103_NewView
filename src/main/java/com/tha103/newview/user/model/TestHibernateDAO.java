@@ -138,10 +138,6 @@ public class TestHibernateDAO {
 //		}
 //		System.out.println(homeList);
 		
-		PostService postSvc = new PostServiceImpl();
-		List<PostVO> postVOs = postSvc.getAll();
-		HotPostDTO hotPostDTO = new HotPostDTO(postVOs);
-		System.out.println(hotPostDTO);
 
 
 		// Optional<> 測試
