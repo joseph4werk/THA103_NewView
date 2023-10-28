@@ -110,21 +110,23 @@ public class RedisServiceImpl implements RedisService{
 
 		
 		public Map<String, String> markSeatsInRedis(String actID, String targetUserName) {
-		    Jedis jedis = null;
+		    Jedis jedis = null;		   
 		    Map<String, String> modifiedSeatsData = new HashMap<>(); 
-		    // 儲存已修改數據
 
 		    try {
 		        jedis = JedisPoolUtil.getJedisPool().getResource();
+		        
+
+		        jedis.select(0); 
+
 		        Map<String, String> seatsData = jedis.hgetAll("seatData:" + actID);
 
 		        for (Map.Entry<String, String> entry : seatsData.entrySet()) {
 		            String seatNumber = entry.getKey();
 		            String seatInfo = entry.getValue();
-		            System.out.println(seatNumber+"   "+seatInfo);
+		            System.out.println(seatNumber + "   " + seatInfo);
 		            String[] seatInfoParts = seatInfo.split(",");
 		            String userName = seatInfoParts[0];
-		           
 		            String seatType = seatInfoParts[1];
 
 		            if (userName.equals(targetUserName) && !seatType.equals("soldOut")) {
@@ -133,14 +135,29 @@ public class RedisServiceImpl implements RedisService{
 		                modifiedSeatsData.put(seatNumber, newSeatInfo);
 		            }
 		        }
+
+		        jedis.select(3); // 切換到 db3，
+
+		        // 複製到db3
+		        if (!modifiedSeatsData.isEmpty()) {
+		            for (Map.Entry<String, String> entry : modifiedSeatsData.entrySet()) {
+		                String seatNumber = entry.getKey();
+		                String newSeatInfo = entry.getValue();
+		                jedis.hset("seatData:" + actID, seatNumber, newSeatInfo); 
+		                // 放到 db3
+		            }
+		        }
 		    } finally {
 		        if (jedis != null) {
+		            jedis.select(0); //最後關閉前 切換回原本db0
 		            jedis.close();
 		        }
 		    }
 
 		    return modifiedSeatsData;
 		}
+
+		
 		
 		public void deleteSeatDataFromRedis(String actID, String seatNumber, String userName) {
 		    Jedis jedis = null;
@@ -165,7 +182,7 @@ public class RedisServiceImpl implements RedisService{
 		        }
 		    }
 		}
-		//購物車使用方法, 改為db1複製資料
+		//購物車使用方法, 改為db1複製資料,db4  也會獲得一份
 		public Map<String, String> markSeatsInRedisAndDB1(String actID, String targetUserName) {
 		    Jedis jedis = null;
 		    Map<String, String> modifiedSeatsData = new HashMap<>();
@@ -177,11 +194,11 @@ public class RedisServiceImpl implements RedisService{
 
 		        // 從主數據庫（db0）獲取座位數據
 		        Map<String, String> seatsData = jedis.hgetAll("seatData:" + actID);
-
+		        String newSeatInfo = null ;
 		        for (Map.Entry<String, String> entry : seatsData.entrySet()) {
 		            String seatNumber = entry.getKey();
 		            String seatInfo = entry.getValue();
-
+		            
 		            String[] seatInfoParts = seatInfo.split(",");
 		            String userName = seatInfoParts[0];
 		            String actName = seatInfoParts[1];
@@ -190,7 +207,7 @@ public class RedisServiceImpl implements RedisService{
 		            if (userName.equals(targetUserName) && seatType.equals("buy")) {
 		                // 將 "buy" 標記的座位狀態改為 "inCart"
 		                String newSeatInfoCart = seatNumber + "," + actName + ",inCart";
-		                String newSeatInfo = userName + "," + actName + ",inCart";
+		                newSeatInfo = userName + "," + actName + ",inCart";
 		                jedis.hset("seatData:" + actID, seatNumber, newSeatInfo);
 		                // 切換到 db1
 		                jedis.select(1);
@@ -203,14 +220,29 @@ public class RedisServiceImpl implements RedisService{
 		                modifiedSeatsData.put(seatNumber, newSeatInfoCart);
 		            }
 		        }
+
+		        //複製到 db4
+		        if (!modifiedSeatsData.isEmpty()) {
+		            jedis.select(4); // 切换到 db4
+		            
+		            for (Map.Entry<String, String> entry : modifiedSeatsData.entrySet()) {
+		                String seatNumber = entry.getKey();
+		                
+		                
+		                jedis.hset("seatData:" + actID, seatNumber, newSeatInfo); // 存到 db4
+		            }
+		            
+		        }
 		    } finally {
 		        if (jedis != null) {
+		        	jedis.select(0);
 		            jedis.close();
 		        }
 		    }
 
 		    return modifiedSeatsData;
 		}
+
 
 
 
