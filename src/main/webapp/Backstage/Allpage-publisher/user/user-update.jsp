@@ -126,7 +126,6 @@ System.out.println("pubuserVO=" + pubuserVO);
 							</div>
 						</div>
 					</form>
-					<input type="submit" class="btn btn-danger" value="清空">
 				</div>
 			</section>
 			<!-- /.content -->

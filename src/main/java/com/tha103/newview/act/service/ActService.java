@@ -28,4 +28,7 @@ public interface ActService {
     List<ActWithPicsDTO> searchActsByCategory(Integer actCategoryID);
 	
 	
+	//use to publisher backstage by Mandy
+	public List<ActVO> getActByPub(Integer pubID);
+	
 }

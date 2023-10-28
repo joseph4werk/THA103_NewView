@@ -23,5 +23,8 @@ public interface ActDAO {
 	List<ActVO> getActsWithNameAndAssociations(String actName);
 	
 
+
 	List<ActVO> getActsByCategoryID(Integer actCategoryID);
+	List<ActVO> getActByPubID(Integer pubID);
+	
 }

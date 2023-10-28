@@ -273,6 +273,10 @@ public class ActServiceImpl implements ActService {
 	    }
 
 	    return actWithPicsList;
+	    }
+	
+	public List<ActVO> getActByPub(Integer pubID){
+		return actDAO.getActByPubID(pubID);
 	}
 
 	

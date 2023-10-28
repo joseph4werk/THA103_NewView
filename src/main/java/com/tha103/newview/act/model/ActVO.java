@@ -102,7 +102,7 @@ public class ActVO {
 	
 	/*主鍵相關表格*/
 	@Expose
-	@OneToMany(mappedBy = "act", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "act", cascade=CascadeType.ALL)
 	private Set<ActPic> actpics;
 //	@Expose
 	@OneToMany(mappedBy = "actVO", cascade=CascadeType.ALL)
