@@ -95,7 +95,7 @@ public class UserVO {
 	private Set<CartActVO> cartActVOs;
 
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<OrdersVO> ordersVOs;
 	
 	@Expose

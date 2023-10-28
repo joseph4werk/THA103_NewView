@@ -1,40 +1,43 @@
 package com.tha103.newview.user.dto;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import com.tha103.newview.orders.model.OrdersVO;
+import com.tha103.newview.user.model.UserVO;
+import com.tha103.newview.user.service.UserServiceImpl;
+
 public class OrderDTO {
-	String publisher;
 	
-	String activity;
+	List<String> publisher = new ArrayList<>();
 	
-	Integer actPicID;
+	List<Timestamp> ordTime = new ArrayList<>();
 	
-	public String getPublisher() {
-		return publisher;
+	List<Integer> ordTotal = new ArrayList<>();
+
+	public OrderDTO(Integer userID) {
+		UserVO userVO = new UserServiceImpl().getUserByPK(userID);
+		Set<OrdersVO> ordersVOs = userVO.getOrdersVOs();
+		for(OrdersVO ordersVO : ordersVOs) {
+			this.publisher.add(ordersVO.getPublisherVO().getPubName());
+			this.ordTime.add(ordersVO.getOrdTime());
+			this.ordTotal.add(ordersVO.getOrdTotal());
+			
+		}
 	}
-	public void setPublisher(String publisher) {
-		this.publisher = publisher;
-	}
-	public String getActivity() {
-		return activity;
-	}
-	public void setActivity(String activity) {
-		this.activity = activity;
-	}
-	public Integer getActPicID() {
-		return actPicID;
-	}
-	public void setActPicID(Integer actPicID) {
-		this.actPicID = actPicID;
-	}
-	public OrderDTO(String publisher, String activity, Integer actPicID) {
+
+	public OrderDTO() {
 		super();
-		this.publisher = publisher;
-		this.activity = activity;
-		this.actPicID = actPicID;
+		// TODO Auto-generated constructor stub
 	}
+
 	@Override
 	public String toString() {
-		return "OrderDTO [publisher=" + publisher + ", activity=" + activity + ", actPicID=" + actPicID + "]";
+		return "OrderDTO [publisher=" + publisher + ", ordTime=" + ordTime + ", ordTotal=" + ordTotal + "]";
 	}
+	
 	
 
 }

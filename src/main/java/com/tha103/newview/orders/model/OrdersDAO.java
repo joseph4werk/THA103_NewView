@@ -13,4 +13,9 @@ public interface OrdersDAO {
 //  萬用複合查詢(傳入參數型態Map)(回傳List)
 //  public List<OrdersVO> getAll(Map<String, String[]> map);
     
+    
+    
+    //for Publisher Backstage get Order List  by Mandy
+    public List<OrdersVO> getOrdersByPubID(Integer pubID);
+    
 }

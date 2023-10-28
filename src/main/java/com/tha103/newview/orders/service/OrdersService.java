@@ -85,5 +85,14 @@ public class OrdersService {
 	public List<OrdersVO> getAll() {
 		return ordersDao.getAll();
 	}
+	
+	
+	
+	//for Publisher Backstage get Order List
+	public List<OrdersVO> getOrdersByPub(Integer pubID){
+		//使用廠商ID取得Discount列表
+		List<OrdersVO> discountList = ordersDao.getOrdersByPubID(pubID);
+		return discountList;
+	}
 
 }

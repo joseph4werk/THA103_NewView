@@ -9,7 +9,14 @@
 <%@ page import="com.tha103.newview.actcategory.model.*"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <%
+Integer pubID = (Integer) session.getAttribute("pubID");
+if(pubID == null){
+	response.sendRedirect("/Backstage/Allpage-publisher/pub-index.jsp");
+	return;
+}
+
 ActDAO actDAO = new ActDAOHibernateImpl();
 ActService actSvc = new ActServiceImpl(actDAO);
 
@@ -102,18 +109,38 @@ pageContext.setAttribute("categories", categories);
 			</section>
 			<section class="content">
 				<c:if test="${not empty actWithPicsList}">
-					<form method="post" action="<%=request.getContextPath()%>/act/act.do" enctype="multipart/form-data" accept-charset="UTF-8" onsubmit="prepareDelete();">
-						
+					<!-- sevlte裡的update傳遞來的資料 -->
+
+					<form METHOD="post" action="<%=request.getContextPath()%>/act/act.do"
+						enctype="multipart/form-data" accept-charset="UTF-8"
+						>
+<!-- onsubmit="prepareDelete();" -->
 						<div class="row">
 							<c:forEach items="${actWithPicsList}" var="actData">
 								<div class="col-md-10 offset-md-1">
 									<div class="form-group row">
+										<label name="actID">活動編號：${actData.actID}</label> <label
+											name="approvalCondition" style="margin: 0 10px;"> <c:choose>
+												<c:when test="${actData.approvalCondition == 0}">
+													<div style="color: blue;">(尚未審核)</div>
+												</c:when>
+												<c:when test="${actData.approvalCondition == 1}">
+													<div style="color: green;">(審核通過)</div>
+												</c:when>
+												<c:otherwise>
+													<div style="color: red;">(審核未過)</div>
+												</c:otherwise>
+											</c:choose>
+										</label>
+									</div>
+									<div class="form-group row">
 										<div class="col-md-6">
-											<input type="hidden" name="actId" value="${actData.actID}" />
-											<label for="actCategory">活動類別：</label> <select
-												name="actCategory" class="form-control" style="width: 100%;">
+											<label for="actCategory">活動類別：</label> 
+											<select name="actCategoryStr" class="form-control" style="width: 100%;">
 												<c:forEach var="category" items="${categories}">
-													<option value="${category.actCategoryID}">${category.actCategoryName}</option>
+													<option value="${category.actCategoryID}"
+														${category.actCategoryName == actData.actCategoryName ? 'selected' : ''}>${category.actCategoryName}
+													</option>
 												</c:forEach>
 											</select>
 										</div>
@@ -121,14 +148,14 @@ pageContext.setAttribute("categories", categories);
 											<label for="actScope">活動規模：</label> <select name="actScope"
 												class="form-control" style="width: 100%;">
 												<option value="1"
-													${actData.actScope == '1' ? 'selected' : ''}>大：可容納
-													900 人</option>
+													${actData.actScope == '1' ? 'selected' : ''}>大：可容納900
+													人</option>
 												<option value="2"
-													${actData.actScope == '2' ? 'selected' : ''}>中：可容納
-													400 人</option>
+													${actData.actScope == '2' ? 'selected' : ''}>中：可容納400
+													人</option>
 												<option value="3"
-													${actData.actScope == '3' ? 'selected' : ''}>小：可容納
-													100 人</option>
+													${actData.actScope == '3' ? 'selected' : ''}>小：可容納100
+													人</option>
 											</select>
 										</div>
 									</div>
@@ -191,16 +218,20 @@ pageContext.setAttribute("categories", categories);
 									</div>
 									<div class="form-group row">
 										<div class="col-md-4">
-											<label for="cityName">活動縣市：</label> <select
-												class="form-control" style="width: 100%;">
+											<label for="cityName">活動縣市：</label> 
+											<select name="cityStr" class="form-control" style="width: 100%;">
+
 												<c:forEach var="cityItem" items="${city}">
-													<option value="${cityItem.actAdressID}">${cityItem.cityName}</option>
+													<option value="${cityItem.cityAddressID}"
+														${cityItem.cityName == actData.cityAddress ? 'selected' : ''}>${cityItem.cityName}
+													</option>
 												</c:forEach>
+
 											</select>
 										</div>
 										<div class="col-md-8">
 											<label for="cityAddress">地址：</label> <input type="text"
-												name="cityAddress" value="${actData.cityAddress}"
+												name="cityAddress" value="${actData.actAddress}"
 												class="form-control" />
 										</div>
 									</div>
@@ -221,32 +252,39 @@ pageContext.setAttribute("categories", categories);
 															<th style="text-align: center">操作</th>
 														</tr>
 													</thead>
-													<c:forEach items="${actData.images}" var="imageData" varStatus="status">
-													<tbody>
-														<tr>
-															<th style="text-align: center;vertical-align: middle;">
-																<img src="data:image/gif;base64,${imageData.base64Image}" alt="Image" style="width: 200px"/>
-															</th>
-															<th style="text-align: center;vertical-align: middle;">
-																<input type="hidden" name="imageIndex" value="${status.index}" />
-																<input type="hidden" name="imageId_${status.index}" value="${imageData.actPicID}" />
-																<input type="file" name="imageNEW_${status.index}" />
-															</th>
-														</tr>
-													</tbody>
+													<c:forEach items="${actData.images}" var="imageData"
+														varStatus="status">
+														<tbody>
+															<tr>
+																<th style="text-align: center; vertical-align: middle;">
+																	<img
+																	src="data:image/gif;base64,${imageData.base64Image}"
+																	alt="Image" style="width: 200px" />
+																</th>
+																<th style="text-align: center; vertical-align: middle;">
+																	<input type="hidden" name="imageIndex"
+																	value="${status.index}" /> <input type="hidden"
+																	name="imageId_${status.index}"
+																	value="${imageData.actPicID}" /> <input type="file"
+																	name="imageNEW_${status.index}" />
+																</th>
+															</tr>
+														</tbody>
 													</c:forEach>
 												</table>
 											</div>
 										</div>
 									</div>
-								
+
 									<!-- /.card-header -->
 									<label for="summernote">活動內容：</label>
 									<textarea name="actContent" id="summernote">${actData.actContent}</textarea>
 
 									<div class="form-group">
 										<input type="submit" class="btn btn-primary" value="送出">
-										<input type="hidden" name="action" value="UP">
+										<input type="hidden" name="action" value="updateAct">
+										<input type="hidden" name="actIdStr" value="${actData.actID}">
+										<input type="hidden" name="pubIDStr" value="${sessionScope.pubID}">
 									</div>
 								</div>
 								<!-- /.col-->

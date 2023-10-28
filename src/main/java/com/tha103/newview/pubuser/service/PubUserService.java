@@ -104,5 +104,10 @@ public class PubUserService {
 		
 		return dao.getAllByCQ(query);
 	}
+
+	public PubUserVO getByAccountInfo(String account) {
+		
+		return dao.findByAccount(account);
+	}
 	
 }
