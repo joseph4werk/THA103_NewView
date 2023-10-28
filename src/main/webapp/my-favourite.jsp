@@ -5,7 +5,7 @@
 <%@page import="com.tha103.newview.mylike.model.*"%>
 
 <%
-    MyLikeService myLikeSvc = new MyLikeService();
+MyLikeServiceImpl myLikeSvc = new MyLikeServiceImpl();
     List<MyLikeVO> list = myLikeSvc.getAll();
     pageContext.setAttribute("list",list);
 %>

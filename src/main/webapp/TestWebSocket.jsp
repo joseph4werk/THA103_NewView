@@ -117,7 +117,7 @@ pageContext.setAttribute("categories", categories);
 
 		<c:if test="${not empty user}">
 			<tr>
-				<td>${user[0].userID}</td>
+				<td>${user[1].userID}</td>
 				<script>
 					userIDValue = "${user[0].userID}";
 				</script>
@@ -381,7 +381,14 @@ pageContext.setAttribute("categories", categories);
 				</div>
 
 				<div class="flex-w flex-c-m m-tb-10">
-
+					<div
+						class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
+						<i
+							class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
+						<i
+							class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+						Filter
+					</div>
 
 					<div
 						class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
@@ -394,9 +401,8 @@ pageContext.setAttribute("categories", categories);
 
 				<!-- Search product -->
 				<div class="dis-none panel-search w-full p-t-10 p-b-15">
-					<div class="bor8 dis-flex p-l-15" id="outerDiv">
-						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04"
-							id="search-button">
+					<div class="bor8 dis-flex p-l-15">
+						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
 							<i class="zmdi zmdi-search"></i>
 						</button>
 
@@ -406,6 +412,7 @@ pageContext.setAttribute("categories", categories);
 							<input type="hidden" name="action" value="search" /> <input
 								class="mtext-107 cl2 size-114 plh2 p-r-15" type="text"
 								name="search-product" placeholder="Search" id="search-product" />
+
 						</form>
 					</div>
 				</div>
@@ -530,7 +537,7 @@ pageContext.setAttribute("categories", categories);
 					<!-- 初始空值 -->
 				</div>
 				<!--動態增加測試-->
-
+				
 				<!--動態測試-->
 
 				<div id="act-container">
@@ -539,9 +546,8 @@ pageContext.setAttribute("categories", categories);
 							class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${actData.actCategory.actCategoryName} block2">
 							<div class="block2">
 								<div class="block2-pic hov-img0">
-									<img src="" alt="IMG-PRODUCT" id="actImage_${actData.actID}"
-										width="285px" height="285px" /> <a href="#"
-										data-act-id="${actData.actID}"
+									<img src="" alt="IMG-PRODUCT" id="actImage_${actData.actID}" width ="285px" height="285px"/>
+									<a href="#" data-act-id="${actData.actID}"
 										class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
 										onclick="showModal(this)"> 活動詳細 </a>
 								</div>
@@ -579,14 +585,12 @@ pageContext.setAttribute("categories", categories);
 												class="block2-txt-child2 flex-r p-t-3">
 												<a href="#"
 													class="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-													data-act-id="${actData.actID}"
-													onclick="sendLikeChangeRequest(this);"> <img
+													data-act-id="${actData.actID}"> <img
 													class="icon-heart1 dis-block trans-04"
 													src="images/icons/icon-heart-01.png" alt="ICON" /> <img
 													class="icon-heart2 dis-block trans-04 ab-t-l"
 													src="images/icons/icon-heart-02.png" alt="ICON" />
 												</a>
-
 
 											</div>
 										</div>
@@ -612,7 +616,7 @@ pageContext.setAttribute("categories", categories);
 				<!--動態測試-->
 
 
-
+			
 			</div>
 
 			<!-- Load more -->
@@ -851,7 +855,7 @@ pageContext.setAttribute("categories", categories);
 							</div>
 
 							<!--  -->
-
+							
 						</div>
 					</div>
 				</div>
@@ -911,32 +915,30 @@ pageContext.setAttribute("categories", categories);
 			e.preventDefault();
 		});
 
-		$(".js-addwish-b2").off("click");
+		$(".js-addwish-b2").each(
+				function() {
+					var nameProduct = $(this).parent().parent().parent().find(
+							".js-name-b2").html();
+					$(this).on("click", function() {
+						swal(nameProduct, "已加入我的最愛 !", "success");
 
-		// 處理click事件
-		function handleButtonClick(link, nameProduct) {
-		    var isLiked = link.hasClass("js-addedwish-b2");
+						$(this).addClass("js-addedwish-b2");
+						$(this).off("click");
+					});
+				});
 
-		    if (isLiked) {
-		        swal(nameProduct, "已取消我的最愛 !", "success");
-		        link.removeClass("js-addedwish-b2");
-		    } else {
-		        swal(nameProduct, "已加入我的最愛 !", "success");
-		        link.addClass("js-addedwish-b2");
-		    }
-		}
+		$(".js-addwish-detail").each(
+				function() {
+					var nameProduct = $(this).parent().parent().parent().find(
+							".js-name-detail").html();
 
-		$(".js-addwish-b2").each(function() {
-		    var link = $(this);
-		    var nameProduct = link.parent().parent().parent().find(".js-name-b2").html();
+					$(this).on("click", function() {
+						swal(nameProduct, "已加入我的最愛 !", "success");
 
-		    link.on("click", function() {
-		        
-		        handleButtonClick(link, nameProduct);
-		    });
-		});
-
-		
+						$(this).addClass("js-addedwish-detail");
+						$(this).off("click");
+					});
+				});
 
 		/*---------------------------------------------*/
 
@@ -973,7 +975,6 @@ pageContext.setAttribute("categories", categories);
 	<script>
 		var packagedData;
 		var userIDValue;
-		console.log(packagedData+",  "+userIDValue)
 		function showModal(elem) {
 			var actIdStr = elem.getAttribute("data-act-id");
 			sendAjaxRequest(actIdStr);
@@ -1012,7 +1013,7 @@ pageContext.setAttribute("categories", categories);
 			var actScope = data.actScope;
 			var actID = data.actID;
 			var scale;		
-			console.log(actID+", "+actName);
+		
 			switch (actScope) {
 			
 			case 1:
@@ -1174,7 +1175,7 @@ pageContext.setAttribute("categories", categories);
     	    // 每個按鈕都有一個不同的actID
  $(".btn-addwish-b2").each(function() {
     var actID = $(this).data("act-id");
-    var link = $(this);
+    var link = $(this); 
 
     $.ajax({
         type: "POST",
@@ -1191,38 +1192,21 @@ pageContext.setAttribute("categories", categories);
             var likeIDsArray = response.likeIDs;
             var actIDs = likeIDsArray.map(item => item.actID);
             console.log(actIDs + " " + actID);
-            var isFavorite = actIDs.includes(actID);
-
+            var isFavorite = actIDs.includes(actID);          
             if (isFavorite) {
-                link.addClass("js-addedwish-b2");
+                link.addClass("js-addedwish-b2"); 
                 console.log("有愛心");
             } else {
-                link.removeClass("js-addedwish-b2");
+                link.removeClass("js-addedwish-b2"); 
                 console.log("沒愛心");
             }
-
-            // 在Ajax成功後 呼叫
-            
-            handleButtonClick(link, nameProduct);
         },
         error: function(error) {
             console.log("Error:", error);
         }
     });
 });
-    	    
-    //搜尋點擊優化	    
- var outerDiv = document.getElementById('outerDiv');
- var searchInput = document.getElementById('search-product');
- outerDiv.addEventListener('click', function() {  
-     searchInput.focus();
- });
 
- var searchButton = document.getElementById('search-button');
- searchButton.addEventListener('click', function(event) {
-     event.preventDefault();
-     searchInput.focus();
- });
 
 
 
@@ -1253,56 +1237,7 @@ pageContext.setAttribute("categories", categories);
         });
     });
 });
-        
-        //查詢沒有結果
-      var actNameNotFound = '<%=request.getAttribute("actNameNotFound")%>';
-    var searchInput = document.getElementById('search-product');
 
-    if (actNameNotFound === 'notFound') {
-        searchInput.style.color = 'red';
-        searchInput.value = '沒有您要的相關活動';
-		//如果要輸入時 自動清空
-        searchInput.addEventListener('focus', function() {
-            if (searchInput.value === '沒有您要的相關活動') {
-                searchInput.value = '';
-                searchInput.style.color = 'black'; 
-            }
-        });
-
-        // 判斷用戶是否要重新查詢
-        searchInput.addEventListener('input', function() {
-            if (searchInput.value !== '沒有您要的相關活動') {
-                searchInput.style.color = 'black'; // 將字體轉黑色
-            }
-        });
-    }
- 
-    //我的最愛切換送交
-    function sendLikeChangeRequest(element) {    
-        var actIDchange = $(element).data("act-id");              
-        var userIDC =1;
-
-        
-        $.ajax({
-            type: "POST",
-            url: "likeChange",  
-            data: {
-                actID: actIDchange,
-                userID: userIDC
-            },
-            dataType: "json",
-            success: function(response) {
-                
-                console.log(response);
-            },
-            error: function(error) {
-                console.log("Error:", error);
-            }
-        });
-        
-        //禁止標籤動作 
-        return false;
-    }
     </script>
 </body>
 </html>
