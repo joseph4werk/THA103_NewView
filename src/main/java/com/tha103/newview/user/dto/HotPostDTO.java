@@ -11,7 +11,7 @@ import com.tha103.newview.postmessage.model.PostMessageVO;
 
 public class HotPostDTO {
 
-	List<String> userName = new ArrayList<>();
+	List<String> userNickname = new ArrayList<>();
 	List<Timestamp> messageDate = new ArrayList<>();
 	List<String> postHeader = new ArrayList<>();
 	List<String> postMessages = new ArrayList<>();
@@ -22,7 +22,7 @@ public class HotPostDTO {
 		
 			this.likeCounts.add(postVOs.getLikeCount());
 			this.dislikeCounts.add(postVOs.getDisLikeCount());
-			this.userName.add(postVOs.getUserVO().getUserName());
+			this.userNickname.add(postVOs.getUserVO().getUserNickname());
 			this.postHeader.add(postVOs.getPostHeader());
 
 			Set<PostMessageVO> postMessageVOs = postVOs.getPostMessageVOs();
@@ -39,8 +39,9 @@ public class HotPostDTO {
 
 	@Override
 	public String toString() {
-		return "HotPostDTO [userName=" + userName + ", messageDate=" + messageDate + ", postHeader=" + postHeader
-				+ ", postMessages=" + postMessages + ", likeCounts=" + likeCounts + ", dislikeCounts=" + dislikeCounts
-				+ "]";
+		return "HotPostDTO [userNickname=" + userNickname + ", messageDate=" + messageDate + ", postHeader="
+				+ postHeader + ", postMessages=" + postMessages + ", likeCounts=" + likeCounts + ", dislikeCounts="
+				+ dislikeCounts + "]";
 	}
+
 }

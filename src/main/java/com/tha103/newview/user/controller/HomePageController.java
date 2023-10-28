@@ -19,7 +19,7 @@ import com.tha103.newview.act.service.ActServiceImpl;
 import com.tha103.newview.post.model.PostVO;
 import com.tha103.newview.post.service.PostService;
 import com.tha103.newview.post.service.PostServiceImpl;
-import com.tha103.newview.user.dto.HomeDTO;
+import com.tha103.newview.user.dto.HotActDTO;
 import com.tha103.newview.user.dto.HotPostDTO;
 
 @WebServlet("/Home")
@@ -42,9 +42,9 @@ public class HomePageController extends HttpServlet{
 		if(action.equals("Act")) {
 			ActService actSvc = new ActServiceImpl();
 			List<ActVO> actVOs = actSvc.getAll();
-			List<HomeDTO> homeList= actVOs.stream()
+			List<HotActDTO> homeList= actVOs.stream()
 					.limit(4)
-					.map(a -> new HomeDTO(a))
+					.map(a -> new HotActDTO(a))
 					.collect(Collectors.toList());
 			
 			json = gson.toJson(homeList);

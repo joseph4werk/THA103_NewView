@@ -8,7 +8,7 @@ import java.util.Set;
 import com.tha103.newview.act.model.ActVO;
 import com.tha103.newview.actpic.model.ActPic;
 
-public class HomeDTO {
+public class HotActDTO {
 	
 	List<Integer> actID = new ArrayList<>();
 
@@ -16,7 +16,7 @@ public class HomeDTO {
 	
 	List<String> actPic = new ArrayList<>();
 	
-	public HomeDTO(ActVO actVO) {
+	public HotActDTO(ActVO actVO) {
 		
 		this.actID.add(actVO.getActID());
 		this.actName.add(actVO.getActName());
@@ -30,7 +30,7 @@ public class HomeDTO {
 		}
 	}
 	
-	public HomeDTO() {
+	public HotActDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
