@@ -6,13 +6,18 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.tha103.newview.admin.service.AdminService;
+
+@WebServlet("/admin/admin.do")
 public class AdminServlet extends HttpServlet {
 	
-	public void doGet(HttpServletRequest req, HttpServletResponse res)
+	public void doGet(HttpServletRequest req, HttpServletResponse res) 
 			throws ServletException, IOException {
 		doPost(req, res);
 	}
@@ -25,28 +30,45 @@ public class AdminServlet extends HttpServlet {
 		
 		if ("adminLogin".equals(action)) { // 來自login_admin.jsp的請求
 			
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
+			/************************* 接收請求參數 **************************/
+			String adminAccount = req.getParameter("adminAccount").trim();
+			String adminPassword = req.getParameter("adminPassword").trim();
+
+			System.out.println(adminAccount);
+			System.out.println(adminPassword);
 			
-			/*********1.接收請求參數 - 輸入格式的錯誤處理*********/
-			String strAccount = req.getParameter("adminAccount");
-			String strPassword = req.getParameter("adminPassword");
+			/************************* 開始查詢資料 **************************/
+			AdminService adminSvc = new AdminService();
+			System.out.println(adminSvc);
+
+			boolean loginSuccessful = adminSvc.authenticate(adminAccount, adminPassword);
+			System.err.println(loginSuccessful);
 			
-			if (strAccount == null || (strAccount.trim()).length() == 0) {
-				errorMsgs.add("請輸入帳號");
-			}
-			if (strPassword == null || (strPassword.trim()).length() == 0) {
-				errorMsgs.add("請輸入密碼");
+			/************************* 回傳資料路徑 **************************/
+			if (!loginSuccessful) {
+				System.out.println("登入失敗");
+				res.sendRedirect(req.getContextPath() + "/Backstage/Allpage-administrator/login/login_admin.jsp");
+				return;
+			} else {
+				System.out.println("登入成功");
+				HttpSession session = req.getSession();
+				String se = session.toString();
+				System.out.println(se);
+				session.setAttribute("adminAccount", adminAccount);
+
+				try {
+					String location = (String) session.getAttribute("location");
+					if (location != null) {
+						session.removeAttribute("location"); // *看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+						res.sendRedirect(location);
+						return;
+					}
+				} catch (Exception ignored) {
+				}
+				res.sendRedirect(req.getContextPath() + "/Backstage/Allpage-administrator/admin-index.jsp");
+				// *(-->如無來源網頁:則重導至後台首頁)
 			}
 			
-			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/Backstage/Allpage-administrator/login/login_admin.html");
-				failureView.forward(req, res);
-				return; //程式中斷
-			}
 		}
 	}
 

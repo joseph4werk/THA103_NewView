@@ -2,12 +2,17 @@ package com.tha103.newview.orders.service;
 
 import java.sql.Timestamp;
 import java.util.List;
+
+import org.hibernate.Session;
+
+import com.tha103.newview.actcategory.model.ActCategory;
 import com.tha103.newview.discount.model.DiscountVO;
 import com.tha103.newview.orders.model.OrdersDAO;
 import com.tha103.newview.orders.model.OrdersDAOImpl;
 import com.tha103.newview.orders.model.OrdersVO;
 import com.tha103.newview.publisher.model.PublisherVO;
 import com.tha103.newview.user.model.UserVO;
+import com.tha103.util.HibernateUtil;
 
 public class OrdersService {
 
@@ -86,4 +91,17 @@ public class OrdersService {
 		return ordersDao.getAll();
 	}
 
+//	public List<UserVO> getAllUsers() {
+//	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//	    try {
+//	        session.beginTransaction();
+//	        List<UserVO> users = session.createQuery("from User", User.class).list();
+//	        session.getTransaction().commit();
+//	        return users;
+//	    } catch (Exception e) {
+//	        e.printStackTrace();
+//	        session.getTransaction().rollback();
+//	        return null; 
+//	    }
+//	}
 }
