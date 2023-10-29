@@ -66,7 +66,7 @@
 		座位數量: <span id="count">0</span> 總金額: <span id="total">0</span>
 	</p>
 	<p>
-		<a class="BuyIn" href="#">確認購買</a>
+		<a class="BuyIn" href="checkout_checkbuy_2.html">確認購買</a>
 		<button class="cart">Add to cart</button>
 	</p>
 	</div>
