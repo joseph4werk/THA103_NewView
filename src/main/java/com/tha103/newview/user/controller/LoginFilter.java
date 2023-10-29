@@ -1,4 +1,4 @@
-package com.tha103.newview.user.controller;
+	package com.tha103.newview.user.controller;
 
 import java.io.IOException;
 import javax.servlet.Filter;
@@ -16,7 +16,9 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet Filter implementation class LoginFilter
  */
-@WebFilter(urlPatterns = { "/member.html","/seatchangeWebsocketMiddle.html" })
+
+@WebFilter(urlPatterns = { "/member.html","/seatchangeWebsocketMiddle.html","/change-personal-info.html", "/my-profile.html", "/change-password.html", "/forum_dopost.html" })
+
 public class LoginFilter extends HttpFilter implements Filter {
 
 	/**

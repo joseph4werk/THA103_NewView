@@ -5,6 +5,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.tha103.newview.act.model.*"%>
 <%@ page import="com.tha103.newview.act.service.*"%>
+
 <%@ page import="com.tha103.newview.actcategory.model.*"%>
 <%@ page import="com.tha103.newview.cityaddress.model.*"%>
 <%@ page import="com.tha103.newview.publisher.model.*"%>
@@ -14,6 +15,7 @@
 ActWithPicsDTO actData = (ActWithPicsDTO) request.getAttribute("actData");
 List<String> base64Images = actData.getBase64Images();
 Integer scope = actData.getActScope();
+
 %>
 
 <html lang="en">
@@ -138,7 +140,7 @@ div .seatsTry a {
 							<li><a href="home-03.html">主頁</a>
 								<ul class="sub-menu"></ul></li>
 
-							<li class="active-menu"><a href="product.html">活動專區</a></li>
+							<li class="active-menu"><a href="NewActJSPTest.jsp">活動專區</a></li>
 
 							<li class="label1" data-label1="hot"><a
 								href="shoping-cart.html">購物車</a></li>
@@ -339,9 +341,9 @@ div .seatsTry a {
 	<!-- breadcrumb -->
 	<div class="container">
 		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-			<a href="index.html" class="stext-109 cl8 hov-cl1 trans-04"> 主頁 <i
+			<a href="NewActJSPTest.jsp" class="stext-109 cl8 hov-cl1 trans-04"> 主頁 <i
 				class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-			</a> <a href="product.html" class="stext-109 cl8 hov-cl1 trans-04">
+			</a> <a href="NewActJSPTest.jsp" class="stext-109 cl8 hov-cl1 trans-04" data-category-id="${actData.actCategoryID}">
 				${actData.actCategoryName} <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a> <span class="stext-109 cl4"> ${actData.actName} </span>
 		</div>
@@ -428,7 +430,7 @@ div .seatsTry a {
 
 							<div class="seatsV">
 								<button class="seatsTry">
-									<a href="./seat/中等規模 20X20/seatnotest.html">馬上前往購買</a>
+									<a id="dynamic-link" href="./seat/中等規模 20X20/seatnotest.html">馬上前往購買</a>
 								</button>
 							</div>
 						</div>
@@ -436,25 +438,7 @@ div .seatsTry a {
 				</div>
 
 				<!--  -->
-				<div class="flex-w flex-m p-l-100 p-t-40 respon7">
-					<div class="flex-m bor9 p-r-10 m-r-11">
-						<a href="#"
-							class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
-							data-tooltip="Add to Wishlist"> <i class="zmdi zmdi-favorite"></i>
-						</a>
-					</div>
-
-					<a href="#"
-						class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-						data-tooltip="Facebook"> <i class="fa fa-facebook"></i>
-					</a> <a href="#"
-						class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-						data-tooltip="Twitter"> <i class="fa fa-twitter"></i>
-					</a> <a href="#"
-						class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-						data-tooltip="Google Plus"> <i class="fa fa-google-plus"></i>
-					</a>
-				</div>
+				
 			</div>
 		</div>
 		</div>
@@ -465,14 +449,12 @@ div .seatsTry a {
 				<!-- Nav tabs -->
 				<ul class="nav nav-tabs" role="tablist">
 					<li class="nav-item p-b-10"><a class="nav-link active"
-						data-toggle="tab" href="#description" role="tab">Description</a></li>
+						data-toggle="tab" href="#description" role="tab">活動詳細</a></li>
+
+					
 
 					<li class="nav-item p-b-10"><a class="nav-link"
-						data-toggle="tab" href="#information" role="tab">Additional
-							information</a></li>
-
-					<li class="nav-item p-b-10"><a class="nav-link"
-						data-toggle="tab" href="#reviews" role="tab">Reviews (1)</a></li>
+						data-toggle="tab" href="#reviews" role="tab">活動評論 (1)</a></li>
 				</ul>
 
 				<!-- Tab panes -->
@@ -481,17 +463,7 @@ div .seatsTry a {
 					<div class="tab-pane fade show active" id="description"
 						role="tabpanel">
 						<div class="how-pos2 p-lr-15-md">
-							<p class="stext-102 cl6">Aenean sit amet gravida nisi. Nam
-								fermentum est felis, quis feugiat nunc fringilla sit amet. Ut in
-								blandit ipsum. Quisque luctus dui at ante aliquet, in hendrerit
-								lectus interdum. Morbi elementum sapien rhoncus pretium maximus.
-								Nulla lectus enim, cursus et elementum sed, sodales vitae eros.
-								Ut ex quam, porta consequat interdum in, faucibus eu velit.
-								Quisque rhoncus ex ac libero varius molestie. Aenean tempor sit
-								amet orci nec iaculis. Cras sit amet nulla libero. Curabitur
-								dignissim, nunc nec laoreet consequat, purus nunc porta lacus,
-								vel efficitur tellus augue in ipsum. Cras in arcu sed metus
-								rutrum iaculis. Nulla non tempor erat. Duis in egestas nunc.</p>
+							<p class="stext-102 cl6">${actData.actIntroduce }</p>
 						</div>
 					</div>
 
@@ -529,74 +501,12 @@ div .seatsTry a {
 					<div class="tab-pane fade" id="reviews" role="tabpanel">
 						<div class="row">
 							<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-								<div class="p-b-30 m-lr-15-sm">
+								<div class="p-b-30 m-lr-15-sm" id="reviewIn">
 									<!-- Review -->
-									<div class="flex-w flex-t p-b-68">
-										<div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-											<img src="images/avatar-01.jpg" alt="AVATAR" />
-										</div>
-
-										<div class="size-207">
-											<div class="flex-w flex-sb-m p-b-17">
-												<span class="mtext-107 cl2 p-r-20"> Ariana Grande </span> <span
-													class="fs-18 cl11"> <i class="zmdi zmdi-star"></i> <i
-													class="zmdi zmdi-star"></i> <i class="zmdi zmdi-star"></i>
-													<i class="zmdi zmdi-star"></i> <i
-													class="zmdi zmdi-star-half"></i>
-												</span>
-											</div>
-
-											<p class="stext-102 cl6">Quod autem in homine
-												praestantissimum atque optimum est, id deseruit. Apud
-												ceteros autem philosophos</p>
-										</div>
-									</div>
+									
 
 									<!-- Add review -->
-									<form class="w-full">
-										<h5 class="mtext-108 cl2 p-b-7">Add a review</h5>
-
-										<p class="stext-102 cl6">Your email address will not be
-											published. Required fields are marked *</p>
-
-										<div class="flex-w flex-m p-t-50 p-b-23">
-											<span class="stext-102 cl3 m-r-16"> Your Rating </span> <span
-												class="wrap-rating fs-18 cl11 pointer"> <i
-												class="item-rating pointer zmdi zmdi-star-outline"></i> <i
-												class="item-rating pointer zmdi zmdi-star-outline"></i> <i
-												class="item-rating pointer zmdi zmdi-star-outline"></i> <i
-												class="item-rating pointer zmdi zmdi-star-outline"></i> <i
-												class="item-rating pointer zmdi zmdi-star-outline"></i> <input
-												class="dis-none" type="number" name="rating" />
-											</span>
-										</div>
-
-										<div class="row p-b-25">
-											<div class="col-12 p-b-5">
-												<label class="stext-102 cl3" for="review">Your
-													review</label>
-												<textarea
-													class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10"
-													id="review" name="review"></textarea>
-											</div>
-
-											<div class="col-sm-6 p-b-5">
-												<label class="stext-102 cl3" for="name">Name</label> <input
-													class="size-111 bor8 stext-102 cl2 p-lr-20" id="name"
-													type="text" name="name" />
-											</div>
-
-											<div class="col-sm-6 p-b-5">
-												<label class="stext-102 cl3" for="email">Email</label> <input
-													class="size-111 bor8 stext-102 cl2 p-lr-20" id="email"
-													type="text" name="email" />
-											</div>
-										</div>
-
-										<button
-											class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
-											Submit</button>
-									</form>
+									
 								</div>
 							</div>
 						</div>
@@ -622,6 +532,9 @@ div .seatsTry a {
 			<!-- Slide2 -->
 			<div class="wrap-slick2">
 				<div class="slick2">
+				
+				
+				
 					<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
 						<!-- Block2 -->
 						<div class="block2">
@@ -1201,26 +1114,7 @@ div .seatsTry a {
 							</div>
 
 							<!--  -->
-							<div class="flex-w flex-m p-l-100 p-t-40 respon7">
-								<div class="flex-m bor9 p-r-10 m-r-11">
-									<a href="#"
-										class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
-										data-tooltip="Add to Wishlist"> <i
-										class="zmdi zmdi-favorite"></i>
-									</a>
-								</div>
-
-								<a href="#"
-									class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-									data-tooltip="Facebook"> <i class="fa fa-facebook"></i>
-								</a> <a href="#"
-									class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-									data-tooltip="Twitter"> <i class="fa fa-twitter"></i>
-								</a> <a href="#"
-									class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-									data-tooltip="Google Plus"> <i class="fa fa-google-plus"></i>
-								</a>
-							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -1348,22 +1242,95 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 var actScope = ${actData.actScope};
+var actID = ${actData.actID};
 var scale;
 switch (actScope) {
-    case 1:
-        scale = "最小規模";
-        break;
-    case 2:
-        scale = "中等規模";
-        break;
-    case 3:
-        scale = "最大規模";
-        break;
-    default:
-        console.error("未知的規模");
+case 1:
+	scale = "最小規模";
+	$('#dynamic-link').attr('href',
+			'seatChooseWebsocketSmall.jsp?actID=' + actID);
+	break;
+case 2:
+	scale = "中等規模";
+	$('#dynamic-link').attr('href',
+			'seatChooseWebsocket.jsp?actID=' + actID);
+	break;
+case 3:
+	scale = "最大規模";
+	$('#dynamic-link').attr('href',
+			'seatChooseWebsocketLarge.jsp?actID=' + actID);
+	break;
+default:
+	console.error("未知的規模");
 }
 
 $(".seatWT").text(scale);
+
+$(document).ready(function(){
+   
+	$.ajax({
+	    type: "POST",
+	    url: "review",
+	    data: { actID: ${actData.actID}},
+	    dataType: "json",
+	    beforeSend: function(xhr) {
+	        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+	    },
+	    success: function(response) {
+	        console.log(response);
+
+	        // 獲取容器元素
+	        var reviewContainer = $("#reviewIn");
+	        var numberOfItems = response.length;
+	        var reviewsTabLink = $(".nav-link[data-toggle='tab'][href='#reviews']");
+	        reviewsTabLink.text("活動評論 (" + numberOfItems + ")");
+	        // 遍歷 response 中的每個評論
+	        $.each(response, function(index, item) {
+	            console.log("Order ID: " + item.orderID);
+	            console.log("Act ID: " + item.actID);
+	            console.log("User Name: " + item.userName);
+	            console.log("StarWith: " + item.StarWith);
+	            console.log("Review: " + item.review);
+
+	            // 創建一個新的評論區塊
+	            var commentBlock = $("<div class='flex-w flex-t p-b-68'></div>");
+
+	            // 創建評論中的圖像元素
+	            var imageElement = $("<div class='wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6'><img src='images/05_68473.jpg' alt='AVATAR' /></div>");
+
+	            // 創建評論中的文本元素
+	            var textElement = $("<div class='size-207'></div>");
+
+	            // 創建評論中的用戶名元素
+	            var userNameElement = $("<span class='mtext-107 cl2 p-r-20' id='userNameSpan'>" + item.userName + "</span>");
+
+	            // 創建評論中的星級評分元素
+	            var starRatingElement = $("<span class='fs-18 cl11'></span>");
+	            for (var i = 0; i < item.StarWith; i++) {
+	                starRatingElement.append("<i class='zmdi zmdi-star'></i>");
+	            }
+
+	            // 創建評論中的評論文本元素
+	            var reviewTextElement = $("<p class='stext-102 cl6'>" + item.review + "</p>");
+
+	            // 添加所有元素到評論區塊
+	            textElement.append(userNameElement);
+	            textElement.append(starRatingElement);
+	            textElement.append(reviewTextElement);
+	            commentBlock.append(imageElement);
+	            commentBlock.append(textElement);
+
+	            // 將評論區塊的內容添加到容器中
+	            reviewContainer.append(commentBlock);
+	        });
+	    }
+	});
+
+
+
+});
+
+
 
 </script>
 

@@ -3,6 +3,9 @@ package com.tha103.newview.user.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,10 +14,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.tha103.newview.mylike.model.MyLikeVO;
 import com.tha103.newview.orders.model.OrdersVO;
+import com.tha103.newview.user.dto.MyLikeActDTO;
+import com.tha103.newview.user.dto.OrderDTO;
+import com.tha103.newview.user.jedis.JedisPoolUtil;
 import com.tha103.newview.user.model.UserVO;
 import com.tha103.newview.user.service.UserService;
 import com.tha103.newview.user.service.UserServiceImpl;
+
+import redis.clients.jedis.Jedis;
 
 @WebServlet("/MemberPage")
 public class MemberController extends HttpServlet {
@@ -32,8 +41,6 @@ public class MemberController extends HttpServlet {
 		Gson gson = new Gson();
 		HashMap<String, Object> data = new HashMap<>();
 		PrintWriter out = res.getWriter();
-		
-//		System.out.println("接到 ajax 請求");
 
 		// 取得 session 中的 userID，載入以下資訊
 		String userID = (String) req.getSession().getAttribute("userID");
@@ -43,7 +50,31 @@ public class MemberController extends HttpServlet {
 		UserService userSvc = new UserServiceImpl();
 		UserVO userVO = userSvc.getUserByPK(Integer.valueOf(userID));
 		OrdersVO ordersVO = userSvc.getOrderByUserID(Integer.valueOf(userID));
-//		System.out.println(userVO);
+
+		// 回傳 status -> hasNoOrders '預設'沒訂單
+		data.put("status", "hasNoOrders");
+		if (ordersVO != null) {
+			OrderDTO orderDTO = new OrderDTO(Integer.valueOf(userID));
+			data.put("orders", orderDTO);
+
+			// 回傳 status -> hasOrders，'覆蓋'原先無訂單的 status
+			data.put("status", "hasOrders");
+		}
+
+		// 取得我的最愛資料
+		Set<MyLikeVO> myLikeVOs = userVO.getMyLikeVOs();
+		
+		List<MyLikeActDTO> myLikeActList = myLikeVOs.stream()
+				.map(a -> new MyLikeActDTO(a))
+				.collect(Collectors.toList());
+		
+		data.put("mylike", myLikeActList);
+
+		// 檢查啟用狀態 -> 從 redis 取得驗證碼
+		Jedis jedis = JedisPoolUtil.getJedisPool().getResource();
+		jedis.select(15);
+		String activate = jedis.get("UserAccount:" + userVO.getUserName()) == null ? "已啟用" : "未啟用";
+		jedis.close();
 
 		// 取得會員資料
 		String name = userVO.getUserName();
@@ -52,10 +83,6 @@ public class MemberController extends HttpServlet {
 		String birthdate = userVO.getUserBirth().toString();
 		String cellphone = userVO.getUserCell();
 
-		// 取得訂單資料
-		String pubName = ordersVO.getPublisherVO().getPubName();
-		System.out.println("pubName: " + pubName);
-
 		// 加入 map 中，使用 json 傳遞物件
 		data.put("userID", userID);
 		data.put("name", name);
@@ -63,6 +90,7 @@ public class MemberController extends HttpServlet {
 		data.put("email", email);
 		data.put("birthdate", birthdate);
 		data.put("cellphone", cellphone);
+		data.put("activate", activate);
 
 //		System.out.println(data);
 

@@ -28,7 +28,7 @@ public class PostCategoryVO {
 	private String postCategoryName;
 	
 	@Expose
-	@OneToMany(mappedBy = "postCategoryVO" , cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "postCategoryVO" , cascade = CascadeType.ALL)
 	private Set<PostVO> postVOs;
 	
 	

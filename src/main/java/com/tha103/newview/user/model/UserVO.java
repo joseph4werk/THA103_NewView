@@ -95,11 +95,11 @@ public class UserVO {
 	private Set<CartActVO> cartActVOs;
 
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<OrdersVO> ordersVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<MyLikeVO> myLikeVOs;
 	
 	public UserVO() {
@@ -286,10 +286,5 @@ public class UserVO {
 				+ ", userEmail=" + userEmail + ", userNickname=" + userNickname + ", buyAuthority=" + buyAuthority
 				+ ", speakAuthority=" + speakAuthority + "]";
 	}
-	
-//	public UserVO(String userAccount) {
-//		super();
-//		this.userAccount = userAccount;
-//	}
 
 }

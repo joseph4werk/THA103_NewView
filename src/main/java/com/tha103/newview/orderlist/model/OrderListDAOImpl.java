@@ -3,18 +3,23 @@ package com.tha103.newview.orderlist.model;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import com.tha103.util.HibernateUtil;
 
 public class OrderListDAOImpl implements OrderListDAO {
+	
 
+	public  OrderListDAOImpl() {
+	  
+	}
 	@Override
 	public int insert(OrderListVO orderListVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
 		try {
 			session.beginTransaction();
-			session.update(orderListVO);
+			session.save(orderListVO);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -39,12 +44,12 @@ public class OrderListDAOImpl implements OrderListDAO {
 	}
 
 	@Override
-	public int delete(Integer orderListID) {
+	public int delete(Integer orderID) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
 		try {
 			session.beginTransaction();
-			OrderListVO orderList = session.get(OrderListVO.class, orderListID);
+			OrderListVO orderList = session.get(OrderListVO.class, orderID);
 			if (orderList != null) {
 				session.delete(orderList);
 			}
@@ -89,5 +94,56 @@ public class OrderListDAOImpl implements OrderListDAO {
 			session.getTransaction().rollback();
 		}
 		return null;
+	} 
+	
+	public Integer findUserIDByOrderIDAndActID(Integer orderID, Integer actID) {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    try {
+	        session.beginTransaction();
+	        String hql = "SELECT o.userVO.userID FROM OrderListVO ol " +
+	                "JOIN ol.ordersVO o " +
+	                "WHERE o.orderID = :orderID " +
+	                "AND ol.actVO.actID = :actID";
+	        		// actID, orderID 
+
+	        Query query = session.createQuery(hql);
+	        query.setParameter("orderID", orderID);
+	        query.setParameter("actID", actID); 
+	        
+	        Integer userID = (Integer) query.uniqueResult();
+	        session.getTransaction().commit();
+	        
+	        return userID;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        session.getTransaction().rollback();
+	    }
+	    return null;
 	}
+	public List<Integer> findOrderIDsByActID(Integer actID) {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    List<Integer> orderIDs = null;
+	    
+	    try {
+	        session.beginTransaction();
+	        
+	        String hql = "SELECT o.orderID FROM OrderListVO ol " +
+	                     "JOIN ol.ordersVO o " +
+	                     "WHERE ol.actVO.actID = :actID";
+	        
+	        Query<Integer> query = session.createQuery(hql, Integer.class);
+	        query.setParameter("actID", actID); 
+	        
+	        orderIDs = query.list();
+	        session.getTransaction().commit();
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        session.getTransaction().rollback();
+	    }
+	    return orderIDs;
+	}
+
+
+
 }

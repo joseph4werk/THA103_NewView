@@ -38,157 +38,162 @@ import com.tha103.newview.cityaddress.model.CityAddress;
 @WebServlet("/SearchSe")
 @MultipartConfig(maxFileSize = 1073741824)
 public class SearchAndListActsWithPicsServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    private ActService actService;
-    private ActPicService actPicService;
-    private ActUpdateService actUpdateService;
-    public SearchAndListActsWithPicsServlet() {
-        super();
-        ActDAO actDAO = new ActDAOHibernateImpl(); 
-        ActPicDAO actPicDAO = new ActPicDAOHibernateImpl();        
-        actService = new ActServiceImpl(actDAO); 
-        actPicService = new ActPicServiceImpl(actPicDAO); 
-        actUpdateService = new ActUpdateServiceImpl(actDAO,actPicDAO);
-    }
+	private static final long serialVersionUID = 1L;
+	private ActService actService;
+	private ActPicService actPicService;
+	private ActUpdateService actUpdateService;
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        doPost(req, res);
-    }
+	public SearchAndListActsWithPicsServlet() {
+		super();
+		ActDAO actDAO = new ActDAOHibernateImpl();
+		ActPicDAO actPicDAO = new ActPicDAOHibernateImpl();
+		actService = new ActServiceImpl(actDAO);
+		actPicService = new ActPicServiceImpl(actPicDAO);
+		actUpdateService = new ActUpdateServiceImpl(actDAO, actPicDAO);
+	}
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-       
-        response.setContentType("application/json"); 
-        String action = request.getParameter("action");
-        String toDelete = request.getParameter("toDelete");
-        String pageChange = request.getParameter("pageChange");
-//        System.out.println(toDelete);
-        String actIDelete = request.getParameter("actIDelete");
-//        System.out.println(action);
-        try {
-            if ("search".equals(action)) {
-                String actName = request.getParameter("search-product");
-                System.out.println(actName);
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		doPost(req, res);
+	}
 
-                if (actName != null && !actName.isEmpty()) {
-                    List<ActWithPicsDTO> actWithPicsList = actService.searchActsByName(actName);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 
-                    if (!actWithPicsList.isEmpty()) {
-//                    	System.out.println(actWithPicsList);
-                        request.setAttribute("actWithPicsList", actWithPicsList); 
-                        request.getRequestDispatcher("/SearchNewFile.jsp").forward(request, response);
-                    } else {
-                        request.setAttribute("actNameNotFound", "notFound");
-                        request.getRequestDispatcher("NewActJSPTest.jsp").forward(request, response);
-                    }
-                } else {
-                    request.setAttribute("actNameError", "null");
-                    request.getRequestDispatcher("NewActJSPTest.jsp").forward(request, response);
-                }
-            } else if ("update".equals(action)) {
-                String actId = request.getParameter("actId");
-                
-                if (actId != null && !actId.isEmpty()) {
-                    Integer actIdValue = Integer.parseInt(actId);
-                    ActWithPicsDTO actWithPicsDTO = actService.getActWithPicturesById(actIdValue);
+		response.setContentType("application/json");
+		String action = request.getParameter("action");
+		String toDelete = request.getParameter("toDelete");
+		System.out.println(toDelete);
+		String actIDelete = request.getParameter("actIDelete");
+		System.out.println(action);
+		try {
+			if ("search".equals(action)) {
+				String actName = request.getParameter("search-product");
+				System.out.println(actName);
 
-                    if (actWithPicsDTO != null) {
-                        List<ActWithPicsDTO> actWithPicsList = Arrays.asList(actWithPicsDTO);
-                        request.setAttribute("actWithPicsList",actWithPicsList);
-                        request.getRequestDispatcher("/update-act.jsp").forward(request, response);
-                    }
-                } else {
-                    request.setAttribute("actIdError", "null");
-                    request.getRequestDispatcher("ActJSP.jsp").forward(request, response);
-                }
-            } else if ("getJsonData".equals(action)) {
-//            	System.out.println(action);
-                handleJsonResponse(request, response);
-            }else if ("UP".equals(action)) {
-            	 System.out.println(toDelete);
-            	if (toDelete != null && !toDelete.isEmpty()) {
-            	    try {
-            	      
-            	      actPicService.deleteActPic(toDelete);
-            	    } catch (NumberFormatException nfe) {
-            	       
-            	        nfe.printStackTrace();
-            	    } catch (Exception e) {
-            	       
-            	        e.printStackTrace();
-            	    }
-            	}
-            	   actUpdateService.updateActAndImages(request,response);
+				if (actName == null || actName.isEmpty()) {
+					request.setAttribute("actNameError", "null");
+					request.getRequestDispatcher("NewActJSPTest.jsp").forward(request, response);
+					return;
+					// 沒有輸入就直接結束
+				}
 
-                   
-                   response.sendRedirect("ActJSP.jsp");
-            }else  if ("delete".equals(action)) {
-                if (actIDelete != null && !actIDelete.isEmpty()) {
-                    try {
-                    	System.out.println(actIDelete);
-//                        actService.delete(Integer.parseInt(actIDelete));
-                        response.getWriter().println("Act ID " + actIDelete + " 成功");
-                        response.sendRedirect("ActJSP.jsp");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        response.getWriter().println("Act ID " + actIDelete + " 失敗");
-                    }
-                } else {
-                    response.getWriter().println("Act ID 不能為空");
-                }
-            }
-            else if ("pageChange".equals(action)) {
-                System.out.println(action);
-                String actIdString = request.getParameter("actID");
-                System.out.println(actIdString);
-                if (actIdString != null) {
-                    Integer actId = Integer.parseInt(actIdString);
+				List<ActWithPicsDTO> actWithPicsList = actService.searchActsByName(actName);
 
-                    ActServiceImpl actService = new ActServiceImpl();
-                    ActWithPicsDTO actWithPics = actService.getActWithPicsDTOById(actId);
+				if (actWithPicsList.isEmpty()) {
+					// 如果沒找到
+					request.setAttribute("actNameNotFound", "notFound");
+					request.getRequestDispatcher("NewActJSPTest.jsp").forward(request, response);
+				} else {
+					// 有找到
+					request.setAttribute("actWithPicsList", actWithPicsList);
+					request.getRequestDispatcher("/SearchNewFile.jsp").forward(request, response);
+				}
+			} else if ("update".equals(action)) {
+				String actId = request.getParameter("actId");
 
-                    if (actWithPics != null) {
-                     
-                        request.setAttribute("actData", actWithPics);
+				if (actId == null || actId.isEmpty()) {
+					request.setAttribute("actIdError", "null");
+					request.getRequestDispatcher("ActJSP.jsp").forward(request, response);
+					return; // 沒有輸入就結束
+				}
 
-                       
-                        request.getRequestDispatcher("/product-detail.jsp").forward(request, response);
-                    } else {
-                        response.getWriter().write("No data found for given actID");
-                    }
-                }
-            }
-		        
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-  
-    private void handleJsonResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        List<ActWithPicsDTO> actWithPicsList = new ArrayList<>();
-        String actIdStr = request.getParameter("actID");
-        System.out.println( actIdStr);
-        Integer actId = null;
+				Integer actIdValue = Integer.parseInt(actId);
+				ActWithPicsDTO actWithPicsDTO = actService.getActWithPicturesById(actIdValue);
 
-        if(actIdStr != null) {
-            actId = Integer.parseInt(actIdStr);
-            
-        }
-        System.out.println(actId);
-        ActWithPicsDTO actWithPicsDTO = actService.getActWithPicsDTOById(actId);
-        
-        if(actWithPicsDTO != null) {
-            actWithPicsList.add(actWithPicsDTO);
+				if (actWithPicsDTO != null) {
+					// 有找到
+					List<ActWithPicsDTO> actWithPicsList = Arrays.asList(actWithPicsDTO);
+					request.setAttribute("actWithPicsList", actWithPicsList);
+					request.getRequestDispatcher("/update-act.jsp").forward(request, response);
+				}
+			} else if ("getJsonData".equals(action)) {
+				handleJsonResponse(request, response);
+			} else if ("UP".equals(action)) {
+				System.out.println(toDelete);
 
-            String json = new Gson().toJson(actWithPicsList);
+				if (toDelete != null && !toDelete.isEmpty()) {
+					// 先查看有無刪除動作再決定是否執行 圖片刪除
+					try {
+						actPicService.deleteActPic(toDelete);
+					} catch (NumberFormatException nfe) {
+						nfe.printStackTrace();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				// 最後執行修改資料方法
+				actUpdateService.updateActAndImages(request, response);
+				response.sendRedirect("ActJSP.jsp");
 
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
-        } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Activity not found");
-        }
-    }
+			} else if ("delete".equals(action)) {
+				if (actIDelete != null && !actIDelete.isEmpty()) {
+					try {
+						System.out.println(actIDelete);
+						// actService.delete(Integer.parseInt(actIDelete));
+						response.getWriter().println("Act ID " + actIDelete + " 成功");
+					} catch (Exception e) {
+						e.printStackTrace();
+						response.getWriter().println("Act ID " + actIDelete + " 失敗");
+					} finally {
+						response.sendRedirect("ActJSP.jsp");
+					}
+				} else {
+					response.getWriter().println("Act ID 不能為空");
+				}
+			} else if ("pageChange".equals(action)) {
+				System.out.println(action);
+				String actIdString = request.getParameter("actID");
+				System.out.println(actIdString);
+
+				if (actIdString != null) {
+					try {
+						Integer actId = Integer.parseInt(actIdString);
+
+						ActServiceImpl actService = new ActServiceImpl();
+						ActWithPicsDTO actWithPics = actService.getActWithPicsDTOById(actId);
+
+						if (actWithPics != null) {
+							request.setAttribute("actData", actWithPics);
+							request.getRequestDispatcher("/product-detail.jsp").forward(request, response);
+						} else {
+							response.getWriter().write("No data found for given actID");
+						}
+					} catch (NumberFormatException e) {
+						e.printStackTrace();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void handleJsonResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		List<ActWithPicsDTO> actWithPicsList = new ArrayList<>();
+		String actIdStr = request.getParameter("actID");
+
+		Integer actId = null;
+
+		if (actIdStr != null) {
+			actId = Integer.parseInt(actIdStr);
+		}
+
+		ActWithPicsDTO actWithPicsDTO = actService.getActWithPicsDTOById(actId);
+
+		if (actWithPicsDTO != null) {
+			actWithPicsList.add(actWithPicsDTO);
+
+			String json = new Gson().toJson(actWithPicsList);
+
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json);
+		} else {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND, "Activity not found");
+		}
+	}
 }

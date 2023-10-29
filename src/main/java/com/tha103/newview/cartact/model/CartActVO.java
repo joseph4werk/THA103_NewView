@@ -16,13 +16,15 @@ import com.tha103.newview.user.model.UserVO;
 @Entity
 @Table(name = "cartact")
 public class CartActVO implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Expose
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cartActID")
 	private Integer cartActID;
 
-	@Expose
+//	@Expose
 	@Column(name = "cartQuantity")
 	private Integer cartQuantity;
 

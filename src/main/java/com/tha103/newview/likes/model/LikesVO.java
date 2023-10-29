@@ -27,6 +27,10 @@ public class LikesVO {
 	@Expose
 	@Column(name = "likeOrNot", columnDefinition = "TINYINT")
 	private Integer likeOrNot;
+	
+	@Expose
+	@Column(name = "visitorID")
+	private Integer visitorID;
 
 	@ManyToOne
 	@JoinColumn(name = "postID", referencedColumnName = "postID")
@@ -65,6 +69,14 @@ public class LikesVO {
 		this.likeOrNot = likeOrNot;
 	}
 
+	public Integer getVisitorID() {
+		return visitorID;
+	}
+
+	public void setVisitorID(Integer visitorID) {
+		this.visitorID = visitorID;
+	}
+
 	public PostVO getPostVO() {
 		return postVO;
 	}
@@ -83,7 +95,9 @@ public class LikesVO {
 
 	@Override
 	public String toString() {
-		return "LikesVO [likeID=" + likeID + ", likeOrNot=" + likeOrNot + "]";
+		return "LikesVO [likeID=" + likeID + ", likeOrNot=" + likeOrNot + ", visitorID=" + visitorID + "]";
 	}
+
+	
 
 }

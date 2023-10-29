@@ -12,7 +12,9 @@ public class ActWithPicsDTO {
     private String actIntroduce;
     private List<String> base64Images;
     private String actCategoryName;
+    private Integer actCategoryID;
     private Date actDate;
+    private Date actTime;
     private Date time;
     private String actAddress;
     private String cityAddress;
@@ -21,6 +23,14 @@ public class ActWithPicsDTO {
     private List<ImageDTO> images;
     
 	
+    
+    
+	public Integer getActCategoryID() {
+		return actCategoryID;
+	}
+	public void setActCategoryID(Integer actCategoryID) {
+		this.actCategoryID = actCategoryID;
+	}
 	public Integer getApprovalCondition() {
 		return approvalCondition;
 	}
@@ -120,7 +130,7 @@ public class ActWithPicsDTO {
 	
 	public ActWithPicsDTO(Integer actID, Integer actScope, String actName, String actContent, double actPrice,
 			String actIntroduce, List<String> base64Images, String actCategoryName, Date actDate, Date time,
-			String actAddress, String cityAddress, String pubName, Integer approvalCondition) {
+			String actAddress, String cityAddress, String pubName, Integer approvalCondition, Date actTime) {
 		super();
 		this.actID = actID;
 		this.actScope = actScope;
@@ -131,6 +141,7 @@ public class ActWithPicsDTO {
 		this.base64Images = base64Images;
 		this.actCategoryName = actCategoryName;
 		this.actDate = actDate;
+		this.actTime = actTime;
 		this.time = time;
 		this.actAddress = actAddress;
 		this.cityAddress = cityAddress;
@@ -144,6 +155,12 @@ public class ActWithPicsDTO {
 	public String getPubID() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public Date getActTime() {
+		return actTime;
+	}
+	public void setActTime(Date actTime) {
+		this.actTime = actTime;
 	}
 	
 

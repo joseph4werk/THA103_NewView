@@ -101,6 +101,7 @@
             <!-- Icon header -->
             <div class="wrap-icon-header flex-w flex-r-m h-full">
               <div class="flex-c-m h-full p-r-25 bor6">
+                <a href="#" style="color: white; margin-right: 15px">登出</a>
                 <div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 js-show-login">
                   <i class="fa fa-user me-sm-1"></i>
                 </div>
@@ -227,7 +228,7 @@
     </div>
     <div class="container-fluid py-4 col-12 col-xl-9 me-6">
       <div class="row">
-        <div class="col-12 col-xl-6">
+        <div class="col-12 col-xl-6 mt-4">
           <div class="card h-100">
             <div class="card-header pb-0 p-3">
               <div class="row">
@@ -250,12 +251,12 @@
                 <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; test@test.com</li>
                 <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Birthdate:</strong> &nbsp; 2023/09/16</li>
                 <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; (886) 098 7654 321</li>
-                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Location:</strong> &nbsp; TW</li>
+                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Activate:</strong> &nbsp; 已啟用</li>
               </ul>
             </div>
           </div>
         </div>
-        <div class="col-12 col-xl-6">
+        <div class="col-12 col-xl-6 mt-4">
           <div class="card h-100">
             <div class="card-header pb-0 p-3">
               <h6 class="mb-0">我的訂單</h6>
@@ -264,55 +265,21 @@
               <ul class="list-group">
                 <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
                   <div class="avatar me-3">
-                    <img src="./assets/img/Bob3.png" alt="kal" class="border-radius-lg shadow" />
+                    <h1 class="mb-0 text-sm text-primary">訂單 &nbsp; #1</h1>
                   </div>
                   <div class="d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">薩泰爾娛樂</h6>
-                    <p class="mb-0 text-xs">炎上1</p>
-                  </div>
-                  <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" href="javascript:;">Details</a>
-                </li>
-                <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                  <div class="avatar me-3">
-                    <img src="./assets/img/Bob3.png" alt="kal" class="border-radius-lg shadow" />
-                  </div>
-                  <div class="d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">薩泰爾娛樂</h6>
-                    <p class="mb-0 text-xs">炎上2</p>
-                  </div>
-                  <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" href="javascript:;">Details</a>
-                </li>
-                <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                  <div class="avatar me-3">
-                    <img src="./assets/img/Bob3.png" alt="kal" class="border-radius-lg shadow" />
-                  </div>
-                  <div class="d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">薩泰爾娛樂</h6>
-                    <p class="mb-0 text-xs">炎上3</p>
-                  </div>
-                  <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" href="javascript:;">Details</a>
-                </li>
-                <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                  <div class="avatar me-3">
-                    <img src="./assets/img/Bob3.png" alt="kal" class="border-radius-lg shadow" />
-                  </div>
-                  <div class="d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">薩泰爾娛樂</h6>
-                    <p class="mb-0 text-xs">炎上4</p>
-                  </div>
-                  <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" href="javascript:;">Details</a>
-                </li>
-                <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                  <div class="avatar me-3">
-                    <img src="./assets/img/Bob3.png" alt="kal" class="border-radius-lg shadow" />
-                  </div>
-                  <div class="d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">薩泰爾娛樂</h6>
-                    <p class="mb-0 text-xs">炎上5</p>
+                    <h6 class="mb-0 ml-5 text-sm">廠商名稱: 薩泰爾娛樂</h6>
+                    <span class="mb-0 ml-5 text-xs">下單日期: 2023/10/25</span>
+                    <span class="mb-0 ml-5 text-xs">訂單金額: $999</span>
                   </div>
                   <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" href="javascript:;">Details</a>
                 </li>
               </ul>
+
+              <!-- 無訂單顯示此區 -->
+              <div class="text-center" id="noOrdersMessage" style="text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: none">
+                <p class="text-secondary" style="font-size: 15pt; font-weight: bold">目前無訂單</p>
+              </div>
             </div>
           </div>
         </div>
@@ -320,11 +287,11 @@
           <div class="card mb-4">
             <div class="card-header pb-0 p-3">
               <h6 class="mb-1">我的最愛</h6>
-              <p class="text-sm">Architects design houses</p>
+              <p class="text-sm">您已點讚的活動</p>
             </div>
             <div class="card-body p-3">
               <div class="row" id="myFavoriteActivities">
-                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+                <!-- <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 likeActOrder">
                   <div class="card card-blog card-plain">
                     <div class="position-relative">
                       <a class="d-block shadow-xl border-radius-xl">
@@ -338,7 +305,7 @@
                       </a>
                       <p class="mb-4 text-sm">KB The Best!</p>
                       <div class="d-flex align-items-center justify-content-between">
-                        <button type="button" class="btn btn-outline-primary btn-sm mb-0">View Project</button>
+                        <button type="button" class="btn btn-outline-primary btn-sm mb-0">檢視活動</button>
                         <div class="avatar-group mt-2">
                           <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
                             <img alt="Image placeholder" src="./assets/img/team-1.jpg" />
@@ -356,79 +323,48 @@
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                  <div class="card card-blog card-plain">
-                    <div class="position-relative">
-                      <a class="d-block shadow-xl border-radius-xl">
-                        <img src="./assets/img/kirby_yoyo.png" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl" />
-                      </a>
-                    </div>
-                    <div class="card-body px-1 pb-0">
-                      <p class="text-gradient text-dark mb-2 text-sm">Fav #2</p>
-                      <a href="javascript:;">
-                        <h5>KIRBY</h5>
-                      </a>
-                      <p class="mb-4 text-sm">KB The Best!</p>
-                      <div class="d-flex align-items-center justify-content-between">
-                        <button type="button" class="btn btn-outline-primary btn-sm mb-0">View Project</button>
-                        <div class="avatar-group mt-2">
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
-                            <img alt="Image placeholder" src="./assets/img/team-1.jpg" />
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Milly">
-                            <img alt="Image placeholder" src="./assets/img/team-2.jpg" />
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Nick Daniel">
-                            <img alt="Image placeholder" src="./assets/img/team-3.jpg" />
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Peterson">
-                            <img alt="Image placeholder" src="./assets/img/team-4.jpg" />
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                  <div class="card card-blog card-plain">
-                    <div class="position-relative">
-                      <a class="d-block shadow-xl border-radius-xl">
-                        <img src="./assets/img/kirby_yoyo.png" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl" />
-                      </a>
-                    </div>
-                    <div class="card-body px-1 pb-0">
-                      <p class="text-gradient text-dark mb-2 text-sm">Fav #3</p>
-                      <a href="javascript:;">
-                        <h5>KIRBY</h5>
-                      </a>
-                      <p class="mb-4 text-sm">KB The Best!</p>
-                      <div class="d-flex align-items-center justify-content-between">
-                        <button type="button" class="btn btn-outline-primary btn-sm mb-0">View Project</button>
-                        <div class="avatar-group mt-2">
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
-                            <img alt="Image placeholder" src="./assets/img/team-1.jpg" />
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Milly">
-                            <img alt="Image placeholder" src="./assets/img/team-2.jpg" />
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Nick Daniel">
-                            <img alt="Image placeholder" src="./assets/img/team-3.jpg" />
-                          </a>
-                          <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Peterson">
-                            <img alt="Image placeholder" src="./assets/img/team-4.jpg" />
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+                </div> -->
+
+                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 likeActOrder">
                   <div class="card h-100 card-plain border">
                     <div class="card-body d-flex flex-column justify-content-center text-center">
-                      <a href="javascript:;">
+                      <a href="http://localhost:8081/com.tha103.newview/NewActJSPTest.jsp">
                         <i class="fa fa-plus text-secondary mb-3"></i>
-                        <h5 class="text-secondary">New project</h5>
+                        <h5 class="text-secondary">尚未有喜愛的活動</h5>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 likeActOrder">
+                  <div class="card h-100 card-plain border">
+                    <div class="card-body d-flex flex-column justify-content-center text-center">
+                      <a href="http://localhost:8081/com.tha103.newview/NewActJSPTest.jsp">
+                        <i class="fa fa-plus text-secondary mb-3"></i>
+                        <h5 class="text-secondary">尚未有喜愛的活動</h5>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 likeActOrder">
+                  <div class="card h-100 card-plain border">
+                    <div class="card-body d-flex flex-column justify-content-center text-center">
+                      <a href="http://localhost:8081/com.tha103.newview/NewActJSPTest.jsp">
+                        <i class="fa fa-plus text-secondary mb-3"></i>
+                        <h5 class="text-secondary">尚未有喜愛的活動</h5>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 likeActOrder">
+                  <div class="card h-100 card-plain border">
+                    <div class="card-body d-flex flex-column justify-content-center text-center">
+                      <a href="http://localhost:8081/com.tha103.newview/NewActJSPTest.jsp">
+                        <!-- <a href="javascript:;"> -->
+                        <i class="fa fa-plus text-secondary mb-3"></i>
+                        <h5 class="text-secondary">尚未有喜愛的活動</h5>
                       </a>
                     </div>
                   </div>
@@ -592,7 +528,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./sign-in.html">
+              <a class="nav-link" href="./change-personal-info.html">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                   <!-- <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> -->
                   <i class="fas fa-user-edit text-dark text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Profile"></i>
@@ -651,6 +587,67 @@
                   </svg>
                 </div>
                 <span class="nav-link-text ms-1">修改密碼</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./activate-account.html">
+                <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                  <i class="fas fa-user-edit text-dark text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Profile"></i>
+
+                  <title>document</title>
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g transform="translate(-1870.000000, -591.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                      <g transform="translate(1716.000000, 291.000000)">
+                        <g transform="translate(154.000000, 300.000000)">
+                          <path
+                            class="color-background opacity-6"
+                            d="M40,40 L36.3636364,40 L36.3636364,3.63636364 L5.45454545,3.63636364 L5.45454545,0 L38.1818182,0 C39.1854545,0 40,0.814545455 40,1.81818182 L40,40 Z"
+                          ></path>
+                          <path
+                            class="color-background"
+                            d="M30.9090909,7.27272727 L1.81818182,7.27272727 C0.814545455,7.27272727 0,8.08727273 0,9.09090909 L0,41.8181818 C0,42.8218182 0.814545455,43.6363636 1.81818182,43.6363636 L30.9090909,43.6363636 C31.9127273,43.6363636 32.7272727,42.8218182 32.7272727,41.8181818 L32.7272727,9.09090909 C32.7272727,8.08727273 31.9127273,7.27272727 30.9090909,7.27272727 Z M18.1818182,34.5454545 L7.27272727,34.5454545 L7.27272727,30.9090909 L18.1818182,30.9090909 L18.1818182,34.5454545 Z M25.4545455,27.2727273 L7.27272727,27.2727273 L7.27272727,23.6363636 L25.4545455,23.6363636 L25.4545455,27.2727273 Z M25.4545455,20 L7.27272727,20 L7.27272727,16.3636364 L25.4545455,16.3636364 L25.4545455,20 Z"
+                          ></path>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                  <!-- </svg> -->
+                </div>
+                <span class="nav-link-text ms-1">啟用帳號</span>
+              </a>
+            </li>
+            <li class="nav-item" id="signout">
+              <a class="nav-link" href="#">
+                <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                  <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <title>spaceship</title>
+                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                      <g transform="translate(-1720.000000, -592.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                        <g transform="translate(1716.000000, 291.000000)">
+                          <g transform="translate(4.000000, 301.000000)">
+                            <path
+                              class="color-background"
+                              d="M39.3,0.706666667 C38.9660984,0.370464027 38.5048767,0.192278529 38.0316667,0.216666667 C14.6516667,1.43666667 6.015,22.2633333 5.93166667,22.4733333 C5.68236407,23.0926189 5.82664679,23.8009159 6.29833333,24.2733333 L15.7266667,33.7016667 C16.2013871,34.1756798 16.9140329,34.3188658 17.535,34.065 C17.7433333,33.98 38.4583333,25.2466667 39.7816667,1.97666667 C39.8087196,1.50414529 39.6335979,1.04240574 39.3,0.706666667 Z M25.69,19.0233333 C24.7367525,19.9768687 23.3029475,20.2622391 22.0572426,19.7463614 C20.8115377,19.2304837 19.9992882,18.0149658 19.9992882,16.6666667 C19.9992882,15.3183676 20.8115377,14.1028496 22.0572426,13.5869719 C23.3029475,13.0710943 24.7367525,13.3564646 25.69,14.31 C26.9912731,15.6116662 26.9912731,17.7216672 25.69,19.0233333 L25.69,19.0233333 Z"
+                            ></path>
+                            <path
+                              class="color-background opacity-6"
+                              d="M1.855,31.4066667 C3.05106558,30.2024182 4.79973884,29.7296005 6.43969145,30.1670277 C8.07964407,30.6044549 9.36054508,31.8853559 9.7979723,33.5253085 C10.2353995,35.1652612 9.76258177,36.9139344 8.55833333,38.11 C6.70666667,39.9616667 0,40 0,40 C0,40 0,33.2566667 1.855,31.4066667 Z"
+                            ></path>
+                            <path
+                              class="color-background opacity-6"
+                              d="M17.2616667,3.90166667 C12.4943643,3.07192755 7.62174065,4.61673894 4.20333333,8.04166667 C3.31200265,8.94126033 2.53706177,9.94913142 1.89666667,11.0416667 C1.5109569,11.6966059 1.61721591,12.5295394 2.155,13.0666667 L5.47,16.3833333 C8.55036617,11.4946947 12.5559074,7.25476565 17.2616667,3.90166667 L17.2616667,3.90166667 Z"
+                            ></path>
+                            <path
+                              class="color-background opacity-6"
+                              d="M36.0983333,22.7383333 C36.9280725,27.5056357 35.3832611,32.3782594 31.9583333,35.7966667 C31.0587397,36.6879974 30.0508686,37.4629382 28.9583333,38.1033333 C28.3033941,38.4890431 27.4704606,38.3827841 26.9333333,37.845 L23.6166667,34.53 C28.5053053,31.4496338 32.7452344,27.4440926 36.0983333,22.7383333 L36.0983333,22.7383333 Z"
+                            ></path>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+                <span class="nav-link-text ms-1">登出</span>
               </a>
             </li>
           </ul>
@@ -1107,10 +1104,11 @@
             // console.log(xhr);
           },
           success: function (data) {
-            console.log(data.name);
-            console.log(data.nickname);
+            console.log(data);
             titleInfo(data);
             memberInfo(data);
+            orderInfo(data);
+            favoriteAct(data);
           },
         });
 
@@ -1118,14 +1116,14 @@
         function titleInfo(data) {
           let h5_memberName_html = "";
           h5_memberName_html = `
-		        	<h5 class="mb-1">${data.name}</h5>
-		      	`;
+          	<h5 class="mb-1">${data.name}</h5>
+        	`;
           $("#memberName h5").html(h5_memberName_html);
           h5_memberName_html = "";
 
           let p_member_html = "";
           p_member_html += `
-		         <p class="mb-0 font-weight-bold text-sm">${data.nickname}</p>
+           <p class="mb-0 font-weight-bold text-sm">${data.nickname}</p>
         		`;
 
           $("#memberName p").html(p_member_html);
@@ -1135,24 +1133,197 @@
         // 修改會員資訊區
         function memberInfo(data) {
           let ul_profile_detail_html = "";
-
-          ul_profile_detail_html += `
+          switch (data.activate) {
+            case "已啟用":
+              ul_profile_detail_html += `
             <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; ${data.name}</li>
             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">NickName:</strong> &nbsp; ${data.nickname}</li>
             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; ${data.email}</li>
             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Birthdate:</strong> &nbsp; ${data.birthdate}</li>
             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; ${data.cellphone}</li>
+            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-success">Activate:</strong> &nbsp; ${data.activate}</li>
           `;
 
-          $("#memberInfo ul").html(ul_profile_detail_html);
-          ul_profile_detail_html = "";
+              $("#memberInfo ul").html(ul_profile_detail_html);
+              ul_profile_detail_html = "";
+              break;
+            case "未啟用":
+              ul_profile_detail_html += `
+            <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; ${data.name}</li>
+            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">NickName:</strong> &nbsp; ${data.nickname}</li>
+            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; ${data.email}</li>
+            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Birthdate:</strong> &nbsp; ${data.birthdate}</li>
+            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; ${data.cellphone}</li>
+            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-danger">Deactivate:</strong> &nbsp; ${data.activate}</li>
+          `;
+
+              $("#memberInfo ul").html(ul_profile_detail_html);
+              ul_profile_detail_html = "";
+              break;
+            default:
+              ul_profile_detail_html += `
+            <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; ${data.name}</li>
+            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">NickName:</strong> &nbsp; ${data.nickname}</li>
+            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; ${data.email}</li>
+            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Birthdate:</strong> &nbsp; ${data.birthdate}</li>
+            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; ${data.cellphone}</li>
+            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Activate:</strong> &nbsp; ${data.activate}</li>
+          `;
+
+              $("#memberInfo ul").html(ul_profile_detail_html);
+              ul_profile_detail_html = "";
+              break;
+          }
         }
 
         // 修改訂單區
-        function orderInfo(data) {}
+        function orderInfo(data) {
+          // console.log(data.orders);
+          if (data.status == "hasNoOrders") {
+            let div_myOrders_html = $("#myOrders").html();
+            div_myOrders_html = "";
+            div_myOrders_html += `
+            <div class="text-center" id="noOrdersMessage" style="text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                <p class="text-secondary" style="font-size: 15pt; font-weight: bold">目前無訂單</p>
+              </div>
+            `;
+            $("#myOrders").html(div_myOrders_html);
+            return;
+          }
+
+          $(data.orders).each(function (index, element) {
+            let ul_orders_html = "";
+            ul_orders_html += `
+            <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+                <div class="avatar me-3">
+                    <h1 class="mb-0 text-sm text-primary">訂單 &nbsp; #${index + 1}</h1>
+                </div>
+                <div class="d-flex align-items-start flex-column justify-content-center">
+                    <h6 class="mb-0 ml-5 text-sm">廠商名稱: ${element.publisher}</h6>
+                    <span class="mb-0 ml-5 text-xs">下單日期: ${element.ordTime}</span>
+                    <span class="mb-0 ml-5 text-xs">訂單金額: $${element.ordTotal}</span>
+                </div>
+                <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" href="javascript:;">Details</a>
+            </li>
+            `;
+
+            $("#myOrders ul").html(ul_orders_html);
+          });
+
+          // let myOrders_item = [];
+          // myOrders_item.push({
+          //   publisher: data.orders.publisher,
+          //   ordTotal: data.orders.ordTotal,
+          //   ordTime: data.orders.ordTime,
+          // });
+          // console.log(myOrders_item);
+
+          // let ul_orders_html = $("#myOrders ul").html();
+          // ul_orders_html = "";
+          // ul_orders_html += `
+
+          // <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+          //         <div class="avatar me-3">
+          //           <h1 class="mb-0 text-sm text-primary">訂單 &nbsp; #1</h1>
+          //         </div>
+          //         <div class="d-flex align-items-start flex-column justify-content-center">
+          //           <h6 class="mb-0 ml-5 text-sm">廠商名稱: 薩泰爾娛樂</h6>
+          //           <span class="mb-0 ml-5 text-xs">下單日期: 2023/10/25</span>
+          //           <span class="mb-0 ml-5 text-xs">訂單金額: $999</span>
+          //         </div>
+          //         <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" href="javascript:;">Details</a>
+          //       </li>
+
+          // `;
+
+          // $("#myOrders ul").html(ul_orders_html);
+        }
 
         // 修改我的最愛區
-        function favoriteAct(data) {}
+        function favoriteAct(data) {
+          // console.log(data.mylike);
+          if (data.mylike[0].actName == null) {
+            return;
+          }
+
+          let div_fav_html = "";
+          $(data.mylike).each(function (index, element) {
+            // console.log(element);
+            div_fav_html = `
+            <div class="card card-blog card-plain">
+              <div class="position-relative">
+                <a class="d-block shadow-xl border-radius-xl">
+                  <img src="data:image/*;base64,${element.actPic}" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl" />
+                </a>
+              </div>
+              <div class="card-body px-1 pb-0">
+                <p class="text-gradient text-dark mb-2 text-sm">Fav #${index + 1}</p>
+                <a href="javascript:;">
+                  <h5>${element.actName}</h5>
+                </a>
+                <p class="mb-4 text-sm">${element.actIntroduce}</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <button type="button" class="btn btn-outline-primary btn-sm mb-0">檢視活動</button>
+                  <div class="avatar-group mt-2">
+                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
+                      <img alt="Image placeholder" src="./assets/img/team-1.jpg" />
+                    </a>
+                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Milly">
+                      <img alt="Image placeholder" src="./assets/img/team-2.jpg" />
+                    </a>
+                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Nick Daniel">
+                      <img alt="Image placeholder" src="./assets/img/team-3.jpg" />
+                    </a>
+                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Peterson">
+                      <img alt="Image placeholder" src="./assets/img/team-4.jpg" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            `;
+
+            $(".likeActOrder").eq(index).html(div_fav_html);
+          });
+        }
+      });
+    </script>
+
+    <!-- 判斷是否有訂單 -->
+    <script>
+      $(document).ready(function () {
+        if ($("#myOrders li").length === 0) {
+          $("#noOrdersMessage").show();
+        }
+      });
+    </script>
+
+    <!--===============================================================================================-->
+
+    <!-- 登出 -->
+    <script>
+      $("#signout").on("click", function (e) {
+        e.preventDefault();
+        $.ajax({
+          url: "http://localhost:8081/com.tha103.newview/LogOut",
+          type: "POST",
+          dataType: "json",
+          beforeSend: function (xhr) {
+            console.log("beforeSend");
+          },
+          success: function (data) {
+            console.log(data);
+            redirect(data);
+          },
+          complete: function (xhr) {
+            console.log("complete");
+          },
+        });
+        function redirect(data) {
+          console.log(data);
+          alert("帳號已登出，畫面將轉導至首頁");
+          location.href = "home-03.html";
+        }
       });
     </script>
 

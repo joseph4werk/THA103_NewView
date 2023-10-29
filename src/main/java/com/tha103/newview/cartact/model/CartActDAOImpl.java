@@ -1,9 +1,7 @@
 package com.tha103.newview.cartact.model;
 
 import java.util.List;
-
 import org.hibernate.Session;
-
 import com.tha103.util.HibernateUtil;
 
 public class CartActDAOImpl implements CartActDAO {

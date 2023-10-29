@@ -98,6 +98,7 @@
 </head>
 
 <body class="animsition">
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 	<script src="./vendors/jquery/jquery-3.7.1.min.js"></script>
@@ -371,7 +372,8 @@
 					<span class="mtext-101 cl5"> About Us </span>
 
 					<p class="stext-108 cl6 p-t-27">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur maximus vulputate hendrerit.
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur maximus vulputate
+						hendrerit.
 						Praesent faucibus erat vitae rutrum gravida. Vestibulum tempus mi enim, in molestie sem
 						fermentum quis.
 					</p>
@@ -401,7 +403,8 @@
 						</div>
 
 						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04"> White Shirt Pleat </a>
+							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04"> White Shirt Pleat
+							</a>
 
 							<span class="header-cart-item-info"> 1 x $19.00 </span>
 						</div>
@@ -413,7 +416,8 @@
 						</div>
 
 						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04"> Converse All Star </a>
+							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04"> Converse All Star
+							</a>
 
 							<span class="header-cart-item-info"> 1 x $39.00 </span>
 						</div>
@@ -425,7 +429,8 @@
 						</div>
 
 						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04"> Nixon Porter Leather </a>
+							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04"> Nixon Porter
+								Leather </a>
 
 							<span class="header-cart-item-info"> 1 x $17.00 </span>
 						</div>
@@ -441,7 +446,8 @@
 							View Cart </a>
 
 						<a href="shoping-cart.html"
-							class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10"> Check Out
+							class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+							Check Out
 						</a>
 					</div>
 				</div>
@@ -464,17 +470,12 @@
 		<div class="container">
 			<!-- <div class="flex-w flex-tr"> -->
 			<div class=" bor10 p-lr-60 p-t-55 p-b-70 p-lr-15-lg w-full-md">
-				<form id="postform">
+				<form id="postform" action="/com.tha103.newview/DoPostServlet" method="post"
+					enctype="multipart/form-data" name="action" value="add">
+
 					<h4 class="mtext-105 cl2 txt-center p-b-30">
 						填入文章資料
 					</h4>
-
-
-					<div class="form-group">
-						<label for="userID"><strong>會員編號</strong></label>
-						<input type="text" id="userID" class="form-control" name="userID" placeholder="@userID">
-					</div>
-
 
 					<div class="form-group">
 						<label for="posttitle"><strong>文章標題</strong></label>
@@ -505,35 +506,35 @@
 						<div class="invalid-feedback">請輸入內容</div>
 					</div>
 
-					<!-- <div class="custom-file">
-						<input type="file" class="custom-file-input" id="postimg" multiple accept="image/*">
-						<label class="custom-file-label" for="postimg">選擇圖片</label>
-					</div>
-					<p>已選擇的文件: <span id="selectedFileName"></span></p> -->
-
 
 					<div>
 						<label for="file"><br><strong>文章圖片(拖曳至下方區塊)</strong></label><br>
-						<input type="file" id="file" name="postpic" style="display: none;">
 						<div class="centered-content">
 							<!-- 第一個拖放區域和預覽區域 -->
+							<input type="file" id="file1" name="postPic1" style="display: none;">
 							<div class="drop_zone" id="drop_zone1"><span class="text">將圖片1拖曳至此處</span></div>
 							<div class="preview" id="preview1"><span class="text">預覽圖</span></div>
 
 							<!-- 第二個拖放區域和預覽區域 -->
+							<input type="file" id="file2" name="postPic2" style="display: none;">
 							<div class="drop_zone" id="drop_zone2"><span class="text">將圖片2拖曳至此處</span></div>
 							<div class="preview" id="preview2"><span class="text">預覽圖</span></div>
 
 							<!-- 第三個拖放區域和預覽區域 -->
+							<input type="file" id="file3" name="postPic3" style="display: none;">
 							<div class="drop_zone" id="drop_zone3"><span class="text">將圖片3拖曳至此處</span></div>
 							<div class="preview" id="preview3"><span class="text">預覽圖</span></div>
 						</div>
+						<div class="invalid-feedback">發文不附圖，此風不可長</div>
 					</div>
 					<br>
 					<br>
 					<br>
 					<br>
-					<button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" type = "submit">
+					<button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
+						type="submit" id="submitpost">
+						<!-- 						<input type="hidden" name="action" value="add"> -->
+
 						Submit
 					</button>
 				</form>
@@ -614,7 +615,8 @@
 				<div class="col-sm-5 col-lg-3 p-b-20">
 					<h4 class="stext-301 cl0 p-b-30 text-left">Latest Blog Post</h4>
 					<p class="stext-301 cl7 size-201 text-left">Ready to get started?</p>
-					<p class="stext-107 cl7 size-201 text-left">Any questions? Let us know in store at 8th floor, 379
+					<p class="stext-107 cl7 size-201 text-left">Any questions? Let us know in store at 8th
+						floor, 379
 						Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879</p>
 
 					<div class="p-t-27">
@@ -660,50 +662,21 @@
 		</span>
 	</div>
 
+
+
+
 	<!--====================================(JS開始)===========================================================-->
 	<script>
-
-		//----------------------------- 元素 ---------------------------//
-		window.addEventListener("load", function (e) {
+		window.addEventListener("load", function () {
 			var the_form = document.getElementById("postform");
-			var userID_el = document.getElementById("userID");
-			var posttitle_el = document.getElementById("posttitle");
-			var postcategory_el = document.getElementById("postcategory");
-			var postcontent_el = document.getElementById("postcontent");
-			var postimg_el = document.getElementById("postimg");
-			var drop_zone_el = document.getElementById("drop_zone");
-			var p_file_el = document.getElementById("p_file");
 			var btn_submit_el = document.getElementById("submitpost");
 			var preview_els = [];
-			for (let i = 1; i <= 3; i++) {
-				preview_els.push(document.getElementById("preview" + i));
-			}
-			var selectedFileName_el = document.getElementById("selectedFileName");
 
-			//---------------------------- 會員驗證 ------------------------//
-			// 登入後獲取訊息
-			var loggedInUser = getLoggedInUserInfo(); // 設置方法
-
-			if (loggedInUser) {
-				// 如果會員登入，將帳號填入輸入框
-				document.getElementById("userID").value = loggedInUser.username; // 假设会员信息中包含用户名
-			}
-
-			function getLoggedInUserInfo() {
-				// 假设在本地已經有會員資訊
-				var loggedInUserJSON = localStorage.getItem("loggedInUser");
-				if (loggedInUserJSON) {
-					return JSON.parse(loggedInUserJSON);
-				}
-				return null;
-			}
-
-			//---------------------- Drag & Drop --------------------------------->
+			// 添加拖放事件
 			for (let i = 1; i <= 3; i++) {
 				let drop_zone_el = document.getElementById("drop_zone" + i);
 				let preview_el = document.getElementById("preview" + i);
 
-				// =========================== 拖放事件 ========================= //
 				drop_zone_el.addEventListener("dragover", function (e) {
 					e.preventDefault();
 					e.target.classList.add("-on");
@@ -716,114 +689,79 @@
 				drop_zone_el.addEventListener("drop", function (e) {
 					e.preventDefault();
 					e.target.classList.remove("-on");
-
 					if (e.dataTransfer.files.length > 0) {
 						preview_img(e.dataTransfer.files[0], preview_el);
 					}
 				});
 			}
 
-			// --------------------- 透過File取得預覽圖 ------------------------ //
+			// 透過File取得預覽圖
 			var preview_img = function (file, preview_el) {
-				var reader = new FileReader(); // 用來讀取檔案
-				reader.readAsDataURL(file); // 讀取檔案
+				var reader = new FileReader();
+				reader.readAsDataURL(file);
+
 				reader.addEventListener("load", function () {
 					let img_str = '<img src="' + reader.result + '" class="preview_img">';
 					preview_el.innerHTML = img_str;
+
+
 				});
+				console.log(preview_img);
 			};
 
-			//-------------------------- 資料送出 ----------------------------------------->
+			// 資料送出
+			btn_submit_el.addEventListener("click", function (e) {
+				e.preventDefault();
+				var form_data = new FormData(the_form);
+
+				// 圖片轉Base64
+				var img_base64_els = document.querySelectorAll(".preview_img");
+				var img_base64_array = [];
+
+				img_base64_els.forEach(function (img_base64_el) {
+					var img_base64 = img_base64_el.getAttribute("src").substring(22); // 去除圖片前綴字
+					img_base64_array.push(img_base64);
+				});
+
+				form_data.append("img_base64", img_base64_array);
+				console.log(img_base64_array);
 
 
-			// 提交事件处理程序
-			the_form.addEventListener('submit', function (e) {
-				e.preventDefault(); // 阻止表单默认提交行为
+				// 其他數據
+				form_data.append("posttitle", document.getElementById("posttitle").value);
+				form_data.append("postCategoryID", document.getElementById("postcategory").value);
+				form_data.append("postcontent", document.getElementById("postcontent").value);
+				form_data.append("action", "add");
+				console.log("FormData:", form_data);
 
-				var send_data = {};
 
-				send_data.userID = userID_el.value;
-				send_data.posttitle = posttitle_el.value;
-				send_data.postcategory = postcategory_el.value;
-				send_data.postcontent = postcontent_el.value;
 
-				send_data.preview = [];
-				for (let i = 1; i <= 3; i++) {
-					var preview_image = sessionStorage.getItem("preview_img" + i);
-					if (preview_image) {
-						send_data.preview.push('<img src="' + preview_image + '" class="preview_img">');
-					} else {
-						send_data.preview.push('沒有添加圖片'); 
+				$.ajax({
+					url: `http://localhost:8081/com.tha103.newview/DoPostServlet`,
+					type: "POST",
+					data: form_data,
+					contentType: false,
+					processData: false,
+					//			dataType: "json",
+					success: function (data) {
+						alert("文章已新增");
+						location.href = "http://localhost:8081/com.tha103.newview/forum_home.html";
+						// 成功處理後顯示
+						console.log("success");
+					},
+					error: function (xhr) {
+						console.log("error");
 					}
-				}
-
-				send_data.img_base64 ;
-				var img_base64_el = document.querySelector(".preview_img");
-				if (img_base64_el) {
-					send_data.img_base64 = img_base64_el.getAttribute("src");
-				}
+				});
 
 
 
-				sessionStorage.setItem("form_data", JSON.stringify(send_data));
-				location.href = "forum_confirm.html";
-
-
-				// =========================== session 裡的資料回寫到表單中 ========================= //
-				var recovery_data = function () {
-					if (sessionStorage.getItem("form_data") != null) {
-						var form_data = JSON.parse(sessionStorage.getItem("form_data"));
-						console.log(form_data);
-						userID_el.value = form_data.userID;
-						posttitle_el.value = form_data.posttitle;
-						postcategory_el.value = form_data.postcategory; 
-						postcontent_el.value = form_data.postcontent;
-						preview_el.innerHTML =  "<img class='preview_img' src='" + form_data.img_base64 + "'>";
-					}
-				};
-
-				// =========================== 函式觸發 ========================= //
-				recovery_data();
 			});
+
 		});
+
 	</script>
 
-
-
-	<!--=======================================================(JS開始)========================================-->
-
-
-	<!--===============================================================================================-->
-	<!-- <script> 
-				// p_file_el.addEventListener("change", function (e) {
-		// 	if (this.files.length > 0) {
-		// 		preview_img(this.files[0]);
-		// 	} else {
-		// 		preview_el.innerHTML = '<span class="text">預覽圖</span>';
-		// 	}
-		// });
-
-
-		//上傳檔案顯示
-		const fileInput = document.getElementById('validatedCustomFile');
-		const selectedFileName = document.getElementById('selectedFileName');
-
-		fileInput.addEventListener('change', function () {
-			const fileName = this.value.split('\\').pop(); // 获取文件名
-			selectedFileName.textContent = fileName; // 显示文件名
-		});
-
-			// // 提交事件
-		// document.getElementById('articleForm').addEventListener('submit', function (e) {
-		// 	e.preventDefault(); // 阻止表單默認提交行为
-
-		// 	// 顯示提交成功的弹窗
-		// 	alert('文章已提交！將回到論壇首頁');
-
-		// 	// 關閉彈窗，回到論壇首頁
-		// 	window.location.href = "forum_home.html";
-		// });
-	</script> -->
 	<!--===============================================================================================-->
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 	<!--===============================================================================================-->
@@ -865,6 +803,7 @@
 	<script src="js/map-custom.js"></script>
 	<!--===============================================================================================-->
 	<script src="js/main.js"></script>
+
 
 </body>
 
