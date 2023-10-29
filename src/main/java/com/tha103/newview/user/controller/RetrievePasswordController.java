@@ -2,8 +2,6 @@ package com.tha103.newview.user.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -22,9 +20,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.tha103.newview.user.model.UserVO;
+import com.tha103.newview.user.jedis.JedisPoolUtil;
 import com.tha103.newview.user.service.UserService;
 import com.tha103.newview.user.service.UserServiceImpl;
+
+import redis.clients.jedis.Jedis;
 
 @WebServlet("/RetrievePassword")
 public class RetrievePasswordController extends HttpServlet {
@@ -41,7 +41,6 @@ public class RetrievePasswordController extends HttpServlet {
 		Gson gson = new Gson();
 		HashMap<String, String> data = new HashMap<>();
 		String json = null;
-		String hashPassword = null;
 
 		// 取得前端傳遞 email 參數
 		String email = req.getParameter("email");
@@ -56,58 +55,19 @@ public class RetrievePasswordController extends HttpServlet {
 			return;
 		}
 
-		// 比對成功，寄驗證信給前端傳來之 email + 驗證信 + 驗證碼 + 新密碼 (亂數8碼)，回傳 status -> success
+		// 寄驗證信給前端傳來之 email + 驗證信 + 驗證碼 + 新密碼 (亂數8碼)
 		String verificationCode = getVerificationCode();
 		String newPassword = getVerificationCode();
 		new Thread(() -> sendMail(email, verificationCode, newPassword)).start();
-
-		// 取得 userVO，更新資料
-		Integer userID = userSvc.getUserByEmail(email).getUserID();
-		UserVO userVO = userSvc.getUserByPK(userID);
-
-		/*************************** 不修改區塊 ***************************/
-		// 取得 user 中資料者註冊資訊，取代原先資訊(不更新)
-		userVO.setUserID(userVO.getUserID());
-		userVO.setUserName(userVO.getUserName());
-		userVO.setUserAccount(userVO.getUserAccount());
-		userVO.setUserBirth(userVO.getUserBirth());
-		userVO.setUserCell(userVO.getUserCell());
-		userVO.setUserEmail(userVO.getUserEmail());
-		userVO.setUserNickname(userVO.getUserNickname());
-		userVO.setBuyAuthority(userVO.getBuyAuthority());
-		userVO.setSpeakAuthority(userVO.getSpeakAuthority());
-		/*************************** 不修改區塊 ***************************/
-
-		// 加密 newPassword
-		// 加密密碼 -> MD5
-		try {
-			// 創建 MD5 實體
-			MessageDigest md = MessageDigest.getInstance("MD5");
-
-			// 轉換原始密碼
-			byte[] bytes = md.digest(newPassword.getBytes());
-
-			// 將 byte[] 轉為 16 進制 String
-			StringBuilder sb = new StringBuilder();
-			for (byte b : bytes) {
-				sb.append(String.format("%02x", b));
-			}
-
-			// MD5 加密後的 Password
-			hashPassword = sb.toString();
-
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-
-		// 更新 hashPawwrod 到資料庫中
-		userVO.setUserPassword(hashPassword);
-
-		// 更新使用者資訊
-		userSvc.updateUser(userVO);
-		System.out.println("密碼重設完成");
-
-		// 比對成功，寄驗證信給前端傳來之 email + 驗證信 + 驗證碼 + 新密碼 (亂數8碼)，回傳 status -> success
+		
+		// 將驗證碼 (1) 、新密碼 (2) 存入 redis，Key 為 userEmail
+		Jedis jedis = JedisPoolUtil.getJedisPool().getResource();
+		jedis.select(15);
+		jedis.set("UserEmail_Verify:" + email, verificationCode);
+		jedis.set("UserEmail_NewPassword:" + email, newPassword);
+		jedis.close();
+		
+		// 回傳 status -> success
 		data.put("status", "success");
 		json = gson.toJson(data);
 		out.write(json);
