@@ -143,7 +143,7 @@ public class PostDAOImpl implements PostDAO {
 
 	    try {
 	        session.beginTransaction();
-	        // 使用 HQL 查询
+	        // 使用 HQL 查詢
 	        String hql = "SELECT p.userVO.userID FROM PostVO p WHERE p.postID = :postID";
 	        int userID = (int) session.createQuery(hql)
 	                .setParameter("postID", postID)
@@ -154,7 +154,7 @@ public class PostDAOImpl implements PostDAO {
 	        e.printStackTrace();
 	        session.getTransaction().rollback();
 	    }
-	    return 0; // 或者返回其他适当的默认值
+	    return 0; // 或者返回其他值
 	}
 
 

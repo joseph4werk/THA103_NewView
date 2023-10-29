@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background-color: rgb(250, 248, 248);">
 
 <head>
-	<title>NewViewForum - RevisedPost</title>
+	<title>NewView - Shoping Cart</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--===============================================================================================-->
@@ -28,79 +28,23 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
-	<link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
 	<!--===============================================================================================-->
+
 	<style>
-		.h2 {
-			color: black;
-		}
-
-		.centered-content {
-			text-align: center;
-			/* 水平居中对齐 */
-		}
-
-		input[disabled] {
-			background-color: #eee;
-			cursor: not-allowed;
-		}
-
-
-		.drop_zone,
-		.preview {
-			width: 48%;
-			/* 設定拖放區和預覽區的寬度為容器的一半 */
-			border: 2px dashed #ccc;
-			height: 300px;
-			text-align: center;
-			cursor: pointer;
-			display: inline-block;
-			margin: 5px;
-			box-sizing: border-box;
-			min-height: 300px;
-			/* 设置最小高度，根据需要调整 */
-			/* 设置box-sizing属性 */
-		}
-
-		.preview_img {
+		.wrap-table-shopping-cart {
 			width: 100%;
-			/* 讓圖片填滿整個預覽格子 */
-			height: 100%;
-			object-fit: contain;
-			/* 調整圖片的呈現方式，保持原始比例 */
-
-		}
-
-		.drop_zone.-on {
-			width: 48%;
-			height: 300px;
-			background-color: rgba(0, 0, 0, 0);
-			/* 使用透明的背景颜色 */
-			padding: 20px;
-			/* 添加一些间距来占位，可以根据需要调整 */
-		}
-
-		@media (max-width: 768px) {
-
-			.drop_zone,
-			.preview {
-				display: block;
-				width: auto;
-				margin-right: 0;
-			}
-		}
-
-		body.no-scroll {
-			overflow: hidden;
+			/* 設置寬度為100%以充滿整個螢幕寬度 */
+			margin: 0;
+			/* 清除邊距 */
 		}
 	</style>
 
 </head>
 
+
 <body class="animsition">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-	<script src="./vendors/jquery/jquery-3.7.1.min.js"></script>
+
+
 	<!-- Header -->
 	<header class="header-v3" style=" background-color: black;">
 		<!-- Header desktop -->
@@ -229,7 +173,7 @@
 				</li>
 
 				<li>
-					<a href="forum.home">討論區</a>
+					<a href="forum_home.html">討論區</a>
 				</li>
 
 				<li>
@@ -380,6 +324,8 @@
 		</div>
 	</aside>
 
+
+
 	<!-- Cart -->
 	<div class="wrap-header-cart js-panel-cart">
 		<div class="s-full js-hide-cart"></div>
@@ -448,109 +394,356 @@
 			</div>
 		</div>
 	</div>
+	<!-- Title page -->
+	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('./img/black-bar.png');">
+		<h2 class="ltext-105 cl0 txt-center">
 
+		</h2>
+	</section>
 
 	<!-- ===================================================== -->
+	<DIV style="text-align:center;margin-bottom: 50px;">
+		<h2><strong>購物車列表</strong></h2>
+	</DIV><br>
+
+	<!-- breadcrumb -->
+	<div class="container" style="margin-top: -150px; margin-bottom: 180px;">
+		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+			<a href="./home-03.html" class="stext-109 cl8 hov-cl1 trans-04">
+				Home
+				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+			</a>
+
+			<span class="stext-109 cl4">
+				Shoping Cart
+			</span>
+		</div>
+	</div>
 
 
-	<!-- Title page -->
-	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('./img/banner.jpg');">
-		<h4 class="ltext-105 cl0 txt-center "><strong>修改此文章</strong></h4>
-	</section>
+	<!-- Shoping Cart -->
+	<div id="cart-container">
+		<script>
+			document.addEventListener('DOMContentLoaded', () => {
+				$.ajax({
+					type: "POST",
+					url: `http://localhost:8081/com.tha103.newview/getcartorder`,
+					dataType: "json",
+					success: function (data) {
+						console.log(data);
+
+						// 建立購物車容器
+						const cartContainer = document.getElementById('cart-container');
+						// 進行第一層迴圈
+						for (var key in data) {
+							if (data.hasOwnProperty(key)) {
+								//進行第一層購物車內容
+								var newCart = document.createElement('form');
+								newCart.className = "bg0 p-t-75 p-b-85";
+								newCart.style.backgroundColor = "rgb(250, 248, 248)";
+
+								var cartContent = `
+									<div class="container" style="text-align: center;margin-top: -180px;">
+										<div class="row">
+											<div class="col-lg-10 col-xl-12 m-lr-auto m-b-60" style="transform: scale(0.85);">
+												<div class="m-l-25 m-r--38 m-lr-0-xl">
+													<input type="hidden" id="pubID-${key}" name="choice" value="${key}"> <!-- 修改唯一的 pubID -->
+													<input class="pubName" type="text" name="choice" value="">
+													<hr>
+													<div class="wrap-table-shopping-cart">
+														<table class="table-shopping-cart">
+															<tr class="table_head" style="background-color: rgb(1, 1, 1);">
+																<th class="column-0 col-xl-1" style="text-align: center;color: #ffffff;">買這筆</th>
+																<th class="column-1 col-xl-2" style="text-align: center;color: #ffffff;">活動圖片</th>
+																<th class="column-2 col-xl-3" style="text-align: center;color: #ffffff;">活動場次</th>
+																<th class="column-3 col-xl-3" style="text-align: center;color: #ffffff;">座位</th>
+																<th class="column-4 col-xl-1" style="text-align: center;color: #ffffff;">單價</th>
+																<th class="column-6 col-xl-1" style="text-align: center;color: #ffffff;">數量</th>
+																<th class="column-6 col-xl-1" style="text-align: center;color: #ffffff;">總金額</th>
+																<th class="column-6 col-xl-1" style="text-align: center;color: #ffffff;">狀態</th>
+															</tr>
+														</table>
+													</div>
+	
+													<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm" style="background-color: #f1f0f0;">
+														<div class="flex-w flex-m m-r-20 m-tb-5">
+															<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
+																name="coupon" placeholder="Coupon Code">
+															<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+																輸入活動廠商折扣碼
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>`;
+
+								newCart.innerHTML = cartContent;
+								cartContainer.appendChild(newCart);
+
+								// 準備第二層迴圈的key值
+								var secondLayerArray = data[key];
+
+								// 獲取剛剛創立的購物車表格
+								var cartTable = newCart.querySelector('table.table-shopping-cart');
+
+								// 開始第二次迴圈取得資料
+								for (var i = 0; i < secondLayerArray.length; i++) {
+									var item = secondLayerArray[i];
+
+									// 設置變數
+									var pubID = item.pubID;
+									var pubName = item.pubName;
+									var actID = item.actID;
+									var scope = item.scope;
+									var actName = item.actName;
+									var rowColumn = item.rowColumn;
+									var actPrice = item.actPrice;
+									var actCount = item.actCount;
+									var actPriceTotal = item.actPriceTotal;
+									var seatStatus = item.soldOut;
+
+									var pubNameElements = newCart.getElementsByClassName('pubName');
+									for (var j = 0; j < pubNameElements.length; j++) {
+										pubNameElements[j].value = "出品廠商: " + pubName;
+									}
+
+									// 將變數渲染到表格中
+									var newRow = cartTable.insertRow(cartTable.rows.length);
+
+									newRow.innerHTML = `
+										<tr class="table_row" style="height: 100px;">
+											<td class="column-0 col-xl-1" style="text-align: right;">
+												<input type="checkbox" id="option${key}-${i + 1}" name="choice" value="option${i + 1}" data-act-price="${actPriceTotal}">
+												<input type="hidden" name="actID" value="${actID}">
+												<input type="hidden" name="pubID" value="${pubID}">
+												<label for="option${key}-${i + 1}"></label>
+											</td>
+											<td class="column-1 col-xl-2">
+												<div class="how-itemcart1">
+													<img src="images/item-cart-04.jpg" alt="IMG">
+												</div>
+											</td>
+											<td class="column-2 col-xl-3">${actName}</td>
+											<td class="column-3 col-xl-3">
+												<select name="seat" style="color: rgb(128, 125, 125);" aria-readonly="true">
+													${rowColumnOptions(rowColumn)}
+												</select>
+											</td>
+											<td class="column-4 col-xl-1" style="text-align: center;">${actPrice}</td>
+											<td class="column-5 col-xl-1">${actCount}</td>
+											<td class="column-6 col-xl-1">${actPriceTotal}</td>
+											<td class="column-7 col-xl-1">
+												<button
+													class="stext-101 cl0 size-100 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
+													style="background-color: black; border-color: black;">
+													刪除
+												</button>
+											</td>
+										</tr>
+									`;
+
+									// 生成rowColumn的option
+									function rowColumnOptions(rowColumn) {
+										let options = '';
+										for (let i = 0; i < rowColumn.length; i++) {
+											options += `<option value="seat${i + 1}">${rowColumn[i]}</option>`;
+										}
+										return options;
+									}
+								}
+							}
+						}
+					},
+
+					error: function (error) {
+						console.error('There was a problem with the AJAX request:', error);
+					}
+				});
+
+			});
+
+		</script>
+	</div>
 
 
-	<!-- Content page -->
-	<section class="bg0 p-t-104 p-b-116">
-		<div class="container">
-			<!-- <div class="flex-w flex-tr"> -->
-			<div class=" bor10 p-lr-60 p-t-55 p-b-70 p-lr-15-lg w-full-md">
-				<form id="postform" action="/com.tha103.newview/DoPostServlet" method="post"
-					enctype="multipart/form-data" name="action" value="update">
 
-					<h4 class="mtext-105 cl2 txt-center p-b-30">
-						填入文章資料
-					</h4>
+	<div style="transform: scale(0.8); text-align: center;margin-top: -150px; margin-left: 50px; margin-bottom: 80px;">
 
+		<div class="bor10 p-lr-30 p-t-30 p-b-30 m-l-50 m-r-40 m-lr-0-xl p-lr-10-sm rounded shadow-sm">
+			<h4 class="mtext-109 cl2 p-b-30" style="font-size: 35px;">
+				Cart Totals
+			</h4>
 
-					<div class="form-group">
-						<label for="userName"><strong>會員名稱</strong></label>
-						<input type="text" id="userName" class="form-control" name="userName" placeholder="@userName"
-							readonly>
-					</div>
+			<div class="flex-w flex-t bor12 p-b-13">
+				<div class="size-208">
+					<span class="stext-110 cl2" style="font-size: large;">
+						小計:
+					</span>
+				</div>
 
-					<div class="form-group">
-						<input type="hidden" id="postID" class="form-control" name="postID" placeholder="@postID"
-							readonly>
-					</div>
-
-
-					<div class="form-group">
-						<label for="posttitle"><strong>文章標題</strong></label>
-						<input type="text" id="posttitle" class="form-control" name="postHeader"
-							placeholder="text your title" required>
-						<div class="invalid-feedback">請輸入標題</div>
-					</div>
-
-					<div class="form-group ">
-						<label for="postcategory"><strong>文章類別</strong></label>
-						<select class="custom-select p-l-28 " id="postcategory" name="postCategoryID" required>
-							<option value="">select category</option>
-							<option value="1">綜合討論All(換票、揪團)</option>
-							<option value="2">音樂表演Music</option>
-							<option value="3">戲劇表演Drama</option>
-							<option value="4">舞蹈表演Dance</option>
-							<option value="5">脫口秀Talk Show</option>
-							<option value="6">演唱會Singing Concert</option>
-							<option value="7">講座Lecture</option>
-						</select>
-						<div class="invalid-feedback">未選擇類別</div>
-					</div>
-
-					<div class="form-group ">
-						<label for="postcontent"><strong>文章內容</strong></label>
-						<textarea id="postcontent" class="form-control stext-111 cl2 plh3 size-120 p-lr-10 p-tb-25"
-							name="postContent" placeholder="text your content" required></textarea>
-						<div class="invalid-feedback">請輸入內容</div>
-					</div>
-
-					<!-- <div class="custom-file">
-						<input type="file" class="custom-file-input" id="postimg" multiple accept="image/*">
-						<label class="custom-file-label" for="postimg">選擇圖片</label>
-					</div>
-					<p>已選擇的文件: <span id="selectedFileName"></span></p> -->
-
-
-					<div>
-						<label for="file"><br><strong>文章圖片(拖曳至下方區塊)</strong></label><br>
-						<input type="file" id="file" name="postPic" style="display: none;">
-						<div class="centered-content">
-							<!-- 第一個拖放區域和預覽區域 -->
-							<div class="drop_zone" id="drop_zone1"><span class="text">將圖片1拖曳至此處</span></div>
-							<div class="preview" id="preview1"><span class="text">預覽圖</span></div>
-
-							<!-- 第二個拖放區域和預覽區域 -->
-							<div class="drop_zone" id="drop_zone2"><span class="text">將圖片2拖曳至此處</span></div>
-							<div class="preview" id="preview2"><span class="text">預覽圖</span></div>
-
-							<!-- 第三個拖放區域和預覽區域 -->
-							<div class="drop_zone" id="drop_zone3"><span class="text">將圖片3拖曳至此處</span></div>
-							<div class="preview" id="preview3"><span class="text">預覽圖</span></div>
-						</div>
-					</div>
-					<br>
-					<br>
-					<br>
-					<br>
-					<button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
-						type="submit" id="submitpost">
-						Submit
-					</button>
-				</form>
+				<div class="size-209">
+					<span id="subtotal" class="mtext-110 cl2">
+						$0
+					</span>
+				</div>
 			</div>
 
+			<div class="flex-w flex-t bor12 p-b-13" style="margin-top: 15px; background-color: beige;">
+				<div class="size-208">
+					<span class="stext-110 cl2" style="font-size: large;margin-top: 5px;color: red;">
+						折扣金額:
+					</span>
+				</div>
+
+				<div class="size-209">
+					<span id="discount" class="mtext-110 cl2" style="font-size: large;margin-top: 5px;color: red;">
+						$0
+					</span>
+				</div>
+			</div>
+
+			<div class="flex-w flex-t p-t-27 p-b-33">
+				<div class="size-208">
+					<span class="mtext-101 cl2">
+						折扣後總計:
+					</span>
+				</div>
+				<div class="size-209 p-t-1">
+					<span id="finalTotal" class="mtext-110 cl2">
+						$0
+					</span>
+				</div>
+			</div>
+
+			<button id="checkout" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+				Proceed to Checkout
+			</button>
 		</div>
-		</div>
-	</section>
+	</div>
+
+
+
+	<script>
+		window.onload = function () {
+			// 獲取所有的 checkbox 元素
+			var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+			var order = []; // 在这里声明 order 变量
+
+			checkboxes.forEach(function (checkbox) {
+				checkbox.addEventListener('change', function () {
+					// 開始更新方法
+					updateCartTotal();
+
+					if (checkbox.checked) {
+						// 獲得<tr>
+						var row = checkbox.closest('tr');
+						var cells = row.cells;
+
+						var actIDInput = row.querySelector('input[name="actID"]');
+						var pubIDInput = row.querySelector('input[name="pubID"]');
+
+						var actID = actIDInput.value;
+						var pubID = pubIDInput.value;
+
+						var rowColumn = cells[3].textContent.trim();
+						var actPrice = parseFloat(cells[4].textContent.replace('$', ''));
+						var actCount = parseFloat(cells[5].textContent.replace('$', ''));
+						var actPriceTotal = parseFloat(cells[6].textContent.replace('$', ''));
+
+						var orderList = {
+							"actID": actID,
+							"pubID": pubID,
+							"rowColumn": rowColumn,
+							"actPrice": actPrice,
+							"actCount": actCount,
+							"actPriceTotal": actPriceTotal
+						};
+
+						order.push(orderList);
+					} else {
+						// 如果 checkbox 取消選中
+						var actIDInput = checkbox.closest('tr').querySelector('input[name="actID"]');
+						var actID = actIDInput.value; // 在這裡重新定義
+						var index = order.findIndex(item => item.actID === actID); // 找到對應的索引
+						if (index > -1) {
+							order.splice(index, 1); // 從 order 陣列中刪除相應的數據
+						}
+					}
+				});
+			});
+
+
+
+			var checkoutButton = document.getElementById('checkout');
+			checkoutButton.addEventListener('click', function () {
+				console.log(order);
+				comfirmOrderList = JSON.stringify(order);
+				console.log(comfirmOrderList);
+				$.ajax({
+					type: "POST",
+					url: `http://localhost:8081/com.tha103.newview/DoOrder`,
+					data: {
+						"comfirmOrderList": comfirmOrderList
+					},
+					dataType: "json",
+					success: function (data) {
+						console.log("訂單儲存成功");
+						var url = data.location;
+						window.location.href = url;
+						
+					},
+					error: function (error) {
+						console.error('There was a problem with the AJAX request:', error);
+					}
+				});
+			});
+
+			// 更新購物車金額的方法
+			function updateCartTotal() {
+				var subtotal = 0;
+				// 獲取所有的 checkbox 元素
+				var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+				// 遍歷所有的 checkbox 元素
+				checkboxes.forEach(function (checkbox) {
+					if (checkbox.checked) {
+						// 獲取對應價格
+						var row = checkbox.closest('tr');
+						var cells = row.cells;
+						var actPrice = parseFloat(cells[6].textContent.replace('$', ''));
+
+						if (!isNaN(actPrice)) {
+							// 將價格添加到小計金額
+							subtotal += actPrice;
+						}
+					}
+				});
+
+				// 暫時先沒寫
+				var discount = 0;
+
+				// 計算 finalTotal
+				var finalTotal = subtotal - discount;
+
+				// 更新頁面上小計金額
+				var subtotalElement = document.getElementById('subtotal');
+				subtotalElement.textContent = '$' + subtotal;
+
+				// 更新頁面上折扣金額
+				var discountElement = document.getElementById('discount');
+				discountElement.textContent = '$' + discount;
+
+				// 更新頁面上總計金額
+				var finalTotalElement = document.getElementById('finalTotal');
+				finalTotalElement.textContent = '$' + finalTotal;
+			}
+		};
+	</script>
+
+
+
+
 
 	<!-- Footer -->
 	<footer class="bg3 p-t-55 p-b-32">
@@ -594,8 +787,8 @@
 						</li>
 
 						<!-- <li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04"> Shipping </a>
-						</li> -->
+							  <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> Shipping </a>
+						  </li> -->
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04"> FAQs </a>
@@ -624,7 +817,8 @@
 					<h4 class="stext-301 cl0 p-b-30 text-left">Latest Blog Post</h4>
 					<p class="stext-301 cl7 size-201 text-left">Ready to get started?</p>
 					<p class="stext-107 cl7 size-201 text-left">Any questions? Let us know in store at 8th floor, 379
-						Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879</p>
+						Hudson
+						St, New York, NY 10018 or call us on (+1) 96 716 6879</p>
 
 					<div class="p-t-27">
 						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
@@ -661,7 +855,6 @@
 
 
 
-
 	<!-- Back to top -->
 	<div class="btn-back-to-top" id="myBtn">
 		<span class="symbol-btn-back-to-top">
@@ -669,143 +862,6 @@
 		</span>
 	</div>
 
-
-
-
-	<!--====================================(JS開始)===========================================================-->
-	<script>
-		document.addEventListener('DOMContentLoaded', () => {
-
-			//-----------------------------------先從前頁獲得既有資料-----------------------------------//
-
-			// 從URL中獲取文章ID
-			const urlParams = new URLSearchParams(window.location.search);
-			const postID = urlParams.get('postID');
-			console.log('postID:', postID);
-
-			// 發送請求到Server
-			$.ajax({
-				type: "GET",
-				url: `http://localhost:8081/com.tha103.newview/GetPostDetailServlet?postID=${postID}`,
-				traditional: true,
-				dataType: "json",
-				success: function (data) {
-					console.log(data);
-					displayPostDetails(data);
-				},
-				error: function (error) {
-					console.error('There was a problem with the AJAX request:', error);
-				}
-			});
-
-			function displayPostDetails(data) {
-
-				var userName = data.userName;
-				var postID = data.postID;
-				var postHeader = data.postHeader;
-				var postContent = data.postContent;
-				console.log(data.postHeader);
-
-			    $('#userName').val(userName);
-			    $('#postID').val(postID);
-			    $('#posttitle').val(postHeader);
-			    $('#postcontent').val(postContent);
-			}
-
-
-			//-----------------------------------開始修改-----------------------------------//
-
-
-			// 初始化變數
-			var the_form = document.getElementById("postform");
-			var btn_submit_el = document.getElementById("submitpost");
-			var preview_els = [];
-
-			// 添加拖放事件
-			for (let i = 1; i <= 3; i++) {
-				let drop_zone_el = document.getElementById("drop_zone" + i);
-				let preview_el = document.getElementById("preview" + i);
-
-				drop_zone_el.addEventListener("dragover", function (e) {
-					e.preventDefault();
-					e.target.classList.add("-on");
-				});
-
-				drop_zone_el.addEventListener("dragleave", function (e) {
-					e.target.classList.remove("-on");
-				});
-
-				drop_zone_el.addEventListener("drop", function (e) {
-					e.preventDefault();
-					e.target.classList.remove("-on");
-					if (e.dataTransfer.files.length > 0) {
-						preview_img(e.dataTransfer.files[0], preview_el);
-					}
-				});
-			}
-
-			// 透過File取得預覽圖
-			var preview_img = function (file, preview_el) {
-				var reader = new FileReader();
-				reader.readAsDataURL(file);
-
-				reader.addEventListener("load", function () {
-					let img_str = '<img src="' + reader.result + '" class="preview_img">';
-					preview_el.innerHTML = img_str;
-
-
-				});
-				console.log(preview_img);
-			};
-
-			// 資料送出
-			btn_submit_el.addEventListener("click", function (e) {
-				e.preventDefault();
-				var form_data = new FormData(the_form);
-
-				// 圖片轉Base64
-				var img_base64_els = document.querySelectorAll(".preview_img");
-				var img_base64_array = [];
-
-				img_base64_els.forEach(function (img_base64_el) {
-					var img_base64 = img_base64_el.getAttribute("src").substring(22);
-					img_base64_array.push(img_base64);
-				});
-
-				form_data.append("img_base64", img_base64_array);
-				console.log(img_base64_array);
-
-
-				// 其他數據
-				form_data.append("postID", document.getElementById("postID").value);
-				form_data.append("posttitle", document.getElementById("posttitle").value);
-				form_data.append("postCategoryID", document.getElementById("postcategory").value);
-				form_data.append("postcontent", document.getElementById("postcontent").value);
-				form_data.append("action", "update");
-				
-				console.log(form_data);
-				
-				// 發送請求到Server
-				$.ajax({
-					url: `http://localhost:8081/com.tha103.newview/DoPostServlet`,
-					type: "POST",
-					data: form_data,
-					contentType: false,
-					processData: false,
-					success: function (data) {
-						// 成功處理後顯示
-						alert("文章修改完成");
-						location.href = "http://localhost:8081/com.tha103.newview/forum_home.html";
-					},
-					error: function (xhr) {
-						console.log("error");
-					}
-				});
-			});
-
-		});
-
-	</script>
 	<!--===============================================================================================-->
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 	<!--===============================================================================================-->
@@ -842,9 +898,6 @@
 			})
 		});
 	</script>
-	<!--===============================================================================================-->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKFWBqlKAGCeS1rMVoaNlwyayu0e0YRes"></script>
-	<script src="js/map-custom.js"></script>
 	<!--===============================================================================================-->
 	<script src="js/main.js"></script>
 
