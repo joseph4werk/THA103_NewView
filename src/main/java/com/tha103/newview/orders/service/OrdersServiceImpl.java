@@ -1,15 +1,13 @@
 package com.tha103.newview.orders.service;
 
-import java.sql.Timestamp;
 import java.util.List;
-import com.tha103.newview.discount.model.DiscountVO;
+
 import com.tha103.newview.orders.model.OrdersDAO;
 import com.tha103.newview.orders.model.OrdersDAOImpl;
 import com.tha103.newview.orders.model.OrdersVO;
-import com.tha103.newview.publisher.model.PublisherVO;
-import com.tha103.newview.user.model.UserVO;
 
-public class OrdersServiceImpl {
+
+public class OrdersServiceImpl implements OrdersService {
 
 	private OrdersDAO ordersDao;
 
@@ -17,19 +15,19 @@ public class OrdersServiceImpl {
 		ordersDao = new OrdersDAOImpl();
 	}
 
-	public void insertOrders(OrdersVO ordersVO) {
+	public int insertOrders(OrdersVO ordersVO) {
 
-		ordersDao.insert(ordersVO);
+		return ordersDao.insert(ordersVO);
 	}
 
-	public void updateOrders(OrdersVO ordersVO) {
+	public int updateOrders(OrdersVO ordersVO) {
 
-		ordersDao.update(ordersVO);
+		return ordersDao.update(ordersVO);
 
 	}
 
-	public void deleteOrders(Integer orderID) {
-		ordersDao.delete(orderID);
+	public int deleteOrders(Integer orderID) {
+		return ordersDao.delete(orderID);
 	}
 
 	public OrdersVO getOneOrder(Integer orderID) {
@@ -39,5 +37,22 @@ public class OrdersServiceImpl {
 	public List<OrdersVO> getAll() {
 		return ordersDao.getAll();
 	}
+
+
+	@Override
+	public int deleteOrdersbyUserIDandPubID(Integer userID, Integer pubID) {
+		// TODO Auto-generated method stub
+		return ordersDao.deleteOrdersbyUserIDandPubID(userID,pubID);
+	}
+
+	@Override
+	public Integer getOrderBy(int userID, int pubID) {
+		// TODO Auto-generated method stub
+		return ordersDao.getOrderBy(userID,pubID);
+	}
+
+	
+
+	
 
 }

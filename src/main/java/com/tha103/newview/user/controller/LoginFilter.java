@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
  * Servlet Filter implementation class LoginFilter
  */
 
-@WebFilter(urlPatterns = { "/member.html","/seatchangeWebsocketMiddle.html","/change-personal-info.html", "/my-profile.html", "/change-password.html", "/forum_dopost.html" })
+@WebFilter(urlPatterns = { "/member.html","/seatchangeWebsocketMiddle.html","/change-personal-info.html", "/my-profile.html", "/change-password.html", "/forum_dopost.html" ,"checkout_checkbuy_1.html","checkout_checkbuy_2.html"})
 
 public class LoginFilter extends HttpFilter implements Filter {
 

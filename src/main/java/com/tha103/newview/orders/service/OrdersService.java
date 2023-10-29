@@ -12,8 +12,14 @@ public interface OrdersService {
 
 	public int deleteOrders(Integer orderID);
 
+
 	public OrdersVO getOneOrder(Integer orderID);
 
 	List<OrdersVO> getAll();
+
+
+	int deleteOrdersbyUserIDandPubID(Integer userID, Integer pubID);
+
+	public Integer getOrderBy(int userID, int pubID);
 
 }

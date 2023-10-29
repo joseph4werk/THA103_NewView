@@ -2,12 +2,12 @@ package com.tha103.newview.orders.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
-import com.tha103.newview.discount.model.DiscountVO;
 import com.tha103.newview.publisher.model.PublisherVO;
-import com.tha103.newview.user.model.UserVO;
 import com.tha103.util.HibernateUtil;
 
 public class OrdersDAOImpl implements OrdersDAO {
@@ -100,5 +100,56 @@ public class OrdersDAOImpl implements OrdersDAO {
 		return null;
 
 	}
+
+	
+
+	@Override
+	public int deleteOrdersbyUserIDandPubID(Integer userID, Integer pubID) {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    try {
+	        session.beginTransaction();
+
+	        // 透過查詢來獲取特定的 OrdersVO
+	        Query query = session.createQuery("from OrdersVO where publisherVO.pubID = :pubID and userVO.userID = :userID");
+	        query.setParameter("pubID", pubID);
+	        query.setParameter("userID", userID);
+	        List<OrdersVO> orders = query.list();
+
+	        for (OrdersVO order : orders) {
+	            session.delete(order); // 刪除每個符合條件的訂單
+	        }
+
+	        session.getTransaction().commit();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        session.getTransaction().rollback();
+	        return -1; // 返回錯誤碼
+	    }
+	    return 1; // 成功刪除
+	}
+
+	@Override
+	public Integer getOrderBy(int userID, int pubID) {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    try {
+	        session.beginTransaction();
+
+	        Query query = session.createQuery("SELECT orderVO.orderID FROM OrdersVO orderVO WHERE orderVO.userVO.userID = :userID AND orderVO.publisherVO.pubID = :pubID", Integer.class);
+	        query.setParameter("userID", userID);
+	        query.setParameter("pubID", pubID);
+
+	        Integer orderID = (Integer) query.uniqueResult();
+	        
+	        session.getTransaction().commit();
+	        return orderID != null ? orderID : 0; // Return 0 or handle null case according to your requirements
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        session.getTransaction().rollback();
+	    }
+	    return 0;
+	}
+
+
+
 
 }

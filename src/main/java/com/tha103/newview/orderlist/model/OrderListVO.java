@@ -23,6 +23,8 @@ import com.tha103.newview.orders.model.OrdersVO;
 @Entity
 @Table(name = "orderlist")
 public class OrderListVO implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Expose
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,16 +52,12 @@ public class OrderListVO implements java.io.Serializable {
 	private Integer fiveStarReview;
 
 	@Expose
-	@Column(name = "seatRows", columnDefinition = "tinyint")
-	private Integer seatRows;
+	@Column(name = "seatRowsColumns", columnDefinition = "tinyint")
+	private String seatRowsColumns;
 
 	@Expose
-	@Column(name = "seatColumns", columnDefinition = "tinyint")
-	private Integer seatColumns;
-
-	@Expose
-	@Column(name = "vacancy")
-	private String vacancy;
+	@Column(name = "type", columnDefinition = "tinyint")
+	private Integer type;
 
 	@ManyToOne
 	@JoinColumn(name = "orderID", referencedColumnName = "orderID")
@@ -79,7 +77,7 @@ public class OrderListVO implements java.io.Serializable {
 	}
 
 	public OrderListVO(Integer orderListID, Integer actTotal, byte[] qRcodeID, Timestamp orderListTime,
-			String reviewContent, Integer fiveStarReview, Integer seatRows, Integer seatColumns, String vacancy,
+			String reviewContent, Integer fiveStarReview, String seatRowsColumns, Integer type,
 			OrdersVO ordersVO, ActVO actVO, Set<ComPicVO> comPicVOs) {
 		super();
 		this.orderListID = orderListID;
@@ -88,9 +86,8 @@ public class OrderListVO implements java.io.Serializable {
 		OrderListTime = orderListTime;
 		this.reviewContent = reviewContent;
 		this.fiveStarReview = fiveStarReview;
-		this.seatRows = seatRows;
-		this.seatColumns = seatColumns;
-		this.vacancy = vacancy;
+		this.seatRowsColumns = seatRowsColumns;
+		this.type = type;
 		this.ordersVO = ordersVO;
 		this.actVO = actVO;
 		this.comPicVOs = comPicVOs;
@@ -144,28 +141,21 @@ public class OrderListVO implements java.io.Serializable {
 		this.fiveStarReview = fiveStarReview;
 	}
 
-	public Integer getSeatRows() {
-		return seatRows;
+
+	public String getSeatRowsColumns() {
+		return seatRowsColumns;
 	}
 
-	public void setSeatRows(Integer seatRows) {
-		this.seatRows = seatRows;
+	public void setSeatRowsColumns(String seatRowsColumns) {
+		this.seatRowsColumns = seatRowsColumns;
 	}
 
-	public Integer getSeatColumns() {
-		return seatColumns;
+	public Integer getType() {
+		return type;
 	}
 
-	public void setSeatColumns(Integer seatColumns) {
-		this.seatColumns = seatColumns;
-	}
-
-	public String getVacancy() {
-		return vacancy;
-	}
-
-	public void setVacancy(String vacancy) {
-		this.vacancy = vacancy;
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 	public OrdersVO getOrdersVO() {
@@ -196,8 +186,8 @@ public class OrderListVO implements java.io.Serializable {
 	public String toString() {
 		return "OrderListVO [orderListID=" + orderListID + ", actTotal=" + actTotal + ", QRcodeID="
 				+ Arrays.toString(QRcodeID) + ", OrderListTime=" + OrderListTime + ", reviewContent=" + reviewContent
-				+ ", fiveStarReview=" + fiveStarReview + ", seatRows=" + seatRows + ", seatColumns=" + seatColumns
-				+ ", vacancy=" + vacancy + "]";
+				+ ", fiveStarReview=" + fiveStarReview + ", seatRowsColumns=" + seatRowsColumns 
+				+ ", type=" + type + "]";
 	}
 
 }

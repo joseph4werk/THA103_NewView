@@ -2,7 +2,7 @@
 <html lang="en" style="background-color: rgb(250, 248, 248);">
 
 <head>
-	<title>Shoping Cart</title>
+	<title>NewView - Shoping Cart</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--===============================================================================================-->
@@ -43,8 +43,8 @@
 
 
 <body class="animsition">
-	
-	
+
+
 	<!-- Header -->
 	<header class="header-v3" style=" background-color: black;">
 		<!-- Header desktop -->
@@ -324,7 +324,7 @@
 		</div>
 	</aside>
 
-	
+
 
 	<!-- Cart -->
 	<div class="wrap-header-cart js-panel-cart">
@@ -402,10 +402,12 @@
 	</section>
 
 	<!-- ===================================================== -->
-	<DIV style="text-align:center;"><h2><strong>購物車列表</strong></h2></DIV><br>
-	
+	<DIV style="text-align:center;margin-bottom: 50px;">
+		<h2><strong>購物車列表</strong></h2>
+	</DIV><br>
+
 	<!-- breadcrumb -->
-	<div class="container"  style="margin-top: -150px;" >
+	<div class="container" style="margin-top: -150px; margin-bottom: 180px;">
 		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
 			<a href="./home-03.html" class="stext-109 cl8 hov-cl1 trans-04">
 				Home
@@ -420,219 +422,159 @@
 
 
 	<!-- Shoping Cart -->
+	<div id="cart-container">
+		<script>
+			document.addEventListener('DOMContentLoaded', () => {
+				$.ajax({
+					type: "POST",
+					url: `http://localhost:8081/com.tha103.newview/getcartorder`,
+					dataType: "json",
+					success: function (data) {
+						console.log(data);
 
-	<form class="bg0 p-t-75 p-b-85" style="background-color: rgb(250, 248, 248);">
-		<div class="container" style="text-align: center;">
-			<div class="row">
-				<div class="col-lg-10 col-xl-12 m-lr-auto m-b-60" style="transform: scale(0.85);" >
-					<div class="m-l-25 m-r--38 m-lr-0-xl">
-						<input type="text" id="publisher2" name="choice" value="出品廠商 : 薩泰爾娛樂">
-						<hr>
-						<div class="wrap-table-shopping-cart">
-							<table class="table-shopping-cart">
-								<tr class="table_head" style="background-color: rgb(1, 1, 1);">
-									<th class="column-0 col-xl-1" style="text-align: center;color: #ffffff;">買這筆</th>
-									<th class="column-1 col-xl-2" style="text-align: center;color: #ffffff;">活動圖片</th>
-									<th class="column-2 col-xl-3" style="text-align: center;color: #ffffff;">活動場次</th>
-									<th class="column-3 col-xl-3" style="text-align: center;color: #ffffff;">座位</th>
-									<th class="column-4 col-xl-1" style="text-align: center;color: #ffffff;">單價</th>
-									<th class="column-6 col-xl-1" style="text-align: center;color: #ffffff;">數量</th>
-									<th class="column-6 col-xl-1" style="text-align: center;color: #ffffff;">總金額</th>
-									<th class="column-6 col-xl-1" style="text-align: center;color: #ffffff;">狀態</th>
-								</tr>
+						// 建立購物車容器
+						const cartContainer = document.getElementById('cart-container');
+						// 進行第一層迴圈
+						for (var key in data) {
+							if (data.hasOwnProperty(key)) {
+								//進行第一層購物車內容
+								var newCart = document.createElement('form');
+								newCart.className = "bg0 p-t-75 p-b-85";
+								newCart.style.backgroundColor = "rgb(250, 248, 248)";
 
-								<tr class="table_row">
-
-									<td class="column-0 col-xl-1" style="text-align: right;">
-										<input type="checkbox" id="option1" name="choice" value="option1">
-										<label for="option1"></label>
-									</td>
-									<td class="column-1 col-xl-2">
-										<div class="how-itemcart1">
-											<img src="images/item-cart-04.jpg" alt="IMG">
+								var cartContent = `
+									<div class="container" style="text-align: center;margin-top: -180px;">
+										<div class="row">
+											<div class="col-lg-10 col-xl-12 m-lr-auto m-b-60" style="transform: scale(0.85);">
+												<div class="m-l-25 m-r--38 m-lr-0-xl">
+													<input type="hidden" id="pubID-${key}" name="choice" value="${key}"> <!-- 修改唯一的 pubID -->
+													<input class="pubName" type="text" name="choice" value="">
+													<hr>
+													<div class="wrap-table-shopping-cart">
+														<table class="table-shopping-cart">
+															<tr class="table_head" style="background-color: rgb(1, 1, 1);">
+																<th class="column-0 col-xl-1" style="text-align: center;color: #ffffff;">買這筆</th>
+																<th class="column-1 col-xl-2" style="text-align: center;color: #ffffff;">活動圖片</th>
+																<th class="column-2 col-xl-3" style="text-align: center;color: #ffffff;">活動場次</th>
+																<th class="column-3 col-xl-3" style="text-align: center;color: #ffffff;">座位</th>
+																<th class="column-4 col-xl-1" style="text-align: center;color: #ffffff;">單價</th>
+																<th class="column-6 col-xl-1" style="text-align: center;color: #ffffff;">數量</th>
+																<th class="column-6 col-xl-1" style="text-align: center;color: #ffffff;">總金額</th>
+																<th class="column-6 col-xl-1" style="text-align: center;color: #ffffff;">狀態</th>
+															</tr>
+														</table>
+													</div>
+	
+													<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm" style="background-color: #f1f0f0;">
+														<div class="flex-w flex-m m-r-20 m-tb-5">
+															<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
+																name="coupon" placeholder="Coupon Code">
+															<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+																輸入活動廠商折扣碼
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
 										</div>
-									</td>
-									<td class="column-2 col-xl-3">博恩巡迴脫口秀</td>
-									<td class="column-3 col-xl-3">
-										<select name="seat" style="color: rgb(128, 125, 125);" aria-readonly="true">
-											<option value="seat1">5A 第五排A位</option>
-											<option value="seat2">5B 第五排B位</option>
-											<option value="seat3">5C 第五排C位</option>
-											<!-- 在这里添加更多的选项 -->
-										</select>
-									</td>
-									<td class="column-4 col-xl-1" style="text-align: center;">$ 36.00</td>
-									<td class="column-5 col-xl-1">1</td>
-									<td class="column-6 col-xl-1">$ 36.00</td>
-									<td class="column-7 col-xl-1">
-										<button class=" stext-101 cl0 size-100 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
-										style = "background-color:black;border-color: black;">
-											刪除
-										</button>
-									</td>
-								</tr>
+									</div>`;
 
-								<tr class="table_row">
-									<td class="column-0 col-xl-1">
-										<input type="checkbox" id="option2" name="choice" value="option2">
-										<label for="option2"></label>
+								newCart.innerHTML = cartContent;
+								cartContainer.appendChild(newCart);
 
-									</td>
-									<td class="column-1 col-xl-2">
-										<div class="how-itemcart1">
-											<img src="images/item-cart-04.jpg" alt="IMG">
-										</div>
-									</td>
-									<td class="column-2 col-xl-3">博恩巡迴脫口秀</td>
-									<td class="column-3 col-xl-3">
-										<select name="seat" style="color: rgb(128, 125, 125);" aria-readonly="true">
-											<option value="seat1">5A 第五排A位</option>
-											<option value="seat2">5B 第五排B位</option>
-											<option value="seat3">5C 第五排C位</option>
-											<!-- 在这里添加更多的选项 -->
-										</select>
-									</td>
-									<td class="column-4 col-xl-1" style="text-align: center;">$ 36.00</td>
-									<td class="column-5 col-xl-1">2</td>
-									<td class="column-6 col-xl-1">$ 36.00</td>
-									<td class="column-7 col-xl-1">
-										<button class=" stext-101 cl0 size-100 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
-										style = "background-color:black;border-color: black;">
-											刪除
-										</button>
-									</td>
-								</tr>
-							</table>
-						</div>
+								// 準備第二層迴圈的key值
+								var secondLayerArray = data[key];
 
-						<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm" style="background-color: #f1f0f0;">
-							<div class="flex-w flex-m m-r-20 m-tb-5">
-								<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
-									name="coupon" placeholder="Coupon Code">
+								// 獲取剛剛創立的購物車表格
+								var cartTable = newCart.querySelector('table.table-shopping-cart');
 
-								<div
-									class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-									輸入活動廠商折扣碼
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>
+								// 開始第二次迴圈取得資料
+								for (var i = 0; i < secondLayerArray.length; i++) {
+									var item = secondLayerArray[i];
 
+									// 設置變數
+									var pubID = item.pubID;
+									var pubName = item.pubName;
+									var actID = item.actID;
+									var scope = item.scope;
+									var actName = item.actName;
+									var rowColumn = item.rowColumn;
+									var actPrice = item.actPrice;
+									var actCount = item.actCount;
+									var actPriceTotal = item.actPriceTotal;
+									var seatStatus = item.soldOut;
 
-	<form class="bg0 p-t-75 p-b-85" style="background-color: rgb(250, 248, 248);margin-top: -200px;">
-		<div class="container" style="text-align: center;">
-			<div class="row">
-				<div class="col-lg-10 col-xl-12 m-lr-auto m-b-60" style="transform: scale(0.85);" >
-					<div class="m-l-25 m-r--38 m-lr-0-xl">
-						<input type="text" id="publisher2" name="choice" value="出品廠商 : 薩泰爾娛樂">
-						<hr>
-						<div class="wrap-table-shopping-cart">
-							<table class="table-shopping-cart">
-								<tr class="table_head" style="background-color: rgb(1, 1, 1);">
-									<th class="column-0 col-xl-1" style="text-align: center;color: #ffffff;">買這筆</th>
-									<th class="column-1 col-xl-2" style="text-align: center;color: #ffffff;">活動圖片</th>
-									<th class="column-2 col-xl-3" style="text-align: center;color: #ffffff;">活動場次</th>
-									<th class="column-3 col-xl-3" style="text-align: center;color: #ffffff;">座位</th>
-									<th class="column-4 col-xl-1" style="text-align: center;color: #ffffff;">單價</th>
-									<th class="column-6 col-xl-1" style="text-align: center;color: #ffffff;">數量</th>
-									<th class="column-6 col-xl-1" style="text-align: center;color: #ffffff;">總金額</th>
-									<th class="column-6 col-xl-1" style="text-align: center;color: #ffffff;">狀態</th>
-								</tr>
+									var pubNameElements = newCart.getElementsByClassName('pubName');
+									for (var j = 0; j < pubNameElements.length; j++) {
+										pubNameElements[j].value = "出品廠商: " + pubName;
+									}
 
-								<tr class="table_row">
+									// 將變數渲染到表格中
+									var newRow = cartTable.insertRow(cartTable.rows.length);
 
-									<td class="column-0 col-xl-1" style="text-align: right;">
-										<input type="checkbox" id="option1" name="choice" value="option1">
-										<label for="option1"></label>
-									</td>
-									<td class="column-1 col-xl-2">
-										<div class="how-itemcart1">
-											<img src="images/item-cart-04.jpg" alt="IMG">
-										</div>
-									</td>
-									<td class="column-2 col-xl-3">博恩巡迴脫口秀</td>
-									<td class="column-3 col-xl-3">
-										<select name="seat" style="color: rgb(128, 125, 125);" aria-readonly="true">
-											<option value="seat1">5A 第五排A位</option>
-											<option value="seat2">5B 第五排B位</option>
-											<option value="seat3">5C 第五排C位</option>
-											<!-- 在这里添加更多的选项 -->
-										</select>
-									</td>
-									<td class="column-4 col-xl-1" style="text-align: center;">$ 36.00</td>
-									<td class="column-5 col-xl-1">1</td>
-									<td class="column-6 col-xl-1">$ 36.00</td>
-									<td class="column-7 col-xl-1">
-										<button class=" stext-101 cl0 size-100 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
-										style = "background-color:black;border-color: black;">
-											刪除
-										</button>
-									</td>
-								</tr>
+									newRow.innerHTML = `
+										<tr class="table_row" style="height: 100px;">
+											<td class="column-0 col-xl-1" style="text-align: right;">
+												<input type="checkbox" id="option${key}-${i + 1}" name="choice" value="option${i + 1}" data-act-price="${actPriceTotal}">
+												<input type="hidden" name="actID" value="${actID}">
+												<input type="hidden" name="pubID" value="${pubID}">
+												<label for="option${key}-${i + 1}"></label>
+											</td>
+											<td class="column-1 col-xl-2">
+												<div class="how-itemcart1">
+													<img src="images/item-cart-04.jpg" alt="IMG">
+												</div>
+											</td>
+											<td class="column-2 col-xl-3">${actName}</td>
+											<td class="column-3 col-xl-3">
+												<select name="seat" style="color: rgb(128, 125, 125);" aria-readonly="true">
+													${rowColumnOptions(rowColumn)}
+												</select>
+											</td>
+											<td class="column-4 col-xl-1" style="text-align: center;">${actPrice}</td>
+											<td class="column-5 col-xl-1">${actCount}</td>
+											<td class="column-6 col-xl-1">${actPriceTotal}</td>
+											<td class="column-7 col-xl-1">
+												<button
+													class="stext-101 cl0 size-100 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
+													style="background-color: black; border-color: black;">
+													刪除
+												</button>
+											</td>
+										</tr>
+									`;
 
-								<tr class="table_row">
-									<td class="column-0 col-xl-1">
-										<input type="checkbox" id="option2" name="choice" value="option2">
-										<label for="option2"></label>
+									// 生成rowColumn的option
+									function rowColumnOptions(rowColumn) {
+										let options = '';
+										for (let i = 0; i < rowColumn.length; i++) {
+											options += `<option value="seat${i + 1}">${rowColumn[i]}</option>`;
+										}
+										return options;
+									}
+								}
+							}
+						}
+					},
 
-									</td>
-									<td class="column-1 col-xl-2">
-										<div class="how-itemcart1">
-											<img src="images/item-cart-04.jpg" alt="IMG">
-										</div>
-									</td>
-									<td class="column-2 col-xl-3">博恩巡迴脫口秀</td>
-									<td class="column-3 col-xl-3">
-										<select name="seat" style="color: rgb(128, 125, 125);" aria-readonly="true">
-											<option value="seat1">5A 第五排A位</option>
-											<option value="seat2">5B 第五排B位</option>
-											<option value="seat3">5C 第五排C位</option>
-											<!-- 在这里添加更多的选项 -->
-										</select>
-									</td>
-									<td class="column-4 col-xl-1" style="text-align: center;">$ 36.00</td>
-									<td class="column-5 col-xl-1">2</td>
-									<td class="column-6 col-xl-1">$ 36.00</td>
-									<td class="column-7 col-xl-1">
-										<button class=" stext-101 cl0 size-100 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
-										style = "background-color:black;border-color: black;">
-											刪除
-										</button>
-									</td>
-								</tr>
-							</table>
-						</div>
+					error: function (error) {
+						console.error('There was a problem with the AJAX request:', error);
+					}
+				});
 
-						<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm" style="background-color: #f1f0f0;">
-							<div class="flex-w flex-m m-r-20 m-tb-5">
-								<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
-									name="coupon" placeholder="Coupon Code">
+			});
 
-								<div
-									class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-									輸入活動廠商折扣碼
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>
+		</script>
+	</div>
+
 
 
 	<div style="transform: scale(0.8); text-align: center;margin-top: -150px; margin-left: 50px; margin-bottom: 80px;">
-		
+
 		<div class="bor10 p-lr-30 p-t-30 p-b-30 m-l-50 m-r-40 m-lr-0-xl p-lr-10-sm rounded shadow-sm">
 			<h4 class="mtext-109 cl2 p-b-30" style="font-size: 35px;">
 				Cart Totals
 			</h4>
-
-			
 
 			<div class="flex-w flex-t bor12 p-b-13">
 				<div class="size-208">
@@ -642,8 +584,8 @@
 				</div>
 
 				<div class="size-209">
-					<span class="mtext-110 cl2">
-						$79.65
+					<span id="subtotal" class="mtext-110 cl2">
+						$0
 					</span>
 				</div>
 			</div>
@@ -656,8 +598,8 @@
 				</div>
 
 				<div class="size-209">
-					<span class="mtext-110 cl2" style="font-size: large;margin-top: 5px;color: red;">
-						$79.65
+					<span id="discount" class="mtext-110 cl2" style="font-size: large;margin-top: 5px;color: red;">
+						$0
 					</span>
 				</div>
 			</div>
@@ -669,17 +611,138 @@
 					</span>
 				</div>
 				<div class="size-209 p-t-1">
-					<span class="mtext-110 cl2">
-						$79.65
+					<span id="finalTotal" class="mtext-110 cl2">
+						$0
 					</span>
 				</div>
 			</div>
 
-			<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+			<button id="checkout" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
 				Proceed to Checkout
 			</button>
 		</div>
 	</div>
+
+
+
+	<script>
+		window.onload = function () {
+			// 獲取所有的 checkbox 元素
+			var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+			var order = []; // 在这里声明 order 变量
+
+			checkboxes.forEach(function (checkbox) {
+				checkbox.addEventListener('change', function () {
+					// 開始更新方法
+					updateCartTotal();
+
+					if (checkbox.checked) {
+						// 獲得<tr>
+						var row = checkbox.closest('tr');
+						var cells = row.cells;
+
+						var actIDInput = row.querySelector('input[name="actID"]');
+						var pubIDInput = row.querySelector('input[name="pubID"]');
+
+						var actID = actIDInput.value;
+						var pubID = pubIDInput.value;
+
+						var rowColumn = cells[3].textContent.trim();
+						var actPrice = parseFloat(cells[4].textContent.replace('$', ''));
+						var actCount = parseFloat(cells[5].textContent.replace('$', ''));
+						var actPriceTotal = parseFloat(cells[6].textContent.replace('$', ''));
+
+						var orderList = {
+							"actID": actID,
+							"pubID": pubID,
+							"rowColumn": rowColumn,
+							"actPrice": actPrice,
+							"actCount": actCount,
+							"actPriceTotal": actPriceTotal
+						};
+
+						order.push(orderList);
+					} else {
+						// 如果 checkbox 取消選中
+						var actIDInput = checkbox.closest('tr').querySelector('input[name="actID"]');
+						var actID = actIDInput.value; // 在這裡重新定義
+						var index = order.findIndex(item => item.actID === actID); // 找到對應的索引
+						if (index > -1) {
+							order.splice(index, 1); // 從 order 陣列中刪除相應的數據
+						}
+					}
+				});
+			});
+
+
+
+			var checkoutButton = document.getElementById('checkout');
+			checkoutButton.addEventListener('click', function () {
+				console.log(order);
+				comfirmOrderList = JSON.stringify(order);
+				console.log(comfirmOrderList);
+				$.ajax({
+					type: "POST",
+					url: `http://localhost:8081/com.tha103.newview/DoOrder`,
+					data: {
+						"comfirmOrderList": comfirmOrderList
+					},
+					dataType: "json",
+					success: function (data) {
+						console.log("訂單儲存成功");
+						var url = data.location;
+						window.location.href = url;
+						
+					},
+					error: function (error) {
+						console.error('There was a problem with the AJAX request:', error);
+					}
+				});
+			});
+
+			// 更新購物車金額的方法
+			function updateCartTotal() {
+				var subtotal = 0;
+				// 獲取所有的 checkbox 元素
+				var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+				// 遍歷所有的 checkbox 元素
+				checkboxes.forEach(function (checkbox) {
+					if (checkbox.checked) {
+						// 獲取對應價格
+						var row = checkbox.closest('tr');
+						var cells = row.cells;
+						var actPrice = parseFloat(cells[6].textContent.replace('$', ''));
+
+						if (!isNaN(actPrice)) {
+							// 將價格添加到小計金額
+							subtotal += actPrice;
+						}
+					}
+				});
+
+				// 暫時先沒寫
+				var discount = 0;
+
+				// 計算 finalTotal
+				var finalTotal = subtotal - discount;
+
+				// 更新頁面上小計金額
+				var subtotalElement = document.getElementById('subtotal');
+				subtotalElement.textContent = '$' + subtotal;
+
+				// 更新頁面上折扣金額
+				var discountElement = document.getElementById('discount');
+				discountElement.textContent = '$' + discount;
+
+				// 更新頁面上總計金額
+				var finalTotalElement = document.getElementById('finalTotal');
+				finalTotalElement.textContent = '$' + finalTotal;
+			}
+		};
+	</script>
+
+
+
 
 
 	<!-- Footer -->
