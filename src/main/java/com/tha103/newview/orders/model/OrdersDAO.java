@@ -9,6 +9,8 @@ public interface OrdersDAO {
     public int delete(Integer orderID);
     public OrdersVO findByPrimaryKey(Integer orderID);
     public List<OrdersVO> getAll();
+	int deleteOrdersbyUserIDandPubID(Integer userID, Integer pubID);
+	public Integer getOrderBy(int userID, int pubID);
           
 //  萬用複合查詢(傳入參數型態Map)(回傳List)
 //  public List<OrdersVO> getAll(Map<String, String[]> map);

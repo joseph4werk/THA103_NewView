@@ -20,11 +20,11 @@ public class OrderDTO {
 	public OrderDTO(Integer userID) {
 		UserVO userVO = new UserServiceImpl().getUserByPK(userID);
 		Set<OrdersVO> ordersVOs = userVO.getOrdersVOs();
+		
 		for(OrdersVO ordersVO : ordersVOs) {
 			this.publisher.add(ordersVO.getPublisherVO().getPubName());
 			this.ordTime.add(ordersVO.getOrdTime());
 			this.ordTotal.add(ordersVO.getOrdTotal());
-			
 		}
 	}
 
@@ -37,7 +37,4 @@ public class OrderDTO {
 	public String toString() {
 		return "OrderDTO [publisher=" + publisher + ", ordTime=" + ordTime + ", ordTotal=" + ordTotal + "]";
 	}
-	
-	
-
 }

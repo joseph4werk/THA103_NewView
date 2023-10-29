@@ -286,10 +286,5 @@ public class UserVO {
 				+ ", userEmail=" + userEmail + ", userNickname=" + userNickname + ", buyAuthority=" + buyAuthority
 				+ ", speakAuthority=" + speakAuthority + "]";
 	}
-	
-//	public UserVO(String userAccount) {
-//		super();
-//		this.userAccount = userAccount;
-//	}
 
 }

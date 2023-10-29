@@ -66,7 +66,7 @@ public class OrderListController extends HttpServlet {
 			String paramName = parameterNames.nextElement();
 			if (paramName.startsWith("seatNumber_")) {
 				String seatNumber = paramName.replace("seatNumber_", "");
-				System.out.println("Received seatNumber: " + seatNumber);
+//				System.out.println("Received seatNumber: " + seatNumber);
 				String seatInfo = request.getParameter("seatData_" + seatNumber);
 				seatData.put(seatNumber, seatInfo);
 				seatDataCount++;
@@ -75,10 +75,10 @@ public class OrderListController extends HttpServlet {
 
 		Timestamp lastEditedTime = new Timestamp(System.currentTimeMillis());
 
-		System.out.println("Received actID: " + actID);
-		System.out.println("Received targetUserName: " + targetUserName);
-		System.out.println("Received modificationCount: " + modificationCount);
-		System.out.println("Received lastEditedTime: " + lastEditedTime);
+//		System.out.println("Received actID: " + actID);
+//		System.out.println("Received targetUserName: " + targetUserName);
+//		System.out.println("Received modificationCount: " + modificationCount);
+//		System.out.println("Received lastEditedTime: " + lastEditedTime);
 
 		if (actID != null && !actIDStr.trim().isEmpty()) {
 			ActServiceImpl actService = new ActServiceImpl();
@@ -86,9 +86,9 @@ public class OrderListController extends HttpServlet {
 			scope = actData.getActScope();
 			if (actData != null) {
 				Total = (int) (actData.getActPrice());
-				System.out.println("Act Price Total: " + Total);
+//				System.out.println("Act Price Total: " + Total);
 			} else {
-				System.out.println("No data found for actID: " + actID);
+//				System.out.println("No data found for actID: " + actID);
 			}
 		} else {
 			System.out.println("Invalid actID received.");
@@ -97,8 +97,8 @@ public class OrderListController extends HttpServlet {
 		for (Map.Entry<String, String> entry : seatData.entrySet()) {
 			String seatNumber = entry.getKey();
 			String seatInfo = entry.getValue();
-			System.out.println("Received seatNumber: " + seatNumber);
-			System.out.println("Received seatInfo: " + seatInfo);
+//			System.out.println("Received seatNumber: " + seatNumber);
+//			System.out.println("Received seatInfo: " + seatInfo);
 		}
 
 		String youtubeLink = "https://youtu.be/dQw4w9WgXcQ?si=3NVOtjDf3Lf9LSPW";
@@ -107,9 +107,9 @@ public class OrderListController extends HttpServlet {
 		for (Map.Entry<String, String> entry : seatData.entrySet()) {
 			String seatNumber = entry.getKey();
 			String seatInfo = entry.getValue();
-			System.out.println("Received seatNumber: " + seatNumber);
+//			System.out.println("Received seatNumber: " + seatNumber);
 			Integer seatNumberInt = Integer.parseInt(seatNumber);
-			System.out.println("Received seatInfo: " + seatInfo);
+//			System.out.println("Received seatInfo: " + seatInfo);
 			double rowIndex1 = 0.0;
 			Integer seatIndex1 = 0;
 			switch (scope) {
@@ -126,8 +126,8 @@ public class OrderListController extends HttpServlet {
 				seatIndex1 = seatNumberInt % 30 == 0 ? 30 : seatNumberInt % 30;
 				break;
 			}
-			System.out.println("Received rowIndex1: " + rowIndex1);
-			System.out.println("Received seatIndex1: " + seatIndex1);
+//			System.out.println("Received rowIndex1: " + rowIndex1);
+//			System.out.println("Received seatIndex1: " + seatIndex1);
 			ActVO act = new ActVO();
 			act.setActID(actID);
 			OrderListVO orderListVO = new OrderListVO();
@@ -137,7 +137,7 @@ public class OrderListController extends HttpServlet {
 			orderListVO.setActVO(act);
 			orderListVO.setSeatRows(((int) rowIndex1) + 1);
 			orderListVO.setSeatColumns(seatIndex1);
-			orderListVO.setVacancy(seatNumber+",未使用");
+			orderListVO.setVacancy(seatNumber+",0");
 			if(orderListVO!=null) {
 			int result = orderListService.insert(orderListVO);
 			}else {

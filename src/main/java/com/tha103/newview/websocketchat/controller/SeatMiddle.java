@@ -166,7 +166,7 @@ public class SeatMiddle {
 			            SeatInfo seatInfoSend = new SeatInfo(userName, seatNumber, actID + ",cancel", actID);
 			            
 			          
-			            System.out.println("ActID: " + actID + ", UserName: " + userName + ", SeatNumber: " + seatNumber + ", SeatType: " + seatType);
+//			            System.out.println("ActID: " + actID + ", UserName: " + userName + ", SeatNumber: " + seatNumber + ", SeatType: " + seatType);
 			            
 			            // 添加 seatInfoSend 列表中
 			            seatInfoToSend.add(seatInfoSend);
@@ -334,55 +334,55 @@ public class SeatMiddle {
 	public static void markSeatsAsSoldOutByUserName(String actID, String targetUserName) {
 	    Map<String, String> modifiedSeatsData = redisService.markSeatsInRedis(actID, targetUserName);
 	    int modificationCount = modifiedSeatsData.size();
-	    System.out.println("Modification Count: " + modificationCount);
+//	    System.out.println("Modification Count: " + modificationCount);
 
-	    if (modificationCount > 0) {
-	        sendMarkedDataToServlet(actID, targetUserName, modifiedSeatsData, modificationCount);
-	    }
+//	    if (modificationCount > 0) {
+//	        sendMarkedDataToServlet(actID, targetUserName, modifiedSeatsData, modificationCount);
+//	    }
 	}
 	
 	
 	
 	// 調用該方法向servlet 傳遞購買消息
-	private static void sendMarkedDataToServlet(String actID, String targetUserName,
-			Map<String, String> modifiedSeatsData, int modificationCount) {
-		try {
-			String servletUrl = "http://localhost:8080/com.tha103.newview/SeatOrderList";
-			URL url = new URL(servletUrl);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("POST");
-			conn.setDoOutput(true);
-			conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-
-			StringBuilder postDataBuilder = new StringBuilder();
-			postDataBuilder.append("actID=").append(URLEncoder.encode(actID, "UTF-8"));
-			postDataBuilder.append("&targetUserName=").append(URLEncoder.encode(targetUserName, "UTF-8"));
-
-			// 添加修改後的數據
-			for (Map.Entry<String, String> entry : modifiedSeatsData.entrySet()) {
-				String seatNumber = entry.getKey();
-				String seatData = entry.getValue();
-				postDataBuilder.append("&seatNumber_").append(URLEncoder.encode(seatNumber, "UTF-8"));
-				postDataBuilder.append("&seatData_").append(URLEncoder.encode(seatData, "UTF-8"));
-			}
-
-			postDataBuilder.append("&modificationCount=").append(modificationCount);
-
-			OutputStream os = conn.getOutputStream();
-			os.write(postDataBuilder.toString().getBytes("UTF-8"));
-			os.flush();
-			os.close();
-
-			int responseCode = conn.getResponseCode();
-			if (responseCode == HttpURLConnection.HTTP_OK) {
-
-			}
-
-			conn.disconnect();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+//	private static void sendMarkedDataToServlet(String actID, String targetUserName,
+//			Map<String, String> modifiedSeatsData, int modificationCount) {
+//		try {
+//			String servletUrl = "http://localhost:8080/com.tha103.newview/SeatOrderList";
+//			URL url = new URL(servletUrl);
+//			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//			conn.setRequestMethod("POST");
+//			conn.setDoOutput(true);
+//			conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+//
+//			StringBuilder postDataBuilder = new StringBuilder();
+//			postDataBuilder.append("actID=").append(URLEncoder.encode(actID, "UTF-8"));
+//			postDataBuilder.append("&targetUserName=").append(URLEncoder.encode(targetUserName, "UTF-8"));
+//
+//			// 添加修改後的數據
+//			for (Map.Entry<String, String> entry : modifiedSeatsData.entrySet()) {
+//				String seatNumber = entry.getKey();
+//				String seatData = entry.getValue();
+//				postDataBuilder.append("&seatNumber_").append(URLEncoder.encode(seatNumber, "UTF-8"));
+//				postDataBuilder.append("&seatData_").append(URLEncoder.encode(seatData, "UTF-8"));
+//			}
+//
+//			postDataBuilder.append("&modificationCount=").append(modificationCount);
+//
+//			OutputStream os = conn.getOutputStream();
+//			os.write(postDataBuilder.toString().getBytes("UTF-8"));
+//			os.flush();
+//			os.close();
+//
+//			int responseCode = conn.getResponseCode();
+//			if (responseCode == HttpURLConnection.HTTP_OK) {
+//
+//			}
+//
+//			conn.disconnect();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	// 像擁有相同actID 用戶發送消息
 	private void sendMessageToActID(String actID, String message) {
@@ -457,19 +457,19 @@ public class SeatMiddle {
 			String senderActID = messageObject.getActID();
 			String messageType = messageObject.getType();
 			String userActID = (String) userSession.getUserProperties().get("actID");
-			System.err.println(userActID);
+//			System.err.println(userActID);
 
 			if (senderActID.equals(userActID)) {
 				if ("cancel".equals(messageType)) {
 					// 取消狀態,回傳前端
 					handleCancelOperation(messageObject, userSession);
 				} else if ("buy".equals(messageType)) {
-					System.err.println("收到購買");
+//					System.err.println("收到購買");
 					// 購買狀態,回傳前端
 					handleBuyOperation(messageObject, userSession);
 				} else if ("disconnect".equals(messageType)) {
 					// 用戶斷線, 將未售出座位更改為取消,發送回前端
-					System.err.println("disconnect");
+//					System.err.println("disconnect");
 					deleteSeatsByUserNameALL(senderActID, messageObject.getUserName(), userSession);
 				} else if ("soldOut".equals(messageType)) {
 					// 用戶決定購買, 將座位更改為已賣出,發送回前端
@@ -498,10 +498,10 @@ public class SeatMiddle {
 
 	        String text = String.format("session ID = %s, disconnected; close code = %d; reason phrase = %s",
 	                userSession.getId(), reason.getCloseCode().getCode(), reason.getReasonPhrase());
-	        System.out.println(text);
-	        System.out.println("斷線正常");
+//	        System.out.println(text);
+//	        System.out.println("斷線正常");
 	    } catch (Exception e) {
-	    	System.out.println("斷線異常");
+//	    	System.out.println("斷線異常");
 	        e.printStackTrace();
 	    }
 	}

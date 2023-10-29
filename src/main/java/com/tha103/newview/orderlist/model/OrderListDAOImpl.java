@@ -44,12 +44,12 @@ public class OrderListDAOImpl implements OrderListDAO {
 	}
 
 	@Override
-	public int delete(Integer orderListID) {
+	public int delete(Integer orderID) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
 		try {
 			session.beginTransaction();
-			OrderListVO orderList = session.get(OrderListVO.class, orderListID);
+			OrderListVO orderList = session.get(OrderListVO.class, orderID);
 			if (orderList != null) {
 				session.delete(orderList);
 			}

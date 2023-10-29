@@ -42,5 +42,4 @@ public class HotPostDTO {
 				+ postHeader + ", postMessages=" + postMessages + ", likeCounts=" + likeCounts + ", dislikeCounts="
 				+ dislikeCounts + "]";
 	}
-
 }
