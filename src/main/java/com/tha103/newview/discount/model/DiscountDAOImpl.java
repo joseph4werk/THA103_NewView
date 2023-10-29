@@ -3,6 +3,7 @@ package com.tha103.newview.discount.model;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import com.tha103.newview.admin.model.AdminVO;
 import com.tha103.newview.publisher.model.PublisherVO;
@@ -108,6 +109,22 @@ public class DiscountDAOImpl implements DiscountDAO {
 		}
 		return null;
 		
+	}
+	
+	
+	//for Publisher Backstage get discount List
+	public List<DiscountVO> getDiscountByPubID(Integer pubID){
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			String hql = "FROM DiscountVO AS d WHERE d.publisherVO.pubID = :pubID";
+			Query<DiscountVO> query = session.createQuery(hql,DiscountVO.class);
+			query.setParameter("pubID",pubID);
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return null;
 	}
 
 

@@ -13,10 +13,10 @@
 
 	<aside class="main-sidebar sidebar-dark-primary elevation-4">
 		<!-- Brand Logo -->
-		<a href="<%=request.getContextPath()%>/Backstage/Allpage-administrator/admin-index.jsp" class="brand-link"> <img
+		<a href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/admin-index.jsp" class="brand-link"> <img
 			src="<%=request.getContextPath()%>/Backstage/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
 			class="brand-image img-circle elevation-3" style="opacity: .8">
-			<span class="brand-text font-weight-light">NewView Backstage</span>
+			<span class="brand-text font-weight-light">NewView</span>
 		</a>
 
 		<!-- Sidebar -->
@@ -59,7 +59,7 @@
 							</a>
 							</li>
 							<li class="nav-item"><a
-								href="<%=request.getContextPath()%>/Backstage/Allpage-administrator/activity/activity-approve.jsp" class="nav-link">
+								href="<%=request.getContextPath()%>/Backstage/Allpage-administrator/activity/activity-list.jsp" class="nav-link">
 									<i class="far fa-circle nav-icon"></i>
 									<p>活動審查</p>
 							</a>
@@ -72,11 +72,11 @@
 							</li>
 						</ul>
 					</li>
-					<li class="nav-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-administrator/order/order-list.jsp"
+					<li class="nav-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-adminstrator/order/order-list.jsp"
 						class="nav-link"> <i class="nav-icon fas fa-file"></i>
 							<p>訂單管理</p>
 					</a></li>
-					<li class="nav-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-administrator/discount/discount-list.jsp"
+					<li class="nav-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-adminstrator/discount/discount-list.jsp"
 						class="nav-link"> <i class="nav-icon fas fa-tree"></i>
 							<p>優惠管理</p>
 					</a></li>
@@ -116,7 +116,7 @@
 							</a></li>
 						</ul>
 					</li>
-					<li class="nav-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-administrator/login/login_admin.jsp"
+					<li class="nav-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-admistrator/login/login_admin.jsp"
 						class="nav-link"> <i class="nav-icon fas fa-file"></i>
 							<p>登出</p>
 					</a></li>

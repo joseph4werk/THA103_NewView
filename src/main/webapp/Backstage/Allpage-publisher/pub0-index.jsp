@@ -1,16 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html >
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NEW VIEW | Administrator Backstage</title>
-  
+  <title>NEW VIEW | Backstage</title>
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -20,7 +18,7 @@
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
 </head>
 
-<body>
+<body class="hold-transition sidebar-mini">
   <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -32,65 +30,7 @@
       </ul>
 
       <!-- Right navbar links -->
-      <ul class="navbar-nav ml-auto">
-        <!-- Messages Dropdown Menu -->
-        <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-comments"></i>
-            <span class="badge badge-danger navbar-badge">3</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <a href="#" class="dropdown-item">
-              <!-- Message Start -->
-              <div class="media">
-                <img src="../dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    Brad Diesel
-                    <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                  </h3>
-                  <p class="text-sm">Call me whenever you can...</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-              </div>
-              <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <!-- Message Start -->
-              <div class="media">
-                <img src="../dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    John Pierce
-                    <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                  </h3>
-                  <p class="text-sm">I got your message bro</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-              </div>
-              <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <!-- Message Start -->
-              <div class="media">
-                <img src="../dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    Nora Silvester
-                    <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                  </h3>
-                  <p class="text-sm">The subject goes here</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-              </div>
-              <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-          </div>
-        </li>
+      <ul class="navbar-nav ml-auto">        
         <!-- Notifications Dropdown Menu -->
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#">
@@ -99,16 +39,6 @@
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <span class="dropdown-item dropdown-header">15 Notifications</span>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-envelope mr-2"></i> 4 new messages
-              <span class="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-users mr-2"></i> 8 friend requests
-              <span class="float-right text-muted text-sm">12 hours</span>
-            </a>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item">
               <i class="fas fa-file mr-2"></i> 3 new reports
@@ -130,10 +60,10 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="admin-index.jsp" class="brand-link">
+      <a href="../../index.html" class="brand-link">
         <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
           style="opacity: .8">
-        <span class="brand-text font-weight-light">NewView Backstage</span>
+        <span class="brand-text font-weight-light">NewView</span>
       </a>
 
       <!-- Sidebar -->
@@ -144,7 +74,7 @@
             <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">NewView 後台管理員</a>
+            <a href="#" class="d-block">後台管理員</a>
           </div>
         </div>
 
@@ -163,46 +93,47 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="activity/activity-category.jsp" class="nav-link">
+                  <a href="1activity/activity-list.html" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>分類管理</p>
+                    <p>活動列表</p>
                   </a>
-                </li>         
-	            <li class="nav-item">
-	              <a href="activity/activity-list.jsp" class="nav-link">
-	                <i class="far fa-circle nav-icon"></i>
-	                <p>活動列表</p>
-	              </a>
-	            </li>
-	            
-	            <li class="nav-item">
-	              <a href="activity/activity-shelves.jsp" class="nav-link">
-	                <i class="far fa-circle nav-icon"></i>
-	                <p>活動審查</p>
-	              </a>
-	            </li>
-	            
-	            <li class="nav-item">
-	              <a href="activity/activity-shelves.jsp" class="nav-link">
-	                <i class="far fa-circle nav-icon"></i>
-	                <p>評論管理</p>
-	              </a>
-	            </li>
-	            
-                
+                </li>
+                <li class="nav-item">
+                  <a href="1activity/activity-shelves.html" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>活動上/下架</p>
+                  </a>
+                </li>
               </ul>
             </li>
             <li class="nav-item">
-              <a href="order/order-list.jsp" class="nav-link">
+              <a href="2order/order-list.html" class="nav-link">
                 <i class="nav-icon fas fa-file"></i>
                 <p>訂單管理</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="order/order-list.jsp" class="nav-link">
+              <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-tree"></i>
-                <p>優惠管理</p>
+                <p>
+                  優惠管理
+                  <i class="fas fa-angle-left right"></i>
+                </p>
               </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="3discount/discount-list.html" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>優惠列表</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="3discount/discount-add.html" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>新增優惠</p>
+                  </a>
+                </li>
+              </ul>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
@@ -214,46 +145,21 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="<%=request.getContextPath()%>/user/user-list.jsp" class="nav-link">
+                  <a href="4user/user-member.html" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>廠商管理</p>
+                    <p>使用者列表</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="user/user-add.jsp" class="nav-link">
+                  <a href="4user/user-member-edit.html" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>會員管理</p>
-                  </a>
-                </li>
-               </ul>
-            </li>   
-                
-                
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-edit"></i>
-                <p>
-                  討論區
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="<%=request.getContextPath()%>/user/user-list.jsp" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>文章列表</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="user/user-add.jsp" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>檢舉審核</p>
+                    <p>新增使用者</p>
                   </a>
                 </li>
               </ul>
             </li>
             <li class="nav-item">
-              <a href="login/login.html" class="nav-link">
+              <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-file"></i>
                 <p>登出</p>
               </a>
@@ -267,11 +173,9 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <!-- Main content -->
+     
+
       
-      <!-- /.Main content -->
-      <!-- /.content Header-->
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
@@ -298,6 +202,6 @@
   <script src="../dist/js/adminlte.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="../dist/js/demo.js"></script>
-
 </body>
+
 </html>

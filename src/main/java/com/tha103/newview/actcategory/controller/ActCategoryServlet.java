@@ -19,7 +19,7 @@ import com.tha103.newview.actcategory.service.*;
 
 
 
-@WebServlet("/actcategory/actcategory.do")
+@WebServlet("/ActCategoryServlet")
 public class ActCategoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -78,29 +78,16 @@ public class ActCategoryServlet extends HttpServlet {
 		
 		if ("delete".equals(action)) {
 			
-//			List<String> errorMsgs = new LinkedList<String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
-//			// 送出刪除的來源網頁路徑
-//			String requestURL = req.getParameter("requestURL");
-			
 			Integer actCategoryID = Integer.valueOf(req.getParameter("actCategoryID"));
 			
-			ActCategoryService actCategorySvc = new ActCategoryService();
-			ActCategory actCategory = actCategorySvc.getOneActCategory(actCategoryID);
-			actCategorySvc.deleteActCategory(actCategoryID);
+			ActCategoryService actSvc = new ActCategoryService();
+			actSvc.deleteActCategory(actCategoryID);
 			
-//			if (requestURL.equals("/Backstage/Allpage-administrator/activity/activity-category.jsp")
-//				req.setAttribute("user-listByID", actCategorySvc.getOneActCategory(actCategory.getPublisherVO().getPubID()));
-
-			
-			
-			String url = "/Backstage/Allpage-administrator/activity/activity-category.jsp";
+			String url = "/Backstage/Allpage-administrator/activity-category.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 			
 		}
-		
-		
 		
 		
 		
