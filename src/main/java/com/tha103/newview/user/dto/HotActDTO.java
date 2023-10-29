@@ -22,12 +22,10 @@ public class HotActDTO {
 		this.actName.add(actVO.getActName());
 
 		Set<ActPic> actpics = actVO.getActpics();
-		Object[] objectArray = actpics.toArray();
-		ActPic[] actPicsArray = new ActPic[objectArray.length];
-		if (objectArray[0] instanceof ActPic) {
-			actPicsArray[0] = (ActPic) objectArray[0];
-			if (actPicsArray[0] != null) {
-				this.actPic.add(Base64.getEncoder().encodeToString(actPicsArray[0].getActPic()));
+		for(ActPic actpic : actpics) {
+			byte[] actPicByte = actpic.getActPic();
+			if(actPicByte != null) {
+				this.actPic.add(Base64.getEncoder().encodeToString(actPicByte));
 			}
 		}
 	}
