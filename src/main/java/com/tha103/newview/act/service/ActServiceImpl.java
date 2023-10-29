@@ -150,7 +150,7 @@ public class ActServiceImpl implements ActService {
 	       
 	        ActDAO actDAO = new ActDAOHibernateImpl();
 	        ActVO act = actDAO.findByPrimaryKey(actIdValue); //使用actID取得 ActVO
-	        System.out.println("service找到的資料:" + act);
+//	        System.out.println("service找到的資料:" + act);
 
 	        if (act != null) {
 	            Set<ActPic> actPics = act.getActpics(); //DAO方法取得活動資訊及圖片(json格式)

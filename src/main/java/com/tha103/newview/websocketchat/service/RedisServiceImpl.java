@@ -2,13 +2,12 @@ package com.tha103.newview.websocketchat.service;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.websocket.Session;
 
+import com.google.gson.Gson;
 import com.tha103.newview.user.jedis.JedisPoolUtil;
 import com.tha103.newview.websocketchat.model.SeatInfo;
 
@@ -16,7 +15,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 public class RedisServiceImpl implements RedisService{
-
+ 
     private final JedisPool jedisPool;
   
 
@@ -124,7 +123,7 @@ public class RedisServiceImpl implements RedisService{
 		        for (Map.Entry<String, String> entry : seatsData.entrySet()) {
 		            String seatNumber = entry.getKey();
 		            String seatInfo = entry.getValue();
-		            System.out.println(seatNumber + "   " + seatInfo);
+//		            System.out.println(seatNumber + "   " + seatInfo);
 		            String[] seatInfoParts = seatInfo.split(",");
 		            String userName = seatInfoParts[0];
 		            String seatType = seatInfoParts[1];
@@ -187,7 +186,7 @@ public class RedisServiceImpl implements RedisService{
 		    Jedis jedis = null;
 		    Map<String, String> modifiedSeatsData = new HashMap<>();
 
-		    int seatExpirationTime = 20; // 設定座位的過期時間
+		    int seatExpirationTime = 6000; // 設定座位的過期時間
 
 		    try {
 		        jedis = JedisPoolUtil.getJedisPool().getResource();
@@ -205,7 +204,8 @@ public class RedisServiceImpl implements RedisService{
 		            String seatType = seatInfoParts[2];
 
 		            if (userName.equals(targetUserName) && seatType.equals("buy")) {
-		                // 將 "buy" 標記的座位狀態改為 "inCart"
+		                // 將 "buy" 標記的座位狀態改為 "inCart
+
 		                String newSeatInfoCart = seatNumber + "," + actName + ",inCart";
 		                newSeatInfo = userName + "," + actName + ",inCart";
 		                jedis.hset("seatData:" + actID, seatNumber, newSeatInfo);
@@ -242,9 +242,125 @@ public class RedisServiceImpl implements RedisService{
 
 		    return modifiedSeatsData;
 		}
+		//確認購買,複製到db3
+		public Map<String, String> findSeatsByActIDAndUserName(String actID, String userName) {
+		    Jedis jedis = null;
+		    int seatExpirationTime = 600;
+		    Map<String, String> result = new HashMap<>();
+		    try {
+		        jedis = JedisPoolUtil.getJedisPool().getResource();
+		        jedis.select(3); 
+		        
+		        Map<String, String> allSeats = jedis.hgetAll("seatData:" + actID);
+		        for (Map.Entry<String, String> entry : allSeats.entrySet()) {
+		            if (entry.getValue().startsWith(userName + "," + actID)) {
+		                result.put(entry.getKey(), entry.getValue());
+		                
+		               
+		                String[] seatInfoParts = entry.getValue().split(",");			            
+			            String actName = seatInfoParts[1];
+			            String seatType = seatInfoParts[2];
+			            jedis.select(5);
+			            String seatKey = "cart:" + userName + ":" + actID + ":" + entry.getKey()+":NotReallyBuy";
+			            String newSeatInfoCart = entry.getKey() + "," + actName + ",inCart";
+		                jedis.set(seatKey, newSeatInfoCart);
+		                jedis.expire(seatKey, seatExpirationTime);	
+			            
+		            }else {
+		            	System.out.println("沒找到");
+		            }
+		        }
+		        
+		        
+		    } finally {
+		        if (jedis != null) {
+		            jedis.close();
+		        }
+		    }
+		    return result;
+		}
 
+		
+		
+		public String getCartDataFromRedis(String cartKey) {
+		    Jedis jedis = null;
+		    Map<String, String> cartData = new HashMap<>();
+		    Gson gson = new Gson();
 
+		    try {
+		        jedis = JedisPoolUtil.getJedisPool().getResource();
+		        jedis.select(5);
+		        String[] parts = cartKey.split(":");
+		        String actID = parts[2];
+		        
+		        String seatInfo = jedis.get(cartKey);
+		        
+		        // 如果cartKey不存在，返回null
+		        if (seatInfo == null) {
+		            return null;
+		        }
+		        
+		        String[] keyParts = cartKey.split(":");
+		        String seatNumber =parts[3];
+		        cartData.put(seatNumber, seatInfo);
+		        System.out.println(seatNumber+"  號碼");
+		        // 刪除找到的資料
+		        jedis.del(cartKey);
+		        jedis.select(3);
+		        jedis.hdel("seatData:" + actID, seatNumber);
+		        
+		    } finally {
+		        if (jedis != null) {
+		            jedis.close();
+		        }
+		    }
 
+		    return gson.toJson(cartData);
+		}
 
+		
+		
+
+		public String findSeatKeyByActIDAndUserName(String actID, String userName) {
+		    Jedis jedis = null;
+		    try {
+		        jedis = JedisPoolUtil.getJedisPool().getResource();
+		        jedis.select(5); 
+
+		        Map<String, String> allSeats = jedis.hgetAll("seatData:" + actID);
+		        for (Map.Entry<String, String> entry : allSeats.entrySet()) {
+		            if (entry.getValue().startsWith(userName + "," + actID)) {
+		                String seatKey = "cart:" + userName + ":" + actID + ":" + entry.getKey() + ":NotReallyBuy";
+		                return seatKey;
+		            }
+		        }
+		    } finally {
+		        if (jedis != null) {
+		            jedis.close();
+		        }
+		    }
+		    return null; // 如果未找到匹配的seatKey
+		}
+		
+		 public  Map<String, String> findSeatsNumberByActIDAndUserName(String actID, String userName) {
+		        Jedis jedis = null;
+		        Map<String, String> result = new HashMap<>();
+		        try {
+		            jedis = JedisPoolUtil.getJedisPool().getResource();
+		            jedis.select(3); 
+
+		            Map<String, String> allSeats = jedis.hgetAll("seatData:" + actID);
+		            for (Map.Entry<String, String> entry : allSeats.entrySet()) {
+		                if (entry.getValue().startsWith(userName + "," + actID)) {
+		                    result.put(entry.getKey(), entry.getValue());
+		                }
+		            }
+		        } finally {
+		            if (jedis != null) {
+		                jedis.close();
+		            }
+		        }
+		        return result;
+		    }
 
 }
