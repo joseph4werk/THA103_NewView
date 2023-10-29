@@ -18,7 +18,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/seatChoose.css" type="text/css" />
+	href="<%=request.getContextPath()%>/css/seatChooseLarge.css" type="text/css" />
 </head>
 
 <body onload="connect();" onunload="disconnect();">
@@ -67,7 +67,7 @@
 	</p>
 	<p>
 		<a class="BuyIn" href="checkout_checkbuy_2.html">確認購買</a>
-		<button class="cart">Add to cart</button>
+		<a class="cart"  href="#">加入購物車</a>
 	</p>
 	</div>
 

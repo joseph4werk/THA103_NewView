@@ -60,10 +60,11 @@ body {
   color: aqua;
   border-radius: 5px;
   font-size: 40px;
-  margin-left: 10px;
+  margin-left: 75px;
   padding: 5px 15px 5px 15px;
   -moz-appearance: none;
   appearance: none;
+  
 }
 .container {
   perspective: 1000px;
@@ -183,6 +184,7 @@ body {
 p.text {
   margin: 5px 0;
   font-size: 20px;
+  text-align: center;
 }
 
 p.text span {
@@ -207,11 +209,12 @@ label {
 
 .cart {
   border: 1px solid #fff;
-  color: #242333;
+  color: #242333; 
   background-color: #fff;
   border-radius: 5px;
-  font-size: 33px;
+  font-size: 30px;
   text-decoration: none;
+  padding: 4px;
   float: right;
 }
 
