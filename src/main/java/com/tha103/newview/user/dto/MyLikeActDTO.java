@@ -11,9 +11,9 @@ import com.tha103.newview.mylike.model.MyLikeVO;
 public class MyLikeActDTO {
 
 	List<String> actName = new ArrayList<>();
-	
+
 	List<String> actIntroduce = new ArrayList<>();
-	
+
 	List<String> actPic = new ArrayList<>();
 
 	public MyLikeActDTO(MyLikeVO myLikeVO) {
@@ -21,10 +21,12 @@ public class MyLikeActDTO {
 		this.actName.add(myLikeVO.getAct().getActName());
 		this.actIntroduce.add(myLikeVO.getAct().getActIntroduce());
 		Set<ActPic> actPics = myLikeVO.getAct().getActpics();
-		
+
 		for (ActPic actPic : actPics) {
 			byte[] actPicByte = actPic.getActPic();
-			this.actPic.add(Base64.getEncoder().encodeToString(actPicByte));
+			if (actPicByte != null) {
+				this.actPic.add(Base64.getEncoder().encodeToString(actPicByte));
+			}
 		}
 	}
 
