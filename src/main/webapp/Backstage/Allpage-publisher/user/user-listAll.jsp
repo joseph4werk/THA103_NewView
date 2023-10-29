@@ -64,48 +64,7 @@ System.out.println(list);
 				</div>
 				<!-- /.container-fluid -->
 			</section>
-			<section class="content">
-
-				<ul>
-
-
-					<li>
-						<form METHOD="post"
-							ACTION="<%=request.getContextPath()%>/pubuser/pubuser.do">
-							<b>輸入使用者編號：</b> <input type="text" name="pubUserID"> <input
-								type="submit" value="送出"> <input type="hidden"
-								name="action" value="getOneForDisplay">
-						</form>
-					</li>
-
-					<jsp:useBean id="pubuserSvc" scope="page"
-						class="com.tha103.newview.pubuser.service.PubUserService" />
-
-					<li>
-						<form METHOD="post"
-							ACTION="<%=request.getContextPath()%>/pubuser/pubuser.do">
-							<b>選擇使用者姓名：</b> <select name="pubUserID">
-								<c:forEach var="pubUserVO" items="${pubuserSvc.all}">
-									<option value="${pubUserVO.pubUserID}">${pubUserVO.pubNickname}
-								</c:forEach>
-							</select> <input type="submit" value="送出"> <input type="hidden"
-								name="action" value="getOneForDisplay">
-						</form>
-					</li>
-					
-					
-					<li>
-						<form METHOD="post"
-							ACTION="<%=request.getContextPath()%>/pubuser/pubuser.do">
-							<b>選擇權限：</b> <select name="Authority">
-								<c:forEach var="Authority" items="${pubuserSvc.all}">
-									<option value="${pubUserVO.pubAuthority}">${pubUserVO.pubAuthority}
-								</c:forEach>
-							</select> <input type="submit" value="送出"> <input type="hidden"
-								name="action" value="getOneForDisplay">
-						</form>
-				</ul>
-			</section>
+			
 			<section class="content">
 				<%-- 萬用複合查詢 --%>
 				<form METHOD="post"
@@ -136,6 +95,7 @@ System.out.println(list);
 								<div class="form-group">
 									<label>使用者權限：</label><select name="pubAuthority" class="form-control"
 										style="width: 100%">
+										<option >選擇權限</option>
 										<option value="0">高階權限</option>
 										<option value="1">一般權限</option>
 									</select>
@@ -159,15 +119,19 @@ System.out.println(list);
 				<%-- 萬用複合查詢 --%>
 			</section>
 			<!-- Main content -->
+			
+			
 			<section class="content">
+				
 				<div class="container-fluid">
+				<%@ include file="../pages/page1.file"%>
 					<!-- /.row -->
 					<div class="row">
 						<div class="col-12">
 
 							<div class="card">
 								<!-- /.card-header -->
-								<%@ include file="../pages/page1.file"%>
+								
 								<div class="card-body table-responsive p-0">
 									<table class="table table-hover text-nowrap">
 										<thead>
@@ -219,26 +183,14 @@ System.out.println(list);
 										</tbody>
 
 									</table>
-									<%@ include file="../pages/page2.file"%>
+									
 								</div>
 								<!-- /.card-body -->
 							</div>
 							<!-- /.card -->
 							<div class="row" style="padding: 10px">
-								<div class="col-6">
-									<a
-										href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/user/user-add.jsp">
-										<button type="button" class="btn btn-dark">新增使用者</button>
-									</a>
-								</div>
-								<div class="col-6">
-									<ul class="pagination pagination-sm m-0 float-right">
-										<li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-										<li class="page-item"><a class="page-link" href="#">1</a></li>
-										<li class="page-item"><a class="page-link" href="#">2</a></li>
-										<li class="page-item"><a class="page-link" href="#">3</a></li>
-										<li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-									</ul>
+								<div class="col-12">
+									<%@ include file="../pages/page2.file"%>
 								</div>
 							</div>
 

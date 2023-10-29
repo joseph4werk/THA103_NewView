@@ -14,8 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.tha103.newview.admin.model.AdminVO;
 import com.tha103.newview.discount.model.DiscountVO;
-import com.tha103.newview.discount.service.*;
-
+import com.tha103.newview.discount.service.DiscountService;
 import com.tha103.newview.publisher.model.PublisherVO;
 import com.tha103.newview.publisher.service.PublisherService;
 

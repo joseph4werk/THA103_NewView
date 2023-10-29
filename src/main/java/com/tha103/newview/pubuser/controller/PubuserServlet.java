@@ -186,7 +186,7 @@ public class PubuserServlet extends HttpServlet {
 
 				/************************* 開始修改資料 **************************/
 				PubUserService pubUserSvc = new PubUserService();
-				pubuserVO = pubUserSvc.updatePubUser(pubNickname, pubAccount, pubPassword, pubAuthority, pubID);
+				pubuserVO = pubUserSvc.updatePubUser(pubUserID,pubNickname, pubAccount, pubPassword, pubAuthority, pubID);
 				System.out.println(pubuserVO);
 				System.out.println("修改成功");
 
@@ -420,6 +420,17 @@ public class PubuserServlet extends HttpServlet {
 				session.setAttribute("pubuserVO", pubuserVO);
 				//將pubID存入session裡
 				session.setAttribute("pubID",pubuserVO.getPublisherVO().getPubID());
+				byte authority = pubuserVO.getPubAuthority();
+				
+				/*
+				//依照權限導向不同頁面
+				if(authority == 0) {
+					resp.sendRedirect("admin.jsp");
+				}else {
+					resp.sendRedirect("user.jsp");
+				}
+				*/
+				
 				
 				try {
 					String location = (String) session.getAttribute("location");
@@ -430,17 +441,36 @@ public class PubuserServlet extends HttpServlet {
 					}
 				} catch (Exception ignored) {
 				}
-				resp.sendRedirect(req.getContextPath() + "/Backstage/Allpage-publisher/pub-index.jsp");
+				
+				
+				resp.sendRedirect(req.getContextPath() + "/Backstage/Allpage-publisher/user/user-add.jsp");
 				// *(-->如無來源網頁:則重導至後台首頁)
 			}
 
 		}
+		
+		
+		if ("logout".equals(action)) {
+			/************************* 接收請求參數 **************************/
+			String logout = req.getParameter("logout");
+			System.out.println("servlet已接收參數" + logout);
+			
+			HttpSession session = req.getSession();
+			session.invalidate();
+
+	        System.out.println("session已清除");
+	        resp.sendRedirect(req.getContextPath() + "/Backstage/Allpage-publisher/login/login.jsp");
+	        System.out.println("已導向");
+
+		}
+		
+		
+		
+		
+		
+		
+		
 
 	}
-
-
-	
-	
-	
 
 }
