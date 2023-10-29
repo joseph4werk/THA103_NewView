@@ -17,4 +17,7 @@ public interface RedisService {
 	Map<String, String> getSeatDataFromRedis(String actID);	
 	Map<String, String> markSeatsInRedisAndDB1(String actID, String targetUserName);
 	Map<String, String> findSeatsByActIDAndUserName(String actID, String userName);
+	String getCartDataFromRedis(String cartKey);
+    Map<String, String> findSeatsNumberByActIDAndUserName(String actID, String userName);
+	String findSeatKeyByActIDAndUserName(String actID, String userName);
 }

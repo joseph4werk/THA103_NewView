@@ -792,7 +792,7 @@
 			</div>
 			<!-------------------------------------------- 送出確認 -------------------------------------------->
 			<div class="container" style="text-align: center;">
-				<button type="submit" class="btn btn-primary py-3 px-4"
+				<button id="wanttobuy" type="submit" class="btn btn-primary py-3 px-4"
 					style="font-size: large;"><strong>確定結帳，前往付款</strong></button>
 			</div>
 
@@ -1106,6 +1106,30 @@
          });
      });
 		
+	 $(document).ready(function() {
+		    // 監控按鈕點擊事件
+		     $("#wanttobuy").on("click", function(event) {
+		        event.preventDefault(); // 阻止按鈕的默認動作
+		        $.ajax({
+		            url: "WantToBuy", 
+		            type: "POST", 
+		            data: {
+		                action: "buy"
+		            },
+		            success: function(response) {
+		                // 處理伺服器的回應
+		                console.log(response);
+		                alert("資料送出!");
+		            },
+		            error: function(xhr, status, error) {
+		                // 處理錯誤
+		                console.error("Error:", error);
+		                alert("送出失敗~~~~~");
+		            }
+		        });
+		    });
+		});
+
 	 
               
 	</script>
