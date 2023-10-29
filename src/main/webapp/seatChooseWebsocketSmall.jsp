@@ -525,7 +525,7 @@ var webSocket;
 	
 
 </script>
-<script src="js/monitor.js"></script>
+<script src="js/monitorSmall.js"></script>
 
 
 </html>
