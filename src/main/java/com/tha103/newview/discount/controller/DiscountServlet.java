@@ -2,9 +2,8 @@ package com.tha103.newview.discount.controller;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,208 +11,409 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.tha103.newview.discount.model.*;
-import com.tha103.newview.discount.service.*;
-import com.tha103.newview.orders.model.OrdersVO;
-import com.tha103.newview.publisher.model.*;
-import com.tha103.newview.usediscount.model.UseDiscountVO;
-import com.tha103.newview.admin.model.*;
+import com.tha103.newview.admin.model.AdminVO;
+import com.tha103.newview.discount.model.DiscountVO;
+import com.tha103.newview.discount.service.DiscountService;
+import com.tha103.newview.publisher.model.PublisherVO;
+import com.tha103.newview.publisher.service.PublisherService;
 
-@WebServlet("/pub/discount.do")
+
+@WebServlet("/discount/discount.do")
 public class DiscountServlet extends HttpServlet {
-
+	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doPost(req, resp);
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
+		doPost(req, res);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-
-		DiscountService discountSvc = new DiscountService();
-
+		
 		if ("add".equals(action)) {
-			// 收到請求
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				String pubIDStr = req.getParameter("pubIDStr");
-				Integer pubID = Integer.parseInt(pubIDStr);
-
-				String adminIDStr = req.getParameter("adminIDStr");
-				Integer adminID = Integer.parseInt(adminIDStr);
-
-				String discountContent = req.getParameter("discountContent");
-				String disAmountStr = req.getParameter("disAmount");
-				Integer disAmount = Integer.parseInt(disAmountStr);
-
-				String discountCode = req.getParameter("discountCode");
-
-				String disStartDateStr = req.getParameter("disStartDateStr");
-				Timestamp disStartDate = null;
-				if (disStartDateStr != null && !(disStartDateStr).isEmpty()) {
-					SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					try {
-						Date parsedDate = timeFormat.parse(disStartDateStr); // 將字串轉為日期
-						disStartDate = new Timestamp(parsedDate.getTime()); // 轉換Timestamp類型
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-
-				String disFinishDateStr = req.getParameter("disStartDateStr");
-				Timestamp disFinishDate = null;
-				if (disFinishDateStr != null && !(disFinishDateStr).isEmpty()) {
-					SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					try {
-						Date parsedDate = timeFormat.parse(disFinishDateStr); // 將字串轉為日期
-						disFinishDate = new Timestamp(parsedDate.getTime()); // 轉換Timestamp類型
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-
-				/********** Package data **********/
-				DiscountVO discountVO = new DiscountVO();
-				discountVO.setDiscountContent(discountContent);
-				discountVO.setDisAmount(disAmount);
-				discountVO.setDiscountCode(discountContent);
-				discountVO.setDisStartDate(disStartDate);
-				discountVO.setDisFinishDate(disFinishDate);
-
-				PublisherVO pub = new PublisherVO();
-				pub.setPubID(pubID);
-				discountVO.setPublisherVO(pub);
-
-				AdminVO admin = new AdminVO();
-				admin.setAdminID(adminID);
-				discountVO.setAdminVO(admin);
-
-				/********** 新增資料 **********/
-
-				discountVO = discountSvc.addDiscount(discountContent, disAmount, discountContent, disStartDate,
-						disFinishDate, pubID, adminID);
-
-				String url = "/Backstage/Allpage-publisher/discount/discount-listAll.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, resp);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				resp.sendRedirect("/Backstage/Allpage-publisher/pub-index.jsp"); // 回應路徑
-			}
-		}
-
-		if ("update".equals(action)) {
-
-			try {
-				String pubIDStr = req.getParameter("pubIDStr");
-				Integer pubID = Integer.parseInt(pubIDStr);
-
-				String adminIDStr = req.getParameter("adminIDStr");
-				Integer adminID = Integer.parseInt(adminIDStr);
 				
-				String discountNOStr = req.getParameter("discountNOStr");
-				Integer discountNO = Integer.parseInt(discountNOStr);
+				/************************* 接收請求參數 **************************/
+				Integer pubID = new Integer(req.getParameter("pubID").trim());
+				Integer adminID = new Integer(req.getParameter("adminID").trim());
+				String discountContent = req.getParameter("discountContent").trim();
+				Integer disAmount = new Integer(req.getParameter("disAmount").trim());
+				String discountCode = req.getParameter("discountCode").trim();
+				Timestamp disStartDate = java.sql.Timestamp.valueOf(req.getParameter("disStartDate").trim());
+				Timestamp disFinishDate = java.sql.Timestamp.valueOf(req.getParameter("disFinishDate").trim());
 
-				String discountContent = req.getParameter("discountContent");
-				String disAmountStr = req.getParameter("disAmount");
-				Integer disAmount = Integer.parseInt(disAmountStr);
+				// 檢查請求參數接收
 
-				String discountCode = req.getParameter("discountCode");
+				System.out.println(pubID);
+				System.out.println(adminID);
+				System.out.println(discountContent);
+				System.out.println(disAmount);
+				System.out.println(discountCode);
+				System.out.println(disStartDate);
+				System.out.println(disFinishDate);
 
-				String disStartDateStr = req.getParameter("disStartDateStr");
-				Timestamp disStartDate = null;
-				if (disStartDateStr != null && !(disStartDateStr).isEmpty()) {
-					SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					try {
-						Date parsedDate = timeFormat.parse(disStartDateStr); // 將字串轉為日期
-						disStartDate = new Timestamp(parsedDate.getTime()); // 轉換Timestamp類型
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+				/************************* 輸入錯誤處理 **************************/
+
+				String idReg = 	"^[0-9]*$";
+				String contentReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,50}$";
+				String codeReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,10}$";
+				String amountReg = "^[1-9999999999]$";
+				
+				if (pubID != null && adminID != null) {
+					errorMsgs.add("廠商編號及管理者編號，請擇一輸入");
+				} else if ((!Integer.toString(pubID).matches(idReg)) || (!Integer.toString(adminID).matches(idReg))) {
+					errorMsgs.add("編號請輸入數字");
+				}
+				
+				if (discountContent == null || discountContent.trim().length() == 0) {
+					errorMsgs.add("優惠名稱: 請勿空白");
+				} else if (!discountContent.trim().matches(contentReg)) { // 正則(規)表示式(regular-expression)
+					errorMsgs.add("優惠名稱: 只能是中、英文字母、數字和_ , 且長度必需在1到50之間");
+				}
+				
+				if (!Integer.toString(disAmount).matches(amountReg)) { // 正則(規)表示式(regular-expression)
+					errorMsgs.add("優惠折抵金額: 請輸入數字, 且長度必需在1到9999999999之間");
+				}
+				
+				if (discountCode == null || discountCode.trim().length() == 0) {
+					errorMsgs.add("折扣碼: 請勿空白");
+				} else if (!discountContent.trim().matches(codeReg)) { // 正則(規)表示式(regular-expression)
+					errorMsgs.add("折扣碼: 只能是中、英文字母、數字和_ , 且長度必需在1到10之間");
+				}
+											
+				if (disStartDate == null) {
+					errorMsgs.add("起始日請勿空白");
 				}
 
-				String disFinishDateStr = req.getParameter("disStartDateStr");
-				Timestamp disFinishDate = null;
-				if (disFinishDateStr != null && !(disFinishDateStr).isEmpty()) {
-					SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					try {
-						Date parsedDate = timeFormat.parse(disFinishDateStr); // 將字串轉為日期
-						disFinishDate = new Timestamp(parsedDate.getTime()); // 轉換Timestamp類型
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+				if (disFinishDate == null) {
+					errorMsgs.add("結束日請勿空白");
 				}
 
-				/********** Package data **********/
+				/************************* Package data **************************/
+				// Package data
 				DiscountVO discountVO = new DiscountVO();
-				discountVO.setDiscountNO(discountNO);
 				discountVO.setDiscountContent(discountContent);
-				discountVO.setDisAmount(disAmount);
-				discountVO.setDiscountCode(discountContent);
+				discountVO.setDisAmount(disAmount); 
+				discountVO.setDiscountCode(discountCode);
 				discountVO.setDisStartDate(disStartDate);
 				discountVO.setDisFinishDate(disFinishDate);
 
-				PublisherVO pub = new PublisherVO();
-				pub.setPubID(pubID);
-				discountVO.setPublisherVO(pub);
+				// coz Association Publisher create PublisherVO object to set pubID
+				PublisherVO publisherVO = new PublisherVO();
+				publisherVO.setPubID(pubID);
+				// to PublisherVO to set PublisherVO
+				discountVO.setPublisherVO(publisherVO);
+				System.out.println(discountVO);
+				
+				// coz Association Admin create AdminVO object to set adminID
+				AdminVO adminVO = new AdminVO();
+				adminVO.setAdminID(adminID);
+				// to AdminVO to set AdminVO
+				discountVO.setAdminVO(adminVO);
+				System.out.println(discountVO);
 
-				AdminVO admin = new AdminVO();
-				admin.setAdminID(adminID);
-				discountVO.setAdminVO(admin);
+				// Send error back to form
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("discountVO", discountVO);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/Backstage/Allpage-administrator/discount/discount-add.jsp");
+					failureView.forward(req, res);
+					return;
 
-				/********** 新增資料 **********/
+				}
 
-				discountVO = discountSvc.updateDiscount(discountNO,discountContent, disAmount, discountContent, disStartDate,
-						disFinishDate, pubID, adminID);
+				/************************* 開始新增資料 **************************/
+				DiscountService discountSvc = new DiscountService();
+				discountVO = discountSvc.addDiscount(discountContent, disAmount, discountCode, disStartDate, disFinishDate, pubID, adminID);
+				System.out.println(discountVO);
+				System.out.println("新增成功");
 
-				String url = "/Backstage/Allpage-publisher/discount/discount-listAll.jsp";
+				/************************* 回傳資料路徑 **************************/
+
+				String url = "/Backstage/Allpage-publisher/user/user-listAll.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, resp);
+				successView.forward(req, res);
 
 			} catch (Exception e) {
-				e.printStackTrace();
-				resp.sendRedirect("/Backstage/Allpage-publisher/pub-index.jsp"); // 回應路徑
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Backstage/Allpage-publisher/user/user-add.jsp");
+				failureView.forward(req, res);
 			}
 		}
+		
+		if ("update".equals(action)) {
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			// 送出修改的來源網頁路徑
+			String requestURL = req.getParameter("requestURL");
 
-		
-		
+			try {
+				
+				/************************* 接收請求參數 **************************/
+				Integer discountNO = new Integer(req.getParameter("discountNO").trim());
+				Integer pubID = new Integer(req.getParameter("pubID").trim());
+				Integer adminID = new Integer(req.getParameter("adminID").trim());
+				String discountContent = req.getParameter("discountContent").trim();
+				Integer disAmount = new Integer(req.getParameter("disAmount").trim());
+				String discountCode = req.getParameter("discountCode").trim();
+				Timestamp disStartDate = java.sql.Timestamp.valueOf(req.getParameter("disStartDate").trim());
+				Timestamp disFinishDate = java.sql.Timestamp.valueOf(req.getParameter("disFinishDate").trim());
+
+				// 檢查請求參數接收
+
+				System.out.println(pubID);
+				System.out.println(adminID);
+				System.out.println(discountContent);
+				System.out.println(disAmount);
+				System.out.println(discountCode);
+				System.out.println(disStartDate);
+				System.out.println(disFinishDate);
+
+				/************************* 輸入錯誤處理 **************************/
+
+				String idReg = 	"^[0-9]*$";
+				String contentReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,50}$";
+				String codeReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{1,10}$";
+				String amountReg = "^[1-9999999999]$";
+				
+				if (pubID != null && adminID != null) {
+					errorMsgs.add("廠商編號及管理者編號，請擇一輸入");
+				} else if ((!Integer.toString(pubID).matches(idReg)) || (!Integer.toString(adminID).matches(idReg))) {
+					errorMsgs.add("編號請輸入數字");
+				}
+				
+				if (discountContent == null || discountContent.trim().length() == 0) {
+					errorMsgs.add("優惠名稱: 請勿空白");
+				} else if (!discountContent.trim().matches(contentReg)) { // 正則(規)表示式(regular-expression)
+					errorMsgs.add("優惠名稱: 只能是中、英文字母、數字和_ , 且長度必需在1到50之間");
+				}
+				
+				if (!Integer.toString(disAmount).matches(amountReg)) { // 正則(規)表示式(regular-expression)
+					errorMsgs.add("優惠折抵金額: 請輸入數字, 且長度必需在1到9999999999之間");
+				}
+				
+				if (discountCode == null || discountCode.trim().length() == 0) {
+					errorMsgs.add("折扣碼: 請勿空白");
+				} else if (!discountContent.trim().matches(codeReg)) { // 正則(規)表示式(regular-expression)
+					errorMsgs.add("折扣碼: 只能是中、英文字母、數字和_ , 且長度必需在1到10之間");
+				}
+											
+				if (disStartDate == null) {
+					errorMsgs.add("起始日請勿空白");
+				}
+
+				if (disFinishDate == null) {
+					errorMsgs.add("結束日請勿空白");
+				}
+
+				/************************* Package data **************************/
+				// Package data
+				DiscountVO discountVO = new DiscountVO();
+				discountVO.setDiscountContent(discountContent);
+				discountVO.setDisAmount(disAmount); 
+				discountVO.setDiscountCode(discountCode);
+				discountVO.setDisStartDate(disStartDate);
+				discountVO.setDisFinishDate(disFinishDate);
+
+				// coz Association Publisher create PublisherVO object to set pubID
+				PublisherVO publisherVO = new PublisherVO();
+				publisherVO.setPubID(pubID);
+				// to PublisherVO to set PublisherVO
+				discountVO.setPublisherVO(publisherVO);
+				System.out.println(discountVO);
+				
+				// coz Association Admin create AdminVO object to set adminID
+				AdminVO adminVO = new AdminVO();
+				adminVO.setAdminID(adminID);
+				// to AdminVO to set AdminVO
+				discountVO.setAdminVO(adminVO);
+				System.out.println(discountVO);
+
+				// Send error back to form
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("discountVO", discountVO);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/Backstage/Allpage-administrator/discount/discount-update.jsp");
+					failureView.forward(req, res);
+					return;
+
+				}
+
+				/************************* 開始修改資料 **************************/
+				DiscountService discountSvc = new DiscountService();
+				discountVO = discountSvc.updateDiscount(discountContent, disAmount, discountCode, disStartDate, disFinishDate, pubID, adminID);
+				System.out.println(discountVO);
+				System.out.println("修改成功");
+
+				/************************* 回傳資料路徑 **************************/
+				PublisherService pubSvc = new PublisherService();
+				//回傳資料路徑這段不太清楚
+				
+				String url = "/Backstage/Allpage-publisher/user/user-listAll.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Backstage/Allpage-administrator/discount/discount-update.jsp");
+				failureView.forward(req, res);
+			}
+			
+		}
 		
 		if ("delete".equals(action)) {
-			String discountNO = req.getParameter("discountNO").trim(); // 收到請求
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			// 送出刪除的來源網頁路徑
+			String requestURL = req.getParameter("requestURL");
+			
+			/************************* 接收請求參數 **************************/
+			
 			try {
-				discountSvc.deleteDiscount(Integer.parseInt(discountNO)); // 透過service至資料庫刪除資料
-				System.out.println(discountNO + "刪除成功");
-				resp.sendRedirect("/Backstage/Allpage-publisher/discount/discount-list"); // 回應路徑
+
+				Integer discountNO = new Integer(req.getParameter("discountNO").trim());
+				// 檢查請求參數接收
+				System.out.println(discountNO);
+
+				/************************* 開始刪除資料 **************************/
+				DiscountService discountSvc = new DiscountService();
+				DiscountVO discountVO = discountSvc.getOneDiscount(discountNO);
+				discountSvc.deleteDiscount(discountNO);
+				System.out.println("刪除成功");
+
+				/************************* 回傳資料路徑 **************************/
+				// 資料庫取出的list物件,存入request
+				if (requestURL.equals("/Backstage/Allpage-administrator/discount/discount-list.jsp")
+						|| requestURL.equals("/Backstage/Allpage-publisher/user/user-listAll.jsp"))
+					req.setAttribute("discount-deleteByNO", discountSvc.getOneDiscount(discountVO.getPublisherVO().getPubID()));
+				//discount判斷admin 和 廠商 這邊不太清楚
+				String url = requestURL;
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+
 			} catch (Exception e) {
-				e.printStackTrace();
-				resp.sendRedirect("/Backstage/Allpage-publisher/pub-index.jsp"); // 回應路徑
+				errorMsgs.add("刪除資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
+				failureView.forward(req, res);
 			}
+			
 		}
-		
-		
-		
 		
 		if ("getOneForDisplay".equals(action)) {
-			String discountNO = req.getParameter("discountNO").trim(); // 收到請求
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
 			try {
-				discountSvc.getDiscountByPK(Integer.parseInt(discountNO)); // 透過service至資料庫刪除資料
-				System.out.println(discountNO + "顯示成功");
-				resp.sendRedirect("/Backstage/Allpage-publisher/discount/discount-listOne"); // 回應路徑
+				/************************* 接收請求參數 **************************/
+				String str = req.getParameter("discountNO");
+				if (str == null || (str.trim()).length() == 0) {
+					System.out.println(str);
+					errorMsgs.add("請輸入優惠編號");
+				}
+
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/Backstage/Allpage-administrator/discount/discount-list.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+				Integer discountNO = null;
+				try {
+					discountNO = new Integer(str);
+
+				} catch (Exception e) {
+					errorMsgs.add("優惠編號格式不正確");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/Backstage/Allpage-administrator/discount/discount-list.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/************************* 開始查詢資料 **************************/
+
+				DiscountService discountSvc = new DiscountService();
+				DiscountVO discountVO = discountSvc.getOneDiscount(discountNO);
+				System.out.println(discountVO);
+
+				if (discountVO == null) {
+					errorMsgs.add("查無資料");
+				}
+
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/Backstage/Allpage-administrator/discount/discount-list.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				/************************* 回傳資料路徑 **************************/
+				req.setAttribute("discountVO", discountVO); // 資料庫取出的discountVO物件,存入req
+				String url = "/Backstage/Allpage-administrator/discount/discount-listOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
-				e.printStackTrace();
-				resp.sendRedirect("/Backstage/Allpage-publisher/pub-index.jsp"); // 回應路徑
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Backstage/Allpage-administrator/discount/discount-list.jsp");
+				failureView.forward(req, res);
+			}
+			
+		}
+		
+		if ("getOneForUpdate".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			String requestURL = req.getParameter("requestURL"); // 送出修改的來源網頁路徑
+
+			/************************* 接收請求參數 **************************/
+			try {
+				Integer discountNO = new Integer(req.getParameter("discountNO").trim());
+				// 檢查請求參數接收
+				System.out.println(discountNO);
+
+				/************************* 開始查詢資料 **************************/
+				
+				DiscountService discountSvc = new DiscountService();
+				DiscountVO discountVO = discountSvc.getOneDiscount(discountNO);
+				System.out.println(discountVO);
+
+				/************************* 回傳資料路徑 **************************/
+				req.setAttribute("discountVO", discountVO); // 資料庫取出的discountVO物件,存入req
+				String url = "/Backstage/Allpage-administrator/discount/discount-update.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("修改資料取出時失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("requestURL");
+				failureView.forward(req, res);
 			}
 		}
 		
-		
-		
 	}
-
+	
 }
