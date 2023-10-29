@@ -32,8 +32,6 @@ public class MyLikeActDTO {
 				actPicsArray[0] = (ActPic) objectArray[0];
 				this.actPic.add(Base64.getEncoder().encodeToString(actPicsArray[0].getActPic()));
 			}
-//			ActPic[] array = (ActPic[]) actpics.toArray();
-//			this.actPic.add(Base64.getEncoder().encodeToString(array[0].getActPic()));
 		}
 	}
 

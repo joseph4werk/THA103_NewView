@@ -100,6 +100,25 @@ public class OrdersDAOImpl implements OrdersDAO {
 		return null;
 
 	}
+	
+	
+	
+	//for Publisher Backstage get Order List by Mandy
+	public List<OrdersVO> getOrdersByPubID(Integer pubID){
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			String hql = "FROM OrdersVO AS o WHERE o.publisherVO.pubID = :pubID";
+			Query<OrdersVO> query = session.createQuery(hql,OrdersVO.class);
+			query.setParameter("pubID",pubID);
+			return query.getResultList();
+		}catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return null;
+	}
+	
 
 	
 

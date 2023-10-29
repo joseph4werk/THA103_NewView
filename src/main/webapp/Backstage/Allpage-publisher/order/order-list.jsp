@@ -1,4 +1,22 @@
+<%@ page import="java.util.*"%>
+<%@ page import="javax.servlet.http.HttpSession"%>
+<%@ page import="com.tha103.newview.orders.service.*"%>
+<%@ page import="com.tha103.newview.orders.model.*"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%
+Integer pubID = (Integer) session.getAttribute("pubID");
+if(pubID == null){
+	response.sendRedirect("/Backstage/Allpage-publisher/pub-index.jsp");
+	return;
+}
+
+OrdersService ordersSvc = new OrdersService();
+List<OrdersVO> pubOrders = ordersSvc.getOrdersByPub(pubID);
+pageContext.setAttribute("list", pubOrders);
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -146,62 +164,30 @@
 												<th>訂單編號</th>
 												<th>訂購人</th>
 												<th>訂單金額</th>
+												<th>折扣金額</th>
+												<th>折扣後金額</th>
 												<th>訂單成立時間</th>
+												<th>訂單數量</th>
 												<th style="text-align: center;">操作</th>
 											</tr>
 										</thead>
 										<tbody>
+											<c:forEach var="orderDate" items="${list}">
 											<tr>
-												<td>nv653</td>
-												<td>John Doe</td>
-												<td>999</td>
-												<td><span class="tag tag-success">2023-09-22</span></td>
+												<td>${orderDate.orderID}</td>
+												<td>${orderDate.userVO.userNickname}</td>
+												<td>${orderDate.ordTotal}</td>
+												<td>${orderDate.discountVO.disAmount}</td>
+												<td>${orderDate.discountPrice}</td>
+												<td>${orderDate.ordTime}</td>
+												<td>${orderDate.actQuantity}</td>
 												<td>
 													<button type="button"
 														class="btn btn-block btn-success btn-sm">詳情</button>
 												</td>
 											</tr>
-											<tr>
-												<td>nv653</td>
-												<td>John Doe</td>
-												<td>999</td>
-												<td><span class="tag tag-success">2023-09-22</span></td>
-												<td>
-													<button type="button"
-														class="btn btn-block btn-success btn-sm">詳情</button>
-												</td>
-											</tr>
-											<tr>
-												<td>nv653</td>
-												<td>John Doe</td>
-												<td>999</td>
-												<td><span class="tag tag-success">2023-09-22</span></td>
-												<td>
-													<button type="button"
-														class="btn btn-block btn-success btn-sm"
-														onclick="order-info.html">詳情</button>
-												</td>
-											</tr>
-											<tr>
-												<td>nv653</td>
-												<td>John Doe</td>
-												<td>999</td>
-												<td><span class="tag tag-success">2023-09-22</span></td>
-												<td>
-													<button type="button"
-														class="btn btn-block btn-success btn-sm">詳情</button>
-												</td>
-											</tr>
-											<tr>
-												<td>nv653</td>
-												<td>John Doe</td>
-												<td>999</td>
-												<td><span class="tag tag-success">2023-09-22</span></td>
-												<td>
-													<button type="button"
-														class="btn btn-block btn-success btn-sm">詳情</button>
-												</td>
-											</tr>
+											
+										</c:forEach>
 										</tbody>
 									</table>
 								</div>

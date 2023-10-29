@@ -384,7 +384,7 @@
                 <h5>輸入驗證碼</h5>
                 <p class="text-lead text-black mb-0">驗證碼已發送至您的註冊信箱，請輸入驗證碼完成註冊</p>
               </div>
-              <div class="card-body mt-0">
+              <!-- <div class="card-body mt-0">
                 <form role="form">
                   <label>Verification-code</label>
                   <div class="mb-2 mt-1">
@@ -393,6 +393,23 @@
                   <div class="text-center">
                     <button type="button" class="btn bg-gradient-dark w-100 my-4 mb-2" id="submit">送出</button>
                   </div>
+                  
+                </form>
+              </div> -->
+              <div class="card-body mt-0">
+                <form role="form">
+                  <label>Verification-code</label>
+                  <div class="mb-2 mt-1">
+                    <input type="text" class="form-control" id="verificationCode" placeholder="請輸入驗證碼" aria-label="verification-code" aria-describedby="verification-code-addon" />
+                  </div>
+                  <div class="row">
+                    <div class="col-6 mb-0 mt-4">
+                      <a href="#" id="submit" class="btn btn-outline-dark" style="width: 100%">送出驗證</a>
+                    </div>
+                    <div class="col-6 mb-0 mt-4">
+                      <a href="member.html" id="notSubmit" class="btn bg-gradient-dark" style="width: 100%">稍後驗證</a>
+                    </div>
+                  </div>
                 </form>
               </div>
             </div>
@@ -400,32 +417,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <section class="mb-6 mt-5 p-t-250">
-      <div class="container">
-        <div class="row mt-lg-n10 mt-md-n11 mt-n10">
-          <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
-            <div class="card z-index-0">
-              <div class="card-header pb-0 text-left bg-transparent">
-                <h3 class="font-weight-bolder text-danger">輸入驗證碼</h3>
-                <p class="mb-0">驗證碼已發送至您的註冊信箱，請輸入驗證碼完成註冊</p>
-              </div>
-              <div class="card-body">
-                <form role="form">
-                  <label>Verification-code</label>
-                  <div class="mb-2 mt-1">
-                    <input type="text" class="form-control" id="verificationCode" placeholder="請輸入驗證碼" aria-label="verification-code" aria-describedby="verification-code-addon" />
-                  </div>
-                  <div class="text-center">
-                    <button type="button" class="btn btn-outline-danger w-100 mt-4 mb-0">送出</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> -->
 
     <!-- ===================================================== -->
 
@@ -710,14 +701,34 @@
         });
         function redirectPath(data) {
           // alert("function");
-          if (data.status == "failed") {
-            alert("驗證錯誤，請重新輸入！");
-            location.href = "registration-verification.html";
-          } else if (data.status == "succeed") {
-            alert("資料驗證完成，網頁將重新導向至首頁！");
-            location.href = "home-03.html";
+          switch (data.status) {
+            case "verified":
+              alert("使用者已驗證，網頁將重新導向至首頁！");
+              location.href = "home-03.html";
+              break;
+            case "failed":
+              alert("驗證碼輸入錯誤，請重新輸入！");
+              break;
+            case "success":
+              alert("驗證成功，網頁將重新導向至首頁！");
+              location.href = "home-03.html";
+              break;
+            default:
+              alert("怎會跑到這，先回會員中心吧:D");
+              location.href = "member.html";
           }
+          // if (data.status == "failed") {
+          //   alert("驗證錯誤，請重新輸入！");
+          //   $("#verificationCode").val("");
+          // } else if (data.status == "succeed") {
+          //   alert("資料驗證完成，網頁將重新導向至首頁！");
+          //   location.href = "home-03.html";
+          // }
         }
+      });
+
+      $("#notSubmit").on("click", function () {
+        alert("稍後可於會員中心再次驗證，將轉導至會員中心。");
       });
     </script>
 

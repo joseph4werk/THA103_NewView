@@ -8,8 +8,9 @@
 <%@ page import="com.tha103.newview.publisher.model.*"%>
 <%@ page import="com.tha103.newview.act.controller.*"%>
 <%
-ActDAO actDAO = new ActDAOHibernateImpl();
-ActService actSvc = new ActServiceImpl(actDAO);
+// ActDAO actDAO = new ActDAOHibernateImpl();
+// ActService actSvc = new ActServiceImpl(actDAO);
+ActService actSvc = new ActServiceImpl();
 List<ActVO> list = actSvc.getAll();
 List<ActCategory> categories = actSvc.getAllCategories();
 List<CityAddress> city = actSvc.getAllCities();
@@ -182,10 +183,10 @@ pageContext.setAttribute("categories", categories);
 							</div>
 							<div class="form-group row">
 								<div class="col-md-4">
-									<label for="cityName">活動縣市：</label> <select
-										class="form-control" style="width: 100%;">
+									<label for="cityName">活動縣市：</label> 
+									<select name="cityName" class="form-control" style="width: 100%;">
 										<c:forEach var="cityItem" items="${city}">
-											<option value="${cityItem.actAdressID}">${cityItem.cityName}</option>
+											<option value="${cityItem.cityAddressID}">${cityItem.cityAddressID}${cityItem.cityName}</option>
 										</c:forEach>
 									</select>
 								</div>
@@ -230,20 +231,14 @@ pageContext.setAttribute("categories", categories);
 
 							<div class="form-group">
 								<input type="submit" class="btn btn-primary" value="送出">
-								<input type="hidden" name="action" value="addAct">
+								<input type="hidden" name="action" value="addPubAct">
+								<input type="hidden" name="pubID" value="<%= session.getAttribute("pubID") %>" />
 							</div>
 						</div>
 						<!-- /.col-->
 					</div>
 					<!-- ./row -->
-					<%
-					if ("actNameSame".equals(session.getAttribute("actNameError"))) {
-					%>
-					<span style="color: red;">該活動名稱已經存在</span>
-					<%
-					session.removeAttribute("actNameError");
-					}
-					%>
+					
 				</form>
 			</section>
 		</div>

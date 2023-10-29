@@ -8,6 +8,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,6 +30,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.tha103.newview.user.jedis.JedisPoolUtil;
 import com.tha103.newview.websocketchat.model.Message;
+import com.tha103.newview.websocketchat.model.PurchasedSeatInfo;
 import com.tha103.newview.websocketchat.model.SeatInfo;
 import com.tha103.newview.websocketchat.service.RedisListener;
 import com.tha103.newview.websocketchat.service.RedisService;
@@ -44,6 +46,8 @@ public class SeatMiddle {
 	private static final ExecutorService executorService = Executors.newCachedThreadPool();
 	private static final Map<String, Session> actIDToSessionMap = new ConcurrentHashMap<>();
 	private static Map<String, List<SeatInfo>> seatInfoMap = new ConcurrentHashMap<>();
+	private static final Set<PurchasedSeatInfo> purchasedSeatInfoSet = Collections.synchronizedSet(new HashSet<>());
+
 	// 方法區
 	 private static RedisService redisService;
 
@@ -52,6 +56,14 @@ public class SeatMiddle {
 	        JedisPool jedisPool = JedisPoolUtil.getJedisPool();
 	        this.redisService = new RedisServiceImpl(jedisPool);
 	    }
+	    //打印訊息  檢查用
+	    private void printPurchasedSeatInfoSet() {
+	        System.out.println("Printing purchasedSeatInfoSet:");
+	        for (PurchasedSeatInfo seatInfoTo : purchasedSeatInfoSet) {
+	            System.out.println(seatInfoTo); 
+	        }
+	    }
+
 	// 該方法為用戶加入連線, onOpen 會先執行讓用戶收到 redis 最新消息
 	private void sendRedisDataToClients(Session userSession) {
 	    Set<SeatInfo> allSeatInfo = redisService.fetchSeatInfoFromRedis(userSession);
@@ -65,21 +77,67 @@ public class SeatMiddle {
 	
 	// 該方法: 取消座位會將redis 裡面對應的userid actid
 	// 來刪除座位 並向同actID 用戶發送取消的消息
-	private void handleCancelOperation(Message message, Session userSession) {
-	    String userName = message.getUserName();
-	    String seatNumber = message.getSeatNumber();
-	    String actName = message.getActID();
+		private void handleCancelOperation(Message message, Session userSession) {
+		    String userName = message.getUserName();
+		    String seatNumber = message.getSeatNumber();
+		    String actID = message.getActID();
+		    String seatType = message.getType();
+		    
+			if (redisService.isSeatSoldOut(actID, seatNumber)) {
+				return; // 座位已售出則中斷
+			}
+		   System.out.println("執行刪除中"+actID+",  "+seatNumber +",  "+seatType);
+		    
+			SeatInfo seatInfo = new SeatInfo(userName, seatNumber, actID + "," + seatType, actID);
+			String updatedSeatInfoInRedis = redisService.performRedisCancelOperations(actID, userName, seatNumber);
+			PurchasedSeatInfo seatInfoToRemove = findPurchasedSeatInfo(userName, actID, seatNumber,"buy");
+			
+			if (seatInfoToRemove != null) {
+		        purchasedSeatInfoSet.remove(seatInfoToRemove);
+		    }
+//			printPurchasedSeatInfoSet();
+			storeSeatInfoInMap(actID, seatInfo, userSession,false);
+			String updatedSeatInfoMessage = buildUpdatedSeatInfoMessage(actID);
+			
+			sendMessageToActID(actID, updatedSeatInfoMessage);
+			storeSeatInfoInMap(actID, seatInfo, userSession,true);
+		}
+		private PurchasedSeatInfo findPurchasedSeatInfo(String userName, String actID, String seatNumber, String seatType) {
+		    for (PurchasedSeatInfo seatInfo : purchasedSeatInfoSet) {
+		        if (seatInfo.getUserName().equals(userName)
+		                && seatInfo.getActID().equals(actID)
+		                && seatInfo.getSeatNumber().equals(seatNumber)
+		                && seatInfo.getSeatType().equals(seatType)) {
+		            return seatInfo;
+		        }
+		    }
+		    return null; // 如果未找到匹配的对象，则返回null
+		}
+		//斷線刪除使用  
+		private PurchasedSeatInfo findPurchasedSeatInfo(String userName, String actID) {
+		    for (PurchasedSeatInfo seatInfo : purchasedSeatInfoSet) {
+		        if (seatInfo.getUserName().equals(userName) && seatInfo.getActID().equals(actID)) {
+		            return seatInfo;
+		        }
+		    }
+		    return null; // 如果未找到匹配的对象，则返回null
+		}
 
-	    String updatedSeatInfoInRedis = redisService.performRedisCancelOperations(actName, userName, seatNumber);
-
-	    if (updatedSeatInfoInRedis != null && updatedSeatInfoInRedis.endsWith(userName + "," + actName + "," + "cancel")) {
-	    	updateSeatInfoInList(actName, seatNumber, userName + "," + actName + "," + "cancel");
-	        sendSeatInfoToActIDUsers(actName, userSession);
-	        // 在 seatInfos 中更新座位信息
-	    } else {
-	        System.out.println("Failed to update seat info.");
+	//  seatInfos 中删除座位信息
+	private void deleteSeatInfoFromList(String actID, String seatNumber) {
+	    List<SeatInfo> seatInfos = seatInfoMap.get(actID);
+	    if (seatInfos != null) {
+	        Iterator<SeatInfo> iterator = seatInfos.iterator();
+	        while (iterator.hasNext()) {
+	            SeatInfo seatInfo = iterator.next();
+	            if (seatInfo.getSeatNumber().equals(seatNumber)) {
+	                iterator.remove(); // 删除座位信息
+	                break;
+	            }
+	        }
 	    }
 	}
+
 	// 該方法為更新SeatInfo 用
 			public void updateSeatInfoInList(String actID, String seatNumber, String updatedSeatInfo) {
 				List<SeatInfo> seatInfos = seatInfoMap.get(actID);
@@ -94,72 +152,143 @@ public class SeatMiddle {
 				}
 			}
 			public void cancelSeatPurchase(String actID, String userName) {
-			    Map<String, String> seatData = redisService.getSeatDataFromRedis(actID);
-			    for (Map.Entry<String, String> entry : seatData.entrySet()) {
-			        String seatNumber = entry.getKey();
-			        String existingSeatInfo = seatData.get(seatNumber); // 使用 Map 的 get 方法直接取得值
-			        if (existingSeatInfo != null) {
-			            String[] seatInfoParts = existingSeatInfo.split(",");
-			            if (seatInfoParts.length >= 3 && seatInfoParts[0].equals(userName) && !seatInfoParts[2].equals("soldOut")) {
-			                // 更新座位信息为 "cancel"，只在程序内部更改 seatInfo 的值
-			                updateSeatInfoInList(actID, seatNumber, userName + "," + actID + "," + "cancel");            
-			                // 删除 Redis 中的座位信息
-			                redisService.deleteSeatDataFromRedis(actID, seatNumber, userName);
-			            }
+			    List<PurchasedSeatInfo> seatsToRemove = new ArrayList<>();
+			    List<SeatInfo> seatInfoToSend = new ArrayList<>(); // 用收集要發送的座位信息
+			    
+			    // 删除purchasedSeatInfoSet中符合的數據
+			    for (PurchasedSeatInfo seatInfo : purchasedSeatInfoSet) {
+			        if (seatInfo.getActID().equals(actID) && seatInfo.getUserName().equals(userName)) {
+			            seatsToRemove.add(seatInfo);
+			            
+			            
+			            String seatNumber = seatInfo.getSeatNumber();
+			            String seatType = seatInfo.getSeatType();
+			            SeatInfo seatInfoSend = new SeatInfo(userName, seatNumber, actID + ",cancel", actID);
+			            
+			          
+			            System.out.println("ActID: " + actID + ", UserName: " + userName + ", SeatNumber: " + seatNumber + ", SeatType: " + seatType);
+			            
+			            // 添加 seatInfoSend 列表中
+			            seatInfoToSend.add(seatInfoSend);
+			        }
+			    }
+			    
+			    // 从purchasedSeatInfoSet中移除符合條件的資料
+			    purchasedSeatInfoSet.removeAll(seatsToRemove);
+
+			    // Redis取消操作
+			    for (PurchasedSeatInfo seatInfo : seatsToRemove) {
+			        String seatNumber = seatInfo.getSeatNumber();
+			        redisService.performRedisCancelOperations(actID, userName, seatNumber);
+			    }
+			    
+			    // 轉換 JSON
+			    Gson gson = new Gson();
+			    String seatInfoJson = gson.toJson(seatInfoToSend);
+			    
+			    // 發送消息
+			    sendSeatInfoToClient(seatInfoJson);
+			}
+
+			// 座位信息到前端
+			private void sendSeatInfoToClient(String seatInfoJson) {
+			    
+			    for (Session session : connectedSessions) {
+			        if (session.isOpen()) {
+			            session.getAsyncRemote().sendText(seatInfoJson);
 			        }
 			    }
 			}
+
+
+
+
 
 			
 
 
 	// 點選改變購買狀態, 並存入redis, 再將buy 消息送到前端
-	private void handleBuyOperation(Message message, Session userSession) {
-		String userName = message.getUserName();
-		String seatNumber = message.getSeatNumber();
-		String seatType = message.getType();
-//	    System.out.println(seatType);
-		String actID = message.getActID();
-		if (redisService.isSeatSoldOut(actID, seatNumber)) {
-			return; // 座位已售出
-		}
-		String[] seatTypeParts = seatType.split(",");
-		SeatInfo seatInfo = new SeatInfo(userName, seatNumber, actID + "," + seatType, actID);
-		redisService.storeSeatInfoInRedis(actID, seatInfo);
-		storeSeatInfoInMap(actID, seatInfo, userSession); // Session 方法
-//	        System.out.println(actID + "," + userName + "," + seatType + "," + seatNumber);
-		String updatedSeatInfoMessage = buildUpdatedSeatInfoMessage(actID);
-		sendMessageToActID(actID, updatedSeatInfoMessage);
+			private void handleBuyOperation(Message message, Session userSession) {
+			    String userName = message.getUserName();
+			    String seatNumber = message.getSeatNumber();
+			    String seatType = message.getType();
+			    String actID = message.getActID();
+			    
+			    if (redisService.isSeatSoldOut(actID, seatNumber)) {
+			        return; // 座位已售出
+			    }
+			    
+			    String[] seatTypeParts = seatType.split(",");
+			    SeatInfo seatInfo = new SeatInfo(userName, seatNumber, actID + "," + seatType, actID);
+			    redisService.storeSeatInfoInRedis(actID, seatInfo);
+			    storeSeatInfoInMap(actID, seatInfo, userSession, false);
 
-	}
+			    // purchasedSeatInfo離線用戶紀錄
+			    PurchasedSeatInfo purchasedSeatInfo = new PurchasedSeatInfo(userName, seatNumber, actID,seatType );
+			    purchasedSeatInfoSet.add(purchasedSeatInfo);
+//			    printPurchasedSeatInfoSet();
+			    String updatedSeatInfoMessage = buildUpdatedSeatInfoMessage(actID);
+			    sendMessageToActID(actID, updatedSeatInfoMessage);
+			    storeSeatInfoInMap(actID, seatInfo, userSession,true);
+			}
 
 	
 
 	/* 新增功能為 向 相同actID 發送消息 */
 	private void sendSeatInfoToActIDUsers(String actID, Session userSession) {
-		List<SeatInfo> seatInfos = seatInfoMap.get(actID);
-		if (seatInfos != null) {
-			Gson gson = new Gson();
-			String seatInfoJson = gson.toJson(seatInfos);
+	    List<SeatInfo> seatInfos = seatInfoMap.get(actID);
+	    if (seatInfos != null) {
+	        Gson gson = new Gson();
+	        String seatInfoJson = gson.toJson(seatInfos);
 
-			for (Session session : connectedSessions) {
-				String userActID = (String) session.getUserProperties().get("actID");
-				if (actID.equals(userActID) && session.isOpen() && !session.equals(userSession)) {
-					session.getAsyncRemote().sendText(seatInfoJson);
-				}
-			}
-		}
+	        for (Session session : connectedSessions) {
+	            // 檢查是否還在
+	            if (session.isOpen()) {
+	                String userActID = (String) session.getUserProperties().get("actID");
+	                if (actID.equals(userActID) && !session.equals(userSession)) {
+	                    session.getAsyncRemote().sendText(seatInfoJson);
+	                }
+	            }
+	        }
+
+	     
+	        seatInfos.clear();
+	    }
 	}
+
+
 
 	
-
-	// map儲存
-	private void storeSeatInfoInMap(String actID, SeatInfo seatInfo, Session userSession) {
-		seatInfoMap.computeIfAbsent(actID, k -> new ArrayList<>()).add(seatInfo);
-
-		// actID 的用户，排除自己
-		sendSeatInfoToActIDUsers(actID, userSession);
+	// 新增一个方法， seatInfoMap 中刪除座位
+	private void deleteSeatInfoFromMap(String actID, String seatNumber) {
+	    List<SeatInfo> seatInfos = seatInfoMap.get(actID);
+	    if (seatInfos != null) {
+	        Iterator<SeatInfo> iterator = seatInfos.iterator();
+	        while (iterator.hasNext()) {
+	            SeatInfo seatInfo = iterator.next();
+	            if (seatInfo.getSeatNumber().equals(seatNumber)) {
+	                iterator.remove(); // 删除座位信息
+	                break;
+	            }
+	        }
+	    }
 	}
+
+	// storeSeatInfoInMap 方法，刪除
+	private void storeSeatInfoInMap(String actID, SeatInfo seatInfo, Session userSession, boolean isDelete) {
+	    List<SeatInfo> seatInfos = seatInfoMap.computeIfAbsent(actID, k -> new ArrayList<>());
+
+	    if (isDelete) {
+	        
+	        deleteSeatInfoFromMap(actID, seatInfo.getSeatNumber());
+	    } else {
+	        
+	        seatInfos.add(seatInfo);
+	    }
+	   
+	    sendSeatInfoToActIDUsers(actID, userSession);
+	}
+
 
 	private String extractUserNameFromSession(Session userSession) {
 		Map<String, String> pathParameters = userSession.getPathParameters();
@@ -297,7 +426,7 @@ public class SeatMiddle {
 		}
 		userIdToUserNameMap.put(userSession.getId(), userName);
 		userSession.getUserProperties().put("actID", actID);
-		 executorService.submit(() -> {
+		executorService.submit(() -> {
 			 //使用其他線呈 來執行監聽器(可能會改位置)
 	            RedisListener.start();
 	        });
@@ -335,6 +464,7 @@ public class SeatMiddle {
 					// 取消狀態,回傳前端
 					handleCancelOperation(messageObject, userSession);
 				} else if ("buy".equals(messageType)) {
+					System.err.println("收到購買");
 					// 購買狀態,回傳前端
 					handleBuyOperation(messageObject, userSession);
 				} else if ("disconnect".equals(messageType)) {
@@ -355,20 +485,27 @@ public class SeatMiddle {
 
 	@OnClose
 	public void onClose(Session userSession, CloseReason reason) {
-		synchronized (connectedSessions) {
-			connectedSessions.remove(userSession);
-		}
+	    try {
+	        synchronized (connectedSessions) {
+	            connectedSessions.remove(userSession);
+	        }
 
-		String userName = extractUserNameFromSession(userSession);
+	        String userName = extractUserNameFromSession(userSession);
 
-		if (!isUserSeatSoldOut(userName)) {
-			broadcastSeatInfoToAllExcept(userName, userSession);
-		}
+	        if (!isUserSeatSoldOut(userName)) {
+	            broadcastSeatInfoToAllExcept(userName, userSession);
+	        }
 
-		String text = String.format("session ID = %s, disconnected; close code = %d; reason phrase = %s",
-				userSession.getId(), reason.getCloseCode().getCode(), reason.getReasonPhrase());
-		System.out.println(text);
+	        String text = String.format("session ID = %s, disconnected; close code = %d; reason phrase = %s",
+	                userSession.getId(), reason.getCloseCode().getCode(), reason.getReasonPhrase());
+	        System.out.println(text);
+	        System.out.println("斷線正常");
+	    } catch (Exception e) {
+	    	System.out.println("斷線異常");
+	        e.printStackTrace();
+	    }
 	}
+
 
 	private boolean isUserSeatSoldOut(String userName) {
 		synchronized (seatInfoList) {

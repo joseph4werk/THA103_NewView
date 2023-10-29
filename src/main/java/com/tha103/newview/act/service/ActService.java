@@ -25,8 +25,11 @@ public interface ActService {
 	List<ActWithPicsDTO> searchActsByName(String actName);
 	ActWithPicsDTO getActWithPicturesById(Integer actIdValue);
 	ActWithPicsDTO getActWithPicsDTOById(Integer actId);
+    List<ActWithPicsDTO> searchActsByCategory(Integer actCategoryID);
 	
 	
+	//use to publisher backstage by Mandy
+	public List<ActVO> getActByPub(Integer pubID);
 	
 	
 }
