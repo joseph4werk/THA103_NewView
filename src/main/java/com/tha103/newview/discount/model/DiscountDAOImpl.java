@@ -3,9 +3,9 @@ package com.tha103.newview.discount.model;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
-import com.tha103.newview.admin.model.AdminVO;
-import com.tha103.newview.publisher.model.PublisherVO;
 import com.tha103.util.HibernateUtil;
 
 //import java.sql.Connection;
@@ -44,7 +44,7 @@ public class DiscountDAOImpl implements DiscountDAO {
 
 	@Override
 	public int update(DiscountVO discountVO) {
-		
+
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
@@ -60,7 +60,7 @@ public class DiscountDAOImpl implements DiscountDAO {
 
 	@Override
 	public int delete(Integer discountNO) {
-		
+
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
@@ -78,7 +78,7 @@ public class DiscountDAOImpl implements DiscountDAO {
 
 	@Override
 	public DiscountVO findByPrimaryKey(Integer discountNO) {
-		
+
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
@@ -95,7 +95,7 @@ public class DiscountDAOImpl implements DiscountDAO {
 
 	@Override
 	public List<DiscountVO> getAll() {
-		
+
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
@@ -107,10 +107,34 @@ public class DiscountDAOImpl implements DiscountDAO {
 			session.getTransaction().rollback();
 		}
 		return null;
-		
+
+	}
+
+	// for Order & OrderList By Lin
+	@Override
+	public DiscountVO getDisAmountBy(String discountCode) {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    Transaction transaction = null;
+	    DiscountVO discountVO = null;
+
+	    try {
+	        transaction = session.beginTransaction();
+	        Query<DiscountVO> query = session.createQuery("FROM DiscountVO WHERE discountCode = :code", DiscountVO.class);
+	        query.setParameter("code", discountCode);
+	        discountVO = query.uniqueResult();
+	        transaction.commit();
+	    } catch (Exception e) {
+	        if (transaction != null) {
+	            transaction.rollback();
+	        }
+	        e.printStackTrace();
+	    }
+
+	    return discountVO;
 	}
 
 
+	
 	public static void main(String[] args) {
 		DiscountDAO dao = new DiscountDAOImpl();
 
@@ -120,7 +144,7 @@ public class DiscountDAOImpl implements DiscountDAO {
 //		AdminVO admin1 = new AdminVO();
 //		admin1.setAdminID(1);
 //		discount1.setAdminVO(admin1);
-		
+
 //		discount1.setDiscountContent("moon festival discount");
 //		discount1.setDisAmount(100);
 //		discount1.setDiscountCode("moon");
@@ -133,13 +157,13 @@ public class DiscountDAOImpl implements DiscountDAO {
 //		DiscountVO discount2 = new DiscountVO();
 //		
 //		discount2.setDiscountNO(4);
-		
+
 //		PublisherVO publisher1 = new PublisherVO();
 //		publisher1.setPubID(4);
 //		discount2.setPublisherVO(publisher1);
-		
+
 //		if (DiscountVO.getAdminID() == null && DiscountVO.getPubID() != null)
-		
+
 //		AdminVO admin2 = new AdminVO();
 //		admin2.setAdminID(1);
 //		discount2.setAdminVO(admin2);
@@ -164,5 +188,8 @@ public class DiscountDAOImpl implements DiscountDAO {
 		for (DiscountVO lists : list) {
 			System.out.println(lists);
 		}
+
 	}
+
+	
 }

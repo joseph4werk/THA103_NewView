@@ -56,8 +56,8 @@ public class OrderListVO implements java.io.Serializable {
 	private String seatRowsColumns;
 
 	@Expose
-	@Column(name = "type", columnDefinition = "tinyint")
-	private Integer type;
+	@Column(name = "usedType", columnDefinition = "tinyint")
+	private Integer usedType;
 
 	@ManyToOne
 	@JoinColumn(name = "orderID", referencedColumnName = "orderID")
@@ -87,7 +87,7 @@ public class OrderListVO implements java.io.Serializable {
 		this.reviewContent = reviewContent;
 		this.fiveStarReview = fiveStarReview;
 		this.seatRowsColumns = seatRowsColumns;
-		this.type = type;
+		this.usedType = type;
 		this.ordersVO = ordersVO;
 		this.actVO = actVO;
 		this.comPicVOs = comPicVOs;
@@ -151,11 +151,11 @@ public class OrderListVO implements java.io.Serializable {
 	}
 
 	public Integer getType() {
-		return type;
+		return usedType;
 	}
 
 	public void setType(Integer type) {
-		this.type = type;
+		this.usedType = type;
 	}
 
 	public OrdersVO getOrdersVO() {
@@ -187,7 +187,7 @@ public class OrderListVO implements java.io.Serializable {
 		return "OrderListVO [orderListID=" + orderListID + ", actTotal=" + actTotal + ", QRcodeID="
 				+ Arrays.toString(QRcodeID) + ", OrderListTime=" + OrderListTime + ", reviewContent=" + reviewContent
 				+ ", fiveStarReview=" + fiveStarReview + ", seatRowsColumns=" + seatRowsColumns 
-				+ ", type=" + type + "]";
+				+ ", usedType=" + usedType + "]";
 	}
 
 }
