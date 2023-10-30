@@ -73,6 +73,15 @@ public class SignUpController extends HttpServlet {
 			out.write(json);
 			return;
 		}
+		
+		// 查詢信箱是否重複
+		if(userSvc.checkUserAccountByEmail(email)) {
+			System.out.println("信箱重複");
+			data.put("status", "duplicateEmail");
+			json = gson.toJson(data);
+			out.write(json);
+			return;
+		}
 
 		
 		// 開始新增使用者
