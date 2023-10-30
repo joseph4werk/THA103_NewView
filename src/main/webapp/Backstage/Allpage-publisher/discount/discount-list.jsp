@@ -76,11 +76,9 @@ pageContext.setAttribute("list", pubDiscount);
 					<div class="row">
 						<div class="col-12">
 							<div class="form-group">
-							<form METHOD="post" ACTION="<%=request.getContextPath()%>/pub/discount.do">
-								<input type="submit" value="新增優惠" class="btn btn-dark">
-								<input type="hidden" name="action" value="getOneForUpdate">
-								<input type="hidden" name="discountNO" value="${discountDate.discountNO}">
-							</form>
+							<a href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/discount/discount-add.jsp" class="btn btn-dark">
+							新增優惠 
+							</a>
 							</div>
 							<div class="card">
 								<!-- /.card-header -->
@@ -111,6 +109,7 @@ pageContext.setAttribute("list", pubDiscount);
 														<input type="submit" value="修改" class="btn btn-block btn-success btn-sm">
 														<input type="hidden" name="action" value="getOneForUpdate">
 														<input type="hidden" name="discountNO" value="${discountDate.discountNO}">
+														<input type="hidden" name="pubID" value="<%= session.getAttribute("pubID") %>" />
 													</form>
 													</td>
 													<td>

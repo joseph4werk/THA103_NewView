@@ -15,8 +15,9 @@ public interface DiscountDAO {
 //	萬用複合查詢(傳入參數型態Map)(回傳List)
 //  public List<DiscountVO> getAll(Map<String, String[]> map);
     
-    //for Publisher Backstage get discount List
+    //for Publisher Backstage
     public List<DiscountVO> getDiscountByPubID(Integer pubID);
+	int deleteByPub(Integer discountNO);
     
 
     

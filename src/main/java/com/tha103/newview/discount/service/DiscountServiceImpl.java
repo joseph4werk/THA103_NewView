@@ -92,6 +92,11 @@ public class DiscountServiceImpl implements DiscountService{
 		List<DiscountVO> discountList = discountDAO.getDiscountByPubID(pubID);
 		return discountList;
 	}
+
+	@Override
+	public void deleteDiscountbyPub(Integer discountNO) {
+		discountDAO.deleteByPub(discountNO);	
+	}
 	
 	
 	

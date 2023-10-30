@@ -108,63 +108,31 @@ System.out.println("update頁面接收到的資料" + discountVO);
 										type="text" class="form-control" />
 								</div>
 								
-								
-								
-<!-- 								<div class="form-group row"> -->
-<!-- 									<div class="col-md-6"> -->
-<!-- 										<label for="disStartDate">優惠起始日：</label> -->
-<%-- 										<input name="disStartDate" value= type="text" --%>
-<!-- 										class="form-control" /> -->
-<!-- 									</div> -->
-<!-- 									<div class="col-md-6"> -->
-<!-- 										<label for="disFinishDate">優惠結束日：</label> -->
-<%-- 										<input name="disFinishDate" value="<%=discountVO.getDisFinishDate()%>" type="text" --%>
-<!-- 										class="form-control" /> -->
-<!-- 									</div> -->
-									
-<!-- 								</div> -->
-								
-								
 
 								<div class="form-group row">
 									<div class="col-md-6">
-										<label for="disStartDate">優惠起始日：</label>
-										<div class="input-group date" id="disStartDate"
-											data-target-input="nearest">
-											<input name="disStartDate" value="<%=discountVO.getDisStartDate()%>" type="text"
-												class="form-control datetimepicker-input"
-												data-target="#disStartDate">
+									<label for="disStartDate">優惠起始日：</label>
+									<div class="input-group">
+										
+										<input type="datetime-local"
+										id="disStartDate" name="disStartDate" 
+										value="<%=discountVO.getDisStartDate()%>"
+										class="form-control float-right" step="1">
 
-											<div class="input-group-append" data-target="#disStartDate"
-												data-toggle="datetimepicker">
-												<div class="input-group-text">
-													<i class="fa fa-calendar"></i>
-												</div>
-											</div>
-										</div>
+									</div>
 									</div>
 									<div class="col-md-6">
-										<label for="disFinishDate">優惠結束日：</label>
-										<div class="input-group date" id="disFinishDate"
-											data-target-input="nearest">
-											<input name="disFinishDate" value="<%=discountVO.getDisFinishDate()%>" type="text"
-												class="form-control datetimepicker-input"
-												data-target="#disFinishDate">
+									<label for="disFinishDate">優惠結束日：</label>
+									<div class="input-group">
+										
+										<input type="datetime-local"
+										id="disFinishDate" name="disFinishDate" 
+										value="<%=discountVO.getDisFinishDate()%>"
+										class="form-control float-right" step="1">
 
-											<div class="input-group-append" data-target="#disFinishDate"
-												data-toggle="datetimepicker">
-												<div class="input-group-text">
-													<i class="fa fa-calendar"></i>
-												</div>
-											</div>
-										</div>
+									</div>
 									</div>
 								</div>
-
-
-
-
-
 								<!-- /.form group -->
 
 								<div class="form-group">
@@ -230,34 +198,7 @@ System.out.println("update頁面接收到的資料" + discountVO);
 	<!-- AdminLTE for demo purposes -->
 	<script src="<%=request.getContextPath()%>/Backstage/dist/js/demo.js"></script>
 	<!-- Page specific script -->
-	<script>
-		$(function() {
-			$('.select2').select2()
-		});
-	</script>
-	<script>
-		$(function() {
-			//Initialize Select2 Elements
-			$('.select2').select2()
 
-			//Initialize Select2 Elements
-			$('.select2bs4').select2({
-				theme : 'bootstrap4'
-			})
-
-			
-			//Date picker(活動日期)
-			$('#disStartDate').datetimepicker({
-				format : 'YYYY-MM-DD'
-			});
-			
-			//Date picker(活動日期)
-			$('#disFinishDate').datetimepicker({
-				format : 'YYYY-MM-DD'
-			});
-
-		})
-	</script>
 </body>
 
 </html>

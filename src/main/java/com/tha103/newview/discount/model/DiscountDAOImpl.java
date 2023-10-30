@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import com.tha103.newview.orders.model.OrdersVO;
 import com.tha103.util.HibernateUtil;
 
 
@@ -144,7 +145,31 @@ public class DiscountDAOImpl implements DiscountDAO {
 		return null;
 	}
 	
-	
+
+	@Override
+	public int deleteByPub(Integer discountNO) {
+
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			DiscountVO discountVO = session.get(DiscountVO.class, discountNO);
+			if (discountVO != null) {
+				
+				//取消關聯
+				OrdersVO ordersVO = (OrdersVO) session.get(OrdersVO.class,discountNO);
+				ordersVO.getDiscountVO().getOrdersVOs().remove(ordersVO);
+				ordersVO.setDiscountVO(null);
+				
+				//刪除資料
+				session.delete(discountVO);
+			}
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return -1;
+	}
 
 
 

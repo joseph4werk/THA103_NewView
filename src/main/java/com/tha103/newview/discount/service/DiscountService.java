@@ -21,5 +21,9 @@ public interface DiscountService {
 	public List<DiscountVO> getAll();
 		
 	public List<DiscountVO> getDiscountByPub(Integer pubID);
+	
+	//for Publisher Backstage
+	public void deleteDiscountbyPub(Integer discountNO);
+
 
 }
