@@ -86,12 +86,13 @@ public class OrderListController extends HttpServlet {
 		Integer Total = null;
 		String actID = null;
 		// 訂單購買接值
-		String discountStr = request.getParameter("dis");
+		String discountStr = request.getParameter("disAmount");
 		Integer discount = null;
 		String jsonCartData = request.getAttribute("cartData").toString();
 		Gson gson = new Gson();
 		if(discountStr != null) {
 			 discount = Integer.parseInt(discountStr);
+			System.out.println(discount);
 		}
 		JsonArray cartJsonArray = gson.fromJson(jsonCartData, JsonArray.class);
 		for (JsonElement element : cartJsonArray) {
@@ -147,8 +148,12 @@ public class OrderListController extends HttpServlet {
 				order.setOrdType(0);
 				order.setActQuantity(seatDataCount);
 				order.setOrdTime(lastEditedTime);
+				if(discount != null) {
 				order.setDiscount(discount);
 				order.setDiscountPrice((act.getActPrice()*seatDataCount)-discount);
+				}else {
+				order.setDiscountPrice((act.getActPrice()*seatDataCount));
+				}
 				OrderListVO orderList = new OrderListVO();
 				orderList.setOrderListTime(lastEditedTime);
 				orderList.setActTotal(act.getActPrice());
