@@ -36,6 +36,9 @@ import com.tha103.newview.orderlist.model.OrderListDAOImpl;
 import com.tha103.newview.orderlist.model.OrderListVO;
 import com.tha103.newview.orderlist.service.OrderListService;
 import com.tha103.newview.orderlist.service.OrderListServiceImpl;
+import com.tha103.newview.orders.model.OrdersVO;
+import com.tha103.newview.publisher.model.PublisherVO;
+import com.tha103.newview.user.model.UserVO;
 
 @WebServlet("/SeatOrderList")
 public class OrderListController extends HttpServlet {
@@ -73,8 +76,6 @@ public class OrderListController extends HttpServlet {
 		int scope = 0;
 		Integer Total = null;
 		String actID = null;
-		String seatNumber =null;
-		ActVO act = null;
 		// 訂單購買接值
 		String jsonCartData = request.getAttribute("cartData").toString();
 		Gson gson = new Gson();
@@ -89,11 +90,13 @@ public class OrderListController extends HttpServlet {
 				System.out.println("Key: " + key + ", Value: " + cartItemInfo);
 				String[] parts = cartItemInfo.split(",");
 				 actID = parts[1];
-				 seatNumber = parts[0];
+				String seatNumber = parts[0];
+				String userIDstr = parts[2];
 				double rowIndex1 = 0.0;
 				Integer seatIndex1 = 0;
+				Integer userID = Integer.parseInt(userIDstr);
 				Integer seatNumberInt = Integer.parseInt(seatNumber);
-				act = actService.findByPrimaryKey(Integer.parseInt(actID));
+				ActVO act = actService.findByPrimaryKey(Integer.parseInt(actID));
 				Integer scopeIn = act.getActScope();
 				System.out.println(scopeIn);
 				switch (scopeIn) {
@@ -113,6 +116,13 @@ public class OrderListController extends HttpServlet {
 				String youtubeLink = "https://youtu.be/dQw4w9WgXcQ?si=3NVOtjDf3Lf9LSPW";
 				byte[] qrCodeImage = generateQRCode(youtubeLink);
 				Timestamp lastEditedTime = new Timestamp(System.currentTimeMillis());
+				OrdersVO order = new OrdersVO();
+				UserVO user = new UserVO();				
+				PublisherVO pub = new PublisherVO();
+				user.setUserID(userID);
+				pub.setPubID(act.getPublisherVO().getPubID());
+				order.setPublisherVO(pub);
+				order.setUserVO(user);
 				OrderListVO orderList = new OrderListVO();
 				orderList.setOrderListTime(lastEditedTime);
 				orderList.setActTotal(act.getActPrice());
