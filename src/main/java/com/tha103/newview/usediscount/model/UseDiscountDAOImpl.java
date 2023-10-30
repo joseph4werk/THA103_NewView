@@ -3,6 +3,7 @@ package com.tha103.newview.usediscount.model;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import com.tha103.util.HibernateUtil;
 
@@ -93,4 +94,49 @@ public class UseDiscountDAOImpl implements UseDiscountDAO {
 		}
 		return null;
 	}
+
+	
+
+	// for Order & OrderList By Lin
+	@Override
+	public int getUseDisIDBy(int discountNO, int userID) {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    Integer useDisID = null;
+	    try {
+	        session.beginTransaction();
+	        Query<Integer> query = session.createQuery(
+	            "SELECT ud.useDisID FROM UseDiscountVO ud WHERE ud.discountVO.discountNO = :discountNO AND ud.userVO.userID = :userID", Integer.class
+	        );
+	        query.setParameter("discountNO", discountNO);
+	        query.setParameter("userID", userID);
+	        useDisID = query.uniqueResult();
+	        session.getTransaction().commit();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        session.getTransaction().rollback();
+	    }
+	    return useDisID;
+	}
+
+	// for Order & OrderList By Lin
+	@Override
+	public UseDiscountVO getUseDiscountByUserID(int userID) {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    UseDiscountVO useDiscount = null;
+	    try {
+	        session.beginTransaction();
+	        Query<UseDiscountVO> query = session.createQuery(
+	            "FROM UseDiscountVO ud WHERE ud.userVO.userID = :userID", UseDiscountVO.class
+	        );
+	        query.setParameter("userID", userID);
+	        useDiscount = query.uniqueResult();
+	        session.getTransaction().commit();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        session.getTransaction().rollback();
+	    }
+	    return useDiscount;
+	}
+
+
 }
