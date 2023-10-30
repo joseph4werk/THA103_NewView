@@ -43,8 +43,15 @@ public class MyPostController extends HttpServlet {
 
 		// 透過 userID 查詢資料
 		UserVO userVO = new UserServiceImpl().getUserByPK(Integer.valueOf(userID));
+		
 		Set<PostVO> postVOs = userVO.getPostVOs();
 		
+		// 判斷 postVOs 是否為空值
+		if(postVOs == null) {
+			return;
+		}
+
+		// 有資料，開始查詢資料
 		// 將使用者的 postVOs 透過 stream 轉成 MyPostDTO 型態的 List
 		List<MyPostDTO> myPostList = postVOs.stream()
 				.sorted((o1, o2) -> {
@@ -52,7 +59,7 @@ public class MyPostController extends HttpServlet {
 					Timestamp t2 = Timestamp.valueOf(o2.getLikeCount().toString());
 					return t1.compareTo(t2) * -1;
 				})
-				.map(a -> new MyPostDTO(a))
+				.map(MyPostDTO::new)
 				.collect(Collectors.toList());
 
 		// 打包回傳 ajax

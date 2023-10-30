@@ -32,9 +32,9 @@ public class OrdersController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Integer userID = 0;
-		Integer uid = (Integer) req.getSession().getAttribute("userID");
+		String uid = (String) req.getSession().getAttribute("userID");
 		if (uid != null) {
-			userID = uid;
+			userID = Integer.valueOf(uid);
 		} else {
 			userID = 1;
 		}

@@ -490,11 +490,9 @@
               <tbody id="myPost">
                 <tr>
                   <th scope="row">1</th>
-                  <td>文章類別</td>
-                  <td>這是我的第一場表演</td>
-                  <td>
-                    2017年初，《PAR表演藝術》開始談論「大劇院時代」（註1）；同年年末，表演藝術評論台亦在「TT不和諧開講」從國內、外案例討論「大劇院時代」。其背景是國家兩廳院完工30年後，臺中國家歌劇院、臺灣戲曲中心陸續落成，也即將迎來高雄衛武營國家藝術文化中心等場館
-                  </td>
+                  <td>尚無資料</td>
+                  <td>尚無資料</td>
+                  <td>尚無資料</td>
                   <td>
                     <i class="bi bi-calendar"></i>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
@@ -502,10 +500,10 @@
                         d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"
                       />
                     </svg>
-                    <small class="text-muted">9 mins ago</small>
+                    <small class="text-muted">尚無資料</small>
                   </td>
                   <td>
-                    <button id="modifiedPost" class="stext-101 cl0 size-100 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" style="background-color: black; border-color: black">去修改</button>
+                    <button id="modifiedPost" class="stext-101 cl0 size-100 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" style="background-color: black; border-color: black">尚無資料</button>
                   </td>
                 </tr>
               </tbody>
@@ -670,7 +668,7 @@
           console.log(data);
           myPost_html = `
           <tr>
-            <th scope="row">1</th>
+            <th scope="row">${index + 1}</th>
             <td>${element.postCategoryName}</td>
             <td>${element.postHeader}</td>
             <td>
@@ -686,7 +684,9 @@
               <small class="text-muted">${element.lastEditedTime}</small>
             </td>
             <td>
-              <button id="modifiedPost" class="stext-101 cl0 size-100 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" style="background-color: black; border-color: black" onclick="handleUpdateClick(${element.postID})">去修改</button>
+              <button id="modifiedPost" class="stext-101 cl0 size-100 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" style="background-color: black; border-color: black" onclick="handleUpdateClick(${
+                element.postID
+              })">去修改</button>
             </td>
           </tr>
           `;
