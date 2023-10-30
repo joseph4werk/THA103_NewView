@@ -773,6 +773,7 @@
 
     <!--===============================================================================================-->
     <script>
+      // 取得專案路徑
       const HOST = window.location.host;
       var path = window.location.pathname;
       var webCtx = path.substring(0, path.indexOf("/", 1));
@@ -794,7 +795,7 @@
         console.log(signUp_item);
 
         $.ajax({
-          url: END_POINT_URL,
+          url: END_POINT_URL + COLLECTION_POINT,
           type: "POST",
           data: signUp_item,
           dataType: "json",

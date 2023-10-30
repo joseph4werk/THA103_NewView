@@ -25,7 +25,7 @@ pageContext.setAttribute("categories", categories);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>NEW VIEW | Administrator Backstage | Activity List</title>
+    <title>NEW VIEW | Administrator Backstage | Activity Approve</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -56,7 +56,7 @@ pageContext.setAttribute("categories", categories);
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>活動列表</h1>
+                            <h1>活動審查</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -142,7 +142,7 @@ pageContext.setAttribute("categories", categories);
                                                 <th>價格</th>
                                                 <th>規模</th>
                                                 <th>狀態</th>
-                                                <th style="text-align: center;">操作</th>
+                                                <th style="text-align: center; padding:12px 24px">操作</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -152,30 +152,18 @@ pageContext.setAttribute("categories", categories);
                                                 <td>${act.actCategory.actCategoryName}</td>
                                                 <td>${act.actName}</td>
                                                 <td>${act.actPrice}</td>
-                                                <td id="scope_${act.actID}">${act.actScope}</td>
-                                                <td>${act.approvalCondition}</td>
+                                                <td id="scope_${act.actID}">${act.actScope == '3' ? '(大) 可容納 900 人' : ''}</td>
+                                                <td id="approval_${act.actID}">${act.approvalCondition}</td>
                                                 <td>
-	                                                	
-	                                                	<Form METHOD="post"
-															ACTION="<%=request.getContextPath()%>/act/act.do">
-															<input type="submit" value="修改"
-																class="btn btn-block btn-success btn-sm"> <input
-																type="hidden" name="actId" value="${act.actID}">
-															<input type="hidden" name="action"
-																value="update">
+	                                                	<button type="button"
+                                                        class="btn btn-block btn-success btn-sm" onclick="document.getElementById('approval_${act.actID}').innerHTML = '通過'">通過</button>
 
-														</Form>
 
-	                                           			<br>
+	                                           
 	                                                
-	                                                	<Form METHOD="post"
-															ACTION="<%=request.getContextPath()%>/act/act.admindo">
-															<input type="submit" value="刪除"
-																class="btn btn-block btn-danger btn-sm"> <input
-																type="hidden" name="actIDDelete" value="${act.actID}">
-															<input type="hidden" name="action" value="delete">
+	                                                	<button type="button"
+                                                        class="btn btn-block btn-danger btn-sm" onclick="document.getElementById('approval_${act.actID}').innerHTML = '未通過'">未通過</button>
 
-														</Form>
 
 	                                            </td>
                                             </tr>
@@ -210,12 +198,36 @@ pageContext.setAttribute("categories", categories);
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
+    
+    <!--
+    <script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+    
+    	
+    		var trLen = $("table").find("tr");
+    		for (var i = 0; i < trLen.length; i++){
+    			for (var z = 5){
+    				if( i != 0) {
+    					trLen.eq(i).find("td").eq(z).attr("id", "approval"+i);
+    				}
+    			}
+    		}
+    	
+    }
+    </script>
+    -->
 
 	<script>
 	document.addEventListener("DOMContentLoaded", function(event) {
 		
+		
+		
 		//活動範圍大小代表數字 
-		var showedScope = document.getElementById('scope_1');
+		for(var i = 0; i< actForm.length; i++){
+			console.log(i);
+		}
+		
+		var showedScope = document.getElementById('scope');
 		console.log(showedScope);
 		
 		//判斷該數字分別顯示不同的座位數量
