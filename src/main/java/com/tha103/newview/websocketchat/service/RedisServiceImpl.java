@@ -245,7 +245,7 @@ public class RedisServiceImpl implements RedisService{
 		//確認購買,複製到db3
 		public Map<String, String> findSeatsByActIDAndUserName(String actID, String userName) {
 		    Jedis jedis = null;
-		    int seatExpirationTime = 20;
+		    int seatExpirationTime = 600;
 		    Map<String, String> result = new HashMap<>();
 		    try {
 		        jedis = JedisPoolUtil.getJedisPool().getResource();
@@ -255,8 +255,7 @@ public class RedisServiceImpl implements RedisService{
 		        for (Map.Entry<String, String> entry : allSeats.entrySet()) {
 		            if (entry.getValue().startsWith(userName + "," + actID)) {
 		                result.put(entry.getKey(), entry.getValue());
-		                
-		               
+		                               
 		                String[] seatInfoParts = entry.getValue().split(",");			            
 			            String actName = seatInfoParts[1];
 			            String seatType = seatInfoParts[2];
