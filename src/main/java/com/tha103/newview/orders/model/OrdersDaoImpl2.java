@@ -153,7 +153,7 @@ public class OrdersDaoImpl2 implements OrdersDao2 {
 	}
 	public static void main(String[] args) {
 		OrdersDaoImpl2 dao = new OrdersDaoImpl2();
-		var a = dao.deleteComPic(18);
+		var a = dao.deleteComPic(1);
 		System.err.println(a);
 	}
 	public int deleteComPic(Integer orderListID) {
