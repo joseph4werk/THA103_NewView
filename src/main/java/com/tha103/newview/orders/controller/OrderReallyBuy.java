@@ -86,9 +86,11 @@ public class OrderReallyBuy extends HttpServlet {
                 String cartData = redisService.getCartDataFromRedis(cartKey);
                 
                 if (cartData != null ) {
+                	cartData = cartData.replace("inCart", String.valueOf(userID));
                     cartData = cartData.replace(":NotReallyBuy", "buy");
                     Gson gson = new Gson();
                     JsonObject cartJsonObject = gson.fromJson(cartData, JsonObject.class);
+                    
                     cartDataList.add(cartJsonObject);
                 }
                 
