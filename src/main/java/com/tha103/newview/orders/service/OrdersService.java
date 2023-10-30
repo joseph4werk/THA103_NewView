@@ -30,5 +30,8 @@ public interface OrdersService {
 			Timestamp ordTime, Integer pubID, Integer ordType, Integer actQuantity, Integer discountNO);
 
 	public List<UserVO> getAllUsers();
+	
+	// for Publisher Backstage
+	public List<OrdersVO> getOrdersByPub(Integer pubID);
 
 }
