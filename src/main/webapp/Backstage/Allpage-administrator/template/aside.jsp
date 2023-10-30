@@ -116,10 +116,14 @@
 							</a></li>
 						</ul>
 					</li>
-					<li class="nav-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-administrator/login/login_admin.jsp"
-						class="nav-link"> <i class="nav-icon fas fa-file"></i>
-							<p>登出</p>
-					</a></li>
+					<form method="post" action="<%=request.getContextPath()%>/admin/admin.do">
+						<li class="nav-item">						
+							<div class="nav-link"> 
+								<button type="submit" class="btn btn-block btn-light btn-sm">登出</button>
+								<input type="hidden" name="action" value="adminLogout" />
+							</div>
+						</li>
+					</form>
 				</ul>
 			</nav>
 			<!-- /.sidebar-menu -->

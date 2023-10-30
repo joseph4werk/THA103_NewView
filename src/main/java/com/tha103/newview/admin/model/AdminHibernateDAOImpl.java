@@ -5,7 +5,9 @@ import java.util.List;
 import javax.persistence.FetchType;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
+import com.tha103.newview.pubuser.model.PubUserVO;
 import com.tha103.util.HibernateUtil;
 
 public class AdminHibernateDAOImpl implements AdminHibernateDAO{
@@ -42,4 +44,36 @@ public class AdminHibernateDAOImpl implements AdminHibernateDAO{
 	}
 	
 	// fetch = FetchType.EAGER
+	
+	
+	// for login
+	public AdminVO findByAccount(String adminAccount) {
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		try {
+			session.beginTransaction();
+			String hql = "FROM AdminVO WHERE adminAccount = :adminAccount";
+
+			Query<AdminVO> query = session.createQuery(hql, AdminVO.class);
+			System.out.println(query);
+
+			query.setParameter("adminAccount", adminAccount);
+			System.out.println(adminAccount);
+
+			AdminVO adminVO = query.uniqueResult();
+			session.getTransaction().commit();
+			System.out.println("交易成功");
+			System.out.println(adminVO);
+			return adminVO;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+
+			System.out.println("交易失敗");
+			return null;
+		}
+		
+	}
 }

@@ -19,7 +19,7 @@ import com.tha103.newview.actcategory.service.*;
 
 
 
-@WebServlet("/ActCategoryServlet")
+@WebServlet("/actcategory/actcategory.do")
 public class ActCategoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -61,12 +61,14 @@ public class ActCategoryServlet extends HttpServlet {
 			/***********************2.開始新增資料**************/
 			
 			ActCategoryService actSvc = new ActCategoryService();
-			actCategory = actSvc.addActCategory(null, actCategoryName, null);
+			actCategory = actSvc.addActCategory(actCategoryName);
 			
 			/***********************3.新增完成，準備轉交(Send the Success view)*************/
 			
 			req.setAttribute("actCategory", actCategory);
-			String url = "/Backstage/Allpage-administrator/activity-category.jsp";
+			String url = "/Backstage/Allpage-administrator/activity/activity-category.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
 			
 		}
 		
@@ -78,16 +80,29 @@ public class ActCategoryServlet extends HttpServlet {
 		
 		if ("delete".equals(action)) {
 			
+//			List<String> errorMsgs = new LinkedList<String>();
+//			req.setAttribute("errorMsgs", errorMsgs);
+//			// 送出刪除的來源網頁路徑
+//			String requestURL = req.getParameter("requestURL");
+			
 			Integer actCategoryID = Integer.valueOf(req.getParameter("actCategoryID"));
 			
-			ActCategoryService actSvc = new ActCategoryService();
-			actSvc.deleteActCategory(actCategoryID);
+			ActCategoryService actCategorySvc = new ActCategoryService();
+			ActCategory actCategory = actCategorySvc.getOneActCategory(actCategoryID);
+			actCategorySvc.deleteActCategory(actCategoryID);
 			
-			String url = "/Backstage/Allpage-administrator/activity-category.jsp";
+//			if (requestURL.equals("/Backstage/Allpage-administrator/activity/activity-category.jsp")
+//				req.setAttribute("user-listByID", actCategorySvc.getOneActCategory(actCategory.getPublisherVO().getPubID()));
+
+			
+			
+			String url = "/Backstage/Allpage-administrator/activity/activity-category.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 			
 		}
+		
+		
 		
 		
 		
