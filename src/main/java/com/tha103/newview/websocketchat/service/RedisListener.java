@@ -51,11 +51,19 @@ public class RedisListener {
 	            String seatTypeStr = parts[4];
 	            String value = userName + "," + actID + ",inCart";
 	            
-	            if(!seatTypeStr.equals("NotReallyBuy")) {
-	            	System.out.println(" actID: " + actID + " 和 seatNumber: " + seatNumber+"  已被確定購買");
-	                return;
-	            }
+	           
 	            deleteSeatData(actID, seatNumber);
+	        }else if (parts.length == 4) {
+	        	
+		            String cartName = parts[0];
+		            String userName = parts[1];
+		            String actID = parts[2];
+		            String seatNumber = parts[3];
+		           
+		            String value = userName + "," + actID + ",inCart";
+		            
+		           
+		            deleteSeatData(actID, seatNumber);
 	        } else {
 	            System.out.println("Invalid message format: " + message);
 	        }	       
