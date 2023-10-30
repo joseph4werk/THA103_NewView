@@ -12,7 +12,7 @@ if(pubID == null){
 	return;
 }
 
-OrdersService ordersSvc = new OrdersService();
+OrdersService ordersSvc = new OrdersServiceImpl();
 List<OrdersVO> pubOrders = ordersSvc.getOrdersByPub(pubID);
 pageContext.setAttribute("list", pubOrders);
 %>

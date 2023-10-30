@@ -1,13 +1,14 @@
+<%@ page import="com.tha103.newview.discount.service.*"%>
+<%@ page import="com.tha103.newview.discount.model.*"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.tha103.newview.discount.model.*"%>
-<%@ page import="com.tha103.newview.discount.service.*"%>
 
 <%
 DiscountVO discountVO = (DiscountVO) request.getAttribute("discountVO");
 %>
+
 <!DOCTYPE html>
-<html >
+<html>
 
 <head>
 <meta charset="utf-8">
@@ -65,7 +66,7 @@ DiscountVO discountVO = (DiscountVO) request.getAttribute("discountVO");
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1>新增優惠</h1>
+							<h1>修改優惠</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
@@ -83,48 +84,58 @@ DiscountVO discountVO = (DiscountVO) request.getAttribute("discountVO");
 				<!-- Default box -->
 				<div class="container-fluid">
 					<div class="card" class="container-fluid">
-						<form METHOD="post" action="<%=request.getContextPath()%>/pub/discount.do" style="padding: 30px 0px;">
+					<jsp:useBean id="discountSvc" scope="page" 
+						class="com.tha103.newview.discount.service.DiscountServiceImpl" />
+						<form METHOD="post" action="<%=request.getContextPath()%>/pubuser/discount.do">
 							<div class="col-md-10 offset-md-1">
 								<div class="form-group">
 									<label for="discountContent">優惠內容：</label> 
-									<input type="text" name="discountContent"
-										class="form-control" />
+									
+									<input name="discountContent" value="<%=discountVO.getDiscountContent()%>" type="text" class="form-control" />
 								</div>
 								<div class="form-group">
 									<label for="disAmount">優惠金額：</label> 
-									<input type="text" name="disAmount" 
-										class="form-control" />
+									<input name="disAmount" value="<%=discountVO.getDisAmount()%>" type="text" id="inputDisAmount" class="form-control" />
 								</div>
 								<div class="form-group">
 									<label for="discountCode">優惠碼：</label> 
-									<input name="discountCode" 
-									type="text" class="form-control" />
+									<input name="discountCode" value="<%=discountVO.getDisStartDate()%>" type="text" id="inputDisCode" class="form-control" />
 								</div>
+
 								<!-- Date range -->
-								<div class="form-group">
-									<label for="disStartDateStr">優惠起始日：</label>
-									<div class="input-group">
-										<input type="datetime-local"
-										id="disStartDateStr" name="disStartDateStr"
-										class="form-control float-right" step="1">
+								<div class="form-group row">
+									<div class="col-md-6">
+										<label for="disStartDate">優惠起始日：</label>
+										<div class="input-group data" id="disStartDate" data-target-input="nearest">
+											<div class="input-group-prepend" data-target="#actTime" data-toggle="datetimepicker">
+												<div class="input-group-text"> 
+												<i class="far fa-calendar-alt"></i>
+												</div>
+											</div>
+											<input name="disStartDate" value="<%=discountVO.getDisStartDate()%>" type="text" 
+											class="form-control datetimepicker-input" data-target="disStartDate">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<label for="disFinishDate">優惠結束日：</label>
+										<div class="input-group date" id="disFinishDate" data-target-input="nearest">
+											<div class="input-group-append" data-target="disFinishDate" data-toggle="datetimepicker">
+												<div class="input-group-text">
+												<i class="far fa-clock"></i>
+												</div>
+											</div>
+											<input name="disFinishDate" value="<%=discountVO.getDisFinishDate()%>" type="text" 
+											class="form-control datetimepicker-input" data-target="disFinishDate">
+										</div>
 									</div>
 									<!-- /.input group -->
 								</div>
-								
-										<!-- Date range -->
-								<div class="form-group">
-									<label for="disFinishDateStr">優惠結束日：</label>
-									<div class="input-group">
-										<input type="datetime-local"
-										id="disFinishDateStr" name="disFinishDateStr"
-										class="form-control float-right" step="1">
-									</div>
-									<!-- /.input group -->
-								</div>
-			
+								<!-- /.form group -->
+
 								<div class="form-group">
 									<input type="submit" class="btn btn-primary" value="送出">
-									<input type="hidden" name="action" value="add"> 
+									<input type="hidden" name="action" value="update">
+									<input type="hidden" name="discountNOStr" value="${discountVO.discountNO}">
 									<input type="hidden" name="pubIDStr" value="${sessionScope.pubID}">
 								</div>
 							</div>
@@ -179,7 +190,96 @@ DiscountVO discountVO = (DiscountVO) request.getAttribute("discountVO");
 			$('.select2').select2()
 		});
 	</script>
+	<script>
+		$(function() {
+			//Initialize Select2 Elements
+			$('.select2').select2()
 
+			//Initialize Select2 Elements
+			$('.select2bs4').select2({
+				theme : 'bootstrap4'
+			})
+
+			//Datemask dd/mm/yyyy
+			$('#datemask').inputmask('dd/mm/yyyy', {
+				'placeholder' : 'dd/mm/yyyy'
+			})
+			//Datemask2 mm/dd/yyyy
+			$('#datemask2').inputmask('mm/dd/yyyy', {
+				'placeholder' : 'mm/dd/yyyy'
+			})
+			//Money Euro
+			$('[data-mask]').inputmask()
+
+			//Date picker
+			$('#reservationdate').datetimepicker({
+				format : 'L'
+			});
+
+			//Date and time picker
+			$('#reservationdatetime').datetimepicker({
+				icons : {
+					time : 'far fa-clock'
+				}
+			});
+
+			//Date range picker
+			$('#reservation').daterangepicker()
+			//Date range picker with time picker
+			$('#reservationtime').daterangepicker({
+				timePicker : true,
+				timePickerIncrement : 30,
+				locale : {
+					format : 'MM/DD/YYYY hh:mm A'
+				}
+			})
+			//Date range as a button
+			$('#daterange-btn').daterangepicker(
+					{
+						ranges : {
+							'Today' : [ moment(), moment() ],
+							'Yesterday' : [ moment().subtract(1, 'days'),
+									moment().subtract(1, 'days') ],
+							'Last 7 Days' : [ moment().subtract(6, 'days'),
+									moment() ],
+							'Last 30 Days' : [ moment().subtract(29, 'days'),
+									moment() ],
+							'This Month' : [ moment().startOf('month'),
+									moment().endOf('month') ],
+							'Last Month' : [
+									moment().subtract(1, 'month').startOf(
+											'month'),
+									moment().subtract(1, 'month')
+											.endOf('month') ]
+						},
+						startDate : moment().subtract(29, 'days'),
+						endDate : moment()
+					},
+					function(start, end) {
+						$('#reportrange span').html(
+								start.format('MMMM D, YYYY') + ' - '
+										+ end.format('MMMM D, YYYY'))
+					})
+
+			//Timepicker
+			$('#timepicker').datetimepicker({
+				format : 'LT'
+			})
+
+		})
+
+		// Setup the buttons for all transfers
+		// The "add files" button doesn't need to be setup because the config
+		// `clickable` has already been specified.
+		document.querySelector("#actions .start").onclick = function() {
+			myDropzone.enqueueFiles(myDropzone
+					.getFilesWithStatus(Dropzone.ADDED))
+		}
+		document.querySelector("#actions .cancel").onclick = function() {
+			myDropzone.removeAllFiles(true)
+		}
+		// DropzoneJS Demo Code End
+	</script>
 </body>
 
 </html>

@@ -5,9 +5,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
+Integer pubID = (Integer) session.getAttribute("pubID");
+if(pubID == null){
+	response.sendRedirect("/Backstage/Allpage-publisher/pub-index.jsp");
+	return;
+}
+
 PubUserService pubUserSvc = new PubUserService();
-List<PubUserVO> list = pubUserSvc.getAll();
-//PubUserVO list = pubUserSvc.getOnePubUser(pubUserID);
+// List<PubUserVO> list = pubUserSvc.getAll();
+List<PubUserVO> list = pubUserSvc.getPubuesrByPub(pubID);
 pageContext.setAttribute("list", list);
 
 
