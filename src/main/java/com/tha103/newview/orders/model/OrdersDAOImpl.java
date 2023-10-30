@@ -121,32 +121,32 @@ public class OrdersDAOImpl implements OrdersDAO {
 	
 
 	
-
+	//for Order & OrderList by Lin
 	@Override
 	public int deleteOrdersbyUserIDandPubID(Integer userID, Integer pubID) {
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    try {
 	        session.beginTransaction();
 
-	        // 透過查詢來獲取特定的 OrdersVO
-	        Query query = session.createQuery("from OrdersVO where publisherVO.pubID = :pubID and userVO.userID = :userID");
+	        // 使用原生SQL來執行刪除操作
+	        String sql = "DELETE FROM Orders WHERE pubID = :pubID AND userID = :userID";
+	        Query query = session.createSQLQuery(sql);
 	        query.setParameter("pubID", pubID);
 	        query.setParameter("userID", userID);
-	        List<OrdersVO> orders = query.list();
 
-	        for (OrdersVO order : orders) {
-	            session.delete(order); // 刪除每個符合條件的訂單
-	        }
+	        int rowsAffected = query.executeUpdate();
 
 	        session.getTransaction().commit();
+	        return rowsAffected; // 返回受影響的行數
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        session.getTransaction().rollback();
 	        return -1; // 返回錯誤碼
 	    }
-	    return 1; // 成功刪除
 	}
 
+
+	//for Order & OrderList by Lin
 	@Override
 	public Integer getOrderBy(int userID, int pubID) {
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();

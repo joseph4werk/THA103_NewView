@@ -395,7 +395,7 @@
                 </div>
 
                 <div class="layer-slick1 animated visible-false" data-appear="zoomIn" data-delay="1600">
-                  <a href="product.html" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn2 p-lr-15 trans-04"> 前往訂票 </a>
+                  <a href="NewActJSPTest.jsp" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn2 p-lr-15 trans-04"> 前往訂票 </a>
                 </div>
               </div>
             </div>
@@ -944,10 +944,18 @@
 
     <!--===============================================================================================-->
     <script>
+      // 取得專案路徑
+      const HOST = window.location.host;
+      var path = window.location.pathname;
+      var webCtx = path.substring(0, path.indexOf("/", 1));
+      const END_POINT_URL = "http://" + HOST + webCtx;
+      // 首頁資訊API
+      const COLLECTION_POINT = "/Home";
+
       $(function () {
         // 熱門活動
         $.ajax({
-          url: "http://localhost:8081/com.tha103.newview/Home",
+          url: END_POINT_URL + COLLECTION_POINT,
           type: "POST",
           data: { action: "Act" },
           dataType: "json",
@@ -966,7 +974,7 @@
 
         // 熱門討論文章
         $.ajax({
-          url: "http://localhost:8081/com.tha103.newview/Home",
+          url: END_POINT_URL + COLLECTION_POINT,
           type: "POST",
           data: { action: "HotPosts" },
           dataType: "json",
@@ -995,7 +1003,7 @@
                        	  <div class="block1 wrap-pic-w" style="position: relative; overflow: hidden;">
                        	    <img src="data:image/*;base64,${element.actPic[0]}" alt="IMG-BANNER" style="width: 1200; height: 800;"/>
 
-                       	    <a href="product.html" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+                       	    <a href="NewActJSPTest.jsp" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
                        	      <div class="block1-txt-child2 p-b-4 trans-05">
                        	        <div class="block1-link stext-101 cl0 trans-09">${element.actName[0]}</div>
                        	      </div>

@@ -141,7 +141,7 @@
         <!-- Sidebar user (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+            <img src="../dist/img/user4-128x128.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
             <a href="#" class="d-block">NewView 後台管理員</a>
@@ -176,7 +176,7 @@
 	            </li>
 	            
 	            <li class="nav-item">
-	              <a href="activity/activity-shelves.jsp" class="nav-link">
+	              <a href="activity/activity-approve.jsp" class="nav-link">
 	                <i class="far fa-circle nav-icon"></i>
 	                <p>活動審查</p>
 	              </a>
@@ -199,7 +199,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="order/order-list.jsp" class="nav-link">
+              <a href="discount/discount-list.jsp" class="nav-link">
                 <i class="nav-icon fas fa-tree"></i>
                 <p>優惠管理</p>
               </a>
@@ -253,7 +253,7 @@
               </ul>
             </li>
             <li class="nav-item">
-              <a href="login/login.html" class="nav-link">
+              <a href="login/login_admin.jsp" class="nav-link">
                 <i class="nav-icon fas fa-file"></i>
                 <p>登出</p>
               </a>
