@@ -15,11 +15,15 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
+
+
+
 import com.tha103.newview.act.model.ActDAO;
 import com.tha103.newview.act.model.ActDAOHibernateImpl;
 import com.tha103.newview.act.model.ActVO;
@@ -115,6 +119,8 @@ public class OrderListController extends HttpServlet {
 				}
 				String youtubeLink = "https://youtu.be/dQw4w9WgXcQ?si=3NVOtjDf3Lf9LSPW";
 				byte[] qrCodeImage = generateQRCode(youtubeLink);
+				
+				
 				Timestamp lastEditedTime = new Timestamp(System.currentTimeMillis());
 				OrdersVO order = new OrdersVO();
 				UserVO user = new UserVO();				
@@ -123,6 +129,7 @@ public class OrderListController extends HttpServlet {
 				pub.setPubID(act.getPublisherVO().getPubID());
 				order.setPublisherVO(pub);
 				order.setUserVO(user);
+				order.setOrdType(0);
 				OrderListVO orderList = new OrderListVO();
 				orderList.setOrderListTime(lastEditedTime);
 				orderList.setActTotal(act.getActPrice());
@@ -130,7 +137,7 @@ public class OrderListController extends HttpServlet {
 				orderList.setQRcodeID(qrCodeImage);
 				orderList.setSeatRowsColumns("第 " + ((int)rowIndex1+1) + "排, 第 " + seatIndex1 + " 列");
 				orderList.setType(0);
-
+				
 				orderListService.insert(orderList);
 				//如果沒有印出訊息
 				if (act != null) {
