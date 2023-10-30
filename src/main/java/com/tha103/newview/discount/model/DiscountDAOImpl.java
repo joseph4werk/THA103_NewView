@@ -1,5 +1,6 @@
 package com.tha103.newview.discount.model;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -44,18 +45,23 @@ public class DiscountDAOImpl implements DiscountDAO {
 	}
 
 	@Override
-	public int update(DiscountVO discountVO) {
+	public void update(DiscountVO discountVO) {
 		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
+			System.out.println("DAO接收到請求");
+			System.out.println("DAO收到的資料" + discountVO);
 			session.beginTransaction();
+			System.out.println("開啟交易中");
 			session.update(discountVO);
 			session.getTransaction().commit();
+			System.out.println("完成交易");
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
+			System.out.println("QQ被rollback了");
+			throw e;
 		}
-		return -1;
 
 	}
 
@@ -84,6 +90,7 @@ public class DiscountDAOImpl implements DiscountDAO {
 		try {
 			session.beginTransaction();
 			DiscountVO discountVO = session.get(DiscountVO.class, discountNO);
+			//System.out.println(discountVO);
 			session.getTransaction().commit();
 			return discountVO;
 		} catch (Exception e) {
@@ -116,6 +123,7 @@ public class DiscountDAOImpl implements DiscountDAO {
 	public List<DiscountVO> getDiscountByPubID(Integer pubID){
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
+			session.beginTransaction();
 			String hql = "FROM DiscountVO AS d WHERE d.publisherVO.pubID = :pubID";
 			Query<DiscountVO> query = session.createQuery(hql,DiscountVO.class);
 			query.setParameter("pubID",pubID);
@@ -126,6 +134,9 @@ public class DiscountDAOImpl implements DiscountDAO {
 		}
 		return null;
 	}
+	
+	
+
 
 
 	public static void main(String[] args) {
@@ -182,4 +193,6 @@ public class DiscountDAOImpl implements DiscountDAO {
 			System.out.println(lists);
 		}
 	}
+
+
 }

@@ -1,6 +1,7 @@
 package com.tha103.newview.discount.model;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -45,11 +46,11 @@ public class DiscountVO {
 
 	@Expose
 	@Column(name = "disStartDate")
-	private Timestamp disStartDate;
+	private Date disStartDate;
 
 	@Expose
 	@Column(name = "disFinishDate")
-	private Timestamp disFinishDate;
+	private Date disFinishDate;
 
 	@Expose
 	@OneToMany(mappedBy = "discountVO")
@@ -73,7 +74,7 @@ public class DiscountVO {
 	}
 
 	public DiscountVO(Integer discountNO, String discountContent, Integer disAmount, String discountCode,
-			Timestamp disStartDate, Timestamp disFinishDate, Set<UseDiscountVO> useDiscountVOs, Set<OrdersVO> ordersVOs,
+			Date disStartDate, Date disFinishDate, Set<UseDiscountVO> useDiscountVOs, Set<OrdersVO> ordersVOs,
 			PublisherVO publisherVO, AdminVO adminVO) {
 		super();
 		this.discountNO = discountNO;
@@ -120,19 +121,19 @@ public class DiscountVO {
 		this.discountCode = discountCode;
 	}
 
-	public Timestamp getDisStartDate() {
+	public Date getDisStartDate() {
 		return disStartDate;
 	}
 
-	public void setDisStartDate(Timestamp disStartDate) {
+	public void setDisStartDate(Date disStartDate) {
 		this.disStartDate = disStartDate;
 	}
 
-	public Timestamp getDisFinishDate() {
+	public Date getDisFinishDate() {
 		return disFinishDate;
 	}
 
-	public void setDisFinishDate(Timestamp disFinishDate) {
+	public void setDisFinishDate(Date disFinishDate) {
 		this.disFinishDate = disFinishDate;
 	}
 

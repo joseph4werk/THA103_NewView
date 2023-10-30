@@ -1,11 +1,12 @@
 package com.tha103.newview.discount.model;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface DiscountDAO {
 	
 	public int insert(DiscountVO DiscountVO);
-    public int update(DiscountVO DiscountVO);
+    public void update(DiscountVO DiscountVO);
     public int delete(Integer discountNO);
     public DiscountVO findByPrimaryKey(Integer discountNO);
     public List<DiscountVO> getAll();
@@ -15,4 +16,7 @@ public interface DiscountDAO {
     
     //for Publisher Backstage get discount List
     public List<DiscountVO> getDiscountByPubID(Integer pubID);
+    
+
+    
 }

@@ -12,9 +12,9 @@ if(pubID == null){
 	return;
 }
 
-OrdersService ordersSvc = new OrdersService();
-List<OrdersVO> pubOrders = ordersSvc.getOrdersByPub(pubID);
-pageContext.setAttribute("list", pubOrders);
+// OrdersService ordersSvc = new OrdersService();
+// List<OrdersVO> pubOrders = ordersSvc.getOrdersByPub(pubID);
+// pageContext.setAttribute("list", pubOrders);
 %>
 
 <!DOCTYPE html>

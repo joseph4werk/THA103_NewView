@@ -1,9 +1,10 @@
 package com.tha103.newview.discount.controller;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.text.DateFormat;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.tha103.newview.admin.model.AdminVO;
 import com.tha103.newview.discount.model.DiscountVO;
-import com.tha103.newview.discount.service.DiscountService;
+import com.tha103.newview.discount.service.*;
 import com.tha103.newview.publisher.model.PublisherVO;
 
 @WebServlet("/pub/discount.do")
@@ -30,47 +31,79 @@ public class DiscountByPubServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-		DiscountService discountSvc = new DiscountService();
+		DiscountService discountSvc = new DiscountServiceImpl();
 
 		if ("add".equals(action)) {
-			// 收到請求
+			// 收到請求 
 
 			try {
 				String pubIDStr = req.getParameter("pubIDStr");
 				Integer pubID = Integer.parseInt(pubIDStr);
 
-				String adminIDStr = req.getParameter("adminIDStr");
+				String adminIDStr = (req.getParameter("adminIDStr") 
+						!= null && !req.getParameter("adminIDStr").isEmpty()) ? req.getParameter("adminIDStr") : "1";
 				Integer adminID = Integer.parseInt(adminIDStr);
+				System.out.println("adminID" + adminID);
 
 				String discountContent = req.getParameter("discountContent");
 				String disAmountStr = req.getParameter("disAmount");
 				Integer disAmount = Integer.parseInt(disAmountStr);
 
 				String discountCode = req.getParameter("discountCode");
-
-				String disStartDateStr = req.getParameter("disStartDateStr");
-				Timestamp disStartDate = null;
-				if (disStartDateStr != null && !(disStartDateStr).isEmpty()) {
-					SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				
+				String disStartDateStr = req.getParameter("disStartDate"); // 使用正確的變數名
+				System.out.println("disStartDateStr: " + disStartDateStr);
+				
+				Date disStartDate = null;
+				if (disStartDateStr != null && !disStartDateStr.isEmpty()) {
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 					try {
-						Date parsedDate = timeFormat.parse(disStartDateStr); // 將字串轉為日期
-						disStartDate = new Timestamp(parsedDate.getTime()); // 轉換Timestamp類型
+						disStartDate = dateFormat.parse(disStartDateStr);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
+				System.out.println("disStartDate" + disStartDate);
 
-				String disFinishDateStr = req.getParameter("disStartDateStr");
-				Timestamp disFinishDate = null;
-				if (disFinishDateStr != null && !(disFinishDateStr).isEmpty()) {
-					SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//				String disStartDateStr = req.getParameter("disStartDateStr");
+//				Timestamp disStartDate = null;
+//				if (disStartDateStr != null && !(disStartDateStr).isEmpty()) {
+//					SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//					try {
+//						Date parsedDate = timeFormat.parse(disStartDateStr); // 將字串轉為日期
+//						disStartDate = new Timestamp(parsedDate.getTime()); // 轉換Timestamp類型
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				}
+				
+				
+				String disFinishDateStr = req.getParameter("disStartDate");
+				System.out.println("disFinishDateStr" + disFinishDateStr);
+				
+				Date disFinishDate = null;
+				if (disFinishDateStr != null && !disFinishDateStr.isEmpty()) {
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 					try {
-						Date parsedDate = timeFormat.parse(disFinishDateStr); // 將字串轉為日期
-						disFinishDate = new Timestamp(parsedDate.getTime()); // 轉換Timestamp類型
+						disFinishDate = dateFormat.parse(disFinishDateStr);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
+				System.out.println("disFinishDate" + disFinishDate);
+
+				
+//				String disFinishDateStr = req.getParameter("disStartDateStr");
+//				Timestamp disFinishDate = null;
+//				if (disFinishDateStr != null && !(disFinishDateStr).isEmpty()) {
+//					SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//					try {
+//						Date parsedDate = timeFormat.parse(disFinishDateStr); // 將字串轉為日期
+//						disFinishDate = new Timestamp(parsedDate.getTime()); // 轉換Timestamp類型
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				}
 
 				/********** Package data **********/
 				DiscountVO discountVO = new DiscountVO();
@@ -106,51 +139,112 @@ public class DiscountByPubServlet extends HttpServlet {
 		if ("update".equals(action)) {
 
 			try {
-				String pubIDStr = req.getParameter("pubIDStr");
-				Integer pubID = Integer.parseInt(pubIDStr);
-
-				String adminIDStr = req.getParameter("adminIDStr");
-				Integer adminID = Integer.parseInt(adminIDStr);
-
 				String discountNOStr = req.getParameter("discountNOStr");
 				Integer discountNO = Integer.parseInt(discountNOStr);
+				System.out.println("servlet收到編號" + discountNO + "更新請求");
+				
 
 				String discountContent = req.getParameter("discountContent");
+				System.out.println("discountContent" + discountContent);
+				
 				String disAmountStr = req.getParameter("disAmount");
 				Integer disAmount = Integer.parseInt(disAmountStr);
+				System.out.println("disAmount" + disAmount);
 
 				String discountCode = req.getParameter("discountCode");
+				System.out.println("discountCode" + discountCode);
 
-				String disStartDateStr = req.getParameter("disStartDateStr");
-				Timestamp disStartDate = null;
-				if (disStartDateStr != null && !(disStartDateStr).isEmpty()) {
-					SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String disStartDateStr = req.getParameter("disStartDate"); // 使用正確的變數名
+				System.out.println("disStartDateStr: " + disStartDateStr);
+				
+				//這個是用date可以成功的
+				Date disStartDate = null;
+				if (disStartDateStr != null && !disStartDateStr.isEmpty()) {
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 					try {
-						Date parsedDate = timeFormat.parse(disStartDateStr); // 將字串轉為日期
-						disStartDate = new Timestamp(parsedDate.getTime()); // 轉換Timestamp類型
+						disStartDate = dateFormat.parse(disStartDateStr);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
+				System.out.println("disStartDate" + disStartDate);
 
-				String disFinishDateStr = req.getParameter("disStartDateStr");
-				Timestamp disFinishDate = null;
-				if (disFinishDateStr != null && !(disFinishDateStr).isEmpty()) {
-					SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//				DateFormat startdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//				Date startdate = startdf.parse(disStartDateStr);
+//				long starttime = startdate.getTime();
+//				Timestamp disStartDate = new Timestamp(starttime);
+//				System.out.println("disStartDate: " + disStartDate);
+
+				
+//				Date targetFormat = null;
+//				Timestamp disStartDate = null;
+//				if (disStartDateStr != null && !(disStartDateStr).isEmpty()) {
+//					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//					try {
+//						targetFormat = dateFormat.parse(disStartDateStr); 
+//						disStartDate = new Timestamp(date.getTime()); // 轉換Timestamp類型
+//					} catch (Exception e) {
+//						System.out.println("disStartDateStr錯誤訊息");
+//						e.printStackTrace();
+//						
+//					}
+//				}
+//				System.out.println(disStartDate);
+
+				//這個是用date可以成功的
+				String disFinishDateStr = req.getParameter("disFinishDate");
+				System.out.println("disFinishDateStr" + disFinishDateStr);
+				
+				Date disFinishDate = null;
+				if (disFinishDateStr != null && !disFinishDateStr.isEmpty()) {
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 					try {
-						Date parsedDate = timeFormat.parse(disFinishDateStr); // 將字串轉為日期
-						disFinishDate = new Timestamp(parsedDate.getTime()); // 轉換Timestamp類型
+						disFinishDate = dateFormat.parse(disFinishDateStr);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
+				System.out.println("disFinishDate" + disFinishDate);
+				
+				
+//			    DateFormat finishdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//			    Date finishdate = finishdf.parse(disStartDateStr);
+//			    long finishtime = finishdate.getTime();
+//			    Timestamp disFinishDate = new Timestamp(finishtime);
+//			    System.out.println("disFinishDate" + disFinishDate);
+			    
+			    
+			    
+//				Timestamp disFinishDate = null;
+//				if (disFinishDateStr != null && !(disFinishDateStr).isEmpty()) {
+//					SimpleDateFormat timeFormat = new SimpleDateFormat("MM/dd/yyyy h:mm a");
+//					try {
+//						Date date = timeFormat.parse(disFinishDateStr); 
+//						disFinishDate = new Timestamp(date.getTime()); // 轉換Timestamp類型
+//					} catch (Exception e) {
+//						System.out.println("disFinishDateStr錯誤訊息");
+//						e.printStackTrace();
+//					}
+//				}
+//				System.out.println("disFinishDateStr" + disFinishDateStr);
+				
+				
+				String pubIDStr = req.getParameter("pubIDStr") ;
+				Integer pubID = Integer.parseInt(pubIDStr);
+				System.out.println("pubID" + pubID);
 
+				String adminIDStr = (req.getParameter("adminIDStr") 
+						!= null && !req.getParameter("adminIDStr").isEmpty()) ? req.getParameter("adminIDStr") : "1";
+				Integer adminID = Integer.parseInt(adminIDStr);
+				System.out.println("adminID" + adminID);
+				
+				System.out.println("接收完請求了");
 				/********** Package data **********/
 				DiscountVO discountVO = new DiscountVO();
 				discountVO.setDiscountNO(discountNO);
 				discountVO.setDiscountContent(discountContent);
 				discountVO.setDisAmount(disAmount);
-				discountVO.setDiscountCode(discountContent);
+				discountVO.setDiscountCode(discountCode);
 				discountVO.setDisStartDate(disStartDate);
 				discountVO.setDisFinishDate(disFinishDate);
 
@@ -163,11 +257,14 @@ public class DiscountByPubServlet extends HttpServlet {
 				discountVO.setAdminVO(admin);
 
 				/********** 新增資料 **********/
+				System.out.println("準備新增資料");
 
-				discountVO = discountSvc.updateDiscount(discountNO, discountContent, disAmount, discountContent,
+				discountVO = discountSvc.updateDiscount(discountNO,discountContent, disAmount, discountCode,
 						disStartDate, disFinishDate, pubID, adminID);
+				System.out.println("要新增的資料為");
+				System.out.println(discountVO);
 
-				String url = "/Backstage/Allpage-publisher/discount/discount-listAll.jsp";
+				String url = "/Backstage/Allpage-publisher/discount/discount-list.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, resp);
 
@@ -179,6 +276,7 @@ public class DiscountByPubServlet extends HttpServlet {
 
 		if ("delete".equals(action)) {
 			String discountNO = req.getParameter("discountNO").trim(); // 收到請求
+			System.out.println("servlet收到刪除請求" + discountNO);
 			try {
 				discountSvc.deleteDiscount(Integer.parseInt(discountNO)); // 透過service至資料庫刪除資料
 				System.out.println(discountNO + "刪除成功");
@@ -189,12 +287,20 @@ public class DiscountByPubServlet extends HttpServlet {
 			}
 		}
 
-		if ("getOneForDisplay".equals(action)) {
+		if ("getOneForUpdate".equals(action)) {
 			String discountNO = req.getParameter("discountNO").trim(); // 收到請求
+			System.out.println("servlet收到顯示請求" + discountNO);
 			try {
-				discountSvc.getDiscountByPK(Integer.parseInt(discountNO)); // 透過service至資料庫刪除資料
-				System.out.println(discountNO + "顯示成功");
-				resp.sendRedirect("/Backstage/Allpage-publisher/discount/discount-listOne"); // 回應路徑
+				
+				DiscountVO discountVO = discountSvc.getOneDiscount(Integer.parseInt(discountNO)); // 透過service至資料庫找到資料
+				System.out.println(discountVO);
+				System.out.println("成功找到資料");
+				
+				req.setAttribute("discountVO", discountVO); // 資料庫取出的pubuserVO物件,存入req
+				String url = "/Backstage/Allpage-publisher/discount/discount-update.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, resp);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 				resp.sendRedirect("/Backstage/Allpage-publisher/pub-index.jsp"); // 回應路徑
