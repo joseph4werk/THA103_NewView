@@ -80,7 +80,7 @@ public class OrderReallyBuy extends HttpServlet {
             userID = Integer.parseInt(userIDstr);
             actID = Integer.parseInt(actIDstr);
             seatNumber = redisService.findSeatsNumberByActIDAndUserName(actIDstr, userIDstr);
-            
+            //設定要購買的資料
             for (Map.Entry<String, String> entry : seatNumber.entrySet()) {
                 String cartKey = "cart:" + userID + ":" + actID + ":" + entry.getKey()+":NotReallyBuy";
                 String cartData = redisService.getCartDataFromRedis(cartKey);
@@ -108,7 +108,7 @@ public class OrderReallyBuy extends HttpServlet {
             System.out.println("購買中   "+seatNumber);
         }
         System.out.println("cartDataList: " + cartDataList);
-        // 将 cartDataList 打包成 JSON 数组
+        // 将 cartDataList 打包成 JSON 
         JsonArray jsonArray = new JsonArray();
         for (JsonObject cartData : cartDataList) {
             jsonArray.add(cartData);

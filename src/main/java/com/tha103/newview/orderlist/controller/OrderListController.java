@@ -72,6 +72,9 @@ public class OrderListController extends HttpServlet {
 		int seatDataCount = 0;
 		int scope = 0;
 		Integer Total = null;
+		String actID = null;
+		String seatNumber =null;
+		ActVO act = null;
 		// 訂單購買接值
 		String jsonCartData = request.getAttribute("cartData").toString();
 		Gson gson = new Gson();
@@ -85,12 +88,12 @@ public class OrderListController extends HttpServlet {
 				String cartItemInfo = value.getAsString();
 				System.out.println("Key: " + key + ", Value: " + cartItemInfo);
 				String[] parts = cartItemInfo.split(",");
-				String actID = parts[1];
-				String seatNumber = parts[0];
+				 actID = parts[1];
+				 seatNumber = parts[0];
 				double rowIndex1 = 0.0;
 				Integer seatIndex1 = 0;
 				Integer seatNumberInt = Integer.parseInt(seatNumber);
-				ActVO act = actService.findByPrimaryKey(Integer.parseInt(actID));
+				act = actService.findByPrimaryKey(Integer.parseInt(actID));
 				Integer scopeIn = act.getActScope();
 				System.out.println(scopeIn);
 				switch (scopeIn) {
