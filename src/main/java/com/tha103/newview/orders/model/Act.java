@@ -2,11 +2,14 @@ package com.tha103.newview.orders.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity(name = "act2")
@@ -26,6 +29,9 @@ public class Act implements Serializable {
 	private Date actDate;
 	private Integer approvalCondition;
 	private String cityAddress;
+	@OneToMany
+	@JoinColumn(name = "actID", referencedColumnName = "actID")
+	private List<ActPic> actPics;
 	
 	public Act() {
 	}
@@ -131,5 +137,13 @@ public class Act implements Serializable {
 
 	public void setCityAddress(String cityAddress) {
 		this.cityAddress = cityAddress;
+	}
+
+	public List<ActPic> getActPics() {
+		return actPics;
+	}
+
+	public void setActPics(List<ActPic> actPics) {
+		this.actPics = actPics;
 	}
 }

@@ -12,7 +12,6 @@
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
-        <property name="hibernate.hbm2ddl.auto">validate</property>
         <property name="hibernate.current_session_context_class">thread</property>
 		<mapping class="com.tha103.newview.user.model.UserVO"/>
 		<mapping class="com.tha103.newview.usediscount.model.UseDiscountVO"/>
@@ -40,12 +39,12 @@
         <mapping class="com.tha103.newview.cartact.model.CartActVO"/>
         <mapping class="com.tha103.newview.compic.model.ComPicVO"/>
         <mapping class="com.tha103.newview.orderlist.model.OrderListVO"/>
-        
-        <mapping class="com.tha103.newview.cart.vo.Act" />
-        <mapping class="com.tha103.newview.cart.vo.ActPic" />
-        
+                
         <mapping class="com.tha103.newview.orders.model.Act" />
+        <mapping class="com.tha103.newview.orders.model.ActPic" />
         <mapping class="com.tha103.newview.orders.model.Orders" />
         <mapping class="com.tha103.newview.orders.model.Orderlist" />
+        <mapping class="com.tha103.newview.orders.model.ComPic" />
+        <mapping class="com.tha103.newview.orders.model.Publisher" />
     </session-factory>
 </hibernate-configuration>
