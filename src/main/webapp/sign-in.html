@@ -694,6 +694,14 @@
         // 停止點擊預設事件
         e.preventDefault();
 
+        if ($("#account").val().trim() == "") {
+          alert("請輸入帳號！");
+          return;
+        } else if ($("#password").val() == "") {
+          alert("請輸入密碼！");
+          return;
+        }
+
         /*  將 sign-in 資料用物件包裝  */
         let signIn_item = {
           account: $("#account").val(),
@@ -727,11 +735,13 @@
           switch (data.status) {
             case "accFailed":
               alert("帳號錯誤，請重新輸入帳號！");
-              location.href = "sign-in.html";
+              $("#account").val("");
+              $("#password").val("");
               break;
             case "pswFailed":
               alert("密碼錯誤，請重新輸入密碼！");
-              location.href = "sign-in.html";
+              $("#account").val("");
+              $("#password").val("");
               break;
             case "success":
               alert("登入成功！");
