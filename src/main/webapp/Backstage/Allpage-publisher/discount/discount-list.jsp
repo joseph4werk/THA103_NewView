@@ -76,7 +76,11 @@ pageContext.setAttribute("list", pubDiscount);
 					<div class="row">
 						<div class="col-12">
 							<div class="form-group">
-								<button type="button" class="btn btn-dark">新增優惠</button>
+							<form METHOD="post" ACTION="<%=request.getContextPath()%>/pub/discount.do">
+								<input type="submit" value="新增優惠" class="btn btn-dark">
+								<input type="hidden" name="action" value="getOneForUpdate">
+								<input type="hidden" name="discountNO" value="${discountDate.discountNO}">
+							</form>
 							</div>
 							<div class="card">
 								<!-- /.card-header -->

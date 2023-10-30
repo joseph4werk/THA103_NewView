@@ -19,7 +19,7 @@ public class DiscountServiceImpl implements DiscountService{
 
 	@Override
 	public DiscountVO addDiscount(String discountContent, Integer disAmount, String discountCode,
-			Date disStartDate, Date disFinishDate, Integer pubID, Integer adminID) {
+			Timestamp disStartDate, Timestamp disFinishDate, Integer pubID, Integer adminID) {
 
 		DiscountVO discountVO = new DiscountVO();
 		discountVO.setDiscountContent(discountContent);
@@ -45,7 +45,7 @@ public class DiscountServiceImpl implements DiscountService{
 
 	@Override
 	public DiscountVO updateDiscount(Integer discountNO,String discountContent, Integer disAmount, String discountCode,
-			Date disStartDate, Date disFinishDate, Integer pubID, Integer adminID) {
+			Timestamp disStartDate, Timestamp disFinishDate, Integer pubID, Integer adminID) {
 		System.out.println("service已接收到請求");
 		DiscountVO discountVO = new DiscountVO();
 		discountVO.setDiscountNO(discountNO);

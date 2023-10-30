@@ -9,10 +9,10 @@ import com.tha103.newview.discount.model.DiscountVO;
 public interface DiscountService {
 
 	public DiscountVO addDiscount(String discountContent, Integer disAmount, String discountCode,
-			Date disStartDate, Date disFinishDate, Integer pubID, Integer adminID);
+			Timestamp disStartDate, Timestamp disFinishDate, Integer pubID, Integer adminID);
 	
 	public DiscountVO updateDiscount(Integer discountNO,String discountContent, Integer disAmount, String discountCode,
-			Date disStartDate, Date disFinishDate, Integer pubID, Integer adminID);
+			Timestamp disStartDate, Timestamp disFinishDate, Integer pubID, Integer adminID);
 	
 	public void deleteDiscount(Integer discountNO);
 	

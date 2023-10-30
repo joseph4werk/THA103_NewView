@@ -46,11 +46,11 @@ public class DiscountVO {
 
 	@Expose
 	@Column(name = "disStartDate")
-	private Date disStartDate;
+	private Timestamp disStartDate;
 
 	@Expose
 	@Column(name = "disFinishDate")
-	private Date disFinishDate;
+	private Timestamp disFinishDate;
 
 	@Expose
 	@OneToMany(mappedBy = "discountVO")
@@ -74,7 +74,7 @@ public class DiscountVO {
 	}
 
 	public DiscountVO(Integer discountNO, String discountContent, Integer disAmount, String discountCode,
-			Date disStartDate, Date disFinishDate, Set<UseDiscountVO> useDiscountVOs, Set<OrdersVO> ordersVOs,
+			Timestamp disStartDate, Timestamp disFinishDate, Set<UseDiscountVO> useDiscountVOs, Set<OrdersVO> ordersVOs,
 			PublisherVO publisherVO, AdminVO adminVO) {
 		super();
 		this.discountNO = discountNO;
@@ -125,7 +125,7 @@ public class DiscountVO {
 		return disStartDate;
 	}
 
-	public void setDisStartDate(Date disStartDate) {
+	public void setDisStartDate(Timestamp disStartDate) {
 		this.disStartDate = disStartDate;
 	}
 
@@ -133,7 +133,7 @@ public class DiscountVO {
 		return disFinishDate;
 	}
 
-	public void setDisFinishDate(Date disFinishDate) {
+	public void setDisFinishDate(Timestamp disFinishDate) {
 		this.disFinishDate = disFinishDate;
 	}
 
