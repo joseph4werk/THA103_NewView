@@ -52,7 +52,7 @@ public class DiscountVO {
 	private Timestamp disFinishDate;
 
 	@Expose
-	@OneToMany(mappedBy = "discountVO")
+	@OneToMany(mappedBy = "discountVO", fetch = FetchType.EAGER)
 	private Set<UseDiscountVO> useDiscountVOs;
 
 	@Expose

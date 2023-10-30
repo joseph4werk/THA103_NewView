@@ -71,7 +71,7 @@ public class UserVO {
 	private Integer speakAuthority; // 0/1 = 啟用/未啟用
 
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL )
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER )
 	private Set<UseDiscountVO> useDiscountVOs;
 
 	@Expose
@@ -83,7 +83,7 @@ public class UserVO {
 	private Set<LikesVO> likesVOs;
 	
 	@Expose
-	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userVO", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<PostVO> postVOs;
 	
 	@Expose
