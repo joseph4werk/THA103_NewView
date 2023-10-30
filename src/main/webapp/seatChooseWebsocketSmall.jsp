@@ -40,9 +40,8 @@
 
 
 	<div id="seating-container">
-
-		<div class="centered-text">
-			<p>舞台</p>
+		
+		<div class="centered-text">		
 			<div class="act-container">
 				<label> 活動:</label> <select id="act" disabled>
 					<option value="${sessionScope.actPrice}">${sessionScope.actName}</option>
@@ -60,6 +59,7 @@
 				</li>
 			</ul>
 		</div>
+		<div class="screen"></div>
 	</div>
 
 	<p class="text">
@@ -67,7 +67,7 @@
 	</p>
 	<p>
 		<a class="BuyIn" href="checkout_checkbuy_2.html">確認購買</a>
-		<button class="cart">Add to cart</button>
+		<a class="cart" href="#">加入購物車</a>
 	</p>
 	</div>
 
@@ -525,7 +525,7 @@ var webSocket;
 	
 
 </script>
-<script src="js/monitor.js"></script>
+<script src="js/monitorSmall.js"></script>
 
 
 </html>

@@ -67,8 +67,7 @@ System.out.println(list);
             
                	<ul>
 					<li>
-						<form METHOD="post"
-							ACTION="<%=request.getContextPath()%>/actcategory/actcategory.do">
+						<form METHOD="post" ACTION="<%=request.getContextPath()%>/actcategory/actcategory.do">
 							<b>輸入分類編號：</b> <input type="text" name="actCategoryID"> <input
 								type="submit" value="送出"> <input type="hidden"
 								name="action" value="getOneForDisplay">
@@ -76,13 +75,12 @@ System.out.println(list);
 					</li>
 
 
-
 					<li>
 						<form METHOD="post"
-							ACTION="<%=request.getContextPath()%>/pubuser/pubuser.do">
+							ACTION="<%=request.getContextPath()%>/ActCategoryServlet">
 							<b>選擇分類名稱：</b> <select name="actCategoryName">
-								<c:forEach var="actCategory" items="${pubuserSvc.all}">
-									<option value="${pubUserVO.pubUserID}">${pubUserVO.pubNickname}
+								<c:forEach var="actCategory" items="${list}">
+									<option value="${actCategory.actCategoryID}">${actCategory.actCategoryName}
 								</c:forEach>
 							</select> <input type="submit" value="送出"> <input type="hidden"
 								name="action" value="getOneForDisplay">
@@ -173,5 +171,3 @@ System.out.println(list);
 </body>
 
 </html>
-
-

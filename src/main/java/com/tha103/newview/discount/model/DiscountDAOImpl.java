@@ -4,25 +4,11 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import com.tha103.newview.admin.model.AdminVO;
-import com.tha103.newview.publisher.model.PublisherVO;
 import com.tha103.util.HibernateUtil;
 
-//import java.sql.Connection;
-//import java.sql.DriverManager;
-//import java.sql.PreparedStatement;
-//import java.sql.ResultSet;
-//import java.sql.SQLException;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//import org.hibernate.Session;
-//
-//import com.tha103.newview.orders.model.OrdersHibernateVO;
-//import com.tha103.util.HibernateUtil;
-//import com.tha103.util.Util;
 
 public class DiscountDAOImpl implements DiscountDAO {
 
@@ -67,7 +53,7 @@ public class DiscountDAOImpl implements DiscountDAO {
 
 	@Override
 	public int delete(Integer discountNO) {
-		
+
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
@@ -85,7 +71,7 @@ public class DiscountDAOImpl implements DiscountDAO {
 
 	@Override
 	public DiscountVO findByPrimaryKey(Integer discountNO) {
-		
+
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
@@ -103,7 +89,7 @@ public class DiscountDAOImpl implements DiscountDAO {
 
 	@Override
 	public List<DiscountVO> getAll() {
-		
+
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
@@ -115,18 +101,41 @@ public class DiscountDAOImpl implements DiscountDAO {
 			session.getTransaction().rollback();
 		}
 		return null;
-		
+
 	}
-	
-	
-	//for Publisher Backstage get discount List
-	public List<DiscountVO> getDiscountByPubID(Integer pubID){
+
+	// for Order & OrderList By Lin
+	@Override
+	public DiscountVO getDisAmountBy(String discountCode) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction transaction = null;
+		DiscountVO discountVO = null;
+
+		try {
+			transaction = session.beginTransaction();
+			Query<DiscountVO> query = session.createQuery("FROM DiscountVO WHERE discountCode = :code",
+					DiscountVO.class);
+			query.setParameter("code", discountCode);
+			discountVO = query.uniqueResult();
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
+
+		return discountVO;
+	}
+
+	// for Publisher Backstage get discount List
+	public List<DiscountVO> getDiscountByPubID(Integer pubID) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
 			String hql = "FROM DiscountVO AS d WHERE d.publisherVO.pubID = :pubID";
-			Query<DiscountVO> query = session.createQuery(hql,DiscountVO.class);
-			query.setParameter("pubID",pubID);
+			Query<DiscountVO> query = session.createQuery(hql, DiscountVO.class);
+			query.setParameter("pubID", pubID);
 			return query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();

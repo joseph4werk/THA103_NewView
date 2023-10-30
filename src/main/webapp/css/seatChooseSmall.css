@@ -20,6 +20,8 @@ body {
 .act-container {
   margin: 20px 0;
   color: #fff;
+  text-align: center;
+  font-size: 25px;
 }
 
 .act-container select {
@@ -27,7 +29,7 @@ body {
   border: 0;
   color: aqua;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 30px;
   margin-left: 10px;
   padding: 5px 15px 5px 15px;
   -moz-appearance: none;
@@ -149,7 +151,7 @@ body {
   height: 120px;
   width: 100%;
   margin: 15px 0;
-  transform: rotateX(-48deg);
+  transform: rotateX(345deg);
   box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
 }
 

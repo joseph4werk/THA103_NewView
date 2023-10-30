@@ -22,6 +22,7 @@ public interface OrdersService {
 
 	public Integer getOrderBy(int userID, int pubID);
 
+
 	public OrdersVO insertOrders(Integer userID, Integer ordTotal, Integer discount, Integer discountPrice,
 			Timestamp ordTime, Integer pubID, Integer ordType, Integer actQuantity, Integer discountNO);
 

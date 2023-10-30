@@ -667,7 +667,16 @@
 
     <!--===============================================================================================-->
     <script>
+      // 取得專案路徑
+      const HOST = window.location.host;
+      var path = window.location.pathname;
+      var webCtx = path.substring(0, path.indexOf("/", 1));
+      const END_POINT_URL = "http://" + HOST + webCtx;
+
       $("#submit").on("click", function (e) {
+        // 驗證 API
+        const COLLECTION_POINT = "/Verify";
+
         e.preventDefault();
         /*  將 sign-up 資料用物件包裝  */
         let verificationCode = {
@@ -676,7 +685,7 @@
         console.log(verificationCode);
 
         $.ajax({
-          url: "http://localhost:8081/com.tha103.newview/Verify",
+          url: END_POINT_URL + COLLECTION_POINT,
           type: "POST",
           data: verificationCode,
           dataType: "json",
@@ -696,20 +705,23 @@
           // alert("function");
           if (data.status == "failed") {
             alert("驗證錯誤，請重新輸入！");
-            location.href = "registration-verification.html";
+            $("#verificationCode").val("");
+            // location.href = "registration-verification.html";
           } else if (data.status == "success") {
-            alert("資料驗證完成，網頁將重新導向至首頁！");
-            location.href = "home-03.html";
+            alert("資料驗證完成，網頁將重新導向至會員中心！");
+            location.href = "member.html";
           }
         }
       });
 
       $("#sendVerificationCode").on("click", function (e) {
+        // 發驗證碼 API
+        const COLLECTION_POINT = "/SendVerificationCode";
         e.preventDefault();
         console.log("click sendCode again");
 
         $.ajax({
-          url: "http://localhost:8081/com.tha103.newview/SendVerificationCode",
+          url: END_POINT_URL + COLLECTION_POINT,
           type: "POST",
           dataType: "json",
           beforeSend: function (xhr) {

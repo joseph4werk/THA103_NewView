@@ -2,7 +2,7 @@
 <html lang="en" style="background-color: rgb(250, 248, 248);">
 
 <head>
-	<title>NewView - CheckOrder</title>
+	<title>NewVew-CheckOut</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -30,6 +30,7 @@
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<!--===============================================================================================-->
 	<style>
 		.outercontainer {
@@ -439,8 +440,34 @@
 		</h2>
 	</section>
 
-	<!-- ===================================================== -->
+	<!-- ===================================  AJAX 渲染開始  ==================================== -->
+	<script>
+		var order = sessionStorage.getItem("order");
+		var orderArray = JSON.parse(order); // yourReceivedData 是您從伺服器端收到的 JSON 字串
+		console.log(orderArray); // 確認解析後的物件陣列是否正確
+		var userID = orderArray[0].userID;
+		console.log(userID);
 
+
+		// 發送請求到Server
+		$.ajax({
+			type: "GET",
+			url: `http://localhost:8081/com.tha103.newview/GetOrderListServlet`,
+			dataType: "json",
+			success: function (data) {
+				console.log(data);
+				$('#userID').val(data.userID);
+				$('#orderName').val(data.userName);
+				$('#orderBirth').val(data.userBirth);
+				$('#orderTel').val(data.userCell);
+				$('#orderMail').val(data.userEmail);
+			},
+			error: function (error) {
+				console.error('There was a problem with the AJAX request:', error);
+			}
+		});
+
+	</script>
 	<!--------------------------------------- section1 ------------------------------------>
 	<div class="outercontainer">
 		<div class="ftco-section p-t-90">
@@ -471,38 +498,38 @@
 									<div class="row align-items-end">
 										<div class="col-md-2">
 											<div class="form-group">
-												<label for="firstname">會員代號</label>
+												<label for="userID">會員代號</label>
 												<input id="userID" type="text" class="form-control"
-													placeholder="預設UserID" >
+													placeholder="預設UserID" readonly>
 											</div>
 										</div>
 										<div class="col-md-3">
 											<div class="form-group">
-												<label for="firstname">姓名</label>
+												<label for="orderName">姓名</label>
 												<input id="orderName" type="text" class="form-control"
-													placeholder="預設姓名" >
+													placeholder="預設姓名" readonly>
 											</div>
 										</div>
 										<div class="col-md-3">
 											<div class="form-group">
-												<label for="lastname">生日</label>
+												<label for="orderBirth">生日</label>
 												<input id="orderBirth" type="text" class="form-control"
-													placeholder="預設生日">
+													placeholder="預設生日" readonly>
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="form-group">
-												<label for="lastname">聯絡方式(手機/電話)</label>
+												<label for="orderTel">聯絡方式(手機/電話)</label>
 												<input id="orderTel" type="text" class="form-control"
-													placeholder="預設連絡電話" >
+													placeholder="預設連絡電話" readonly>
 											</div>
 										</div>
 										<div class="w-100"></div>
 										<div class="col-md-12">
 											<div class="form-group">
-												<label for="country">電子郵件</label>
+												<label for="orderMail">電子郵件</label>
 												<input id="orderMail" type="text" class="form-control"
-													placeholder="預設信箱" >
+													placeholder="預設信箱" readonly>
 											</div>
 										</div>
 									</div>
@@ -520,30 +547,30 @@
 										<div class="row align-items-end">
 											<div class="col-md-2">
 												<div class="form-group">
-													<label for="firstname">會員代號</label>
+													<label for="recipientuserID">會員代號</label>
 													<input id="recipientuserID" type="text" class="form-control"
-														placeholder="請輸入UserID">
+														placeholder="請輸入UserID" require>
 												</div>
 											</div>
 											<div class="col-md-3">
 												<div class="form-group">
 													<label for="firstname">姓名</label>
 													<input id="recipientName" type="text" class="form-control"
-														placeholder="請輸入姓名">
+														placeholder="請輸入姓名" require>
 												</div>
 											</div>
 											<div class="col-md-3">
 												<div class="form-group">
 													<label for="lastname">生日</label>
 													<input id="recipientBirth" type="text" class="form-control"
-														placeholder="請輸入生日">
+														placeholder="請輸入生日" require>
 												</div>
 											</div>
 											<div class="col-md-4">
 												<div class="form-group">
 													<label for="lastname">聯絡方式(手機/電話)</label>
 													<input id="recipientTel" type="text" class="form-control"
-														placeholder="請輸入連絡電話">
+														placeholder="請輸入連絡電話" require>
 												</div>
 											</div>
 											<div class="w-100"></div>
@@ -551,7 +578,7 @@
 												<div class="form-group">
 													<label for="country">電子郵件</label>
 													<input id="recipientMail" type="text" class="form-control"
-														placeholder="請輸入信箱">
+														placeholder="請輸入信箱" require>
 												</div>
 											</div>
 										</div>
@@ -619,36 +646,9 @@
 													</th>
 													<th class="column-5" style="font-size: large;">總額</th>
 												</tr>
-
-												<tr class="table_row">
-													<td class="column-1">
-														<div class="how-itemcart1">
-															<img src="images/item-cart-04.jpg" alt="IMG">
-														</div>
-													</td>
-													<td class="column-2">Fresh Strawberries</td>
-													<td class="column-3 num-price">$ 36.00</td>
-													<td class="column-4" style="font-size: large;text-align: center;">1
-														<input class="mtext-104 cl3 txt-center num-product"
-															type="hidden" name="num-product1" value="1">
-													</td>
-													<td class="column-5 num-total">$ 36.00</td>
-												</tr>
-
-												<tr class="table_row">
-													<td class="column-1">
-														<div class="how-itemcart1">
-															<img src="images/item-cart-05.jpg" alt="IMG">
-														</div>
-													</td>
-													<td class="column-2">Lightweight Jacket</td>
-													<td class="column-3 num-price">$ 16.00</td>
-													<td class="column-4" style="font-size: large;text-align: center;">1
-														<input class="mtext-104 cl3 txt-center num-product"
-															type="hidden" name="num-product2" value="1" readonly>
-													</td>
-													<td class="column-5 num-total">$ 16.00</td>
-												</tr>
+												<tbody id="table-body">
+													<!--動態產出-->
+												</tbody>
 											</table>
 										</div>
 									</div>
@@ -657,63 +657,10 @@
 								<div>
 									<h4 class="mb-4 p-t-30 billing-heading" style="font-weight: bold;">活動場次座位資訊</h4>
 
-									<p>活動一</p>
-									<div class="card mb-4 bg-white rounded shadow-sm p-t-30 p-b-30">
-										<div class="row align-items-end">
-											<div class="col-md-2">
-												<div class="form-group">
-													<label for="firstname">活動代號</label>
-													<input id="actID" type="text" class="form-control"
-														placeholder="default" readonly>
-												</div>
-											</div>
-
-											<div class="col-md-4">
-												<div class="form-group">
-													<label for="actName">活動名稱</label>
-													<input id="orderTel" type="text" class="form-control"
-														placeholder="default" readonly>
-												</div>
-											</div>
-
-											<div class="col-md-3">
-												<div class="form-group">
-													<label for="startTime">開始時間</label>
-													<input id="orderName" type="text" class="form-control"
-														placeholder="default" readonly>
-												</div>
-											</div>
-											<div class="col-md-3">
-												<div class="form-group">
-													<label for="lastname">結束時間</label>
-													<input id="orderBirth" type="text" class="form-control"
-														placeholder="default" readonly>
-												</div>
-											</div>
-
-											<div class="w-100"></div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<label for="country">活動地址</label>
-													<input id="orderMail" type="text" class="form-control"
-														placeholder="default" readonly>
-												</div>
-											</div>
-
-											<div class="w-100"></div>
-											<div class="col-md-12">
-												<div class="form-group">
-													<label for="country">座位清單</label>
-													<div>
-														<p>座位1<input id="seat1" type="text" class="form-control"
-																placeholder="座位1" readonly></p>
-														<p>座位2<input id="seat2" type="text" class="form-control"
-																placeholder="座位2" readonly></p>
-													</div>
-												</div>
-											</div>
-										</div>
+									<div id="card-container">
+										<!--動態產出-->
 									</div>
+
 								</div>
 							</form>
 						</div>
@@ -722,11 +669,98 @@
 			</div>
 		</div>
 	</div>
+	<!-- ===================================  Section2 渲染開始  ==================================== -->
+	<script>
+		var order = sessionStorage.getItem("order");
+		var jsonData = JSON.parse(order); // 從伺服器端收到的 JSON 字串
+		const tableBody = document.getElementById('table-body'); // 取得表格的 tbody
+
+		// 遍歷 JSON 陣列中的每個物件並將資料插入 HTML 表格
+		jsonData.forEach((item, index) => {
+
+			const row = document.createElement('tr');
+			row.classList.add('table_row');
+			row.innerHTML = `
+			<td class="column-1">
+			  <div class="how-itemcart1">
+				<img src="images/item-cart-04.jpg" alt="IMG">
+			  </div>
+			</td>
+			<td class="column-2">${item.actName}</td>
+			<td class="column-3 num-price">$${item.actPrice}</td>
+			<td class="column-4" style="font-size: large;text-align: center;">${item.actCount}</td>
+			<td class="column-5 num-total">$${item.actPriceTotal}</td>
+		  `;
+			tableBody.appendChild(row);
+		});
+	</script>
+
+
+	<script>
+		var order = sessionStorage.getItem("order");
+		var jsonData = JSON.parse(order); // JSON data received from the server
+		var cardContainer = document.getElementById('card-container');
+
+		jsonData.forEach((item, index) => {
+			var cardDiv = document.createElement('div');
+			cardDiv.classList.add('card', 'mb-4', 'bg-white', 'rounded', 'shadow-sm', 'p-t-30', 'p-b-30');
+			cardDiv.innerHTML = `
+            <div class="row align-items-end">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="actID">活動代號</label>
+                        <input id="actID" type="text" class="form-control" value="${item.actID}" readonly>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="actName">活動名稱</label>
+                        <input id="orderTel" type="text" class="form-control" value="${item.actName}" readonly>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="startTime">活動日期</label>
+                        <input id="orderName" type="text" class="form-control" value="${item.actDate}" readonly>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="lastname">最後退票時間</label>
+                        <input id="orderBirth" type="text" class="form-control" value="${item.actDate}" style="color: red;" readonly>
+                    </div>
+                </div>
+                <div class="w-100"></div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="country">活動地址</label>
+                        <input id="orderMail" type="text" class="form-control" value="${item.cityAddress}" readonly>
+                    </div>
+                </div>
+                <div class="w-100"></div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="country">座位清單</label>
+                        <div>
+                        ${(() => {
+					const regex = /第 \d+排,第 \d+列/g;
+					const seats = item.seatRowsColumns.match(regex);
+					return seats.map((seat, i) => `<p>座位${i + 1}<input id="seat${i + 1}" type="text" class="form-control" value="${seat}" readonly></p>`).join('');
+				})()}
+                    </div>
+                    </div>
+                </div>
+            </div>
+        `;
+			cardContainer.appendChild(cardDiv);
+		});
+	</script>
+
 
 
 	<!--------------------------------------- section3 結帳資訊確認------------------------------------>
 
-	<div class="outercontainer" style="margin-top: -270px;">
+	<div class="outercontainer" style="margin-top: -350px;">
 		<div class="ftco-section" style="background-color: rgb(250, 248, 248);">
 			<div class="container">
 				<div class="card mb-4 bg-white rounded shadow-sm p-b-40">
@@ -754,16 +788,18 @@
 									</div>
 									<input id="firstPrice"
 										class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
-										name="coupon" placeholder="活動總金額">
+										name="coupon" placeholder="活動總金額" style="background-color: rgb(248, 244, 244);"
+										readonly>
 								</div>
 								<div class="flex-w flex-sb-m bor15 p-t-5 p-b-5 p-lr-40 p-lr-15-sm">
 									<div class="stext-110 cl2"
 										style="flex-grow: 1; text-align: right; margin-right: 15px;font-size: medium;">
 										廠商優惠碼折抵後金額 :
 									</div>
-									<input id="firstPrice"
+									<input id="secondPrice"
 										class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
-										name="coupon" placeholder="活動總金額">
+										name="coupon" placeholder="活動總金額" style="background-color: rgb(248, 244, 244);"
+										readonly>
 								</div>
 								<hr style=" border-top: 2px solid lightgray;">
 								<div class="flex-w flex-sb-m bor15 p-t-5 p-b-5 p-lr-40 p-lr-15-sm">
@@ -772,12 +808,12 @@
 									</button>
 									<button
 										class="flex-c-m stext-101 cl0 size-60 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
-										type="button" id="submitpost">使用 NewView 優惠碼
+										type="button" id="submitcoupon">使用 NewView 優惠碼
 									</button>
-									<input id="firstPrice"
+									<input id="developerPrice"
 										class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
 										name="coupon" placeholder="輸入活動代碼">
-									
+
 								</div>
 								<div class="flex-w flex-sb-m bor15 p-t-5 p-b-5 p-lr-40 p-lr-15-sm">
 									<span class="stext-110 cl2"
@@ -786,7 +822,8 @@
 									</span>
 									<input id="discountPrice"
 										class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
-										name="coupon" placeholder="折扣總金額">
+										name="coupon" placeholder="折扣總金額" style="background-color: rgb(248, 244, 244);"
+										readonly>
 								</div>
 
 								<div class="flex-w flex-sb-m bor15 p-t-5 p-b-5 p-lr-40 p-lr-15-sm">
@@ -796,7 +833,8 @@
 									</span>
 									<input id="totalPrice"
 										class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
-										name="coupon" placeholder="總金額">
+										name="coupon" placeholder="總金額" style="background-color: rgb(248, 244, 244);"
+										readonly>
 								</div>
 							</form>
 						</div>
@@ -805,12 +843,108 @@
 			</div>
 			<!-------------------------------------------- 送出確認 -------------------------------------------->
 			<div class="container" style="text-align: center;">
-				<button type="submit" class="btn btn-primary py-3 px-4"
+				<button id="orderconfirm" type="submit" class="btn btn-primary py-3 px-4"
 					style="font-size: large;"><strong>確定結帳，前往付款</strong></button>
 			</div>
 
 		</div>
 	</div>
+
+	<!-- ===================================  AJAX 請求discountCode  ==================================== -->
+
+	<script>
+		var order = sessionStorage.getItem("order");
+		var jsonData = JSON.parse(order);
+		var userID = jsonData[0].userID;
+
+		var firstPrice = 0;
+		var secondPrice = 0;
+
+		// 初始化總價格，確保 developerPrice 有值，否則將其設為 0
+		var discountPrice = $('#developerPrice').val();
+		discountPrice = discountPrice ? parseFloat(discountPrice) : 0;
+
+		jsonData.forEach(item => {
+			firstPrice += item.actPriceTotal;
+			secondPrice += item.discountPrice;
+		});
+
+		var totalPrice = firstPrice - discountPrice;
+
+		document.getElementById('firstPrice').value = firstPrice;
+		document.getElementById('secondPrice').value = secondPrice;
+
+		$('#submitcoupon').on('click', function () {
+			var discountCode = $('#developerPrice').val();
+
+			$.ajax({
+				url: 'http://localhost:8081/com.tha103.newview/GetDiscountCode',
+				type: 'GET',
+				data: {
+					"discountCode": discountCode,
+					"userID": userID
+				},
+				success: function (data) {
+					console.log(data);
+					$("#discountPrice").val(data.disAmount.toString());
+
+					// 重新計算總金額
+					var totalPrice = firstPrice - parseFloat(data.disAmount);
+					updateTotalPrices(totalPrice);
+				},
+				error: function (xhr, status, error) {
+					$("#developerPrice").css("color", "red").val("輸入錯誤或此折扣碼不存在");
+					$("#discountPrice").val(0);
+					$("#totalPrice").val(totalPrice);
+				}
+			});
+		});
+
+		// 透過此函數更新總價格
+		function updateTotalPrices(totalPrice) {
+			document.getElementById('totalPrice').value = totalPrice;
+		}
+
+		updateTotalPrices(totalPrice);
+
+
+	</script>
+
+	<!-- ===================================  AJAX 送出訂單確認  ==================================== -->
+
+	<script>
+		$(document).ready(function () {
+
+
+			$('#orderconfirm').on('click', function () {
+				var order = sessionStorage.getItem("order");
+				var orderArray = JSON.parse(order); 
+				console.log(orderArray);
+
+				var discount = $("#discountPrice").val();
+				var discountprice = $("#totalPrice").val();
+				var recipientuserID = $("#recipientuserID").val();
+				
+				$.ajax({
+					url: 'http://localhost:8081/com.tha103.newview/ConfirmUpdateOrder',
+					type: 'POST',
+					data: {
+						"orderData": order,
+						"discount": discount,
+						"discountprice": discountprice,
+						"recipientuserID": recipientuserID
+					},
+					success: function (data) {
+						console.log(data);
+					},
+					error: function (xhr, status, error) {
+						console.error('There was a problem with the AJAX request:', error);
+					}
+				});
+			});
+		});
+	</script>
+
 	<!--------------------------------------- section3 END ------------------------------------>
 
 
@@ -930,64 +1064,8 @@
 	</div>
 
 
-	<!--===============================================================================================-->
-	<script src="js/jquery.min.js"></script>
-	<script src="js/jquery-migrate-3.0.1.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="vendor/bootstrap/js/popper.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="js/jquery.easing.1.3.js"></script>
-	<script src="js/jquery.waypoints.min.js"></script>
-	<script src="js/jquery.stellar.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<script src="js/aos.js"></script>
-	<script src="js/jquery.animateNumber.min.js"></script>
-	<script src="js/bootstrap-datepicker.js"></script>
-	<script src="js/scrollax.min.js"></script>
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-	<script src="js/google-map.js"></script>
-	<script src="js/main.js"></script>
-
-	<script>
-		$(document).ready(function () {
-
-			var quantitiy = 0;
-			$('.quantity-right-plus').click(function (e) {
-
-				// Stop acting like a button
-				e.preventDefault();
-				// Get the field name
-				var quantity = parseInt($('#quantity').val());
-
-				// If is not undefined
-
-				$('#quantity').val(quantity + 1);
 
 
-				// Increment
-
-			});
-
-			$('.quantity-left-minus').click(function (e) {
-				// Stop acting like a button
-				e.preventDefault();
-				// Get the field name
-				var quantity = parseInt($('#quantity').val());
-
-				// If is not undefined
-
-				// Increment
-				if (quantity > 0) {
-					$('#quantity').val(quantity - 1);
-				}
-			});
-
-		});
-	</script>
-	<!--===============================================================================================-->
 </body>
 
 </html>
