@@ -103,7 +103,7 @@ public class OrderReallyBuy extends HttpServlet {
             return;
         }
 
-        // 处理购买行为
+        
         if ("buy".equals(action)) {
             System.out.println("購買中   "+seatNumber);
         }
@@ -112,12 +112,8 @@ public class OrderReallyBuy extends HttpServlet {
         JsonArray jsonArray = new JsonArray();
         for (JsonObject cartData : cartDataList) {
             jsonArray.add(cartData);
-        }
-
-        // 将 JSON 数组添加到请求属性中
-        req.setAttribute("cartData", jsonArray.toString());
-
-        // 转发到 /SeatOrderList 页面
+        }   
+        req.setAttribute("cartData", jsonArray.toString());      
         RequestDispatcher dispatcher = req.getRequestDispatcher("/SeatOrderList");
         dispatcher.forward(req, res);
     }
