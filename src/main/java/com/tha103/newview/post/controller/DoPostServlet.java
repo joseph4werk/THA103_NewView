@@ -192,6 +192,7 @@ public class DoPostServlet extends HttpServlet {
 
 				// 更新實體資料
 				postSvc.updatePost(existingPost);
+				out.println("update success");
 
 			} else {
 				// 處理主鍵不存在的情况

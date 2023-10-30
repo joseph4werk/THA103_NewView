@@ -16,7 +16,9 @@ import com.tha103.newview.user.model.UserVO;
 @Entity
 @Table(name = "cartact")
 public class CartActVO implements java.io.Serializable {
-//	@Expose
+	private static final long serialVersionUID = 1L;
+
+	@Expose
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cartActID")

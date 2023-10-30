@@ -16,14 +16,17 @@ public interface ActDAO {
 	void delete(Integer ActID);
 
 	ActVO findByPrimaryKey(Integer ActID);
-
 	List<ActVO> getAll();
 
-	List<ActVO> getActPics();
+	List<ActVO> getActPics();	
+	
+	List<ActCategory> getAllCategories();
+	List<ActVO> getActsWithNameAndAssociations(String actName);
 
 	
 
-	List<ActCategory> getAllCategories();
-	List<ActVO> getActsWithNameAndAssociations(String actName);
+
+	List<ActVO> getActsByCategoryID(Integer actCategoryID);
+	List<ActVO> getActByPubID(Integer pubID);
 	
 }

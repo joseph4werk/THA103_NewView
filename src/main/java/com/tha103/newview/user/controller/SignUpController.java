@@ -2,6 +2,10 @@ package com.tha103.newview.user.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
+import java.util.HashMap;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -21,6 +25,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.tha103.newview.user.jedis.JedisPoolUtil;
+import com.tha103.newview.user.model.UserVO;
 import com.tha103.newview.user.service.UserService;
 import com.tha103.newview.user.service.UserServiceImpl;
 
@@ -42,6 +47,8 @@ public class SignUpController extends HttpServlet {
 		HttpSession session = req.getSession();
 		Gson gson = new Gson();
 		String json = null;
+		String hashPassword = null;
+		HashMap<String, String> data = new HashMap<>();
 
 		/*************************** 1.接收請求參數 **********************/
 		String name = req.getParameter("name");
@@ -55,41 +62,79 @@ public class SignUpController extends HttpServlet {
 		/*************************** 2.開始查詢資料 **********************/
 
 		UserService userSvc = new UserServiceImpl();
+		UserVO userVO = new UserVO();
 		System.out.println(account);
 
-		if (!userSvc.checkUserAccount(account)) {
-			// call sendMail 方法，產生驗證碼
-			String verificationCode = getVerificationCode();
-			// 開新的 Thread 寄 mail (不然很慢==)
-			new Thread(() -> sendMail(email, verificationCode)).start();
-
-			// 使用 Jedis 將 userAccount 當 key 存入驗證碼的資訊
-			Jedis jedis = JedisPoolUtil.getJedisPool().getResource();
-			jedis.select(15);
-			jedis.set("UserAccount:" + account, verificationCode);
-			jedis.expire("UserAccount:" + account, 600);
-			jedis.close();
-
-			System.out.println("將資料存進 redis 15 DB");
-			System.out.println("usercontroller's verificationCode: " + verificationCode);
-
-			// 將接到的參數存入 session 以提供下之程式(驗證碼)使用
-			session.setAttribute("name", name);
-			session.setAttribute("newAccount", account);
-			session.setAttribute("password", password);
-			session.setAttribute("birthdate", birthdate);
-			session.setAttribute("cellphone", cellphone);
-			session.setAttribute("email", email);
-			session.setAttribute("nickname", nickname);
-			
-			json = gson.toJson("success");
+		// 資料庫中已有此筆資料，回傳 failed 不給新增
+		if (userSvc.checkUserAccount(account)) {
+			System.out.println("新增失敗");
+			data.put("status", "failed");
+			json = gson.toJson(data);
 			out.write(json);
 			return;
+		}
+
+		
+		// 開始新增使用者
+		// call sendMail 方法，產生驗證碼
+		String verificationCode = getVerificationCode();
+		// 開新的 Thread 寄 mail (不然很慢==)
+		new Thread(() -> sendMail(email, verificationCode)).start();
+
+		// 使用 Jedis 將 userAccount 當 key 存入驗證碼的資訊
+		Jedis jedis = JedisPoolUtil.getJedisPool().getResource();
+		jedis.select(15);
+		jedis.set("UserAccount:" + account, verificationCode);
+		jedis.expire("UserAccount:" + account, 600);
+		jedis.close();
+
+		// 開始新增資料進 userVO
+		userVO.setUserName(name);
+		userVO.setUserAccount(account);
+
+		// 加密 password
+		// 加密密碼 -> MD5
+		try {
+			// 創建 MD5 實體
+			MessageDigest md = MessageDigest.getInstance("MD5");
+
+			// 轉換原始密碼
+			byte[] bytes = md.digest(password.getBytes());
+
+			// 將 byte[] 轉為 16 進制 String
+			StringBuilder sb = new StringBuilder();
+			for (byte b : bytes) {
+				sb.append(String.format("%02x", b));
+			}
+
+			// MD5 加密後的 Password
+			hashPassword = sb.toString();
+
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+
+		userVO.setUserPassword(hashPassword);
+		userVO.setUserBirth(Date.valueOf(birthdate));
+		userVO.setUserCell(cellphone);
+		userVO.setUserEmail(email);
+		userVO.setUserNickname(nickname);
+		userVO.setBuyAuthority(1);
+		userVO.setSpeakAuthority(1);
+
+		// 新增 user，取得新 user 回傳之用戶編號 PK
+		int addUser = userSvc.addUser(userVO);
+		if (addUser != 0) {
 			
-		} else {
-			System.out.println("使用者已存在");
-			out.println("使用者已存在");
-			json = gson.toJson("failed");
+			// 將 userID, account 存進session
+			session.setAttribute("userID", String.valueOf(addUser));
+			session.setAttribute("account", account);
+			System.out.println("存進session的userID: " + addUser);
+
+			System.out.println("userAccount: " + account + " 新增成功");
+			// 將成功訊息放進 json 物件中 status 供前端識別
+			data.put("status", "success");
+			json = gson.toJson(data);
 			out.write(json);
 			return;
 		}

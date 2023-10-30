@@ -56,32 +56,7 @@
 				</div>
 				<!-- /.container-fluid -->
 			</section>
-			<section class="content">
-
-				<ul>
-					<jsp:useBean id="pubuserSvc" scope="page"
-						class="com.tha103.newview.pubuser.service.PubUserService" />
-					<li>
-						<form METHOD="post"
-							ACTION="<%=request.getContextPath()%>/pubuser/pubuser.do">
-							<b>輸入使用者編號：</b> <input type="text" name="pubUserID"> <input
-								type="submit" value="送出"> <input type="hidden"
-								name="action" value="getOneForDisplay">
-						</form>
-					</li>
-					<li>
-						<form METHOD="post"
-							ACTION="<%=request.getContextPath()%>/pubuser/pubuser.do">
-							<b>選擇使用者姓名：</b> <select name="pubNickname">
-								<c:forEach var="pubuserVO" items="${pubuserSvc.all}">
-									<option value="${pubuserVO.pubNickname}">${pubuserVO.pubNickname}
-								</c:forEach>
-							</select><input type="submit" value="送出"> <input type="hidden"
-								name="action" value="getOneForDisplay">
-						</form>
-					</li>
-				</ul>
-			</section>
+			
 			<section class="content">
 				<%-- 萬用複合查詢 --%>
 				<form METHOD="post"

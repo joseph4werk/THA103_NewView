@@ -108,7 +108,7 @@ pageContext.setAttribute("categories", categories);
 </head>
 <body class="animsition">
 
-	
+
 
 	<table border="1">
 		<tr>
@@ -381,14 +381,7 @@ pageContext.setAttribute("categories", categories);
 				</div>
 
 				<div class="flex-w flex-c-m m-tb-10">
-					<div
-						class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
-						<i
-							class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
-						<i
-							class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-						Filter
-					</div>
+
 
 					<div
 						class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
@@ -401,8 +394,9 @@ pageContext.setAttribute("categories", categories);
 
 				<!-- Search product -->
 				<div class="dis-none panel-search w-full p-t-10 p-b-15">
-					<div class="bor8 dis-flex p-l-15">
-						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+					<div class="bor8 dis-flex p-l-15" id="outerDiv">
+						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04"
+							id="search-button">
 							<i class="zmdi zmdi-search"></i>
 						</button>
 
@@ -412,7 +406,6 @@ pageContext.setAttribute("categories", categories);
 							<input type="hidden" name="action" value="search" /> <input
 								class="mtext-107 cl2 size-114 plh2 p-r-15" type="text"
 								name="search-product" placeholder="Search" id="search-product" />
-
 						</form>
 					</div>
 				</div>
@@ -538,58 +531,6 @@ pageContext.setAttribute("categories", categories);
 				</div>
 				<!--動態增加測試-->
 
-				<!--往下一格活動區-->
-				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-					<!-- Block2 -->
-					<div class="block2">
-						<div class="block2-pic hov-img0">
-							<img src="images/icons/iStock-831601850.jpg" alt="IMG-PRODUCT" />
-
-							<a href="https://www.youtube.com/"
-								class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								活動詳細 </a>
-						</div>
-
-						<div class="block2-txt flex-w flex-t p-t-14">
-							<p style="font-size: 11px">活動日期:2023.12.12(一)8:00</p>
-
-							<div class="block2-txt-child1 flex-col-l">
-								<div style="width: 100%; overflow: hidden">
-									<div style="float: left">
-										<a href="product-detail.html"
-											class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-											誰的脫口秀 </a>
-									</div>
-									<div style="float: right">
-										<span class="stext-105 cl3"> TWD 300 </span>
-									</div>
-								</div>
-								<hr style="margin-top: 0" size="8px" align="center" width="100%" />
-								<div style="width: 100%; overflow: hidden">
-									<div style="float: left">
-										<a
-											href="https://www.google.com/maps/@25.0356163,121.4798943,15z?authuser=0&entry=ttu">
-											<img src="./images/icons/iStock-902788474 (1).png" alt="" />
-											台北市
-										</a>
-									</div>
-									<div style="float: right"
-										class="block2-txt-child2 flex-r p-t-3">
-										<a href="#"
-											class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-											<img class="icon-heart1 dis-block trans-04"
-											src="images/icons/icon-heart-01.png" alt="ICON" /> <img
-											class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="images/icons/icon-heart-02.png" alt="ICON" />
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!--往上一格活動區-->
 				<!--動態測試-->
 
 				<div id="act-container">
@@ -598,8 +539,9 @@ pageContext.setAttribute("categories", categories);
 							class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${actData.actCategory.actCategoryName} block2">
 							<div class="block2">
 								<div class="block2-pic hov-img0">
-									<img src="" alt="IMG-PRODUCT" id="actImage_${actData.actID}" />
-									<a href="#" data-act-id="${actData.actID}"
+									<img src="" alt="IMG-PRODUCT" id="actImage_${actData.actID}"
+										width="285px" height="285px" /> <a href="#"
+										data-act-id="${actData.actID}"
 										class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
 										onclick="showModal(this)"> 活動詳細 </a>
 								</div>
@@ -636,12 +578,16 @@ pageContext.setAttribute("categories", categories);
 											<div style="float: right"
 												class="block2-txt-child2 flex-r p-t-3">
 												<a href="#"
-													class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-													<img class="icon-heart1 dis-block trans-04"
+													class="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
+													data-act-id="${actData.actID}"
+													onclick="sendLikeChangeRequest(this);"> <img
+													class="icon-heart1 dis-block trans-04"
 													src="images/icons/icon-heart-01.png" alt="ICON" /> <img
 													class="icon-heart2 dis-block trans-04 ab-t-l"
 													src="images/icons/icon-heart-02.png" alt="ICON" />
 												</a>
+
+
 											</div>
 										</div>
 									</div>
@@ -666,54 +612,7 @@ pageContext.setAttribute("categories", categories);
 				<!--動態測試-->
 
 
-				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item watches">
-					<!-- Block2 -->
-					<div class="block2">
-						<div class="block2-pic hov-img0">
-							<img src="images/icons/97928.jpg" alt="IMG-PRODUCT" /> <a
-								href="#"
-								class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								活動詳細 </a>
-						</div>
 
-						<div class="block2-txt flex-w flex-t p-t-14">
-							<p style="font-size: 11px">活動日期:2023.12.12(一)8:00</p>
-
-							<div class="block2-txt-child1 flex-col-l">
-								<div style="width: 100%; overflow: hidden">
-									<div style="float: left">
-										<a href="product-detail.html"
-											class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-											永遠搶不到的演唱會 </a>
-									</div>
-									<div style="float: right">
-										<span class="stext-105 cl3"> TWD 900 </span>
-									</div>
-								</div>
-								<hr style="margin-top: 0" size="8px" align="center" width="100%" />
-								<div style="width: 100%; overflow: hidden">
-									<div style="float: left">
-										<a
-											href="https://www.google.com/maps/@25.0356163,121.4798943,15z?authuser=0&entry=ttu">
-											<img src="./images/icons/iStock-902788474 (1).png" alt="" />
-											台北市
-										</a>
-									</div>
-									<div style="float: right"
-										class="block2-txt-child2 flex-r p-t-3">
-										<a href="#"
-											class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-											<img class="icon-heart1 dis-block trans-04"
-											src="images/icons/icon-heart-01.png" alt="ICON" /> <img
-											class="icon-heart2 dis-block trans-04 ab-t-l"
-											src="images/icons/icon-heart-02.png" alt="ICON" />
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
 
 			<!-- Load more -->
@@ -943,7 +842,8 @@ pageContext.setAttribute("categories", categories);
 									<div class="size-204 flex-w flex-m respon6-next">
 										<button class="seatsTry">
 											<a id="dynamic-link" href="#" data-actid="ActIDValue"
-												data-userid="UserIDValue" onclick=sendDataToServer(packagedData);>馬上前往購買</a>
+												data-userid="UserIDValue"
+												onclick=sendDataToServer(packagedData);>馬上前往購買</a>
 										</button>
 
 									</div>
@@ -951,26 +851,7 @@ pageContext.setAttribute("categories", categories);
 							</div>
 
 							<!--  -->
-							<div class="flex-w flex-m p-l-100 p-t-40 respon7">
-								<div class="flex-m bor9 p-r-10 m-r-11">
-									<a href="#"
-										class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
-										data-tooltip="Add to Wishlist"> <i
-										class="zmdi zmdi-favorite"></i>
-									</a>
-								</div>
 
-								<a href="#"
-									class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-									data-tooltip="Facebook"> <i class="fa fa-facebook"></i>
-								</a> <a href="#"
-									class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-									data-tooltip="Twitter"> <i class="fa fa-twitter"></i>
-								</a> <a href="#"
-									class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-									data-tooltip="Google Plus"> <i class="fa fa-google-plus"></i>
-								</a>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -1030,30 +911,32 @@ pageContext.setAttribute("categories", categories);
 			e.preventDefault();
 		});
 
-		$(".js-addwish-b2").each(
-				function() {
-					var nameProduct = $(this).parent().parent().parent().find(
-							".js-name-b2").html();
-					$(this).on("click", function() {
-						swal(nameProduct, "已加入我的最愛 !", "success");
+		$(".js-addwish-b2").off("click");
 
-						$(this).addClass("js-addedwish-b2");
-						$(this).off("click");
-					});
-				});
+		// 處理click事件
+		function handleButtonClick(link, nameProduct) {
+		    var isLiked = link.hasClass("js-addedwish-b2");
 
-		$(".js-addwish-detail").each(
-				function() {
-					var nameProduct = $(this).parent().parent().parent().find(
-							".js-name-detail").html();
+		    if (isLiked) {
+		        swal(nameProduct, "已取消我的最愛 !", "success");
+		        link.removeClass("js-addedwish-b2");
+		    } else {
+		        swal(nameProduct, "已加入我的最愛 !", "success");
+		        link.addClass("js-addedwish-b2");
+		    }
+		}
 
-					$(this).on("click", function() {
-						swal(nameProduct, "已加入我的最愛 !", "success");
+		$(".js-addwish-b2").each(function() {
+		    var link = $(this);
+		    var nameProduct = link.parent().parent().parent().find(".js-name-b2").html();
 
-						$(this).addClass("js-addedwish-detail");
-						$(this).off("click");
-					});
-				});
+		    link.on("click", function() {
+		        
+		        handleButtonClick(link, nameProduct);
+		    });
+		});
+
+		
 
 		/*---------------------------------------------*/
 
@@ -1090,6 +973,7 @@ pageContext.setAttribute("categories", categories);
 	<script>
 		var packagedData;
 		var userIDValue;
+		console.log(packagedData+",  "+userIDValue)
 		function showModal(elem) {
 			var actIdStr = elem.getAttribute("data-act-id");
 			sendAjaxRequest(actIdStr);
@@ -1120,16 +1004,15 @@ pageContext.setAttribute("categories", categories);
 			var actName = data.actName;
 			var actImages = data.base64Images;
 			var actPrice = data.actPrice;
-			var actIntroduce = data.actIntroduce;
+			var actContent = data.actContent;
 			var actScope = data.actScope;
 			var actDate = data.actDate;
 			var time = data.time;
 			var DateTime = actDate + "  " + time;
 			var actScope = data.actScope;
 			var actID = data.actID;
-
 			var scale;		
-		
+			console.log(actID+", "+actName);
 			switch (actScope) {
 			
 			case 1:
@@ -1193,7 +1076,7 @@ pageContext.setAttribute("categories", categories);
 
 			$("#dynamic-heading").text(actName);
 			$("#priceYA").text("TWD" + actPrice);
-			$("#castYA").text(actIntroduce);
+			$("#castYA").text(actContent);
 			$(".seatWT").text(scale);
 			$(".actDate").text(DateTime);
 			$('#dynamic-link').attr('data-actid', actID);
@@ -1204,7 +1087,7 @@ pageContext.setAttribute("categories", categories);
 				        actName: actName,
 				        actImages: actImages,
 				        actPrice: actPrice,
-				        actIntroduce: actIntroduce,
+				        actContent: actContent,
 				        actScope: actScope,
 				        actDate: actDate,
 				        time: time,
@@ -1282,31 +1165,147 @@ pageContext.setAttribute("categories", categories);
 
 
 	</script>
-	
-	 <script type="text/javascript">
+
+	<script type="text/javascript">
         // 在頁面加載完成後執行
-        $(document).ready(function() {
-            var toggleState = 0; // 初始化狀態為0
+      $(document).ready(function() {
+    	  var userID = 1;
 
-            // 當按鈕被點擊時
-            $("#toggleButton").click(function(e) {
-                e.preventDefault(); // 防止<a>標籤的默認行為
+    	    // 每個按鈕都有一個不同的actID
+ $(".btn-addwish-b2").each(function() {
+    var actID = $(this).data("act-id");
+    var link = $(this);
 
-                // 切換狀態
-                toggleState = 1 - toggleState;
+    $.ajax({
+        type: "POST",
+        url: "LikuSoDesu",
+        data: {
+            action: "desu",
+            actID: actID,
+            userID: userID
+        },
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
 
-                // 根據狀態切換圖片
-                if (toggleState === 1) {
-                    // 當狀態為1時，顯示第一張圖片
-                    $(this).find(".icon-heart1").show();
-                    $(this).find(".icon-heart2").hide();
+            var likeIDsArray = response.likeIDs;
+            var actIDs = likeIDsArray.map(item => item.actID);
+            console.log(actIDs + " " + actID);
+            var isFavorite = actIDs.includes(actID);
+
+            if (isFavorite) {
+                link.addClass("js-addedwish-b2");
+                console.log("有愛心");
+            } else {
+                link.removeClass("js-addedwish-b2");
+                console.log("沒愛心");
+            }
+
+            // 在Ajax成功後 呼叫
+            
+            handleButtonClick(link, nameProduct);
+        },
+        error: function(error) {
+            console.log("Error:", error);
+        }
+    });
+});
+    	    
+    //搜尋點擊優化	    
+ var outerDiv = document.getElementById('outerDiv');
+ var searchInput = document.getElementById('search-product');
+ outerDiv.addEventListener('click', function() {  
+     searchInput.focus();
+ });
+
+ var searchButton = document.getElementById('search-button');
+ searchButton.addEventListener('click', function(event) {
+     event.preventDefault();
+     searchInput.focus();
+ });
+
+
+
+    // 當按鈕被點擊時，執行Ajax請求切換狀態
+    $("#toggleButton").click(function(e) {
+        e.preventDefault(); // 防止<a>標籤的默認行為
+		var actID = ${actData.actID}
+        // 執行Ajax請求將用戶ID和收藏狀態發送到伺服器
+        $.ajax({
+            type: 'POST',
+            url: 'LikuSoDesu', // 替換為伺服器端接收請求的URL
+            data: { userID: actID, isFavorite: !isFavorite }, // 切換收藏狀態
+            success: function(response) {
+                // 在伺服器響應成功後執行相應的操作
+
+                // 切換圖標的顯示
+                if (isFavorite) {
+                    $(".icon-heart1").hide();
+                    $(".icon-heart2").show();
                 } else {
-                    // 當狀態為0時，顯示第二張圖片
-                    $(this).find(".icon-heart1").hide();
-                    $(this).find(".icon-heart2").show();
+                    $(".icon-heart1").show();
+                    $(".icon-heart2").hide();
                 }
-            });
+
+                // 更新收藏狀態
+                isFavorite = !isFavorite;
+            }
         });
+    });
+});
+        
+        //查詢沒有結果
+      var actNameNotFound = '<%=request.getAttribute("actNameNotFound")%>';
+    var searchInput = document.getElementById('search-product');
+
+    if (actNameNotFound === 'notFound') {
+        searchInput.style.color = 'red';
+        searchInput.value = '沒有您要的相關活動';
+		//如果要輸入時 自動清空
+        searchInput.addEventListener('focus', function() {
+            if (searchInput.value === '沒有您要的相關活動') {
+                searchInput.value = '';
+                searchInput.style.color = 'black'; 
+            }
+        });
+
+        // 判斷用戶是否要重新查詢
+        searchInput.addEventListener('input', function() {
+            if (searchInput.value !== '沒有您要的相關活動') {
+                searchInput.style.color = 'black'; // 將字體轉黑色
+            }
+        });
+    }
+ 
+    //我的最愛切換送交
+    function sendLikeChangeRequest(element) {    
+        var actIDchange = $(element).data("act-id");              
+        var userIDC =1;
+
+        
+        $.ajax({
+            type: "POST",
+            url: "likeChange",  
+            data: {
+                actID: actIDchange,
+                userID: userIDC
+            },
+            dataType: "json",
+            success: function(response) {
+                
+                console.log(response);
+            },
+            error: function(error) {
+                console.log("Error:", error);
+            }
+        });
+        
+        //禁止標籤動作 
+        return false;
+    }
+    
+    
+   
     </script>
 </body>
 </html>

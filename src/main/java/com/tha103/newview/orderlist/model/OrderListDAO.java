@@ -6,7 +6,7 @@ import java.util.List;
 public interface OrderListDAO {
 	public int insert(OrderListVO orderListVO);
 	public int update(OrderListVO orderListVO);
-	public int delete(Integer orderListID);
+	public int delete(Integer orderID);
 	public OrderListVO findeByPrimaryKey(Integer orderListID);
 	public List<OrderListVO> getAll();
 	Integer findUserIDByOrderIDAndActID(Integer orderID, Integer actID);

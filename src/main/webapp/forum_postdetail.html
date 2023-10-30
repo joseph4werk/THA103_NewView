@@ -31,6 +31,7 @@
 	<!--===============================================================================================-->
 
 
+
 </head>
 
 <body class="animsition">
@@ -614,7 +615,7 @@
 								</div>
 								<button id="login-Button"
 									class="flex-c-m stext-101 cl0 size-125 bg3 bor2 hov-btn3 p-lr-15 trans-04">
-									<a href="sign-in.html" style="color:white;">航向美麗的文藝航道</a>
+									<a href="./sign-in.html" style="color:white;">Click!登入會員，一起航向美麗的文藝航道</a>
 								</button>
 							</div>
 						</div>
@@ -1193,7 +1194,6 @@
 			//從上頁取得postID值
 			var urlParams = new URLSearchParams(window.location.search);
 			postID = urlParams.get('postID');
-			console.log(postID);
 
 			// ---------------------------------按讚功能開始--------------------------------//
 			// 初始化
@@ -1227,6 +1227,7 @@
 
 			}
 
+			
 
 			//-------------------------------- 讚按鈕新增修改的前端---------------------------//
 
@@ -1238,7 +1239,7 @@
 					likeCount++;  // 喜歡計數+1
 					$("#likeCount").text(likeCount);  // 更新喜歡計數HTML
 					likeClicked = true;  // 設置like已被點擊
-
+					
 
 					// 使用Ajax更新喜歡數到後端
 					$.ajax({
@@ -1251,7 +1252,12 @@
 							action: "like"
 						},
 						success: function (response) {
-							console.log("按讚數已更新到後端資料庫");
+							var responseData = JSON.parse(response);
+						    likeCount = responseData.likeCount;
+						    dislikeCount = responseData.dislikeCount;
+						    $("#likeCount").text(likeCount);
+						    $("#dislikeCount").text(dislikeCount);
+						    console.log("按讚數已更新到後端資料庫");
 						},
 						error: function (error) {
 							console.error("無法更新按讚數：" + error);
@@ -1359,7 +1365,6 @@
 			
 			// ---------------------------------修改刪除驗證開始--------------------------------//
 			
-			console.log(postID);
 
 			$.ajax({
 				type: "POST",
@@ -1370,9 +1375,7 @@
 				},
 				dataType: "json",
 				success: function (data) {
-					console.log(data.userID);
-					console.log(data.authorID);
-					console.log(data.hasPermission);
+		
 					if (data.hasPermission) {
 						$("#modifyButton").show();
 						$("#deleteButton").show();
@@ -1471,9 +1474,7 @@
 				form_data.append("postID", postID);
 				form_data.append("MesContent", MesContent);
 				form_data.append("action", "AddMsg");
-				console.log("postID:", postID);//15
-				console.log("MesContent:", MesContent);//9527
-
+				
 
 				$.ajax({
 					url: `http://localhost:8081/com.tha103.newview/DoMessageServlet`,
@@ -1482,14 +1483,14 @@
 					contentType: false,
 					processData: false,
 					success: function (event) {
-						console.log(event);
+						
 						// 去除 "postmsgVO" 部分
 						var jsonStr = event.replace('postmsgVO', '');
 
 						// 解析 JSON 字符串
 						try {
 							var jsonData = JSON.parse(jsonStr);
-							console.log(jsonData);
+							
 						} catch (error) {
 							console.error('Error parsing JSON:', error);
 						}
@@ -1499,10 +1500,7 @@
 						var MesContent = jsonData.MesContent;
 						var currentTime = jsonData.msgDate;
 						var postMessageID = jsonData.postMessageID;
-						console.log("username:", jsonData.userName);
-						console.log("userAccount:", jsonData.userAccount);
-						console.log("postMessageID:", jsonData.postMessageID);
-
+						
 
 						// 創建新留言區塊
 						var newComment = `
@@ -1566,8 +1564,7 @@
 				},
 				dataType: "json",
 				success: function (data) {
-					console.log(data)
-
+					
 					for (var i = 0; i < data.length; i++) {
 						var userAccount = data[i].userAccount;
 						var username = data[i].userName;
@@ -1641,8 +1638,7 @@
 					action: "Delete"
 				};
 
-				console.log(data);
-
+				
 				$.ajax({
 					url: `http://localhost:8081/com.tha103.newview/DoMessageServlet`,
 					data: data,

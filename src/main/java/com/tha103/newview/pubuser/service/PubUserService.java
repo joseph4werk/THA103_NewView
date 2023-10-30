@@ -35,10 +35,11 @@ public class PubUserService {
 		return pubuserVO;
 	}
 
-	public PubUserVO updatePubUser(String pubNickname, String pubAccount, String pubPassword, byte pubAuthority,
+	public PubUserVO updatePubUser(Integer pubUserID,String pubNickname, String pubAccount, String pubPassword, byte pubAuthority,
 			Integer pubID) {
 
 		PubUserVO pubuserVO = new PubUserVO();
+		pubuserVO.setPubUserID(pubUserID);
 		pubuserVO.setPubNickname(pubNickname);
 		pubuserVO.setPubAccount(pubAccount);
 		pubuserVO.setPubPassword(pubPassword);
@@ -103,6 +104,11 @@ public class PubUserService {
 		System.out.println(query);
 		
 		return dao.getAllByCQ(query);
+	}
+
+	public PubUserVO getByAccountInfo(String account) {
+		
+		return dao.findByAccount(account);
 	}
 	
 }

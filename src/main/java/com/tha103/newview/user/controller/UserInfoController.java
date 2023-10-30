@@ -35,7 +35,6 @@ public class UserInfoController extends HttpServlet {
 
 		// 從 session 取出 userID (已套用濾器 -> session 中有存放 userID)
 		String userID = (String) session.getAttribute("userID");
-//		System.out.println("userID: " + userID);
 
 		// 取得資料庫資料
 		UserService userSvc = new UserServiceImpl();
