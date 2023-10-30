@@ -2,9 +2,6 @@ package com.tha103.newview.user.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.sql.Date;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -16,9 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.tha103.newview.user.jedis.JedisPoolUtil;
-import com.tha103.newview.user.model.UserVO;
-import com.tha103.newview.user.service.UserService;
-import com.tha103.newview.user.service.UserServiceImpl;
 
 import redis.clients.jedis.Jedis;
 
@@ -45,9 +39,6 @@ public class VerifyController extends HttpServlet {
 		String verificationFromWeb = req.getParameter("verificationCode");
 		System.out.println("verificationFromWeb: " + verificationFromWeb);
 		
-		UserService userSvc = new UserServiceImpl();
-		UserVO userVO = new UserVO();
-
 		// 從 redis 取得驗證碼
 		Jedis jedis = JedisPoolUtil.getJedisPool().getResource();
 		jedis.select(15);

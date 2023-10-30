@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.tha103.newview.act.model.ActVO;
 import com.tha103.newview.mylike.model.MyLikeVO;
@@ -36,7 +37,9 @@ public class LikeChangeController extends HttpServlet {
 	        res.setContentType("application/json");
             res.setCharacterEncoding("UTF-8");
             String actIDStr = req.getParameter("actID");
-            String userIDStr = req.getParameter("userID");
+//            String userIDStr = req.getParameter("userID");
+            HttpSession session = req.getSession();
+            String userIDStr = (String) session.getAttribute("userID");
             Integer actID = null;
             Integer userID = null;
            

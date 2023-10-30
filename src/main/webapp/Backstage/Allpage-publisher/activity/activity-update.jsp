@@ -122,13 +122,13 @@ pageContext.setAttribute("categories", categories);
 										<label name="actID">活動編號：${actData.actID}</label> <label
 											name="approvalCondition" style="margin: 0 10px;"> <c:choose>
 												<c:when test="${actData.approvalCondition == 0}">
-													<div style="color: blue;">(尚未審核)</div>
+													<div class="badge badge-info">尚未審核</div>
 												</c:when>
 												<c:when test="${actData.approvalCondition == 1}">
-													<div style="color: green;">(審核通過)</div>
+													<div class="badge badge-success">審核通過</div>
 												</c:when>
 												<c:otherwise>
-													<div style="color: red;">(審核未過)</div>
+													<div class="badge badge-danger">審核未過</div>
 												</c:otherwise>
 											</c:choose>
 										</label>

@@ -1,9 +1,8 @@
 package com.tha103.newview.user.model;
 
-import java.util.*;
+import java.util.List;
 
 import com.tha103.newview.orders.model.OrdersVO;
-import com.tha103.newview.publisher.model.PublisherVO;
 
 public interface UserDAO {
 	boolean checkUserAccount(String account);

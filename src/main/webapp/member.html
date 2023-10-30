@@ -328,7 +328,7 @@
                 <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 likeActOrder">
                   <div class="card h-100 card-plain border">
                     <div class="card-body d-flex flex-column justify-content-center text-center">
-                      <a href="javascript:;">
+                      <a href="http://localhost:8081/com.tha103.newview/NewActJSPTest.jsp">
                         <i class="fa fa-plus text-secondary mb-3"></i>
                         <h5 class="text-secondary">尚未有喜愛的活動</h5>
                       </a>
@@ -339,7 +339,7 @@
                 <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 likeActOrder">
                   <div class="card h-100 card-plain border">
                     <div class="card-body d-flex flex-column justify-content-center text-center">
-                      <a href="javascript:;">
+                      <a href="http://localhost:8081/com.tha103.newview/NewActJSPTest.jsp">
                         <i class="fa fa-plus text-secondary mb-3"></i>
                         <h5 class="text-secondary">尚未有喜愛的活動</h5>
                       </a>
@@ -350,7 +350,7 @@
                 <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 likeActOrder">
                   <div class="card h-100 card-plain border">
                     <div class="card-body d-flex flex-column justify-content-center text-center">
-                      <a href="javascript:;">
+                      <a href="http://localhost:8081/com.tha103.newview/NewActJSPTest.jsp">
                         <i class="fa fa-plus text-secondary mb-3"></i>
                         <h5 class="text-secondary">尚未有喜愛的活動</h5>
                       </a>
@@ -361,7 +361,8 @@
                 <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 likeActOrder">
                   <div class="card h-100 card-plain border">
                     <div class="card-body d-flex flex-column justify-content-center text-center">
-                      <a href="javascript:;">
+                      <a href="http://localhost:8081/com.tha103.newview/NewActJSPTest.jsp">
+                        <!-- <a href="javascript:;"> -->
                         <i class="fa fa-plus text-secondary mb-3"></i>
                         <h5 class="text-secondary">尚未有喜愛的活動</h5>
                       </a>
@@ -1208,47 +1209,20 @@
 
             $("#myOrders ul").html(ul_orders_html);
           });
-
-          // let myOrders_item = [];
-          // myOrders_item.push({
-          //   publisher: data.orders.publisher,
-          //   ordTotal: data.orders.ordTotal,
-          //   ordTime: data.orders.ordTime,
-          // });
-          // console.log(myOrders_item);
-
-          // let ul_orders_html = $("#myOrders ul").html();
-          // ul_orders_html = "";
-          // ul_orders_html += `
-
-          // <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-          //         <div class="avatar me-3">
-          //           <h1 class="mb-0 text-sm text-primary">訂單 &nbsp; #1</h1>
-          //         </div>
-          //         <div class="d-flex align-items-start flex-column justify-content-center">
-          //           <h6 class="mb-0 ml-5 text-sm">廠商名稱: 薩泰爾娛樂</h6>
-          //           <span class="mb-0 ml-5 text-xs">下單日期: 2023/10/25</span>
-          //           <span class="mb-0 ml-5 text-xs">訂單金額: $999</span>
-          //         </div>
-          //         <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" href="javascript:;">Details</a>
-          //       </li>
-
-          // `;
-
-          // $("#myOrders ul").html(ul_orders_html);
         }
 
         // 修改我的最愛區
         function favoriteAct(data) {
-          console.log(data.mylike);
-          if (!data.mylike.actName.length == 0) {
-            $(data.mylike).each(function (index, element) {
-              let none = "";
-              if (index > 3) {
-                none = "display:none";
-              }
-              let div_fav_html = `
-            <div class="card card-blog card-plain" ${none}>
+          // console.log(data.mylike);
+          if (data.mylike[0].actName == null) {
+            return;
+          }
+
+          let div_fav_html = "";
+          $(data.mylike).each(function (index, element) {
+            // console.log(element);
+            div_fav_html = `
+            <div class="card card-blog card-plain">
               <div class="position-relative">
                 <a class="d-block shadow-xl border-radius-xl">
                   <img src="data:image/*;base64,${element.actPic}" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl" />
@@ -1281,11 +1255,8 @@
             </div>
             `;
 
-              $(".likeActOrder").eq(index).html(div_fav_html);
-              console.log($(".likeActOrder").eq(index));
-            });
-            return;
-          }
+            $(".likeActOrder").eq(index).html(div_fav_html);
+          });
         }
       });
     </script>
