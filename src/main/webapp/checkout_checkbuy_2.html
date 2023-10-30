@@ -1038,31 +1038,7 @@
 	 
 	
 	 
-	 $(document).ready(function() {
-		    // 監控按鈕點擊事件
-		    var discountPrice = $("#discountPrice").val(); 
-		     $("#wanttobuy").on("click", function(event) {
-		        event.preventDefault(); // 阻止按鈕的默認動作
-		        $.ajax({
-		            url: "WantToBuy", 
-		            type: "POST", 
-		            data: {
-		                action: "buy",
-		               
-		            },
-		            success: function(response) {
-		                // 處理伺服器的回應
-		                console.log(response);
-		                alert("資料送出!");
-		            },
-		            error: function(xhr, status, error) {
-		                // 處理錯誤
-		                console.error("Error:", error);
-		               
-		            }
-		        });
-		    });
-		});
+	
 
 	 
               
@@ -1154,7 +1130,7 @@
          });
      });
 		
-	 
+	 var disAmount = 0;
 	 function performSecondAjaxRequest(totalAmount) {
 		 console.log(totalAmount)
 		$('#submitcoupon').on('click', function () {
@@ -1169,7 +1145,9 @@
 				},
 				success: function (data) {
 					console.log(data);
+					
 					$("#discountPrice").val(data.disAmount.toString());
+					 disAmount = parseFloat(data.disAmount); 
 					var actTotalElement = document.getElementById("actTotal"); 
 					var actTotalText = actTotalElement.textContent;
 					console.log(actTotalText)
@@ -1191,7 +1169,30 @@
 			document.getElementById('totalPrice').value = totalPrice;
 		}
 
-		
+		$(document).ready(function () {
+		    
+		    var discountPrice = $("#discountPrice").val();
+		    $("#wanttobuy").on("click", function (event) {
+		        event.preventDefault(); 
+		        $.ajax({
+		            url: "WantToBuy",
+		            type: "POST",
+		            data: {
+		                action: "buy",
+		                disAmount: disAmount 
+		            },
+		            success: function (response) {
+		                
+		                console.log(response);
+		                alert("資料送出!");
+		            },
+		            error: function (xhr, status, error) {
+		             
+		                console.error("Error:", error);
+		            }
+		        });
+		    });
+		});
 
 	</script>
 	<!--===============================================================================================-->
