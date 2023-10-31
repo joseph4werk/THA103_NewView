@@ -11,7 +11,7 @@ public interface DiscountService {
 	public DiscountVO addDiscount(String discountContent, Integer disAmount, String discountCode,
 			Timestamp disStartDate, Timestamp disFinishDate, Integer pubID, Integer adminID);
 	
-	public DiscountVO updateDiscount(Integer discountNO,String discountContent, Integer disAmount, String discountCode,
+	public DiscountVO updateDiscount(String discountContent, Integer disAmount, String discountCode,
 			Timestamp disStartDate, Timestamp disFinishDate, Integer pubID, Integer adminID);
 	
 	public void deleteDiscount(Integer discountNO);

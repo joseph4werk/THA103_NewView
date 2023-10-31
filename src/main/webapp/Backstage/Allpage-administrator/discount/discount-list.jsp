@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
-DiscountService discountSvc = new DiscountService();
+DiscountServiceImpl discountSvc = new DiscountServiceImpl();
 List<DiscountVO> list = discountSvc.getAll();
 pageContext.setAttribute("list", list);
 
@@ -77,6 +77,7 @@ System.out.println(list);
 					<li>
 						<form METHOD="post"
 							ACTION="<%=request.getContextPath()%>/discount/discount.do">
+							
 							<b>選擇優惠名稱：</b> <select name="discountNO">
 								<c:forEach var="discountVO" items="${discountSvc.all}">
 									<option value="${discountVO.discountNO}">${discountVO.discountContent}
