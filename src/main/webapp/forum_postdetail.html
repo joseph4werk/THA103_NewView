@@ -1069,7 +1069,7 @@
 			// 发起AJAX请求以获取文章详细信息
 			$.ajax({
 				type: "GET",
-				url: `http://localhost:8081/com.tha103.newview/GetPostDetailServlet?postID=${postID}&postCategoryID=${postCategoryID}`,
+				url: `GetPostDetailServlet?postID=${postID}&postCategoryID=${postCategoryID}`,
 				traditional: true,
 				dataType: "json",
 				success: function (data) {
@@ -1206,7 +1206,7 @@
 			//---------------------------- 發起AJAX请求以獲得按讚數---------------------------//
 			$.ajax({
 				type: "GET",
-				url: `http://localhost:8081/com.tha103.newview/GetPostDetailServlet?postID=${postID}`,
+				url: `GetPostDetailServlet?postID=${postID}`,
 				traditional: true,
 				dataType: "json",
 				success: function (data) {
@@ -1244,7 +1244,7 @@
 					// 使用Ajax更新喜歡數到後端
 					$.ajax({
 						type: "POST",
-						url: "http://localhost:8081/com.tha103.newview/DoLikeDislikeServlet",  // 替換為你的後端API端點
+						url: "DoLikeDislikeServlet",  // 替換為你的後端API端點
 						data: {
 							likeCount: likeCount,
 							dislikeCount: dislikeCount,
@@ -1274,7 +1274,7 @@
 					// 使用Ajax更新喜歡數到後端
 					$.ajax({
 						type: "POST",
-						url: "http://localhost:8081/com.tha103.newview/DoLikeDislikeServlet",  // 替換為你的後端API端點
+						url: "DoLikeDislikeServlet",  // 替換為你的後端API端點
 						data: {
 							likeCount: likeCount,
 							dislikeCount: dislikeCount,
@@ -1302,7 +1302,7 @@
 					// 使用Ajax更新喜歡數到後端
 					$.ajax({
 						type: "POST",
-						url: "http://localhost:8081/com.tha103.newview/DoLikeDislikeServlet",  // 替換為你的後端API端點
+						url: "DoLikeDislikeServlet",  // 替換為你的後端API端點
 						data: {
 							likeCount: likeCount,
 							dislikeCount: dislikeCount,
@@ -1327,7 +1327,7 @@
 					// 使用Ajax更新喜歡數到後端
 					$.ajax({
 						type: "POST",
-						url: "http://localhost:8081/com.tha103.newview/DoLikeDislikeServlet",  // 替換為你的後端API端點
+						url: "DoLikeDislikeServlet",  // 替換為你的後端API端點
 						data: {
 							likeCount: likeCount,
 							dislikeCount: dislikeCount,
@@ -1368,7 +1368,7 @@
 
 			$.ajax({
 				type: "POST",
-				url: `http://localhost:8081/com.tha103.newview/VerifyPostMember`,
+				url: `VerifyPostMember`,
 				data: {
 					action: "verifyPostMember",
 					postID:postID
@@ -1399,12 +1399,15 @@
 			// ---------------------------------刪除文章功能開始--------------------------------//
 
 			$("#deleteButton").click(function () {
-				var postID = urlParams.get("postID");
+				console.log(postID);
 				var result = confirm("確定要刪除文章嗎?");
 				if (result) {
 					$.ajax({
-						url: `http://localhost:8081/com.tha103.newview/DeletePostServlet?postID=${postID}`,
+						url: `DeletePostServlet?`,
 						type: "POST",
+						data:{
+						   "postID":postID
+						},
 						success: function (data) {
 							// 成功處理後顯示
 							var url = data.location;
@@ -1441,7 +1444,7 @@
 			// 獲取UserID
 			$.ajax({
 				type: "GET",
-				url: `http://localhost:8081/com.tha103.newview/GetMemberSession`,
+				url: `GetMemberSession`,
 				traditional: true,
 				data: {
 					action: "getmember"
@@ -1477,7 +1480,7 @@
 				
 
 				$.ajax({
-					url: `http://localhost:8081/com.tha103.newview/DoMessageServlet`,
+					url: `DoMessageServlet`,
 					type: "POST",
 					data: form_data,
 					contentType: false,
@@ -1558,7 +1561,7 @@
 			// ---------------------------------獲取留言List--------------------------------//
 			$.ajax({
 				type: "GET",
-				url: `http://localhost:8081/com.tha103.newview/DoMessageServlet?postID=${postID}`,
+				url: `DoMessageServlet?postID=${postID}`,
 				data: {
 					"action": "GetAll"
 				},
@@ -1640,7 +1643,7 @@
 
 				
 				$.ajax({
-					url: `http://localhost:8081/com.tha103.newview/DoMessageServlet`,
+					url: `DoMessageServlet`,
 					data: data,
 					type: "POST",
 					success: function (data) {

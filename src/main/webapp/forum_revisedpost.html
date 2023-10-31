@@ -686,7 +686,7 @@
 			// 發送請求到Server
 			$.ajax({
 				type: "GET",
-				url: `http://localhost:8081/com.tha103.newview/GetPostDetailServlet?postID=${postID}`,
+				url: `GetPostDetailServlet?postID=${postID}`,
 				traditional: true,
 				dataType: "json",
 				success: function (data) {
@@ -787,7 +787,7 @@
 				
 				// 發送請求到Server
 				$.ajax({
-					url: `http://localhost:8081/com.tha103.newview/DoPostServlet`,
+					url: `DoPostServlet`,
 					type: "POST",
 					data: form_data,
 					contentType: false,
@@ -795,7 +795,7 @@
 					success: function (data) {
 						// 成功處理後顯示
 						alert("文章修改完成");
-						location.href = "http://localhost:8081/com.tha103.newview/forum_home.html";
+						location.href = "forum_home.html";
 					},
 					error: function (xhr) {
 						console.log("error");
