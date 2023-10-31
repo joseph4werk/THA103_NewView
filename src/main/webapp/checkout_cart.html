@@ -690,7 +690,9 @@
 					dataType: "json",
 					success: function (data) {
 						console.log("訂單儲存成功");
-						var url = data.location;
+						console.log(data);
+						sessionStorage.setItem("order", JSON.stringify(data));
+						var url = "checkout_checkbuy_1.html";
 						window.location.href = url;
 						
 					},

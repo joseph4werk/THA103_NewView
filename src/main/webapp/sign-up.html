@@ -773,6 +773,7 @@
 
     <!--===============================================================================================-->
     <script>
+      // 取得專案路徑
       const HOST = window.location.host;
       var path = window.location.pathname;
       var webCtx = path.substring(0, path.indexOf("/", 1));
@@ -794,7 +795,7 @@
         console.log(signUp_item);
 
         $.ajax({
-          url: END_POINT_URL,
+          url: END_POINT_URL + COLLECTION_POINT,
           type: "POST",
           data: signUp_item,
           dataType: "json",
@@ -809,12 +810,18 @@
         function redirect(data) {
           console.log(data);
           switch (data.status) {
+            case "duplicateEmail":
+              alert("信箱已重複，請輸入其他信箱！");
+              $("#email").val("");
+              break;
             case "success":
               alert("驗證碼已寄到您的信箱，請前往收信並驗證。");
               location.href = "registration-verification.html";
               break;
             case "failed":
               alert("註冊失敗，帳號已重複，請修正後再提交申請！");
+              $("#account").val("");
+              break;
           }
         }
       });

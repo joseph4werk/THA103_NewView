@@ -63,6 +63,4 @@ public class AdminLoginFilter implements Filter {
 		config = null;
 	}
 	
-	
-	
 }

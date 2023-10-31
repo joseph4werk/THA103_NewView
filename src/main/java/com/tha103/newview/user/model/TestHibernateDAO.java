@@ -54,10 +54,10 @@ public class TestHibernateDAO {
 //		System.out.println(user3);
 
 		// 查詢多筆
-//		List<UserVO> list = dao.getAll();
-//		for (UserVO lists : list) {
-//			System.out.println(lists);
-//		}
+		List<UserVO> list = dao.getAll();
+		for (UserVO lists : list) {
+			System.out.println(lists);
+		}
 
 		// 使用 userAccount 查詢單筆
 //		boolean notExist = dao.checkUserAccount("test_a");

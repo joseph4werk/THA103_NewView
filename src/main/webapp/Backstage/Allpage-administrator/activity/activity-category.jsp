@@ -67,14 +67,12 @@ System.out.println(list);
             
                	<ul>
 					<li>
-						<form METHOD="post"
-							ACTION="<%=request.getContextPath()%>/ActCategoryServlet">
+						<form METHOD="post" ACTION="<%=request.getContextPath()%>/actcategory/actcategory.do">
 							<b>輸入分類編號：</b> <input type="text" name="actCategoryID"> <input
 								type="submit" value="送出"> <input type="hidden"
 								name="action" value="getOneForDisplay">
 						</form>
 					</li>
-
 
 
 					<li>

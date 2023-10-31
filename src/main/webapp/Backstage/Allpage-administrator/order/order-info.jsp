@@ -1,6 +1,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.tha103.newview.orders.service.*"%>
 <%@ page import="com.tha103.newview.orders.model.*"%>
+<<<<<<< HEAD
 <%@ page import="com.tha103.newview.user.model.*"%>
 <%@ page import="com.tha103.newview.user.service.*"%>
 <%@ page import="com.tha103.newview.discount.model.*"%>
@@ -129,6 +130,7 @@ System.out.println(list);
                                                 <td><%=ordersVO.getOrdType()%></td>
                                             </tr>  
                                             
+
                                         </tbody>
                                     </table>
                                 </div>

@@ -127,5 +127,11 @@ public class OrdersServiceImpl implements OrdersService {
 		}
 	}
 
+	@Override // for Publisher Backstage
+	public List<OrdersVO> getOrdersByPub(Integer pubID) {
+		List<OrdersVO> orderList = ordersDao.getOrdersByPubID(pubID);
+		return orderList;
+	}
+
 }
 

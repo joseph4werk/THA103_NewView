@@ -181,8 +181,10 @@ body {
 }
 
 p.text {
+  text-align: center;
   margin: 5px 0;
   font-size: 20px;
+  
 }
 
 p.text span {
@@ -206,12 +208,14 @@ label {
 }
 
 .cart {
+ 
   border: 1px solid #fff;
   color: #242333;
   background-color: #fff;
   border-radius: 5px;
-  font-size: 33px;
+  font-size: 30px;
   text-decoration: none;
+  padding: 4px;
   float: right;
 }
 

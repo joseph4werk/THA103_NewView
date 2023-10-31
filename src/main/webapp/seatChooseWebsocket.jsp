@@ -67,7 +67,7 @@
 	</p>
 	<p>
 		<a class="BuyIn" href="checkout_checkbuy_2.html">確認購買</a>
-		<button class="cart">Add to cart</button>
+		<a class="cart" href="checkout_cart.html">加入購物車</a>
 	</p>
 	</div>
 

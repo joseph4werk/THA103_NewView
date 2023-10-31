@@ -1,9 +1,7 @@
 package com.tha103.newview.orderlist.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -12,12 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.tha103.newview.act.model.ActVO;
 import com.tha103.newview.orderlist.model.OrderListVO;
 import com.tha103.newview.orderlist.service.OrderListService;
 import com.tha103.newview.orderlist.service.OrderListServiceImpl;
 import com.tha103.newview.user.model.UserVO;
-
-
+import com.tha103.newview.user.service.UserService;
+import com.tha103.newview.user.service.UserServiceImpl;
 
 @WebServlet("/GetOrderListServlet")
 public class GetOrderListServlet extends HttpServlet {
@@ -32,28 +32,31 @@ public class GetOrderListServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("application/json; charset=UTF-8");
-		
-		
+
 		OrderListService ordSvc = new OrderListServiceImpl();
 		OrderListVO orderVO = new OrderListVO();
-		UserVO userVO = new UserVO();
-		
-		
+
+		ActVO actVO = new ActVO();
+
+		// 獲取購買人User訊息from Session
+		String currentUserID = (String) req.getSession().getAttribute("userID");
+		int userID = Integer.parseInt(currentUserID);
+		UserService userSvc = new UserServiceImpl();
+		UserVO userVOs = userSvc.getUserByPK(userID);
+
 		Map<String, Object> OrderInfo = new HashMap<>();
+
+		// 基本資訊確認
+		OrderInfo.put("userID", userID);
+		OrderInfo.put("userName", userVOs.getUserName());
+		OrderInfo.put("userBirth", userVOs.getUserBirth());
+		OrderInfo.put("userCell", userVOs.getUserCell());
+		OrderInfo.put("userEmail", userVOs.getUserEmail());
 		
-		//基本資訊確認
-		OrderInfo.put("userID", userVO.getUserID());
-		OrderInfo.put("userName", userVO.getUserName());
-		OrderInfo.put("userBirth", userVO.getUserBirth());
-		OrderInfo.put("userCell", userVO.getUserCell());
-		OrderInfo.put("userEmail", userVO.getUserEmail());
-		
-		//訂單明細確認
-		OrderInfo.put("userID", userVO.getUserID());
-		OrderInfo.put("userID", userVO.getUserID());
-		OrderInfo.put("userID", userVO.getUserID());
-		
-		
+		Gson gson = new Gson();
+		String json = gson.toJson(OrderInfo);
+		res.getWriter().write(json);
+
 	}
-	
+
 }

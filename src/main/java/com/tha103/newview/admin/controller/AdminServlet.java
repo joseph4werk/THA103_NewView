@@ -12,15 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
 import com.tha103.newview.admin.model.*;
 import com.tha103.newview.admin.service.*;
-
 
 
 @WebServlet("/admin/admin.do")
 public class AdminServlet extends HttpServlet {
 	
-	public void doGet(HttpServletRequest req, HttpServletResponse res)
+	public void doGet(HttpServletRequest req, HttpServletResponse res) 
 			throws ServletException, IOException {
 		doPost(req, res);
 	}
@@ -33,22 +33,28 @@ public class AdminServlet extends HttpServlet {
 		
 		if ("adminLogin".equals(action)) { // 來自login_admin.jsp的請求
 			
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
-			
-			/*********1.接收請求參數 - 輸入格式的錯誤處理*********/
+			/************************* 接收請求參數 **************************/
 			String adminAccount = req.getParameter("adminAccount").trim();
 			String adminPassword = req.getParameter("adminPassword").trim();
+
+			System.out.println(adminAccount);
+			System.out.println(adminPassword);
 			
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+
+			/*********1.接收請求參數 - 輸入格式的錯誤處理*********/			
+
 			if (adminAccount == null || (adminAccount.trim()).length() == 0) {
 				errorMsgs.add("請輸入帳號");
 			}
 			if (adminPassword == null || (adminPassword.trim()).length() == 0) {
 				errorMsgs.add("請輸入密碼");
+
 			}
 			
+
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/Backstage/Allpage-administrator/login/login_admin.jsp");
@@ -96,9 +102,8 @@ public class AdminServlet extends HttpServlet {
 
 				
 				
-			}
+			}		
 		}
-		
 		
 		if ("adminLogout".equals(action)) {
 			/************************* 接收請求參數 **************************/
@@ -112,10 +117,10 @@ public class AdminServlet extends HttpServlet {
 	        res.sendRedirect(req.getContextPath() + "/Backstage/Allpage-administrator/login/login_admin.jsp");
 	        System.out.println("已導向");
 
+			}
+		
+		
 		}
-		
-		
-	}
 
 	
 }
