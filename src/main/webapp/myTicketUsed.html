@@ -141,7 +141,7 @@
 </head>
 
 <body class="animsition">
-    <!-- Header -->
+	    <!-- Header -->
     <header class="header-v3">
       <!-- Header desktop -->
       <div class="container-menu-desktop trans-03 mb-6">
@@ -310,7 +310,7 @@
       </script>
     </header>
 
-    <!-- Sidebar -->
+	    <!-- Sidebar -->
     <aside class="wrap-sidebar js-sidebar">
       <div class="s-full js-hide-sidebar"></div>
 
@@ -437,7 +437,6 @@
 
 
 	<!-- ===================================================== -->
-
     <!-- Footer -->
     <footer class="bg3 p-t-55 p-b-32">
       <div class="container">
@@ -522,6 +521,7 @@
         </div>
       </div>
     </footer>
+
 	<!-- Back to top -->
 	<div class="btn-back-to-top" id="myBtn">
 		<span class="symbol-btn-back-to-top"> <i class="zmdi zmdi-chevron-up"></i>
@@ -830,26 +830,27 @@
 	</script>
 
 	<script>
-	const urlParams = new URLSearchParams(location.search);
-	const id = urlParams.get('orderListID');
 		const listTb2 = document.querySelector('#listTb3');
-		fetch(`orders?orderListID=${id}`)
+		fetch('orders')
 			.then(resp => resp.json())
 			.then(orderArr => {
 				for (let order of orderArr) {
 					for (let orderDetail of order.orderlists) {
-						if(id == orderDetail.orderListID){
-							var splitDateTime = orderDetail.act.actDate.split(" ");
-							var datePart = splitDateTime[0]; // 获取日期部分
-							var timePart = splitDateTime[1]; // 获取时间部分;
-							var splitDateTime1 = orderDetail.act.time.split(" ");
-							var datePart1 = splitDateTime1[0]; // 获取日期部分
-							var timePart1 = splitDateTime1[1]; // 获取时间部分;
-						var type = "";
-		                   if(orderDetail.usedType == 1){type = "已用";}
-		                   else if(order.ordType == 0 && orderDetail.usedType == 0){type = "可使用";}
-		                   else if(order.ordType == 1 && orderDetail.usedType == 0){type = "可使用";}
-		                   else if(order.ordType == 2 && orderDetail.usedType == 0){type = "不可用";}
+						if(orderDetail.usedType == 1){
+						var splitDateTime = orderDetail.act.actDate.split(" ");
+						console.log(splitDateTime);
+						var datePart = splitDateTime[0]; // 获取日期部分
+						console.log(datePart);
+						var timePart = splitDateTime[1]; // 获取时间部分;
+						console.log(timePart);
+						var splitDateTime1 = orderDetail.act.time.split(" ");
+						var datePart1 = splitDateTime1[0]; // 获取日期部分
+						var timePart1 = splitDateTime1[1]; // 获取时间部分;
+                   var type = "";
+                   if(orderDetail.usedType == 1){type = "已用";}
+                   else if(order.ordType == 0 && orderDetail.usedType == 0){type = "可使用";}
+                   else if(order.ordType == 1 && orderDetail.usedType == 0){type = "可使用";}
+                   else if(order.ordType == 2 && orderDetail.usedType == 0){type = "不可用";}
 						listTb2.innerHTML += `
 						<div class="page-header min-vh-75"
 						style="margin-top: -250px;  display: flex; justify-content: center; align-items: center; min-height: 100vh">
@@ -903,7 +904,7 @@
 															</div>
 
 															<div class="d-flex align-items-center mb-3 text-center mr-5">
-																<label for="password" class="form-label me-3">票券狀態</label>
+																<label for="password" class="form-label me-3">座位編號</label>
 																<span id="password"
 																	style="flex: 1; margin: 0 10px 10px 10px">${type}</span>
 															</div>
@@ -931,8 +932,9 @@
 					<svg style="height: 100px;">
 					</svg>
 
-					`;}
+					`;
 
+					}
 					}
 				}
 			});
@@ -957,44 +959,6 @@
 			}
 		});
 	</script>
-<!-- 	<script> -->
-// 	const urlParams = new URLSearchParams(location.search);
-// 	const id = urlParams.get('orderListID');
-
-// 	const userID = document.querySelector('#userID');
-// 	const actName = document.querySelector('#actName');
-// 	const orderListID = document.querySelector('#orderListID');
-// 	const reviewContent = document.querySelector('#reviewContent');
-// 	const previews = [
-// 		document.querySelector('#preview1'),
-// 		document.querySelector('#preview2'),
-// 		document.querySelector('#preview3')
-// 	];
-
-// 	let comPics;
-
-// 	fetch(`orders?orderListID=${id}`, { method: 'OPTIONS' })
-// 		.then(resp => resp.json())
-// 		.then(list => {
-// 			const order = list[0]?.aliasToValue;
-// 			userID.value = order.userID;
-// 			actName.value = order.actName;
-// 			orderListID.value = order.orderListID;
-// 			rate(order.fiveStarReview);
-// 			reviewContent.value = order.reviewContent;
-
-// 			comPics = list?.map(o => o.aliasToValue.comPic);
-// 			for (let index = 0; index < comPics.length; index++) {
-// 				previews[index].innerHTML = `<img src="${bytesToUrl(comPics[index])}" class="preview_img">`;
-// 			}
-// 		});
-
-// 	function bytesToUrl(bytes) {
-// 		const int8Array = new Int8Array(bytes);
-// 		const blob = new Blob([int8Array]);
-// 		return URL.createObjectURL(blob);
-// 	}
-<!-- </script> -->
 
 </body>
 

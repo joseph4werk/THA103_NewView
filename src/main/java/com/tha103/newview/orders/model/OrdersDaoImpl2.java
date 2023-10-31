@@ -129,7 +129,7 @@ public class OrdersDaoImpl2 implements OrdersDao2 {
 			session.beginTransaction();
 			Orderlist orderList = session.get(Orderlist.class, orderListID);
 			if (orderList != null) {
-				orderList.setReviewContent(""); // 例如，将字段设置为 null
+				orderList.setReviewContent(null); // 例如，将字段设置为 null
 				orderList.setFiveStarReview(null);
 		            
 		            // 保存或更新记录以保存更改
@@ -151,18 +151,13 @@ public class OrdersDaoImpl2 implements OrdersDao2 {
 		session.merge(comPic);
 		return 1;
 	}
-	public static void main(String[] args) {
-		OrdersDaoImpl2 dao = new OrdersDaoImpl2();
-		var a = dao.deleteComPic(1);
-		System.err.println(a);
-	}
 	public int deleteComPic(Integer orderListID) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
 		try {
 			session.beginTransaction();
 			    String hql = "DELETE FROM ComPic WHERE orderListID = :orderListID";
-			    Query<ComPic> query = session.createQuery(hql, ComPic.class);
+			    Query<?> query = session.createQuery(hql);
 			    query.setParameter("orderListID", orderListID);
 			    int deletedRecords = query.executeUpdate();
 		        
