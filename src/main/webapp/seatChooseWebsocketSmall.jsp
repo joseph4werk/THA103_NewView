@@ -146,7 +146,7 @@ var webSocket;
 		                otherSelectedSeats.splice(index, 1);
 		            });
 		        });
-		    }else if (seatTypeParts[1] === "cancel" && seatElement.dataset.userName !== userName) {
+		    }else if (seatTypeParts[1] === "cancel" && seatElement.dataset.userName !== userName && seatTypeParts[1] !== "soldOut"  && seatTypeParts[1] !== "soldReally") {
 		        console.log(messageData[i]);
 
 		        var indexesToRemove = [];
