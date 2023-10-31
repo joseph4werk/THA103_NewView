@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public OrdersVO getOrderByUserID(Integer userID) {
+	public List<OrdersVO> getOrderByUserID(Integer userID) {
 		return userdao.getOrderByUserID(userID);
 	}
 

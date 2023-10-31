@@ -17,7 +17,7 @@ public interface UserDAO {
 	public List<UserVO> getAll();
 	// 萬用複合查詢(傳入參數型態Map)(回傳List)
 //	public List<UserVO> getAll(Map<String, String[]> map);
-	public OrdersVO getOrderByUserID(Integer userID);
+	public List<OrdersVO> getOrderByUserID(Integer userID);
 //	public Optional<OrdersVO> getOrderByUserID(Integer userID);
 	public List<Object[]> getPublisherNameByUserID(Integer userID);
 	public List<Object[]> getActPicIDByUserID(Integer userID);

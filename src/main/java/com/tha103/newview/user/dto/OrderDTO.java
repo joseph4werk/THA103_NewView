@@ -17,15 +17,11 @@ public class OrderDTO {
 	
 	List<Integer> ordTotal = new ArrayList<>();
 
-	public OrderDTO(Integer userID) {
-		UserVO userVO = new UserServiceImpl().getUserByPK(userID);
-		Set<OrdersVO> ordersVOs = userVO.getOrdersVOs();
-		
-		for(OrdersVO ordersVO : ordersVOs) {
-			this.publisher.add(ordersVO.getPublisherVO().getPubName());
-			this.ordTime.add(ordersVO.getOrdTime());
-			this.ordTotal.add(ordersVO.getOrdTotal());
-		}
+	public OrderDTO(OrdersVO ordersVO) {
+
+		this.publisher.add(ordersVO.getPublisherVO().getPubName());
+		this.ordTime.add(ordersVO.getOrdTime());
+		this.ordTotal.add(ordersVO.getOrdTotal());
 	}
 
 	public OrderDTO() {

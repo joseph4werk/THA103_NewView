@@ -15,7 +15,7 @@ public interface UserService {
 	public UserVO getUserByAccount(String account);
 	public UserVO getUserByEmail(String email);
 	public List<UserVO> getAll();
-	public OrdersVO getOrderByUserID(Integer userID);
+	public List<OrdersVO> getOrderByUserID(Integer userID);
 //	public Optional<OrdersVO> getOrderByUserID(Integer userID);
 	public List<Object[]> getActPicIDByUserID(Integer userID);
 	public List<Object[]> getPublisherNameByUserID(Integer userID);

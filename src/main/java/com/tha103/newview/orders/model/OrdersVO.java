@@ -224,7 +224,7 @@ public class OrdersVO {
 		return false;
 	}
 	
-	public int hashCode() {
-		return this.publisherVO.getPubID().hashCode();
-	}
+//	public int hashCode() {
+//			return this.publisherVO.getPubID().hashCode();
+//	}
 }

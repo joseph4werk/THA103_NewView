@@ -176,20 +176,25 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public OrdersVO getOrderByUserID(Integer userID) {
+	public List<OrdersVO> getOrderByUserID(Integer userID) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
 		try {
 			session.beginTransaction();
 
 			String sql = "from OrdersVO WHERE userID = :userID ";
-			OrdersVO ordersVO = (OrdersVO) session.createQuery(sql).setParameter("userID", userID).uniqueResult();
-			session.getTransaction().commit();
+			List<OrdersVO> ordersVO = session.createQuery(sql).setParameter("userID", userID).list();
 
+			if(ordersVO == null) {
+				session.getTransaction().commit();
+				return null;
+			}
+
+			session.getTransaction().commit();
 			return ordersVO;
 		} catch (Exception e) {
+			e.printStackTrace();
 			session.getTransaction().rollback();
-
 		}
 		session.getTransaction().commit();
 		return null;

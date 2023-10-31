@@ -49,14 +49,18 @@ public class MemberController extends HttpServlet {
 		// 透過 userID 查詢資料
 		UserService userSvc = new UserServiceImpl();
 		UserVO userVO = userSvc.getUserByPK(Integer.valueOf(userID));
-		OrdersVO ordersVO = userSvc.getOrderByUserID(Integer.valueOf(userID));
 
 		// 回傳 status -> hasNoOrders '預設'沒訂單
 		data.put("status", "hasNoOrders");
-		if (ordersVO != null) {
-			OrderDTO orderDTO = new OrderDTO(Integer.valueOf(userID));
-			data.put("orders", orderDTO);
 
+		// 開始查詢訂單
+		List<OrdersVO> ordersList = userSvc.getOrderByUserID(Integer.valueOf(userID));
+		if(ordersList != null) {
+			List<OrderDTO> orderDTO = ordersList.stream()
+					.map(a -> new OrderDTO(a))
+					.collect(Collectors.toList());
+			
+			data.put("orders", orderDTO);
 			// 回傳 status -> hasOrders，'覆蓋'原先無訂單的 status
 			data.put("status", "hasOrders");
 		}
@@ -73,7 +77,7 @@ public class MemberController extends HttpServlet {
 		// 檢查啟用狀態 -> 從 redis 取得驗證碼
 		Jedis jedis = JedisPoolUtil.getJedisPool().getResource();
 		jedis.select(15);
-		String activate = jedis.get("UserAccount:" + userVO.getUserName()) == null ? "已啟用" : "未啟用";
+		String activate = jedis.get("UserAccount:" + userVO.getUserAccount()) == null ? "已啟用" : "未啟用";
 		jedis.close();
 
 		// 取得會員資料
