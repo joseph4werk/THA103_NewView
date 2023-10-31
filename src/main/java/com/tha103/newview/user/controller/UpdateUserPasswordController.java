@@ -48,10 +48,43 @@ public class UpdateUserPasswordController extends HttpServlet {
 		System.out.println("oldPassword: " + oldPassword);
 		System.out.println("newPassword: " + newPassword);
 		System.out.println("confirmNewPassword: " + confirmNewPassword);
+		
+		String passwordReg = "^[(a-zA-Z0-9)]{3,10}";
+		// 後端驗證前端參數: 舊密碼
+		if((oldPassword.trim() == null) || (oldPassword.length() == 0)) {
+			data.put("status", "oldNull");
+			json = gson.toJson(data);
+			out.write(json);
+			return;
+		}
+		
+		// 後端驗證前端參數: 新密碼
+		if((newPassword.trim() == null) || (newPassword.length() == 0)) {
+			data.put("status", "newNull");
+			json = gson.toJson(data);
+			out.write(json);
+			return;
+		}
 
+		// 後端驗證前端參數: 驗證新密碼
+		if((confirmNewPassword.trim() == null) || (confirmNewPassword.length() == 0)) {
+			data.put("status", "newConfirmNull");
+			json = gson.toJson(data);
+			out.write(json);
+			return;
+		}
+		
 		// 比較新密碼 / 確認密碼兩者是否一致
 		if (!newPassword.equals(confirmNewPassword)) {
 			data.put("status", "confirmFailed");
+			json = gson.toJson(data);
+			out.write(json);
+			return;
+		}
+
+		// 驗證正則表達式 (上面以驗證新舊密碼是否相同，故只驗證其一即可)
+		if(!newPassword.matches(passwordReg)) {
+			data.put("status", "regError");
 			json = gson.toJson(data);
 			out.write(json);
 			return;
