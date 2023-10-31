@@ -52,7 +52,7 @@ public class RedisServiceImpl implements RedisService{
 	    }
 
 	    return allSeatInfo;
-	}
+	} 
 
 	public String performRedisCancelOperations(String actName, String userName, String seatNumber) {
 	    Jedis jedis = null;

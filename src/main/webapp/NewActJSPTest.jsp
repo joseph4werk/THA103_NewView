@@ -140,7 +140,7 @@ pageContext.setAttribute("categories", categories);
 							<li class="active-menu"><a href="NewActJSPTest.jsp">活動專區</a></li>
 
 							<li class="label1" data-label1="hot"><a
-								href="shoping-cart.html">購物車</a></li>
+								href="checkout_cart.html">購物車</a></li>
 
 							<li><a href="blog.html">討論區</a></li>
 
@@ -157,11 +157,6 @@ pageContext.setAttribute("categories", categories);
 							<i class="zmdi zmdi-search"></i>
 						</div>
 
-						<div
-							class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
-							data-notify="2">
-							<i class="zmdi zmdi-shopping-cart"></i>
-						</div>
 
 						<a href="#"
 							class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
