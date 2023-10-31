@@ -7,6 +7,7 @@ import com.tha103.newview.act.model.ActVO;
 import com.tha103.newview.actcategory.model.ActCategory;
 import com.tha103.newview.actcategory.model.ActCategoryDAO;
 import com.tha103.newview.actcategory.model.ActCategoryDAOHibernateImpl;
+import com.tha103.newview.pubuser.model.PubUserVO;
 
 public class ActCategoryService {
 
@@ -55,6 +56,10 @@ public class ActCategoryService {
 
 	public void deleteActCategory(Integer actCategoryID) {
 		dao.delete(actCategoryID);
+	}
+	
+	public ActCategory getOneActCategory(Integer actCategoryID) {
+		return dao.findByPrimaryKey(actCategoryID);
 	}
 
 	public List<ActCategory> getAll() {

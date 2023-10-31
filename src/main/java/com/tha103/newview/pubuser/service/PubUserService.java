@@ -111,4 +111,10 @@ public class PubUserService {
 		return dao.findByAccount(account);
 	}
 	
+	
+	public List<PubUserVO> getPubuesrByPub(Integer pubID) {
+		List<PubUserVO> pubUserList = dao.getListByPubID(pubID);
+		return pubUserList;
+	}
+	
 }

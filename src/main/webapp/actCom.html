@@ -1,92 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<title>NewViewForum - doPost</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="images/icons/favicon.png" />
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-<!--===============================================================================================-->	
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
-<!--===============================================================================================-->
-<style>
-	.table-shopping-cart .column-5 {
-	  width: 172px;
-	  padding-right: px;/* 0 */
-	  text-align: right;
-	  font-size: 16px;
-	}
-	
-	.table-shopping-cart .table_row td {
-	  padding-bottom: 0px;
-	}
-	
-	.table-shopping-cart .table_row td.column-1 {
-	  padding-bottom: 0px;
-	}
-	
-	.p-t-75, .p-tb-75, .p-all-75 {padding-top: 75px;}
-	
-	.p-b-13, .p-tb-13, .p-all-13 {padding-bottom: 13px;}
+	<!--===============================================================================================-->
+	<style>
+		.star {
+			color: gold;
+			cursor: pointer;
+			font-size: 24px;
+		}
 	</style>
-<style>
-	.h2{
-		color: black;
-	}
 
-	.centered-content {
-    text-align: center; /* 水平居中对齐 */
-	}
+	<style>
+		.table-shopping-cart .column-5 {
+			width: 172px;
+			padding-right: px;
+			/* 0 */
+			text-align: right;
+			font-size: 16px;
+		}
 
-	input[disabled]{
-        background-color: #eee;
-        cursor: not-allowed;
-    }
+		.table-shopping-cart .table_row td {
+			padding-bottom: 0px;
+		}
+
+		.table-shopping-cart .table_row td.column-1 {
+			padding-bottom: 0px;
+		}
+
+		.p-t-75,
+		.p-tb-75,
+		.p-all-75 {
+			padding-top: 75px;
+		}
+
+		.p-b-13,
+		.p-tb-13,
+		.p-all-13 {
+			padding-bottom: 13px;
+		}
+	</style>
+	<style>
+		.h2 {
+			color: black;
+		}
+
+		.centered-content {
+			text-align: center;
+			/* 水平居中对齐 */
+		}
+
+		input[disabled] {
+			background-color: #eee;
+			cursor: not-allowed;
+		}
 
 
-    .drop_zone, .preview {
-            width: 48%; /* 設定拖放區和預覽區的寬度為容器的一半 */
-            border: 2px dashed #ccc;
+		.drop_zone,
+		.preview {
+			width: 48%;
+			/* 設定拖放區和預覽區的寬度為容器的一半 */
+			border: 2px dashed #ccc;
 			height: 300px;
-            text-align: center;
-            cursor: pointer;
-            display: inline-block;
-            margin: 5px;
-   }
+			text-align: center;
+			cursor: pointer;
+			display: inline-block;
+			margin: 5px;
+		}
 
-	.preview_img {
-			width: 100%; /* 讓圖片填滿整個預覽格子 */
-            height: 100%;
-            object-fit: contain; /* 調整圖片的呈現方式，保持原始比例 */
-    }
-	@media (max-width: 768px) {
-            .drop_zone, .preview {
-                display: block;
-                width: auto;
-                margin-right: 0;
-            }
-    }
-</style>
+		.preview_img {
+			width: 100%;
+			/* 讓圖片填滿整個預覽格子 */
+			height: 100%;
+			object-fit: contain;
+			/* 調整圖片的呈現方式，保持原始比例 */
+		}
+
+		@media (max-width: 768px) {
+
+			.drop_zone,
+			.preview {
+				display: block;
+				width: auto;
+				margin-right: 0;
+			}
+		}
+	</style>
 
 </head>
 
@@ -145,7 +171,8 @@
 							<div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 js-show-login">
 								<i class="fa fa-user me-sm-1"></i>
 							</div>
-							<div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
+							<div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart"
+								data-notify="2">
 								<i class="zmdi zmdi-shopping-cart"></i>
 							</div>
 						</div>
@@ -176,7 +203,8 @@
 					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-login">
 						<i class="fa fa-user me-sm-1"></i>
 					</div>
-					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
+					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart"
+						data-notify="2">
 						<i class="zmdi zmdi-shopping-cart"></i>
 					</div>
 				</div>
@@ -304,47 +332,56 @@
 					<div class="flex-w flex-sb p-t-36 gallery-lb">
 						<!-- item gallery sidebar -->
 						<div class="wrap-item-gallery m-b-10">
-							<a class="item-gallery bg-img1" href="https://picsum.photos/200" data-lightbox="gallery" style="background-image: url('https://picsum.photos/200')"></a>
+							<a class="item-gallery bg-img1" href="https://picsum.photos/200" data-lightbox="gallery"
+								style="background-image: url('https://picsum.photos/200')"></a>
 						</div>
 
 						<!-- item gallery sidebar -->
 						<div class="wrap-item-gallery m-b-10">
-							<a class="item-gallery bg-img1" href="https://picsum.photos/200" data-lightbox="gallery" style="background-image: url('https://picsum.photos/200')"></a>
+							<a class="item-gallery bg-img1" href="https://picsum.photos/200" data-lightbox="gallery"
+								style="background-image: url('https://picsum.photos/200')"></a>
 						</div>
 
 						<!-- item gallery sidebar -->
 						<div class="wrap-item-gallery m-b-10">
-							<a class="item-gallery bg-img1" href="https://picsum.photos/200" data-lightbox="gallery" style="background-image: url('https://picsum.photos/200')"></a>
+							<a class="item-gallery bg-img1" href="https://picsum.photos/200" data-lightbox="gallery"
+								style="background-image: url('https://picsum.photos/200')"></a>
 						</div>
 
 						<!-- item gallery sidebar -->
 						<div class="wrap-item-gallery m-b-10">
-							<a class="item-gallery bg-img1" href="https://picsum.photos/200" data-lightbox="gallery" style="background-image: url('https://picsum.photos/200')"></a>
+							<a class="item-gallery bg-img1" href="https://picsum.photos/200" data-lightbox="gallery"
+								style="background-image: url('https://picsum.photos/200')"></a>
 						</div>
 
 						<!-- item gallery sidebar -->
 						<div class="wrap-item-gallery m-b-10">
-							<a class="item-gallery bg-img1" href="https://picsum.photos/200" data-lightbox="gallery" style="background-image: url('https://picsum.photos/200')"></a>
+							<a class="item-gallery bg-img1" href="https://picsum.photos/200" data-lightbox="gallery"
+								style="background-image: url('https://picsum.photos/200')"></a>
 						</div>
 
 						<!-- item gallery sidebar -->
 						<div class="wrap-item-gallery m-b-10">
-							<a class="item-gallery bg-img1" href="https://picsum.photos/200" data-lightbox="gallery" style="background-image: url('https://picsum.photos/200')"></a>
+							<a class="item-gallery bg-img1" href="https://picsum.photos/200" data-lightbox="gallery"
+								style="background-image: url('https://picsum.photos/200')"></a>
 						</div>
 
 						<!-- item gallery sidebar -->
 						<div class="wrap-item-gallery m-b-10">
-							<a class="item-gallery bg-img1" href="https://picsum.photos/200" data-lightbox="gallery" style="background-image: url('https://picsum.photos/200')"></a>
+							<a class="item-gallery bg-img1" href="https://picsum.photos/200" data-lightbox="gallery"
+								style="background-image: url('https://picsum.photos/200')"></a>
 						</div>
 
 						<!-- item gallery sidebar -->
 						<div class="wrap-item-gallery m-b-10">
-							<a class="item-gallery bg-img1" href="https://picsum.photos/200" data-lightbox="gallery" style="background-image: url('https://picsum.photos/200')"></a>
+							<a class="item-gallery bg-img1" href="https://picsum.photos/200" data-lightbox="gallery"
+								style="background-image: url('https://picsum.photos/200')"></a>
 						</div>
 
 						<!-- item gallery sidebar -->
 						<div class="wrap-item-gallery m-b-10">
-							<a class="item-gallery bg-img1" href="https://picsum.photos/200" data-lightbox="gallery" style="background-image: url('https://picsum.photos/200')"></a>
+							<a class="item-gallery bg-img1" href="https://picsum.photos/200" data-lightbox="gallery"
+								style="background-image: url('https://picsum.photos/200')"></a>
 						</div>
 					</div>
 				</div>
@@ -353,7 +390,8 @@
 					<span class="mtext-101 cl5"> About Us </span>
 
 					<p class="stext-108 cl6 p-t-27">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur maximus vulputate hendrerit. Praesent faucibus erat vitae rutrum gravida. Vestibulum tempus mi enim, in molestie sem
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur maximus vulputate hendrerit.
+						Praesent faucibus erat vitae rutrum gravida. Vestibulum tempus mi enim, in molestie sem
 						fermentum quis.
 					</p>
 				</div>
@@ -417,9 +455,13 @@
 					<div class="header-cart-total w-full p-tb-40">Total: $75.00</div>
 
 					<div class="header-cart-buttons flex-w w-full">
-						<a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10"> View Cart </a>
+						<a href="shoping-cart.html"
+							class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+							View Cart </a>
 
-						<a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10"> Check Out </a>
+						<a href="shoping-cart.html"
+							class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10"> Check Out
+						</a>
 					</div>
 				</div>
 			</div>
@@ -433,91 +475,93 @@
 	<!-- Title page -->
 	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('./img/banner.jpg');">
 		<h4 class="ltext-105 cl0 txt-center ">Let's Start to Write Your Post</h4>
-	</section>		
+	</section>
 
 
 	<!-- Content page -->
 	<section class="bg0 p-t-104 p-b-116">
 		<div class="container">
 			<!-- <div class="flex-w flex-tr"> -->
-				<div class=" bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
-					<form id="articleForm">
-						<h4 class="mtext-105 cl2 txt-center p-b-30">
-							評論活動
-						</h4>
+			<div class=" bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
+				<form id="articleForm">
+					<h4 class="mtext-105 cl2 txt-center p-b-30">
+						評論活動
+					</h4>
 
-						
-						<div class="form-group" >
-							<label for="TextInput">會員帳號</label>
-							<input type="text" id="TextInput" class="form-control" placeholder="@userID" readonly="readonly">
-						</div>
-						
 
-						<div class="form-group" >
-							<label for="TextInput">活動</label>
-							<input type="text" id="TextInput" class="form-control" placeholder="@actID" readonly="readonly">
-						</div>
+					<div class="form-group">
+						<label for="TextInput">會員帳號</label>
+						<input type="text" id="userID" class="form-control" placeholder="@userID" readonly="readonly">
+					</div>
 
-						<div class="form-group ">
-							<label for="TextInput">活動類別</label>
-                            <select class="custom-select p-l-28 " required>
-                              <option value="">select category</option>
-                              <option value="1">綜合討論All(換票、揪團)</option>
-                              <option value="2">音樂表演Music</option>
-                              <option value="3">戲劇表演Drama</option>
-                              <option value="4">舞蹈表演Dance</option>
-                              <option value="5">脫口秀Talk Show</option>
-                              <option value="6">演唱會Singing Concert</option>
-                              <option value="7">講座Lecture</option>
-                            </select>
-                        	  <div class="invalid-feedback">未選擇類別</div>
-                        </div>
 
-						<div class="form-group ">
-							<label for="TextInput">評論內容</label>
-							<textarea id="TextInput" class="form-control stext-111 cl2 plh3 size-120 p-lr-10 p-tb-25" name="msg" placeholder="text your content" required></textarea>
-							<div class="invalid-feedback">請輸入內容</div>
-						</div>
+					<div class="form-group">
+						<label for="TextInput">活動</label>
+						<input type="text" id="actName" class="form-control" placeholder="@actName" readonly="readonly">
+					</div>
 
-						<div class="custom-file">
-                            <input type="file" class="custom-file-input" id="validatedCustomFile" >
-                            <label class="custom-file-label" for="validatedCustomFile">選擇圖片</label>
-                        </div>
-						<p>已選擇的文件: <span id="selectedFileName"></span></p>
-						
-						
-						<div>
-							<label for="p_file"><br>或拖曳文章圖片至下方</label><br>
-							<input type="file" id="p_file" style="display: none;">
-							<div class="centered-content">
+					<div class="form-group">
+						<label for="TextInput">明細編號</label>
+						<input type="text" id="orderListID" class="form-control" placeholder="@orderListID"
+							readonly="readonly">
+					</div>
+
+					<p id="ratingResult" style="margin-bottom:-5px;">我的評分：5星</p>
+					<p class="rating">
+						<span class="star" onclick="rate(1)">&#9733;</span>
+						<span class="star" onclick="rate(2)">&#9733;</span>
+						<span class="star" onclick="rate(3)">&#9733;</span>
+						<span class="star" onclick="rate(4)">&#9733;</span>
+						<span class="star" onclick="rate(5)">&#9733;</span>
+					</p>
+
+					<div class="form-group ">
+						<label for="TextInput">評論內容</label>
+						<textarea id="reviewContent" class="form-control stext-111 cl2 plh3 size-120 p-lr-10 p-tb-25"
+							name="msg" placeholder="text your content" required>
+						</textarea>
+						<div class="invalid-feedback">請輸入內容</div>
+					</div>
+
+					<!-- <div class="custom-file">
+						<input type="file" class="custom-file-input" id="validatedCustomFile">
+						<label class="custom-file-label" for="validatedCustomFile">選擇圖片</label>
+					</div>
+					<p>已選擇的文件: <span id="selectedFileName"></span></p> -->
+
+
+					<div>
+						<label for="p_file"><br>拖曳文章圖片至下方</label><br>
+						<input type="file" id="p_file" style="display: none;">
+						<div class="centered-content">
 							<!-- 第一個拖放區域和預覽區域 -->
 							<div class="drop_zone" id="drop_zone1"><span class="text">將圖片1拖曳至此處</span></div>
 							<div class="preview" id="preview1"><span class="text">預覽圖</span></div>
-							
+
 							<!-- 第二個拖放區域和預覽區域 -->
 							<div class="drop_zone" id="drop_zone2"><span class="text">將圖片2拖曳至此處</span></div>
 							<div class="preview" id="preview2"><span class="text">預覽圖</span></div>
-							
+
 							<!-- 第三個拖放區域和預覽區域 -->
 							<div class="drop_zone" id="drop_zone3"><span class="text">將圖片3拖曳至此處</span></div>
 							<div class="preview" id="preview3"><span class="text">預覽圖</span></div>
-							</div>
 						</div>
-		
-						<br>
-						<br>
-						<br>
-						<br>
-						<button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
-							Submit
-						</button>
-					</form>
-				</div>
+					</div>
 
+					<br>
+					<br>
+					<br>
+					<br>
+					<button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+						Submit
+					</button>
+				</form>
 			</div>
+
 		</div>
-	</section>	
-	
+		</div>
+	</section>
+
 	<!-- Footer -->
 	<footer class="bg3 p-t-55 p-b-32">
 		<div class="container">
@@ -574,12 +618,14 @@
 
 					<form>
 						<div class="wrap-input1 w-full p-b-4">
-							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com" />
+							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email"
+								placeholder="email@example.com" />
 							<div class="focus-input1 trans-04"></div>
 						</div>
 
 						<div class="p-t-18">
-							<button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">訂閱電子報</button>
+							<button
+								class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">訂閱電子報</button>
 						</div>
 					</form>
 				</div>
@@ -587,7 +633,8 @@
 				<div class="col-sm-5 col-lg-3 p-b-20">
 					<h4 class="stext-301 cl0 p-b-30 text-left">Latest Blog Post</h4>
 					<p class="stext-301 cl7 size-201 text-left">Ready to get started?</p>
-					<p class="stext-107 cl7 size-201 text-left">Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879</p>
+					<p class="stext-107 cl7 size-201 text-left">Any questions? Let us know in store at 8th floor, 379
+						Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879</p>
 
 					<div class="p-t-27">
 						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
@@ -613,16 +660,14 @@
 						document.write(new Date().getFullYear());
 					</script>
 					All rights reserved | Made with
-					<i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> &amp; distributed by
+					<i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
+						target="_blank">Colorlib</a> &amp; distributed by
 					<a href="https://themewagon.com" target="_blank">ThemeWagon</a>
 					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 				</p>
 			</div>
 		</div>
 	</footer>
- 
-
-
 
 	<!-- Back to top -->
 	<div class="btn-back-to-top" id="myBtn">
@@ -631,121 +676,219 @@
 		</span>
 	</div>
 
-
-
-<!--===============================================================================================-->	
+	<!--===============================================================================================-->
 	<script>
-        // 提交事件
-        document.getElementById('articleForm').addEventListener('submit', function (e) {
-            e.preventDefault(); // 阻止表單默認提交行为
+		// 提交事件
+		document.getElementById('articleForm').addEventListener('submit', function (e) {
+			e.preventDefault();
 
-            // 顯示提交成功的弹窗
-            alert('文章已提交！將回到論壇首頁');
+			const imgs = document.querySelectorAll('.preview_img');
+			const comPicObjectList = [];
+			for (let img of imgs) {
+				comPicObjectList.push(getComPicObjectFromElement(id, img));
+			}
 
-            // 關閉彈窗，回到論壇首頁
-            window.location.href = "forum_home.html";
-        });
-    </script>
+			fetch('orders', {
+				method: 'PUT',
+				body: JSON.stringify({
+					orderListID: id,
+					reviewContent: reviewContent.value,
+					fiveStarReview: userRating,
+					comPics: comPicObjectList
+				})
+			})
+				.then(resp => resp.json())
+				.then(body => {
+					alert('完成評論！');
+					history.back();
+				});
+		});
 
-<!--===============================================================================================-->	
+		function getComPicObjectFromElement(orderListID, element) {
+			const { src } = element;
+			const comPicID = element.dataset.compicid;
+			const comPicBase64 = src.startsWith('blob:') ? null : src.substring(src.indexOf(',') + 1);
+			return { comPicID, orderListID, comPicBase64 };
+		}
+	</script>
+
+	<!--===============================================================================================-->
 	<script>
-        window.addEventListener("load", function(e){
-            for (let i = 1; i <= 3; i++) {
-                let drop_zone_el = document.getElementById("drop_zone" + i);
-                let preview_el = document.getElementById("preview" + i);
-                
-                // =========================== 拖放事件 ========================= //
-                drop_zone_el.addEventListener("dragover", function(e){
-                    e.preventDefault();
-                    e.target.classList.add("-on");
-                });
+		window.addEventListener("load", function (e) {
+			for (let i = 1; i <= 3; i++) {
+				let drop_zone_el = document.getElementById("drop_zone" + i);
+				let preview_el = document.getElementById("preview" + i);
 
-                drop_zone_el.addEventListener("dragleave", function(e){
-                    e.target.classList.remove("-on");
-                });
+				// =========================== 拖放事件 ========================= //
+				drop_zone_el.addEventListener("dragover", function (e) {
+					e.preventDefault();
+					e.target.classList.add("-on");
+				});
 
-                drop_zone_el.addEventListener("drop", function(e){
-                    e.preventDefault();
-                    e.target.classList.remove("-on");
+				drop_zone_el.addEventListener("dragleave", function (e) {
+					e.target.classList.remove("-on");
+				});
 
-                    if (e.dataTransfer.files.length > 0) {
-                        preview_img(e.dataTransfer.files[0], preview_el);
-                    }
-                });
-            }
+				drop_zone_el.addEventListener("drop", function (e) {
+					e.preventDefault();
+					e.target.classList.remove("-on");
 
-            // =========================== 透過File取得預覽圖 ========================= //
-            var preview_img = function(file, previewEl) {
-                var reader = new FileReader(); // 用來讀取檔案
-                reader.readAsDataURL(file); // 讀取檔案
-                reader.addEventListener("load", function () {
-                    let img_str = '<img src="' + reader.result + '" class="preview_img">';
-                    previewEl.innerHTML = img_str;
-                });
-            };
+					if (e.dataTransfer.files.length > 0) {
+						preview_img(e.dataTransfer.files[0], preview_el);
+					}
+				});
+			}
 
-            p_file_el.addEventListener("change", function(e){
-                if (this.files.length > 0) {
-                    preview_img(this.files[0]);
-                } else {
-                    preview_el.innerHTML = '<span class="text">預覽圖</span>';
-                }
-            });
-        });
-    </script>
+			// =========================== 透過File取得預覽圖 ========================= //
+			var preview_img = function (file, previewEl) {
+				var reader = new FileReader(); // 用來讀取檔案
+				reader.readAsDataURL(file); // 讀取檔案
+				reader.addEventListener("load", function () {
+					const img = previewEl.querySelector('img');
+					if (img) {
+						img.src = reader.result;
+					} else {
+						let img_str = '<img src="' + reader.result + '" class="preview_img">';
+						previewEl.innerHTML = img_str;
+					}
+				});
+			};
 
+			// p_file_el.addEventListener("change", function (e) {
+			// 	if (this.files.length > 0) {
+			// 		preview_img(this.files[0]);
+			// 	} else {
+			// 		preview_el.innerHTML = '<span class="text">預覽圖</span>';
+			// 	}
+			// });
+		});
+	</script>
 
-<!--===============================================================================================-->	
-	<script> //上傳檔案顯示
-        const fileInput = document.getElementById('validatedCustomFile');
-        const selectedFileName = document.getElementById('selectedFileName');
+	<!--===============================================================================================-->
+	<!-- <script> //上傳檔案顯示
+		const fileInput = document.getElementById('validatedCustomFile');
+		const selectedFileName = document.getElementById('selectedFileName');
 
-        fileInput.addEventListener('change', function () {
-            const fileName = this.value.split('\\').pop(); // 获取文件名
-            selectedFileName.textContent = fileName; // 显示文件名
-        });
-    </script>
-<!--===============================================================================================-->	
+		fileInput.addEventListener('change', function () {
+			const fileName = this.value.split('\\').pop(); // 获取文件名
+			selectedFileName.textContent = fileName; // 显示文件名
+		});
+	</script> -->
+	<!--===============================================================================================-->
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="vendor/bootstrap/js/popper.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="vendor/select2/select2.min.js"></script>
 	<script>
-		$(".js-select2").each(function(){
+		$(".js-select2").each(function () {
 			$(this).select2({
 				minimumResultsForSearch: 20,
 				dropdownParent: $(this).next('.dropDownSelect2')
 			});
 		})
 	</script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script>
-		$('.js-pscroll').each(function(){
-			$(this).css('position','relative');
-			$(this).css('overflow','hidden');
+		$('.js-pscroll').each(function () {
+			$(this).css('position', 'relative');
+			$(this).css('overflow', 'hidden');
 			var ps = new PerfectScrollbar(this, {
 				wheelSpeed: 1,
 				scrollingThreshold: 1000,
 				wheelPropagation: false,
 			});
 
-			$(window).on('resize', function(){
+			$(window).on('resize', function () {
 				ps.update();
 			})
 		});
 	</script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKFWBqlKAGCeS1rMVoaNlwyayu0e0YRes"></script>
 	<script src="js/map-custom.js"></script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="js/main.js"></script>
+	<script>
+		let userRating = 5;
+
+		function rate(stars) {
+			userRating = stars;
+			updateRating();
+			highlightStars(stars);
+		}
+
+		function updateRating() {
+			const ratingResult = document.getElementById("ratingResult");
+			ratingResult.textContent = "我的評分：" + userRating + "星";
+		}
+
+		function highlightStars(stars) {
+			const allStars = document.querySelectorAll(".star");
+			for (let i = 0; i < allStars.length; i++) {
+				if (i < stars) {
+					allStars[i].style.color = "gold"; // 显示为黄色
+				} else {
+					allStars[i].style.color = "gray"; // 显示为灰色
+				}
+			}
+		}
+
+	</script>
 
 </body>
+<script>
+	const urlParams = new URLSearchParams(location.search);
+	const id = urlParams.get('orderListID');
+
+	const userID = document.querySelector('#userID');
+	const actName = document.querySelector('#actName');
+	const orderListID = document.querySelector('#orderListID');
+	const reviewContent = document.querySelector('#reviewContent');
+	const previews = [
+		document.querySelector('#preview1'),
+		document.querySelector('#preview2'),
+		document.querySelector('#preview3')
+	];
+
+	fetch(`orders?orderListID=${id}`, { method: 'OPTIONS' })
+		.then(resp => resp.json())
+		.then(list => {
+			const order = list[0]?.aliasToValue;
+			userID.value = order.userID;
+			actName.value = order.actName;
+			orderListID.value = order.orderListID;
+			rate(order.fiveStarReview);
+			reviewContent.value = order.reviewContent;
+
+			const comPicObjectList = list?.map(o => {
+				return {
+					comPicID: o.aliasToValue.comPicID,
+					comPic: o.aliasToValue.comPic
+				};
+			});
+			for (let index = 0; index < comPicObjectList.length; index++) {
+				const comPicObject = comPicObjectList[index];
+				const { comPicID, comPic } = comPicObject;
+				previews[index].innerHTML = `
+					<img
+						src="${bytesToUrl(comPic)}"
+						${comPicID ? 'data-compicid="' + comPicID + '"' : ''}
+						class="preview_img">`;
+			}
+		});
+
+	function bytesToUrl(bytes) {
+		const int8Array = new Int8Array(bytes);
+		const blob = new Blob([int8Array]);
+		return URL.createObjectURL(blob);
+	}
+</script>
+
 </html>

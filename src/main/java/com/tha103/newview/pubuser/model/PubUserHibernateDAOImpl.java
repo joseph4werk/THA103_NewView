@@ -204,4 +204,20 @@ public class PubUserHibernateDAOImpl implements PubUserHibernateDAO {
 
 	}
 
+	@Override
+	public List<PubUserVO> getListByPubID(Integer pubID) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			String hqlString = "FROM PubUserVO AS p WHERE p.publisherVO.pubID = :pubID";
+			Query<PubUserVO> query = session.createQuery(hqlString,PubUserVO.class);
+			query.setParameter("pubID", pubID);
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return null;
+	}
+
 }

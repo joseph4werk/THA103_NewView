@@ -713,7 +713,7 @@
 
 	<!--------------------------------------- section3 結帳資訊確認------------------------------------>
 
-	<div class="outercontainer" style="margin-top: -270px;">
+	<div class="outercontainer" style="margin-top: -350px;">
 		<div class="ftco-section" style="background-color: rgb(250, 248, 248);">
 			<div class="container">
 				<div class="card mb-4 bg-white rounded shadow-sm p-b-40">
@@ -741,16 +741,18 @@
 									</div>
 									<input id="firstPrice"
 										class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
-										name="coupon" placeholder="活動總金額">
+										name="coupon" placeholder="活動總金額" style="background-color: rgb(248, 244, 244);"
+										readonly>
 								</div>
 								<div class="flex-w flex-sb-m bor15 p-t-5 p-b-5 p-lr-40 p-lr-15-sm">
 									<div class="stext-110 cl2"
 										style="flex-grow: 1; text-align: right; margin-right: 15px;font-size: medium;">
 										廠商優惠碼折抵後金額 :
 									</div>
-									<input id="firstPrice"
+									<input id="secondPrice"
 										class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
-										name="coupon" placeholder="活動總金額">
+										name="coupon" placeholder="活動總金額" style="background-color: rgb(248, 244, 244);"
+										readonly>
 								</div>
 								<hr style=" border-top: 2px solid lightgray;">
 								<div class="flex-w flex-sb-m bor15 p-t-5 p-b-5 p-lr-40 p-lr-15-sm">
@@ -759,12 +761,12 @@
 									</button>
 									<button
 										class="flex-c-m stext-101 cl0 size-60 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer"
-										type="button" id="submitpost">使用 NewView 優惠碼
+										type="button" id="submitcoupon">使用 NewView 優惠碼
 									</button>
-									<input id="firstPrice"
+									<input id="developerPrice"
 										class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
 										name="coupon" placeholder="輸入活動代碼">
-									
+
 								</div>
 								<div class="flex-w flex-sb-m bor15 p-t-5 p-b-5 p-lr-40 p-lr-15-sm">
 									<span class="stext-110 cl2"
@@ -773,7 +775,8 @@
 									</span>
 									<input id="discountPrice"
 										class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
-										name="coupon" placeholder="折扣總金額">
+										name="coupon" placeholder="折扣總金額" style="background-color: rgb(248, 244, 244);"
+										readonly>
 								</div>
 
 								<div class="flex-w flex-sb-m bor15 p-t-5 p-b-5 p-lr-40 p-lr-15-sm">
@@ -783,7 +786,8 @@
 									</span>
 									<input id="totalPrice"
 										class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
-										name="coupon" placeholder="總金額">
+										name="coupon" placeholder="總金額" style="background-color: rgb(248, 244, 244);"
+										readonly>
 								</div>
 							</form>
 						</div>
@@ -940,6 +944,7 @@
 	<script src="js/main.js"></script>
 
 	<script>
+	
 		$(document).ready(function () {
 
 			var quantitiy = 0;
@@ -976,6 +981,7 @@
 		});
 	</script>
 	<script>
+	var totalAmount = 0;
 	 $(document).ready(function () {
 	        // 在頁面載入完成後自動觸發Ajax請求
 	        var userID = "1";
@@ -1030,6 +1036,21 @@
 	        });
 	    });
 	 
+	
+	 
+	
+
+	 
+              
+	
+	<!-- ===================================  AJAX 請求discountCode  ==================================== -->
+	var userID = 1;
+	var TotalPr = 0;
+	var secondPrice = 0;
+	var discountPrice = $('#developerPrice').val();
+	discountPrice = discountPrice ? parseFloat(discountPrice) : 0;
+	var totalAmount = 0;
+	
 	 $(document).ready(function() {
          $.ajax({
              url: "Makabaka", 
@@ -1045,15 +1066,20 @@
                  //活動價錢
                  var newPrice = response.actWithPics.actPrice;
              	 var tdPrice = document.getElementById('actPrice');
+             	 
                  tdPrice.textContent = newPrice;
                  //活動數量
                  var newCount = response.totalSeatsReceived;
              	 var tdCount = document.getElementById('actCount');
                  tdCount.textContent = newCount;
                  //活動總價錢
+                 var totalPriceInput = $("#totalPrice");
                  var newTotal = newPrice*newCount;
-             	 var tdTotal = document.getElementById('actTotal');
+             	 var tdTotal = document.getElementById('actTotal');           	
                  tdTotal.textContent = newTotal;
+                 totalAmount = newTotal;
+                 totalPriceInput.attr("placeholder", newTotal);
+                 
                  //活動圖片
                  var base64Image = response.actWithPics.images[0].base64Image; 
                  $("#actImg").attr("src", "data:image/jpeg;base64," + base64Image);
@@ -1095,9 +1121,7 @@
                  
                  //活動原始總價錢
                  $("#firstPrice").val(newTotal);
-                 
-                 
-                 
+                 performSecondAjaxRequest(totalAmount); 
              },
              error: function(xhr, status, error) {
                  
@@ -1106,32 +1130,70 @@
          });
      });
 		
-	 $(document).ready(function() {
-		    // 監控按鈕點擊事件
-		     $("#wanttobuy").on("click", function(event) {
-		        event.preventDefault(); // 阻止按鈕的默認動作
+	 var disAmount = 0;
+	 function performSecondAjaxRequest(totalAmount) {
+		 console.log(totalAmount)
+		$('#submitcoupon').on('click', function () {
+			var discountCode = $('#developerPrice').val();
+			console.log(discountCode+",  "+userID);
+			$.ajax({
+				url: 'BuyUseDiscount',
+				type: 'GET',
+				data: {
+					"discountCode": discountCode,
+					"userID": userID
+				},
+				success: function (data) {
+					console.log(data);
+					
+					$("#discountPrice").val(data.disAmount.toString());
+					 disAmount = parseFloat(data.disAmount); 
+					var actTotalElement = document.getElementById("actTotal"); 
+					var actTotalText = actTotalElement.textContent;
+					console.log(actTotalText)
+					// 重新計算總金額
+					var totalPrice = totalAmount - parseFloat(data.disAmount);
+					var totalPriceInput = $("#totalPrice");
+					totalPriceInput.attr("placeholder", totalPrice);
+				},
+				error: function (xhr, status, error) {
+					$("#developerPrice").css("color", "red").val("輸入錯誤或此折扣碼不存在");
+					$("#discountPrice").val(0);
+					$("#totalPrice").val(totalPrice);
+				}
+			});
+		});
+	 }
+		// 透過此函數更新總價格
+		function updateTotalPrices(totalPrice) {
+			document.getElementById('totalPrice').value = totalPrice;
+		}
+
+		$(document).ready(function () {
+		    
+		    var discountPrice = $("#discountPrice").val();
+		    $("#wanttobuy").on("click", function (event) {
+		        event.preventDefault(); 
 		        $.ajax({
-		            url: "WantToBuy", 
-		            type: "POST", 
+		            url: "WantToBuy",
+		            type: "POST",
 		            data: {
-		                action: "buy"
+		                action: "buy",
+		                disAmount: disAmount 
 		            },
-		            success: function(response) {
-		                // 處理伺服器的回應
+		            success: function (response) {
+		                
 		                console.log(response);
 		                alert("資料送出!");
 		            },
-		            error: function(xhr, status, error) {
-		                // 處理錯誤
+		            error: function (xhr, status, error) {
+		             
 		                console.error("Error:", error);
-		                alert("送出失敗~~~~~");
 		            }
 		        });
 		    });
 		});
 
-	 
-              
 	</script>
 	<!--===============================================================================================-->
 </body>

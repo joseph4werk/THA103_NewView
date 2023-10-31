@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Map;
 
+import javax.imageio.spi.ImageTranscoderSpi;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,15 +16,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
-
-
-
 import com.tha103.newview.act.model.ActDAO;
 import com.tha103.newview.act.model.ActDAOHibernateImpl;
 import com.tha103.newview.act.model.ActVO;
@@ -40,7 +37,11 @@ import com.tha103.newview.orderlist.model.OrderListDAOImpl;
 import com.tha103.newview.orderlist.model.OrderListVO;
 import com.tha103.newview.orderlist.service.OrderListService;
 import com.tha103.newview.orderlist.service.OrderListServiceImpl;
+import com.tha103.newview.orders.model.OrdersDAO;
+import com.tha103.newview.orders.model.OrdersDAOImpl;
 import com.tha103.newview.orders.model.OrdersVO;
+import com.tha103.newview.orders.service.OrdersService;
+import com.tha103.newview.orders.service.OrdersServiceImpl;
 import com.tha103.newview.publisher.model.PublisherVO;
 import com.tha103.newview.user.model.UserVO;
 
@@ -52,12 +53,15 @@ public class OrderListController extends HttpServlet {
 	private ActService actService;
 	private ActPicService actPicService;
 	private ActUpdateService actUpdateService;
-
+	private OrdersService ordersService;
 	@Override
 	public void init() throws ServletException {
 		super.init();
 		OrderListDAO orderListDAO = new OrderListDAOImpl();
 		this.orderListService = new OrderListServiceImpl();
+		OrdersDAO ordersDAO = new OrdersDAOImpl();
+		this.ordersService = new OrdersServiceImpl();
+		
 		ActDAO actDAO = new ActDAOHibernateImpl();
 		ActPicDAO actPicDAO = new ActPicDAOHibernateImpl();
 		actService = new ActServiceImpl(actDAO);
@@ -78,24 +82,36 @@ public class OrderListController extends HttpServlet {
 
 		int seatDataCount = 0;
 		int scope = 0;
+		boolean orderInserted = false;
 		Integer Total = null;
 		String actID = null;
 		// 訂單購買接值
+		String discountStr = request.getParameter("disAmount");
+		Integer discount = null;
 		String jsonCartData = request.getAttribute("cartData").toString();
 		Gson gson = new Gson();
+		if(discountStr != null) {
+			 discount = Integer.parseInt(discountStr);
+			System.out.println(discount);
+		}
 		JsonArray cartJsonArray = gson.fromJson(jsonCartData, JsonArray.class);
+		for (JsonElement element : cartJsonArray) {
+			 seatDataCount++;
+		}
 		for (JsonElement element : cartJsonArray) {
 			JsonObject cartItem = element.getAsJsonObject();
 			for (Map.Entry<String, JsonElement> entry : cartItem.entrySet()) {
+				int orderNOW = 0;
 				String key = entry.getKey();
 				JsonElement value = entry.getValue();
-
+				
 				String cartItemInfo = value.getAsString();
 				System.out.println("Key: " + key + ", Value: " + cartItemInfo);
 				String[] parts = cartItemInfo.split(",");
-				 actID = parts[1];
+				actID = parts[1];
 				String seatNumber = parts[0];
 				String userIDstr = parts[2];
+				OrderListVO orderListToInsert = null;
 				double rowIndex1 = 0.0;
 				Integer seatIndex1 = 0;
 				Integer userID = Integer.parseInt(userIDstr);
@@ -119,8 +135,7 @@ public class OrderListController extends HttpServlet {
 				}
 				String youtubeLink = "https://youtu.be/dQw4w9WgXcQ?si=3NVOtjDf3Lf9LSPW";
 				byte[] qrCodeImage = generateQRCode(youtubeLink);
-				
-				
+								
 				Timestamp lastEditedTime = new Timestamp(System.currentTimeMillis());
 				OrdersVO order = new OrdersVO();
 				UserVO user = new UserVO();				
@@ -129,7 +144,16 @@ public class OrderListController extends HttpServlet {
 				pub.setPubID(act.getPublisherVO().getPubID());
 				order.setPublisherVO(pub);
 				order.setUserVO(user);
+				order.setOrdTotal(act.getActPrice()*seatDataCount);
 				order.setOrdType(0);
+				order.setActQuantity(seatDataCount);
+				order.setOrdTime(lastEditedTime);
+				if(discount != null) {
+				order.setDiscount(discount);
+				order.setDiscountPrice((act.getActPrice()*seatDataCount)-discount);
+				}else {
+				order.setDiscountPrice((act.getActPrice()*seatDataCount));
+				}
 				OrderListVO orderList = new OrderListVO();
 				orderList.setOrderListTime(lastEditedTime);
 				orderList.setActTotal(act.getActPrice());
@@ -137,6 +161,12 @@ public class OrderListController extends HttpServlet {
 				orderList.setQRcodeID(qrCodeImage);
 				orderList.setSeatRowsColumns("第 " + ((int)rowIndex1+1) + "排, 第 " + seatIndex1 + " 列");
 				orderList.setType(0);
+				//只創造一筆訂單
+				if (!orderInserted) {
+			        orderListToInsert = orderList; 
+			        ordersService.insertOrders(order);
+			        orderInserted = true; // true，表示已經有該筆訂單
+			    }
 				
 				orderListService.insert(orderList);
 				//如果沒有印出訊息

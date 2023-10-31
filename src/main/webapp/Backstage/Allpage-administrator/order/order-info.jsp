@@ -1,20 +1,24 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.tha103.newview.orders.service.*"%>
 <%@ page import="com.tha103.newview.orders.model.*"%>
-<%@ page import="com.tha103.newview.user.model.*"%>
-<%@ page import="com.tha103.newview.user.service.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<%
+OrdersService ordersSvc = new OrdersService();
+List<OrdersVO> list = ordersSvc.getAll();
+pageContext.setAttribute("list", list);
 
 
-<!DOCTYPE html>
+System.out.println(list);
+%>
+
+
 <html>
-
 <head>
-    <meta charset="utf-8">
+	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>NEW VIEW | Administrator Backstage | Order List</title>
+    <title>NEW VIEW | Administrator Backstage | Order Info</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -44,14 +48,13 @@
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
     
-    	<jsp:include page="../template/nav.jsp" flush="true">
+        <jsp:include page="../template/nav.jsp" flush="true">
 			<jsp:param name="nav" value="nav" />
 		</jsp:include>
 
 		<jsp:include page="../template/aside.jsp" flush="true">
 			<jsp:param name="aside" value="aside" />
-		</jsp:include>
-       
+		</jsp:include>  
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -60,78 +63,28 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>訂單列表</h1>
+                            <h1>訂單詳情</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-administrator/admin-index.jsp">後台首頁</a></li>
+                                <li class="breadcrumb-item"><a href="../../index.html">後台首頁</a></li>
                                 <li class="breadcrumb-item active">訂單管理</li>
                             </ol>
                         </div>
                     </div>
-                </div>
-                <!-- /.container-fluid -->
+                </div><!-- /.container-fluid -->
+            </section>
+
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div>
+                        <div>
+                            <h4>訂單資訊</h4>
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
             </section>
             <!-- content Search -->
-            <section class="content">
-                <div class="container-fluid">
-                    <!-- <h2 class="text-center display-4">Enhanced Search</h2> -->
-                    <form action="enhanced-results.html">
-                        <div class="row">
-                            <div class="col-md-10 offset-md-1">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label>活動類別:</label>
-                                            <select class="form-control" style="width: 100%;">
-                                                <option>脫口秀</option>
-                                                <option>演講</option>
-                                                <option>音樂劇</option>
-                                                <option>舞台劇</option>
-                                                <option>演唱會</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label>日期排序：</label>
-                                            <select class="form-control" style="width: 100%;">
-                                                <option>由新到舊</option>
-                                                <option>由舊到新</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>關鍵字搜尋:</label>
-                                    <div class="input-group input-group-lg">
-                                        <input type="search" class="form-control form-control-lg"
-                                            placeholder="Type your keywords here" value="">
-                                        <div class="input-group-append">
-                                            <button type="submit" class="btn btn-lg btn-default">
-                                                <i class="fa fa-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Date and time range -->
-                                <div class="form-group">
-                                    <label>訂單成立時間：</label>
-
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="far fa-clock"></i></span>
-                                        </div>
-                                        <input type="text" class="form-control float-right" id="reservationtime">
-                                    </div>
-                                    <!-- /.input group -->
-                                </div>
-                                <!-- /.form group -->
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </section>
 
             <!-- Main content -->
             <section class="content">
@@ -145,26 +98,24 @@
                                         <thead>
                                             <tr>
                                                 <th>訂單編號</th>
-                                                <th>訂購人</th>
                                                 <th>訂單金額</th>
-                                                <th>訂單成立時間</th>
-                                                <th style="text-align: center;">操作</th>
+                                                <th>折扣金額(廠商)</th>
+                                                <th>折扣金額(平台)</th>
+                                                <th>應收金額</th>
+                                                <th>訂單成立日期</th>
+                                                <th style="text-align: center;">訂單狀態</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        	<c:forEach var="ord" items="${list}">
                                             <tr>
-                                                <td>${ord.orderID}</td>
-                                                <td>${ord.userVO.userName}</td>
-                                                <td>${ord.ordTotal}</td>
-                                                <td>${ord.ordTime}</td>
-                                                
-                                                <td>
-                                                    <button type="button"
-                                                        class="btn btn-block btn-success btn-sm">詳情</button>
-                                                </td>
-                                            </tr>
-                                          </c:forEach>
+                                                <td>nv653</td>
+                                                <td>John Doe</td>
+                                                <td>100</td>
+                                                <td>0</td>
+                                                <td>999</td>
+                                                <td><span class="tag tag-success">2023-09-22</span></td>
+                                                <td>未使用</td>
+                                            </tr>  
                                         </tbody>
                                     </table>
                                 </div>
@@ -177,16 +128,149 @@
                 </div><!-- /.container-fluid -->
             </section>
             <!-- /.content -->
-        </div>
-        <!-- /.content-wrapper -->
 
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div>
+                        <div>
+                            <h4>商品資訊</h4>
+                        </div>
+                     
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+
+
+
+           
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- /.row -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body table-responsive p-0">
+                                    <table class="table table-hover text-nowrap">
+                                        <thead>
+                                            <tr style="text-align: center">
+                                                <th>商品編號</th>
+                                                <th>活動名稱</th>
+                                                <th>活動日期</th>
+                                                <th>活動時段</th>
+                                                <th>座位</th>
+                                                <th>商品價格</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="text-align: center">
+                                            <tr>
+                                                <td>012</td>
+                                                <td>百齡果週二夜 10/3 19:00</td>
+                                                <td>2023-10-03</td>
+                                                <td>19:00 ~ 20:30</td>
+                                                <td>第3排第5號</td>
+                                                <td><span class="tag tag-success">800</span></td>
+                                            </tr>  
+                                            <tr>
+                                                <td>013</td>
+                                                <td>百齡果脫口秀 10/21 14:00</td>
+                                                <td>2023-10-21</td>
+                                                <td>14:00 ~ 15:30</td>
+                                                <td>第2排第8號</td>
+                                                <td><span class="tag tag-success">800</span></td>
+                                            </tr>  
+                                        </tbody>
+                                        <tfoot>
+                                
+                                            <tr>
+                                                <td style="text-align: right; ; font-weight: bold" colspan=5>商品金額小計：</td>
+                                                <td style="text-align: center">1600</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align: right; border-top: none; font-weight: bold" colspan=5>商品應收金額：</td>
+                                                <td style="text-align: center; border-top: none">1400</td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </section>
+
+
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div>
+                        <div>
+                            <h4>訂購人資訊</h4>
+                        </div>
+                     
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+
+
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- /.row -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body table-responsive p-0">
+                                    <table class="table table-hover text-nowrap">
+                                        <thead>
+                                            <tr style="text-align: center">
+                                                <th>訂購人</th>
+                                                <th>訂購人電話</th>
+                                                <th>訂購人信箱</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="text-align: center">
+                                            <tr>
+                                                <td>Peter</td>
+                                                <td>0987654321</td>
+                                                <td>peterxxxxxx@gmail.com</td>
+                                            </tr>  
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </section>
+
+            
+
+
+
+
+        </div>
         
-        
-       		<jsp:include page="../template/footer.jsp" flush="true">
-				<jsp:param name="footer" value="footer" />
-			</jsp:include>
-        <!-- ./wrapper -->
-		</div>
+	    <!-- /.content-wrapper -->
+	        <footer class="main-footer">
+	            <div class="float-right d-none d-sm-block">
+	                <b>Version</b> 1.0.0
+	            </div>
+	            <strong>Copyright &copy; 2023~ <a href="https://newview.com">NewView</a>.</strong> All rights
+	            reserved.
+	        </footer>
+	
+	    <!-- Control Sidebar -->
+	        <aside class="control-sidebar control-sidebar-dark">
+	            <!-- Control sidebar content goes here -->
+	        </aside>
+	        <!-- /.control-sidebar -->
+	    </div>
+	    <!-- ./wrapper -->
+         
         <!-- jQuery -->
         <script src="../../plugins/jquery/jquery.min.js"></script>
         <!-- Bootstrap 4 -->
