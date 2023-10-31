@@ -20,4 +20,5 @@ public interface RedisService {
 	String getCartDataFromRedis(String cartKey);
     Map<String, String> findSeatsNumberByActIDAndUserName(String actID, String userName);
 	String findSeatKeyByActIDAndUserName(String actID, String userName);
+	void updateSoldOutToSoldOutReally(String actID, String targetUserID);
 }

@@ -39,17 +39,17 @@ public class SeatController extends HttpServlet {
 		JsonObject jsonObject = gson.fromJson(jsonData, JsonObject.class);
 
 		// 提取JsonObject的資料
-		String userid = jsonObject.get("userid").getAsString();
-		String actID = jsonObject.get("actID").getAsString();
+//		String userid = jsonObject.get("userid").getAsString();
+		String actID = jsonObject.get("actID").getAsString();       
 		String actPrice = jsonObject.get("actPrice").getAsString();
 		String actName = jsonObject.get("actName").getAsString();
 		String actScopeStr = jsonObject.get("actScope").getAsString();
 		Integer actScope = Integer.parseInt(actScopeStr);
 		// 獲取 HttpSession
 		HttpSession session = request.getSession();
-
+		String userID = (String) session.getAttribute("userID");
 		// 將這些資料設置為 session 屬性
-		session.setAttribute("userid", userid);
+		
 		session.setAttribute("actID", actID);
 		session.setAttribute("actPrice", actPrice);
 		session.setAttribute("actName", actName);
