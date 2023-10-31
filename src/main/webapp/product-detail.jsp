@@ -110,166 +110,227 @@ div .seatsTry a {
 
 </head>
 <body class="animsition">
-	<!-- Header -->
-	<header class="header-v4">
-		<!-- Header desktop -->
-		<div class="container-menu-desktop">
-			<!-- Topbar -->
-			<div class="top-bar">
-				<div class="content-topbar flex-sb-m h-full container">
-					<div class="left-top-bar">NewView</div>
+	    <!-- Header -->
+    <header class="header-v3">
+      <!-- Header desktop -->
+      <div class="container-menu-desktop trans-03 mb-6">
+        <div class="wrap-menu-desktop" style="background-color: black">
+          <nav class="limiter-menu-desktop p-l-45">
+            <!-- Logo desktop -->
+            <a href="./home-03.html" class="logo" style="color: white; font-size: large; font-weight: bold">
+              <!-- <img src="images/icons/logo-02.png" alt="IMG-LOGO"> -->
+              NewView
+            </a>
 
-					<div class="right-top-bar flex-w h-full">
-						<!-- <a href="#" class="flex-c-m trans-04 p-lr-25"> Help & FAQs </a> -->
+            <!-- Menu desktop -->
+            <div class="menu-desktop">
+              <ul class="main-menu" style="font-weight: bold">
+                <li>
+                  <a href="./home-03.html">主頁</a>
+                </li>
 
-						<a href="#" class="flex-c-m trans-04 p-lr-25"> My Account </a>
-					</div>
-				</div>
-			</div>
+                <li>
+                  <a href="./NewActJSPTest.jsp">活動專區</a>
+                </li>
 
-			<div class="wrap-menu-desktop how-shadow1">
-				<nav class="limiter-menu-desktop container">
-					<!-- Logo desktop -->
-					<!-- <a href="#" class="logo">
-              <img src="images/icons/logo-01.png" alt="IMG-LOGO" />
-            </a> -->
+                <li class="label1" data-label1="hot">
+                  <a href="./checkout_cart.html">購物車</a>
+                </li>
 
-					<!-- Menu desktop -->
-					<div class="menu-desktop">
-						<ul class="main-menu">
-							<li><a href="home-03.html">主頁</a>
-								<ul class="sub-menu"></ul></li>
+                <li>
+                  <a href="./forum_home.html">討論區</a>
+                </li>
 
-							<li class="active-menu"><a href="NewActJSPTest.jsp">活動專區</a></li>
+                <li>
+                  <a href="./member.html">會員中心</a>
+                </li>
+              </ul>
+            </div>
 
-							<li class="label1" data-label1="hot"><a
-								href="shoping-cart.html">購物車</a></li>
+            <!-- Icon header -->
+            <div class="wrap-icon-header flex-w flex-r-m h-full">
+              <div class="flex-c-m h-full p-r-25 bor6">
+                <div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 js-show-login">
+                  <i class="fa fa-user me-sm-1"></i>
+                </div>
+                <a href="#" class="logout" style="color: white; margin-right: 15px; margin-left: 15px">登出</a>
+                <!-- <div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
+                  <i class="zmdi zmdi-shopping-cart"></i>
+                </div> -->
+              </div>
 
-							<li><a href="blog.html">討論區</a></li>
+              <div class="flex-c-m h-full p-lr-19">
+                <div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 js-show-sidebar">
+                  <i class="zmdi zmdi-menu"></i>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
 
-							<li><a href="about.html">關於我們</a></li>
+      <!-- Header Mobile -->
+      <div class="wrap-header-mobile">
+        <!-- Logo moblie -->
+        <div class="logo-mobile">
+          <a href="home-03.html" style="color: black; font-size: large; font-weight: bold">
+            <!-- <img src="images/icons/logo-01.png" alt="IMG-LOGO"/> -->
+            NewView
+          </a>
+        </div>
 
-							<li><a href="contact.html">聯絡我們</a></li>
-						</ul>
-					</div>
+        <!-- Icon header -->
+        <div class="wrap-icon-header flex-w flex-r-m h-full m-r-15">
+          <div class="flex-c-m h-full p-r-5">
+            <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 js-show-login">
+              <i class="fa fa-user me-sm-1"></i>
+            </div>
+            <a href="#" class="logout" style="margin-right: 15px; margin-left: 15px">登出</a>
+            <!-- <div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
+              <i class="zmdi zmdi-shopping-cart"></i>
+            </div> -->
+          </div>
+        </div>
 
-					<!-- Icon header -->
-					<div class="wrap-icon-header flex-w flex-r-m">
-						<div
-							class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
-							<i class="zmdi zmdi-search"></i>
-						</div>
+        <!-- Button show menu -->
+        <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+        </div>
+      </div>
 
-						<div
-							class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
-							data-notify="2">
-							<i class="zmdi zmdi-shopping-cart"></i>
-						</div>
+      <!-- Menu Mobile -->
+      <div class="menu-mobile">
+        <ul class="main-menu-m" style="font-weight: bold">
+          <li>
+            <a href="./home-03.html">主頁</a>
+            <span class="arrow-main-menu-m">
+              <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </span>
+          </li>
 
-						<a href="#"
-							class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
-							data-notify="0"> <i class="zmdi zmdi-favorite-outline"></i>
-						</a>
-					</div>
-				</nav>
-			</div>
-		</div>
+          <li>
+            <a href="./NewActJSPTest.jsp">活動專區</a>
+          </li>
 
-		<!-- Header Mobile -->
-		<div class="wrap-header-mobile">
-			<!-- Logo moblie -->
-			<div class="logo-mobile">
-				<a href="index.html"><img src="images/icons/logo-01.png"
-					alt="IMG-LOGO" /></a>
-			</div>
+          <li>
+            <a href="./checkout_cart.html" class="label1 rs1" data-label1="hot">購物車</a>
+          </li>
 
-			<!-- Icon header -->
-			<div class="wrap-icon-header flex-w flex-r-m m-r-15">
-				<div
-					class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
-					<i class="zmdi zmdi-search"></i>
-				</div>
+          <li>
+            <a href="./forum_dopost.html">討論區</a>
+          </li>
 
-				<div
-					class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart"
-					data-notify="2">
-					<i class="zmdi zmdi-shopping-cart"></i>
-				</div>
+          <li>
+            <a href="./member.html">會員中心</a>
+          </li>
 
-				<a href="#"
-					class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti"
-					data-notify="0"> <i class="zmdi zmdi-favorite-outline"></i>
-				</a>
-			</div>
+          <li>
+            <a href="./myOrder.html">訂單查詢</a>
+          </li>
+        </ul>
+      </div>
 
-			<!-- Button show menu -->
-			<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
-				<span class="hamburger-box"> <span class="hamburger-inner"></span>
-				</span>
-			</div>
-		</div>
+      <!-- Modal Search -->
+      <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+        <button class="flex-c-m btn-hide-modal-search trans-04">
+          <i class="zmdi zmdi-close"></i>
+        </button>
 
-		<!-- Menu Mobile -->
-		<div class="menu-mobile">
-			<ul class="topbar-mobile">
-				<li>
-					<div class="left-top-bar">Free shipping for standard order
-						over $100</div>
-				</li>
+        <form class="container-search-header">
+          <div class="wrap-search-header">
+            <input class="plh0" type="text" name="search" placeholder="Search..." />
 
-				<li>
-					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m p-lr-10 trans-04"> Help & FAQs </a> <a
-							href="#" class="flex-c-m p-lr-10 trans-04"> My Account </a> <a
-							href="#" class="flex-c-m p-lr-10 trans-04"> EN </a> <a href="#"
-							class="flex-c-m p-lr-10 trans-04"> USD </a>
-					</div>
-				</li>
-			</ul>
+            <button class="flex-c-m trans-04">
+              <i class="zmdi zmdi-search"></i>
+            </button>
+          </div>
+        </form>
+      </div>
 
-			<ul class="main-menu-m">
-				<li><a href="index.html">Home</a>
-					<ul class="sub-menu-m">
-						<li><a href="index.html">Homepage 1</a></li>
-						<li><a href="home-02.html">Homepage 2</a></li>
-						<li><a href="home-03.html">Homepage 3</a></li>
-					</ul> <span class="arrow-main-menu-m"> <i
-						class="fa fa-angle-right" aria-hidden="true"></i>
-				</span></li>
+      <!-- 登出 -->
+      <script>
+        $(".logout").on("click", function (e) {
+          // 登出 API
+          const COLLECTION_POINT = "/LogOut";
+          e.preventDefault();
+          $.ajax({
+            url: END_POINT_URL + COLLECTION_POINT,
+            type: "POST",
+            dataType: "json",
+            beforeSend: function (xhr) {
+              console.log("beforeSend");
+            },
+            success: function (data) {
+              console.log(data);
+              redirect(data);
+            },
+            complete: function (xhr) {
+              console.log("complete");
+            },
+          });
+          function redirect(data) {
+            console.log(data);
+            alert("帳號已登出，畫面將轉導至首頁");
+            location.href = "home-03.html";
+          }
+        });
+      </script>
+    </header>
+    
+    
+        <!-- Sidebar -->
+    <aside class="wrap-sidebar js-sidebar">
+      <div class="s-full js-hide-sidebar"></div>
 
-				<li><a href="product.html">Shop</a></li>
+      <div class="sidebar flex-col-l p-t-22 p-b-25">
+        <div class="flex-r w-full p-b-30 p-r-27">
+          <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-sidebar">
+            <i class="zmdi zmdi-close"></i>
+          </div>
+        </div>
 
-				<li><a href="shoping-cart.html" class="label1 rs1"
-					data-label1="hot">Features</a></li>
+        <div class="sidebar-content flex-w w-full p-lr-65 js-pscroll">
+          <ul class="sidebar-link w-full">
+            <li class="p-b-13">
+              <a href="./home-03.html" class="stext-102 cl2 hov-cl1 trans-04"> 主頁 </a>
+            </li>
 
-				<li><a href="blog.html">Blog</a></li>
+            <li class="p-b-13">
+              <a href="./NewActJSPTest.jsp" class="stext-102 cl2 hov-cl1 trans-04"> 活動專區 </a>
+            </li>
 
-				<li><a href="about.html">About</a></li>
+            <li class="p-b-13">
+              <a href="./forum_home.html" class="stext-102 cl2 hov-cl1 trans-04"> 討論區 </a>
+            </li>
 
-				<li><a href="contact.html">Contact</a></li>
-			</ul>
-		</div>
+            <li class="p-b-13">
+              <a href="./member.html" class="stext-102 cl2 hov-cl1 trans-04"> 會員中心 </a>
+            </li>
 
-		<!-- Modal Search -->
-		<div
-			class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
-			<div class="container-search-header">
-				<button
-					class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
-					<img src="images/icons/icon-close2.png" alt="CLOSE" />
-				</button>
+            <li class="p-b-13">
+              <a href="./myOrder.html" class="stext-102 cl2 hov-cl1 trans-04"> 訂單查詢 </a>
+            </li>
+          </ul>
 
-				<form class="wrap-search-header flex-w p-l-15">
-					<button class="flex-c-m trans-04">
-						<i class="zmdi zmdi-search"></i>
-					</button>
-					<input class="plh3" type="text" name="search"
-						placeholder="Search..." />
-				</form>
-			</div>
-		</div>
-	</header>
+          <div class="sidebar-gallery w-full p-tb-30">
+            <span class="mtext-101 cl5"> @ NewView </span>
 
+            <div class="flex-w flex-sb p-t-36 gallery-lb"></div>
+          </div>
+
+          <div class="sidebar-gallery w-full">
+            <span class="mtext-101 cl5"> About Us </span>
+
+            <p class="stext-108 cl6 p-t-27">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur maximus vulputate hendrerit. Praesent faucibus erat vitae rutrum gravida. Vestibulum tempus mi enim, in molestie sem
+              fermentum quis.
+            </p>
+          </div>
+        </div>
+      </div>
+    </aside>
 	<!-- Cart -->
 	<div class="wrap-header-cart js-panel-cart">
 		<div class="s-full js-hide-cart"></div>
@@ -866,113 +927,90 @@ div .seatsTry a {
 		</div>
 	</section>
 
-	<!-- Footer -->
-	<footer class="bg3 p-t-75 p-b-32">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">Categories</h4>
+	    <!-- Footer -->
+    <footer class="bg3 p-t-55 p-b-32">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6 col-lg-3 p-b-20">
+            <h4 class="stext-301 cl0 p-b-30">Categories</h4>
+            <ul style="border-right: 1px solid #ccc; padding-right: 20px">
+              <li class="p-b-10">
+                <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 脫口秀 </a>
+              </li>
 
-					<ul>
-						<li class="p-b-10"><a href="#"
-							class="stext-107 cl7 hov-cl1 trans-04"> Women </a></li>
+              <li class="p-b-10">
+                <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 講座 </a>
+              </li>
 
-						<li class="p-b-10"><a href="#"
-							class="stext-107 cl7 hov-cl1 trans-04"> Men </a></li>
+              <li class="p-b-10">
+                <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 音樂會 </a>
+              </li>
 
-						<li class="p-b-10"><a href="#"
-							class="stext-107 cl7 hov-cl1 trans-04"> Shoes </a></li>
+              <li class="p-b-10">
+                <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 舞台劇 </a>
+              </li>
 
-						<li class="p-b-10"><a href="#"
-							class="stext-107 cl7 hov-cl1 trans-04"> Watches </a></li>
-					</ul>
-				</div>
+              <li class="p-b-10">
+                <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 演唱會 </a>
+              </li>
+            </ul>
+          </div>
 
-				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">Help</h4>
+          <div class="col-sm-6 col-lg-3 p-b-20">
+            <h4 class="stext-301 cl0 p-b-30">Help</h4>
 
-					<ul>
-						<li class="p-b-10"><a href="#"
-							class="stext-107 cl7 hov-cl1 trans-04"> Track Order </a></li>
+            <ul>
+              <li class="p-b-10">
+                <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 訂單查詢 </a>
+              </li>
 
-						<li class="p-b-10"><a href="#"
-							class="stext-107 cl7 hov-cl1 trans-04"> Returns </a></li>
+              <li class="p-b-10">
+                <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 退貨申請 </a>
+              </li>
 
-						<li class="p-b-10"><a href="#"
-							class="stext-107 cl7 hov-cl1 trans-04"> Shipping </a></li>
+              <li class="p-b-10">
+                <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> FAQs </a>
+              </li>
+            </ul>
+          </div>
 
-						<li class="p-b-10"><a href="#"
-							class="stext-107 cl7 hov-cl1 trans-04"> FAQs </a></li>
-					</ul>
-				</div>
+          <div class="col-sm-6 col-lg-3 p-b-20">
+            <h4 class="stext-301 cl0 p-b-30">Newsletter</h4>
 
-				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">GET IN TOUCH</h4>
+            <form>
+              <div class="wrap-input1 w-full p-b-4">
+                <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com" />
+                <div class="focus-input1 trans-04"></div>
+              </div>
 
-					<p class="stext-107 cl7 size-201">Any questions? Let us know in
-						store at 8th floor, 379 Hudson St, New York, NY 10018 or call us
-						on (+1) 96 716 6879</p>
+              <div class="p-t-18">
+                <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">訂閱電子報</button>
+              </div>
+            </form>
+          </div>
 
-					<div class="p-t-27">
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16"> <i
-							class="fa fa-facebook"></i>
-						</a> <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16"> <i
-							class="fa fa-instagram"></i>
-						</a> <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16"> <i
-							class="fa fa-pinterest-p"></i>
-						</a>
-					</div>
-				</div>
+          <div class="col-sm-6 col-lg-3 p-b-20">
+            <!-- <h4 class="stext-301 cl0 p-b-30">Latest Blog Post</h4> -->
+            <p class="stext-301 cl7 size-201">Ready to get started?</p>
+            <p class="stext-107 cl7 size-201">Any questions? Let us know in store at 104台北市中山區南京東路三段219號5樓 or call us on (+886) 2712 0589</p>
 
-				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">Newsletter</h4>
+            <div class="p-t-27">
+              <!-- <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+            <i class="fa fa-facebook"></i>
+          </a>
 
-					<form>
-						<div class="wrap-input1 w-full p-b-4">
-							<input class="input1 bg-none plh1 stext-107 cl7" type="text"
-								name="email" placeholder="email@example.com" />
-							<div class="focus-input1 trans-04"></div>
-						</div>
+          <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+            <i class="fa fa-instagram"></i>
+          </a>
 
-						<div class="p-t-18">
-							<button
-								class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-								Subscribe</button>
-						</div>
-					</form>
-				</div>
-			</div>
-
-			<div class="p-t-40">
-				<div class="flex-c-m flex-w p-b-18">
-					<a href="#" class="m-all-1"> <img
-						src="images/icons/icon-pay-01.png" alt="ICON-PAY" />
-					</a> <a href="#" class="m-all-1"> <img
-						src="images/icons/icon-pay-02.png" alt="ICON-PAY" />
-					</a> <a href="#" class="m-all-1"> <img
-						src="images/icons/icon-pay-03.png" alt="ICON-PAY" />
-					</a> <a href="#" class="m-all-1"> <img
-						src="images/icons/icon-pay-04.png" alt="ICON-PAY" />
-					</a> <a href="#" class="m-all-1"> <img
-						src="images/icons/icon-pay-05.png" alt="ICON-PAY" />
-					</a>
-				</div>
-
-				<p class="stext-107 cl6 txt-center">
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					Copyright &copy;
-					<script>
-						document.write(new Date().getFullYear());
-					</script>
-					All rights reserved | Made with <i class="fa fa-heart-o"
-						aria-hidden="true"></i> by <a href="https://colorlib.com"
-						target="_blank">Colorlib</a> &amp; distributed by <a
-						href="https://themewagon.com" target="_blank">ThemeWagon</a>
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-				</p>
-			</div>
-		</div>
-	</footer>
+          <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+            <i class="fa fa-pinterest-p"></i>
+          </a> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
 
 	<!-- Back to top -->
 	<div class="btn-back-to-top" id="myBtn">
