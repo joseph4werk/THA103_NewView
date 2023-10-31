@@ -111,7 +111,10 @@ public class OrdersDAOImpl implements OrdersDAO {
 			String hql = "FROM OrdersVO AS o WHERE o.publisherVO.pubID = :pubID";
 			Query<OrdersVO> query = session.createQuery(hql,OrdersVO.class);
 			query.setParameter("pubID",pubID);
-			return query.getResultList();
+			
+			List<OrdersVO> result = query.getResultList();
+			session.getTransaction().commit();
+			return result;
 		}catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();

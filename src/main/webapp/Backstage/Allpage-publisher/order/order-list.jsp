@@ -30,32 +30,32 @@ pageContext.setAttribute("list", pubOrders);
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <!-- Font Awesome -->
 <link rel="stylesheet"
-	href="../../plugins/fontawesome-free/css/all.min.css">
+	href="<%=request.getContextPath()%>/Backstage/plugins/fontawesome-free/css/all.min.css">
 <!-- daterange picker -->
 <link rel="stylesheet"
-	href="../../plugins/daterangepicker/daterangepicker.css">
+	href="<%=request.getContextPath()%>/Backstage/plugins/daterangepicker/daterangepicker.css">
 <!-- iCheck for checkboxes and radio inputs -->
 <link rel="stylesheet"
-	href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+	href="<%=request.getContextPath()%>/Backstage/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 <!-- Bootstrap Color Picker -->
 <link rel="stylesheet"
-	href="../../plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+	href="<%=request.getContextPath()%>/Backstage/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
 <!-- Tempusdominus Bootstrap 4 -->
 <link rel="stylesheet"
-	href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+	href="<%=request.getContextPath()%>/Backstage/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 <!-- Select2 -->
-<link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/plugins/select2/css/select2.min.css">
 <!-- Bootstrap4 Duallistbox -->
 <link rel="stylesheet"
-	href="../../plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+	href="<%=request.getContextPath()%>/Backstage/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
 <!-- BS Stepper -->
 <link rel="stylesheet"
-	href="../../plugins/bs-stepper/css/bs-stepper.min.css">
+	href="<%=request.getContextPath()%>/Backstage/plugins/bs-stepper/css/bs-stepper.min.css">
 <!-- dropzonejs -->
 <link rel="stylesheet"
-	href="../../plugins/dropzone/min/dropzone.min.css">
+	href="<%=request.getContextPath()%>/Backstage/plugins/dropzone/min/dropzone.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/dist/css/adminlte.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -80,7 +80,7 @@ pageContext.setAttribute("list", pubOrders);
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="../../index.html">後台首頁</a></li>
+								<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/pub-index.jsp">後台首頁</a></li>
 								<li class="breadcrumb-item active">訂單管理</li>
 							</ol>
 						</div>
@@ -118,31 +118,31 @@ pageContext.setAttribute("list", pubOrders);
 										</div>
 									</div>
 								</div>
-								<div class="form-group">
-									<label>關鍵字搜尋:</label>
-									<div class="input-group input-group-lg">
-										<input type="search" class="form-control form-control-lg"
-											placeholder="Type your keywords here" value="">
-										<div class="input-group-append">
-											<button type="submit" class="btn btn-lg btn-default">
-												<i class="fa fa-search"></i>
-											</button>
-										</div>
-									</div>
-								</div>
+<!-- 								<div class="form-group"> -->
+<!-- 									<label>關鍵字搜尋:</label> -->
+<!-- 									<div class="input-group input-group-lg"> -->
+<!-- 										<input type="search" class="form-control form-control-lg" -->
+<!-- 											placeholder="Type your keywords here" value=""> -->
+<!-- 										<div class="input-group-append"> -->
+<!-- 											<button type="submit" class="btn btn-lg btn-default"> -->
+<!-- 												<i class="fa fa-search"></i> -->
+<!-- 											</button> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
 								<!-- Date and time range -->
-								<div class="form-group">
-									<label>訂單成立時間：</label>
+<!-- 								<div class="form-group"> -->
+<!-- 									<label>訂單成立時間：</label> -->
 
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text"><i class="far fa-clock"></i></span>
-										</div>
-										<input type="text" class="form-control float-right"
-											id="reservationtime">
-									</div>
-									<!-- /.input group -->
-								</div>
+<!-- 									<div class="input-group"> -->
+<!-- 										<div class="input-group-prepend"> -->
+<!-- 											<span class="input-group-text"><i class="far fa-clock"></i></span> -->
+<!-- 										</div> -->
+<!-- 										<input type="text" class="form-control float-right" -->
+<!-- 											id="reservationtime"> -->
+<!-- 									</div> -->
+<!-- 									/.input group -->
+<!-- 								</div> -->
 								<!-- /.form group -->
 							</div>
 						</div>
@@ -211,35 +211,35 @@ pageContext.setAttribute("list", pubOrders);
 	<!-- ./wrapper -->
 
 	<!-- jQuery -->
-	<script src="../../plugins/jquery/jquery.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Backstage/plugins/jquery/jquery.min.js"></script>
 	<!-- Bootstrap 4 -->
-	<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Backstage/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- Select2 -->
-	<script src="../../plugins/select2/js/select2.full.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Backstage/plugins/select2/js/select2.full.min.js"></script>
 	<!-- Bootstrap4 Duallistbox -->
 	<script
-		src="../../plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+		src="<%=request.getContextPath()%>/Backstage/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
 	<!-- InputMask -->
-	<script src="../../plugins/moment/moment.min.js"></script>
-	<script src="../../plugins/inputmask/jquery.inputmask.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Backstage/plugins/moment/moment.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Backstage/plugins/inputmask/jquery.inputmask.min.js"></script>
 	<!-- date-range-picker -->
-	<script src="../../plugins/daterangepicker/daterangepicker.js"></script>
+	<script src="<%=request.getContextPath()%>/Backstage/plugins/daterangepicker/daterangepicker.js"></script>
 	<!-- bootstrap color picker -->
 	<script
-		src="../../plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+		src="<%=request.getContextPath()%>/Backstage/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
 	<!-- Tempusdominus Bootstrap 4 -->
 	<script
-		src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+		src="<%=request.getContextPath()%>/Backstage/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 	<!-- Bootstrap Switch -->
-	<script src="../../plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Backstage/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 	<!-- BS-Stepper -->
-	<script src="../../plugins/bs-stepper/js/bs-stepper.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Backstage/plugins/bs-stepper/js/bs-stepper.min.js"></script>
 	<!-- dropzonejs -->
-	<script src="../../plugins/dropzone/min/dropzone.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Backstage/plugins/dropzone/min/dropzone.min.js"></script>
 	<!-- AdminLTE App -->
-	<script src="../../dist/js/adminlte.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Backstage/dist/js/adminlte.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
-	<script src="../../dist/js/demo.js"></script>
+	<script src="<%=request.getContextPath()%>/Backstage/dist/js/demo.js"></script>
 	<!-- Page specific script -->
 	<script>
 		$(function() {

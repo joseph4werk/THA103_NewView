@@ -85,11 +85,11 @@ pageContext.setAttribute("categories", categories);
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1>活動上/下架</h1>
+							<h1>活動上架</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="../../index.html">後台首頁</a></li>
+								<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/pub-index.jsp">後台首頁</a></li>
 								<li class="breadcrumb-item active">活動管理</li>
 							</ol>
 						</div>

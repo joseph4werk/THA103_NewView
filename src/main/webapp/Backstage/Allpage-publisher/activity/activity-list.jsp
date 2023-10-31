@@ -68,7 +68,7 @@ pageContext.setAttribute("city", city);
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="../../index.html">後台首頁</a></li>
+								<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/pub-index.jsp">後台首頁</a></li>
 								<li class="breadcrumb-item active">活動管理</li>
 							</ol>
 						</div>
@@ -115,18 +115,18 @@ pageContext.setAttribute("city", city);
 										</div>
 									</div>
 								</div>
-								<div class="form-group">
-									<label>關鍵字搜尋:</label>
-									<div class="input-group input-group-lg">
-										<input type="search" class="form-control form-control-lg"
-											placeholder="Type your keywords here" value="">
-										<div class="input-group-append">
-											<button type="submit" class="btn btn-lg btn-default">
-												<i class="fa fa-search"></i>
-											</button>
-										</div>
-									</div>
-								</div>
+<!-- 								<div class="form-group"> -->
+<!-- 									<label>關鍵字搜尋:</label> -->
+<!-- 									<div class="input-group input-group-lg"> -->
+<!-- 										<input type="search" class="form-control form-control-lg" -->
+<!-- 											placeholder="Type your keywords here" value=""> -->
+<!-- 										<div class="input-group-append"> -->
+<!-- 											<button type="submit" class="btn btn-lg btn-default"> -->
+<!-- 												<i class="fa fa-search"></i> -->
+<!-- 											</button> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
 								<!-- /.form group -->
 							</div>
 						</div>

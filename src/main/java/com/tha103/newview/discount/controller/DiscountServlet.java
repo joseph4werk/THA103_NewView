@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.tha103.newview.admin.model.AdminVO;
 import com.tha103.newview.discount.model.DiscountVO;
 import com.tha103.newview.discount.service.DiscountService;
+import com.tha103.newview.discount.service.DiscountServiceImpl;
 import com.tha103.newview.publisher.model.PublisherVO;
 import com.tha103.newview.publisher.service.PublisherService;
 
@@ -131,7 +132,7 @@ public class DiscountServlet extends HttpServlet {
 				}
 
 				/************************* 開始新增資料 **************************/
-				DiscountService discountSvc = new DiscountService();
+				DiscountService discountSvc = new DiscountServiceImpl();
 				discountVO = discountSvc.addDiscount(discountContent, disAmount, discountCode, disStartDate, disFinishDate, pubID, adminID);
 				System.out.println(discountVO);
 				System.out.println("新增成功");
