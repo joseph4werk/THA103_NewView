@@ -126,9 +126,9 @@ public class RedisServiceImpl implements RedisService{
 //		            System.out.println(seatNumber + "   " + seatInfo);
 		            String[] seatInfoParts = seatInfo.split(",");
 		            String userName = seatInfoParts[0];
-		            String seatType = seatInfoParts[1];
-
-		            if (userName.equals(targetUserName) && !seatType.equals("soldOut")) {
+		            String seatType = seatInfoParts[2];
+		            System.out.println(seatType);
+		            if (userName.equals(targetUserName) && !seatType.equals("soldOut")&& !seatType.equals("soldReally")) {
 		                String newSeatInfo = userName + "," + actID + ",soldOut";
 		                jedis.hset("seatData:" + actID, seatNumber, newSeatInfo);
 		                modifiedSeatsData.put(seatNumber, newSeatInfo);
@@ -203,7 +203,7 @@ public class RedisServiceImpl implements RedisService{
 		            String actName = seatInfoParts[1];
 		            String seatType = seatInfoParts[2];
 
-		            if (userName.equals(targetUserName) && seatType.equals("buy")) {
+		            if (userName.equals(targetUserName) && seatType.equals("buy") ) {
 		                // 將 "buy" 標記的座位狀態改為 "inCart
 
 		                String newSeatInfoCart = seatNumber + "," + actName + ",inCart";
@@ -245,7 +245,7 @@ public class RedisServiceImpl implements RedisService{
 		//確認購買,複製到db3
 		public Map<String, String> findSeatsByActIDAndUserName(String actID, String userName) {
 		    Jedis jedis = null;
-		    int seatExpirationTime = 600;
+		    int seatExpirationTime = 30;
 		    Map<String, String> result = new HashMap<>();
 		    try {
 		        jedis = JedisPoolUtil.getJedisPool().getResource();
@@ -253,7 +253,7 @@ public class RedisServiceImpl implements RedisService{
 		        
 		        Map<String, String> allSeats = jedis.hgetAll("seatData:" + actID);
 		        for (Map.Entry<String, String> entry : allSeats.entrySet()) {
-		            if (entry.getValue().startsWith(userName + "," + actID)) {
+		            if (entry.getValue().startsWith(userName + "," + actID+",soldOut")) {
 		                result.put(entry.getKey(), entry.getValue());
 		                               
 		                String[] seatInfoParts = entry.getValue().split(",");			            
@@ -328,7 +328,7 @@ public class RedisServiceImpl implements RedisService{
 
 		        Map<String, String> allSeats = jedis.hgetAll("seatData:" + actID);
 		        for (Map.Entry<String, String> entry : allSeats.entrySet()) {
-		            if (entry.getValue().startsWith(userName + "," + actID)) {
+		            if (entry.getValue().startsWith(userName + "," + actID+",soldOut")) {
 		                String seatKey = "cart:" + userName + ":" + actID + ":" + entry.getKey() + ":NotReallyBuy";
 		                return seatKey;
 		            }
@@ -350,7 +350,7 @@ public class RedisServiceImpl implements RedisService{
 
 		            Map<String, String> allSeats = jedis.hgetAll("seatData:" + actID);
 		            for (Map.Entry<String, String> entry : allSeats.entrySet()) {
-		                if (entry.getValue().startsWith(userName + "," + actID)) {
+		                if (entry.getValue().startsWith(userName + "," + actID+",soldOut")) {
 		                    result.put(entry.getKey(), entry.getValue());
 		                }
 		            }
@@ -361,5 +361,34 @@ public class RedisServiceImpl implements RedisService{
 		        }
 		        return result;
 		    }
+		 public void updateSoldOutToSoldOutReally(String actID, String targetUserID) {
+			    Jedis jedis = null;
+			    try {
+			        jedis = JedisPoolUtil.getJedisPool().getResource();
+			        jedis.select(0); // 切换到 db0
+
+			        Map<String, String> seatsData = jedis.hgetAll("seatData:" + actID);
+
+			        for (Map.Entry<String, String> entry : seatsData.entrySet()) {
+			            String seatNumber = entry.getKey();
+			            String seatInfo = entry.getValue();
+
+			            String[] seatInfoParts = seatInfo.split(",");
+			            String userName = seatInfoParts[0];
+			            String seatType = seatInfoParts[2];
+			            System.out.println(userName+" 和 "+ seatType);
+			            if (seatType.equals("soldOut") && userName.equals(targetUserID)) {
+			                // 如果狀態 "soldOut" 且用户ID匹配，改成 "soldOutReally"
+			            	System.out.println("更改為really");
+			                String newSeatInfo = userName + "," + actID + ",soldReally";
+			                jedis.hset("seatData:" + actID, seatNumber, newSeatInfo);
+			            }
+			        }
+			    } finally {
+			        if (jedis != null) {
+			            jedis.close();
+			        }
+			    }
+			}
 
 }

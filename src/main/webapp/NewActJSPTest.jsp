@@ -22,6 +22,7 @@ pageContext.setAttribute("user", userlist);
 pageContext.setAttribute("city", city);
 pageContext.setAttribute("list", list);
 pageContext.setAttribute("categories", categories);
+
 %>
 
 <html lang="en">
@@ -108,23 +109,9 @@ pageContext.setAttribute("categories", categories);
 </head>
 <body class="animsition">
 
+ 
 
-
-	<table border="1">
-		<tr>
-			<th>User ID</th>
-		</tr>
-
-		<c:if test="${not empty user}">
-			<tr>
-				<td>${user[0].userID}</td>
-				<script>
-					userIDValue = "${user[0].userID}";
-				</script>
-
-			</tr>
-		</c:if>
-	</table>
+	
 	<!-- Header -->
 	<header class="header-v4">
 		<!-- Header desktop -->
@@ -949,8 +936,10 @@ pageContext.setAttribute("categories", categories);
 					});
 				});
 	</script>
+	
 	<!--===============================================================================================-->
 	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	
 	<script>
 		$(".js-pscroll").each(function() {
 			$(this).css("position", "relative");
@@ -973,7 +962,7 @@ pageContext.setAttribute("categories", categories);
 	<script>
 		var packagedData;
 		var userIDValue;
-		console.log(packagedData+",  "+userIDValue)
+		console.log(userIDValue)
 		function showModal(elem) {
 			var actIdStr = elem.getAttribute("data-act-id");
 			sendAjaxRequest(actIdStr);
@@ -1165,12 +1154,11 @@ pageContext.setAttribute("categories", categories);
 
 
 	</script>
-
 	<script type="text/javascript">
         // 在頁面加載完成後執行
-      $(document).ready(function() {
-    	  var userID = 1;
-
+$(document).ready(function() {
+ var userID = '<%= session.getAttribute("userID") %>';
+			
     	    // 每個按鈕都有一個不同的actID
  $(".btn-addwish-b2").each(function() {
     var actID = $(this).data("act-id");
@@ -1280,7 +1268,7 @@ pageContext.setAttribute("categories", categories);
     //我的最愛切換送交
     function sendLikeChangeRequest(element) {    
         var actIDchange = $(element).data("act-id");              
-        var userIDC =1;
+        var userIDC = '<%= session.getAttribute("userID") %>';
 
         
         $.ajax({
