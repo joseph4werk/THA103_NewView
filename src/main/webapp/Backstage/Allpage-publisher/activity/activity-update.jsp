@@ -10,6 +10,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+
 <%
 Integer pubID = (Integer) session.getAttribute("pubID");
 if(pubID == null){
@@ -99,7 +100,7 @@ pageContext.setAttribute("categories", categories);
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="../../index.html">後台首頁</a></li>
+								<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/pub-index.jsp">後台首頁</a></li>
 								<li class="breadcrumb-item active">活動管理</li>
 							</ol>
 						</div>

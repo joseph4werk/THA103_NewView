@@ -106,15 +106,19 @@ public class PubUserService {
 		return dao.getAllByCQ(query);
 	}
 
+	
 	public PubUserVO getByAccountInfo(String account) {
 		
 		return dao.findByAccount(account);
 	}
 	
-	
 	public List<PubUserVO> getPubuesrByPub(Integer pubID) {
 		List<PubUserVO> pubUserList = dao.getListByPubID(pubID);
 		return pubUserList;
 	}
+
+	
+
+
 	
 }

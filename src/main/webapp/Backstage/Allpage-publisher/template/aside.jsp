@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
 <meta charset="utf-8">
@@ -23,12 +24,12 @@
 		<div class="sidebar">
 			<!-- Sidebar user (optional) -->
 			<div class="user-panel mt-3 pb-3 mb-3 d-flex">
-				<div class="image">
-					<img src="<%=request.getContextPath()%>/Backstage/dist/img/user2-160x160.jpg"
-						class="img-circle elevation-2" alt="User Image">
-				</div>
+<!-- 				<div class="image"> -->
+<%-- 					<img src="<%=request.getContextPath()%>/Backstage/dist/img/user2-160x160.jpg" --%>
+<!-- 						class="img-circle elevation-2" alt="User Image"> -->
+<!-- 				</div> -->
 				<div class="info">
-					<a href="#" class="d-block">後台管理員</a>
+					<a href="#" class="d-block">廠商後台管理員</a>
 				</div>
 			</div>
 
@@ -53,7 +54,7 @@
 							<li class="nav-item"><a
 								href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/activity/activity-shelves.jsp" class="nav-link">
 									<i class="far fa-circle nav-icon"></i>
-									<p>活動上/下架</p>
+									<p>活動上架</p>
 							</a></li>
 						</ul></li>
 					<li class="nav-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/order/order-list.jsp"

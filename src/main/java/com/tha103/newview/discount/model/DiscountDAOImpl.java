@@ -36,7 +36,6 @@ public class DiscountDAOImpl implements DiscountDAO {
 		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
-			System.out.println("DAO接收到請求");
 			System.out.println("DAO收到的資料" + discountVO);
 			session.beginTransaction();
 			System.out.println("開啟交易中");
@@ -137,7 +136,11 @@ public class DiscountDAOImpl implements DiscountDAO {
 			String hql = "FROM DiscountVO AS d WHERE d.publisherVO.pubID = :pubID";
 			Query<DiscountVO> query = session.createQuery(hql, DiscountVO.class);
 			query.setParameter("pubID", pubID);
-			return query.getResultList();
+			
+			List<DiscountVO> result = query.getResultList();
+			session.getTransaction().commit();
+			
+			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();

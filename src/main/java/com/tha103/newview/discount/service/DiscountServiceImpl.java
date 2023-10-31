@@ -65,7 +65,6 @@ public class DiscountServiceImpl implements DiscountService{
 		adminVO.setAdminID(adminID);
 		discountVO.setAdminVO(adminVO);
 		
-		System.out.println("準備請DAO更新資料庫");
 		System.out.println("service接收到的資料" + discountVO);
 		discountDAO.update(discountVO);
 		System.out.println("service準備回傳資料");

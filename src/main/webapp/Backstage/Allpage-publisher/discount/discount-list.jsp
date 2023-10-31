@@ -59,7 +59,7 @@ pageContext.setAttribute("list", pubDiscount);
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="../../index.html">後台首頁</a></li>
+								<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/pub-index.jsp">後台首頁</a></li>
 								<li class="breadcrumb-item active">優惠管理</li>
 							</ol>
 						</div>
@@ -155,5 +155,6 @@ pageContext.setAttribute("list", pubDiscount);
 	<!-- AdminLTE for demo purposes -->
 	<script src="<%=request.getContextPath()%>/Backstage/dist/js/demo.js"></script>
 </body>
+
 
 </html>
