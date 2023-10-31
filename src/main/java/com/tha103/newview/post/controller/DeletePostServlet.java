@@ -33,8 +33,9 @@ public class DeletePostServlet extends HttpServlet {
 
 		// ***********************************DeleteByPK**********************************//
 
-		System.out.println(12345);// 接受来自forum_revisedopost.html请求(Ajax)
-		int postID = Integer.parseInt(req.getParameter("postID").trim());
+		
+		int postID = Integer.parseInt(req.getParameter("postID").trim());// 接受来自forum_revisedopost.html请求(Ajax)
+		System.out.println(postID);
 		PostService postSvc = new PostServiceImpl();
 		postSvc.deletePost(postID);
 		System.out.println("Success to delete Image");

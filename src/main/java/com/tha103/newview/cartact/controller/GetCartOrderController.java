@@ -42,7 +42,7 @@ public class GetCartOrderController extends HttpServlet {
 
 		// 2. 連接 Redis
 		Jedis jedis = JedisPoolUtil.getJedisPool().getResource();
-		jedis.select(0); // 選擇 Redis db(0)
+		jedis.select(4); // 選擇 Redis db(4)
 
 		// 3.藉由獲取RedisHash，裁切資料後得到actID、userID、座位狀態，以及座位行列資訊，其中座位行列要先透過ActVO得到Scope資料，才能知道座位數量，進一步轉換為行列資訊
 		// 3-1. 先得到所有Hash資料
@@ -121,8 +121,8 @@ public class GetCartOrderController extends HttpServlet {
 
 		switch (scope) {
 		case 1:
-			rowIndex = (int) Math.ceil((double) seatNumber / 20);
-			seatIndex = seatNumber % 20 == 0 ? 20 : seatNumber % 20;
+			rowIndex = (int) Math.ceil((double) seatNumber / 10);
+			seatIndex = seatNumber % 10 == 0 ? 10 : seatNumber % 10;
 			break;
 		case 2:
 			rowIndex = (int) Math.ceil((double) seatNumber / 20);
