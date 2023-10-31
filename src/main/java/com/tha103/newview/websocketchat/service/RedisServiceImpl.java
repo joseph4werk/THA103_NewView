@@ -186,7 +186,7 @@ public class RedisServiceImpl implements RedisService{
 		    Jedis jedis = null;
 		    Map<String, String> modifiedSeatsData = new HashMap<>();
 
-		    int seatExpirationTime = 20; // 設定座位的過期時間
+		    int seatExpirationTime = 60; // 設定座位的過期時間
 
 		    try {
 		        jedis = JedisPoolUtil.getJedisPool().getResource();
@@ -245,7 +245,7 @@ public class RedisServiceImpl implements RedisService{
 		//確認購買,複製到db3
 		public Map<String, String> findSeatsByActIDAndUserName(String actID, String userName) {
 		    Jedis jedis = null;
-		    int seatExpirationTime = 30;
+		    int seatExpirationTime = 60;
 		    Map<String, String> result = new HashMap<>();
 		    try {
 		        jedis = JedisPoolUtil.getJedisPool().getResource();
