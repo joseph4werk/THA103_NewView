@@ -64,12 +64,6 @@
 									<p>活動審查</p>
 							</a>
 							</li>
-							<li class="nav-item"><a
-								href="<%=request.getContextPath()%>/Backstage/Allpage-administrator/activity/activity-list.jsp" class="nav-link">
-									<i class="far fa-circle nav-icon"></i>
-									<p>評論管理</p>
-							</a>
-							</li>
 						</ul>
 					</li>
 					<li class="nav-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-administrator/order/order-list.jsp"
@@ -80,42 +74,7 @@
 						class="nav-link"> <i class="nav-icon fas fa-tree"></i>
 							<p>優惠管理</p>
 					</a></li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-edit"></i>
-							<p>
-								權限管理 <i class="fas fa-angle-left right"></i>
-							</p>
-					</a>
-						<ul class="nav nav-treeview">
-							<li class="nav-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-administrator/authority/user-member.jsp"
-								class="nav-link"> <i class="far fa-circle nav-icon"></i>
-									<p>廠商管理</p>
-							</a></li>
-							<li class="nav-item"><a
-								href="<%=request.getContextPath()%>/Backstage/Allpage-admistrator/authority/user-publisher.jsp" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>會員管理</p>
-							</a></li>
-						</ul>
-					</li>
-					<li class="nav-item"><a href="#" class="nav-link"> <i
-							class="nav-icon fas fa-edit"></i>
-							<p>
-								討論區 <i class="fas fa-angle-left right"></i>
-							</p>
-					</a>
-						<ul class="nav nav-treeview">
-							<li class="nav-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-administrator/forum/article-list.jsp"
-								class="nav-link"> <i class="far fa-circle nav-icon"></i>
-									<p>文章列表</p>
-							</a></li>
-							<li class="nav-item"><a
-								href="<%=request.getContextPath()%>/Backstage/Allpage-admistrator/forum/article-review.jsp" class="nav-link"> <i
-									class="far fa-circle nav-icon"></i>
-									<p>檢舉審核</p>
-							</a></li>
-						</ul>
-					</li>
+					
 					<form method="post" action="<%=request.getContextPath()%>/admin/admin.do">
 						<li class="nav-item">						
 							<div class="nav-link"> 

@@ -146,7 +146,7 @@ pageContext.setAttribute("categories", categories);
                                             </tr>
                                         </thead>
                                         <tbody>
-
+										<c:forEach var="act" items="${list}" >
                                             <tr>
                                                 <td>${act.actID}</td>
                                                 <td>${act.actCategory.actCategoryName}</td>
@@ -167,6 +167,7 @@ pageContext.setAttribute("categories", categories);
 
 	                                            </td>
                                             </tr>
+                                           </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>

@@ -252,7 +252,7 @@ public class DiscountServlet extends HttpServlet {
 				}
 
 				/************************* 開始修改資料 **************************/
-				DiscountService discountSvc = new DiscountService();
+				DiscountService discountSvc = new DiscountServiceImpl();
 				discountVO = discountSvc.updateDiscount(discountContent, disAmount, discountCode, disStartDate, disFinishDate, pubID, adminID);
 				System.out.println(discountVO);
 				System.out.println("修改成功");
@@ -291,7 +291,7 @@ public class DiscountServlet extends HttpServlet {
 				System.out.println(discountNO);
 
 				/************************* 開始刪除資料 **************************/
-				DiscountService discountSvc = new DiscountService();
+				DiscountService discountSvc = new DiscountServiceImpl();
 				DiscountVO discountVO = discountSvc.getOneDiscount(discountNO);
 				discountSvc.deleteDiscount(discountNO);
 				System.out.println("刪除成功");
@@ -352,7 +352,7 @@ public class DiscountServlet extends HttpServlet {
 
 				/************************* 開始查詢資料 **************************/
 
-				DiscountService discountSvc = new DiscountService();
+				DiscountService discountSvc = new DiscountServiceImpl();
 				DiscountVO discountVO = discountSvc.getOneDiscount(discountNO);
 				System.out.println(discountVO);
 
@@ -397,7 +397,7 @@ public class DiscountServlet extends HttpServlet {
 
 				/************************* 開始查詢資料 **************************/
 				
-				DiscountService discountSvc = new DiscountService();
+				DiscountService discountSvc = new DiscountServiceImpl();
 				DiscountVO discountVO = discountSvc.getOneDiscount(discountNO);
 				System.out.println(discountVO);
 

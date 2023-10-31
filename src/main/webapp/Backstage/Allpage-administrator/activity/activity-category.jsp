@@ -23,9 +23,9 @@ System.out.println(list);
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/dist/css/adminlte.min.css">
     <style>
         .offset-md-1M {
             margin-left: 16%;
@@ -126,7 +126,7 @@ System.out.println(list);
 															<input type="hidden" name="requestURL"
 																value="<%=request.getServletPath()%>"> 
 															<input type="hidden" name="action"
-																value="getOneForUpdate">
+																value="getOne_For_Update">
 														</Form>
 	                                                </td>
 	                                                <td>
@@ -135,6 +135,7 @@ System.out.println(list);
 															<input type="submit" value="刪除"
 																class="btn btn-block btn-danger btn-sm"> <input
 																type="hidden" name="actCategoryID" value="${act.actCategoryID}">
+															<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>">
 															<input type="hidden" name="action" value="delete">
 														</Form>
 	                                                </td>

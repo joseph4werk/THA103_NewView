@@ -39,17 +39,16 @@ public class ActCategoryService {
 		return actCategory;
 	}
 
-	public ActCategory updateActCategory(Integer actCategoryID, String actCategoryName, Set<ActVO> acts) {
+	public ActCategory updateActCategory(Integer actCategoryID, String actCategoryName) {
 
-		ActCategory actCategory = new ActCategory();
+		ActCategory act = new ActCategory();
 
-		actCategory.setActCategoryID(actCategoryID);
-		actCategory.setActCategoryName(actCategoryName);
-		actCategory.setActs(acts);
+		act.setActCategoryID(actCategoryID);
+		act.setActCategoryName(actCategoryName);		
 
-		dao.update(actCategory);
+		dao.update(act);
 
-		return actCategory;
+		return act;
 	}
 
 	public void deleteActCategory(Integer actCategoryID) {
