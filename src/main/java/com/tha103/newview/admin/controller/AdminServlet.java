@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.tha103.newview.admin.service.AdminService;
+
+import com.tha103.newview.admin.model.*;
+import com.tha103.newview.admin.service.*;
+
 
 @WebServlet("/admin/admin.do")
 public class AdminServlet extends HttpServlet {
@@ -37,25 +40,52 @@ public class AdminServlet extends HttpServlet {
 			System.out.println(adminAccount);
 			System.out.println(adminPassword);
 			
-			/************************* 開始查詢資料 **************************/
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+
+			/*********1.接收請求參數 - 輸入格式的錯誤處理*********/			
+
+			if (adminAccount == null || (adminAccount.trim()).length() == 0) {
+				errorMsgs.add("請輸入帳號");
+			}
+			if (adminPassword == null || (adminPassword.trim()).length() == 0) {
+				errorMsgs.add("請輸入密碼");
+
+			}
+			
+
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/Backstage/Allpage-administrator/login/login_admin.jsp");
+				failureView.forward(req, res);
+				return; //程式中斷
+			}
+			
+			
+			/************************* 2. 開始查詢資料 **************************/
 			AdminService adminSvc = new AdminService();
 			System.out.println(adminSvc);
-
-			boolean loginSuccessful = adminSvc.authenticate(adminAccount, adminPassword);
-			System.err.println(loginSuccessful);
 			
-			/************************* 回傳資料路徑 **************************/
-			if (!loginSuccessful) {
+			boolean loginSuccess = adminSvc.authenticate(adminAccount, adminPassword);
+			
+			/************************* 3. 回傳路徑 **************************/
+			if (!loginSuccess) {
 				System.out.println("登入失敗");
 				res.sendRedirect(req.getContextPath() + "/Backstage/Allpage-administrator/login/login_admin.jsp");
 				return;
 			} else {
 				System.out.println("登入成功");
 				HttpSession session = req.getSession();
-				String se = session.toString();
-				System.out.println(se);
 				session.setAttribute("adminAccount", adminAccount);
 
+				//將DAO裡的找到的資訊存入adminVO
+				AdminService adminsvc = new AdminService();
+				AdminVO adminVO = adminsvc.getByAccountInfo(adminAccount);
+				
+				//將adminVO的資料存入session
+				session.setAttribute("adminVO", adminVO);
+				
 				try {
 					String location = (String) session.getAttribute("location");
 					if (location != null) {
@@ -65,12 +95,32 @@ public class AdminServlet extends HttpServlet {
 					}
 				} catch (Exception ignored) {
 				}
+				
+				
 				res.sendRedirect(req.getContextPath() + "/Backstage/Allpage-administrator/admin-index.jsp");
 				// *(-->如無來源網頁:則重導至後台首頁)
-			}
-			
+
+				
+				
+			}		
 		}
-	}
+		
+		if ("adminLogout".equals(action)) {
+			/************************* 接收請求參數 **************************/
+			String logout = req.getParameter("adminLogout");
+			System.out.println("servlet已接收參數" + logout);
+			
+			HttpSession session = req.getSession();
+			session.invalidate();
+
+	        System.out.println("session已清除");
+	        res.sendRedirect(req.getContextPath() + "/Backstage/Allpage-administrator/login/login_admin.jsp");
+	        System.out.println("已導向");
+
+			}
+		
+		
+		}
 
 	
 }

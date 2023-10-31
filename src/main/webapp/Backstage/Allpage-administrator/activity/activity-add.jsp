@@ -13,25 +13,25 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/plugins/fontawesome-free/css/all.min.css">
     <!-- daterange picker -->
-    <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/plugins/daterangepicker/daterangepicker.css">
     <!-- iCheck for checkboxes and radio inputs -->
-    <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Bootstrap Color Picker -->
-    <link rel="stylesheet" href="../../plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- Select2 -->
-    <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/plugins/select2/css/select2.min.css">
     <!-- Bootstrap4 Duallistbox -->
-    <link rel="stylesheet" href="../../plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
     <!-- BS Stepper -->
-    <link rel="stylesheet" href="../../plugins/bs-stepper/css/bs-stepper.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/plugins/bs-stepper/css/bs-stepper.min.css">
     <!-- dropzonejs -->
-    <link rel="stylesheet" href="../../plugins/dropzone/min/dropzone.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/plugins/dropzone/min/dropzone.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/dist/css/adminlte.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -57,7 +57,7 @@
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="../../index.html">後台首頁</a></li>
+                                <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-administrator/admin-index.jsp">後台首頁</a></li>
                                 <li class="breadcrumb-item active">分類管理</li>
                             </ol>
                         </div>
@@ -70,20 +70,25 @@
                 <!-- Default box -->
                 <div class="container-fluid">
                     <div class="card" class="container-fluid">
-                        <form action="#" style="padding: 30px 0px;">
+                        <form METHOD="post" action="<%=request.getContextPath()%>/actcategory/actcategory.do" name="add" style="padding: 30px 0px;">
                             <div class="col-md-10 offset-md-1">
                                 <div class="form-group">
                                     <label for="inputDisContent">分類名稱：</label>
-                                    <input type="text" id="inputCategoryContent" class="form-control" />
+                                    <input type="text" id="inputCategoryContent" name="actCategoryName" class="form-control" />
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" id="categorySubmit" value="送出">
+									<input type="hidden" name="action" value="add"> 
+									<input type="submit" class="btn btn-primary" value="送出">
+								</div>
+							</div>
+                        </form>        
+                                                         
                                     <input type="submit" class="btn btn-danger" value="清空">
-                                </div>
-                            </div>
-                        </form>
+                                
                     </div>
-                </div>
+                        
+                 </div>
+                
             </section>
             <!-- /.content -->
 

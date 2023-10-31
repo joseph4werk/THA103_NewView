@@ -28,13 +28,11 @@ public class ActCategoryService {
 
 	}
 
-	public ActCategory addActCategory(Integer actCategoryID, String actCategoryName, Set<ActVO> acts) {
+	public ActCategory addActCategory(String actCategoryName) {
 
 		ActCategory actCategory = new ActCategory();
 
-		actCategory.setActCategoryID(actCategoryID);
 		actCategory.setActCategoryName(actCategoryName);
-		actCategory.setActs(acts);
 
 		dao.insert(actCategory);
 
@@ -67,18 +65,3 @@ public class ActCategoryService {
 	}
 
 }
-
-//package com.tha103.newview.actcategory.service;
-//
-//import java.util.List;
-//
-//import com.tha103.newview.actcategory.model.ActCategory;
-//
-//public interface ActCategoryService {
-//	
-//	public int addActCategory(ActCategory ActCategory);
-//	public int updateActCategory(ActCategory ActCategory);
-//	public int deleteActCategory(ActCategory ActCategory);
-//	public List<ActCategory> getAll();
-//	
-//}
