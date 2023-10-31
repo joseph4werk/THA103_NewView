@@ -723,10 +723,6 @@ pageContext.setAttribute("categories", categories);
 										</div>
 									</div>
 
-									
-
-
-
 								</div>
 							</div>
 						</div>
