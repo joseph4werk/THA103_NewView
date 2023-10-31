@@ -69,7 +69,7 @@ public class OrderReallyBuy extends HttpServlet {
         res.setContentType("application/json");
 
         String action = req.getParameter("action");
-        String userIDstr = (String) req.getSession().getAttribute("userid");
+        String userIDstr = (String) req.getSession().getAttribute("userID");
         String actIDstr =(String) req.getSession().getAttribute("actID");
         Integer userID;
         Integer actID;
@@ -81,10 +81,11 @@ public class OrderReallyBuy extends HttpServlet {
             actID = Integer.parseInt(actIDstr);
             seatNumber = redisService.findSeatsNumberByActIDAndUserName(actIDstr, userIDstr);
             //設定要購買的資料
+            System.out.println("執行購買任務");
             for (Map.Entry<String, String> entry : seatNumber.entrySet()) {
                 String cartKey = "cart:" + userID + ":" + actID + ":" + entry.getKey()+":NotReallyBuy";
                 String cartData = redisService.getCartDataFromRedis(cartKey);
-                
+                redisService.updateSoldOutToSoldOutReally(actIDstr, userIDstr);
                 if (cartData != null ) {
                 	cartData = cartData.replace("inCart", String.valueOf(userID));
                     cartData = cartData.replace(":NotReallyBuy", "buy");
@@ -105,11 +106,11 @@ public class OrderReallyBuy extends HttpServlet {
             return;
         }
 
-        
-        if ("buy".equals(action)) {
-            System.out.println("購買中   "+seatNumber);
-        }
-        System.out.println("cartDataList: " + cartDataList);
+//        
+//        if ("buy".equals(action)) {
+//            System.out.println("購買中   "+seatNumber);
+//        }
+//        System.out.println("cartDataList: " + cartDataList);
         // 将 cartDataList 打包成 JSON 
         JsonArray jsonArray = new JsonArray();
         for (JsonObject cartData : cartDataList) {

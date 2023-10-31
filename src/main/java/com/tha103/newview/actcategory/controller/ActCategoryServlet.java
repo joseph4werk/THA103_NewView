@@ -61,12 +61,14 @@ public class ActCategoryServlet extends HttpServlet {
 			/***********************2.開始新增資料**************/
 			
 			ActCategoryService actSvc = new ActCategoryService();
-			actCategory = actSvc.addActCategory(null, actCategoryName, null);
+			actCategory = actSvc.addActCategory(actCategoryName);
 			
 			/***********************3.新增完成，準備轉交(Send the Success view)*************/
 			
 			req.setAttribute("actCategory", actCategory);
-			String url = "/Backstage/Allpage-administrator/activity-category.jsp";
+			String url = "/Backstage/Allpage-administrator/activity/activity-category.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
 			
 		}
 		

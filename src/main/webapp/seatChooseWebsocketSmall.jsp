@@ -23,20 +23,9 @@
 
 <body onload="connect();" onunload="disconnect();">
 
-	User ID:
-	<c:out value="${sessionScope.userid}" />
-	<br> Act ID:
-	<c:out value="${sessionScope.actID}" />
-	<br> Act Price:
-	<c:out value="${sessionScope.actPrice}" />
-	<br>
+	
 
 	<h3 id="statusOutput" class="statusOutput"></h3>
-
-	<div class="panel input-area">
-		<input id="userName" class="text-field" type="text"
-			placeholder="User name" " />
-	</div>
 
 
 	<div id="seating-container">
@@ -76,10 +65,10 @@
 
 <script>
 
-var userName = "${sessionScope.userid}";
+var userName = "${sessionScope.userID}";
 console.log(userName);
 var actID = "${sessionScope.actID}"; 
-var MyPoint = `/WebSocketChatWeb/${sessionScope.userid}/${actID}`;
+var MyPoint = `/WebSocketChatWeb/${sessionScope.userID}/${actID}`;
 console.log(MyPoint);
 var host = window.location.host;
 var path = window.location.pathname;
@@ -107,13 +96,13 @@ var webSocket;
 
 		webSocket.onmessage = function (event) {
 			
-		    var userName =${sessionScope.userid};
+		    var userName ="${sessionScope.userID}";
 		    var messageData = JSON.parse(event.data);
 		  	console.log(otherSelectedSeats)
 		    for(var i = 0; i < messageData.length ; i++ ){
 		    	 var seatTypeParts = messageData[i].seatType.split(',');
 		    	 
-		    if (seatElement.dataset.userName !== userName && (seatTypeParts[1] === "buy" ||seatTypeParts[1] ==="inCart") && seatTypeParts[1] !== "soldOut") {
+		    if (seatElement.dataset.userName !== userName && (seatTypeParts[1] === "buy" ||seatTypeParts[1] ==="inCart") && seatTypeParts[1] !== "soldOut" && seatTypeParts[1] !== "soldReally") {
 		    	console.log("處理中~~~~")
 		        otherSelectedSeats.push(messageData[i]);
 		        
@@ -131,7 +120,7 @@ var webSocket;
 		                }
 		            });
 		        });
-		    }else if (seatTypeParts[1] === "soldOut") {
+		    }else if (seatTypeParts[1] === "soldOut" || seatTypeParts[1] === "soldReally") {
 		        otherSelectedSeats.push(messageData[i]);
 		        otherSelectedSeats.forEach(function (seatObject) {
 		            var seatNumber = seatObject.seatNumber;
@@ -224,7 +213,7 @@ var webSocket;
       //發送測試
      
       function toggleSeatStatus(seatDiv) {
-    	  var userName = inputUserName.value.trim();
+    	  var userName ="${sessionScope.userID}";
   	
     	    let seatStatus = seatDiv.dataset.status || "unselected";
   		 	
@@ -234,7 +223,7 @@ var webSocket;
     	            seatDiv.dataset.status = "selected";
     	           
     	            // 拿到座位號碼
-    	            var userName = inputUserName.value.trim();
+    	            var userName = "${sessionScope.userID}";
     	            let seatNumber = seatDiv.dataset.seatNumber;
     	            
     	            let seatSelection = {
@@ -311,12 +300,8 @@ var webSocket;
       
       
       container.addEventListener("click", (e) => {
-    	  var userName = inputUserName.value.trim();
-    		if (userName === "") {
-    			alert("Input a user name");
-    			inputUserName.focus();
-    			return;
-    		}
+    	  var userName = "${sessionScope.userID}";
+    		
         if (
           e.target.classList.contains("seat") &&
           !e.target.classList.contains("sold") &&
@@ -406,11 +391,10 @@ var webSocket;
       //--------------TEST------------//
       
       //以上為座位相關 以下為 老師範本
-	var inputUserName = document.getElementById("userName");
-	inputUserName.focus();
+	
 		
 	function sendMessage() {
-		var userName = inputUserName.value.trim();
+		var userName = "${sessionScope.userID}";
 		if (userName === "") {
 			alert("Input a user name");
 			inputUserName.focus();
@@ -437,7 +421,7 @@ var webSocket;
 	function disconnect() {
 		var selectElement = document.getElementById("act");
 	    var selectedActivity = selectElement.options[selectElement.selectedIndex].text;
-	    var userName = inputUserName.value.trim();
+	    var userName = "${sessionScope.userID}";
 	   
 	    var userType = "disconnect";
 	    if (userName) {
@@ -464,7 +448,7 @@ var webSocket;
     cartButton.addEventListener('click', function () {
         var selectElement = document.getElementById("act");
         var selectedActivity = selectElement.options[selectElement.selectedIndex].text;
-        var userName = inputUserName.value.trim();
+        var userName ="${sessionScope.userID}";
         console.log('有人要買搂~')
         const message = {
             userName: userName,	      
@@ -495,7 +479,7 @@ var webSocket;
     cartButton.addEventListener('click', function () {
         var selectElement = document.getElementById("act");
         var selectedActivity = selectElement.options[selectElement.selectedIndex].text;
-        var userName = inputUserName.value.trim();
+        var userName = "${sessionScope.userID}";
         console.log('我還在考慮~')
         const message = {
             userName: userName,	      
