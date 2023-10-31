@@ -737,7 +737,7 @@
 
 
 				$.ajax({
-					url: `http://localhost:8081/com.tha103.newview/DoPostServlet`,
+					url: `DoPostServlet`,
 					type: "POST",
 					data: form_data,
 					contentType: false,
@@ -745,7 +745,7 @@
 					//			dataType: "json",
 					success: function (data) {
 						alert("文章已新增");
-						location.href = "http://localhost:8081/com.tha103.newview/forum_home.html";
+						location.href = "forum_home.html";
 						// 成功處理後顯示
 						console.log("success");
 					},

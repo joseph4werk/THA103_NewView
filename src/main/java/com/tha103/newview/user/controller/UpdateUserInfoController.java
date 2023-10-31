@@ -32,10 +32,29 @@ public class UpdateUserInfoController extends HttpServlet {
 		HashMap<String, String> data = new HashMap<>();
 		HttpSession session = req.getSession();
 		Gson gson = new Gson();
+		String json = null;
 
 		// 從 session 取出 userID (已套用濾器 -> session 中有存放 userID)
 		String userID = (String) session.getAttribute("userID");
 		System.out.println(userID);
+		
+		// 驗證前端傳遞參數
+		// 1. 用戶姓名
+		String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z)]{2,10}";
+		if(req.getParameter("name").trim() == null) {
+			data.put("error", "名字不得為空");
+			json = gson.toJson(data);
+			out.write(json);
+			return;
+		}else if(!(req.getParameter("name").matches(nameReg))) {
+			data.put("error", "請輸入正確的中、英文姓名格式，長度需介於2-10個字元");
+			json = gson.toJson(data);
+			out.write(json);
+			return;
+		}
+		
+		// 2. 
+		
 
 		// 取得資料庫資料
 		UserService userSvc = new UserServiceImpl();
@@ -65,7 +84,7 @@ public class UpdateUserInfoController extends HttpServlet {
 		// 回傳 status 參數 (-1 為更新失敗)
 		String status = updateStatus == -1 ? "failed" : "success";
 		data.put("status", status);
-		String json = gson.toJson(data);
+		json = gson.toJson(data);
 		out.write(json);
 	}
 }

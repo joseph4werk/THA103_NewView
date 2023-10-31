@@ -212,7 +212,19 @@ public class OrdersVO {
 	}
 
 
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj != null && getClass() == obj.getClass()) {
+			OrdersVO oVO = (OrdersVO) obj;
+			if (this.publisherVO.getPubID().equals(oVO.publisherVO.getPubID())) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
-	
-
+//	public int hashCode() {
+//			return this.publisherVO.getPubID().hashCode();
+//	}
 }

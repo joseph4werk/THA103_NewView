@@ -7,12 +7,11 @@
 PubUserVO pubUserVO = (PubUserVO) request.getAttribute("pubUserVO");
 %>
 
-<%
-System.out.println(pubUserVO);
-%>
+<!DOCTYPE html>
+<html >
 
-<html>
 <head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NEW VIEW | Backstage</title>
 
@@ -47,6 +46,13 @@ System.out.println(pubUserVO);
 	href="<%=request.getContextPath()%>/Backstage/plugins/dropzone/min/dropzone.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/dist/css/adminlte.min.css">
+
+<style>
+input:valid {
+  background-color: #e8f0fe ;
+}
+</style>
+
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -71,7 +77,7 @@ System.out.println(pubUserVO);
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="../../index.html">後台首頁</a></li>
+								<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/pub-index.jsp">後台首頁</a></li>
 								<li class="breadcrumb-item active">權限管理</li>
 							</ol>
 						</div>
@@ -91,61 +97,45 @@ System.out.println(pubUserVO);
 					</ul>
 				</c:if>
 				<!-- Default box -->
-				<div class="card">
+				<div class="card" class="container-fluid">
 					<form METHOD="post" action="<%=request.getContextPath()%>/pubuser/pubuser.do" name="addform"
 						style="padding: 30px 0px;">
 						<div class="col-md-10 offset-md-1">
 
-							<jsp:useBean id="pubSvc" scope="page"
-								class="com.tha103.newview.publisher.service.PublisherService" />
-							<div class="form-group">
-								<label for="inputPubID">廠商：</label> <select size="1"
-									name="pubID">
-									<c:forEach var="pub" items="${pubSvc.all}">
-										<option value="${pub.pubID}"
-											${pub.pubID==pub.pubID? 'selected':'' }>${pub.pubName}
-									</c:forEach>
-								</select>
-							</div>
-
 							<div class="form-group">
 								<label for="inputNickname">使用者暱稱：</label> <input type="text"
-									name="pubNickname"
-									value="<%=(pubUserVO == null) ? "小花" : pubUserVO.getPubNickname()%>"
-									id="inputNickname" class="form-control" />
+									name="pubNickname" id="inputNickname" class="form-control"
+									required placeholder="請輸入中文或英文" pattern="^[\u4e00-\u9fa5_a-zA-Z]+$" />
 							</div>
 							<div class="form-group">
-								<label for="inputAccount">使用者帳號：</label> <input type="text"
-									name="pubAccount"
-									value="<%=(pubUserVO == null) ? "Aa12345" : pubUserVO.getPubAccount()%>"
-									id="inputAccount" class="form-control" />
+								<label for="inputAccount">使用者帳號：</label> 
+								<input type="text" name="pubAccount" id="inputAccount" class="form-control" 
+									required placeholder="6-16英數字" pattern="[0-9A-z]{6,16}"/>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword">使用者密碼：</label> <input type="text"
-									name="pubPassword"
-									value="<%=(pubUserVO == null) ? "Aa12345" : pubUserVO.getPubPassword()%>"
-									id="inputPassword" class="form-control" />
+									name="pubPassword" id="inputPassword" class="form-control" 
+									required placeholder="4-16英數字" pattern="[0-9A-z]{4,16}"/>
 							</div>
 							<div class="form-group">
-								<label for="inputAuthority">使用權限：</label> <input type="radio"
-									id="Authority0" checked /> <label for="Authority0"
-									style="margin-right: 20px;">最高權限</label> <input type="radio"
-									id="Authority1" name="1" /> <label for="Authority1"
-									style="margin-right: 20px;">一般權限</label> <input type="hidden"
-									id="pubAuthority" name="pubAuthority" value="0">
+								<label for="pubAuthority">使用權限：</label>
+								<select name="pubAuthority" class="form-control" style="width: 100%;">
+									<option value="1" ${pubuserVO.pubAuthority == '1' ? 'selected' : ''}>最高權限</option>
+									<option value="2" ${pubuserVO.pubAuthority == '2' ? 'selected' : ''}>一般權限</option>
+								</select>	
 							</div>
 							<div class="form-group">
-								<input type="hidden" name="action" value="add"> 
-								<input type="submit" class="btn btn-primary" value="送出">
+								<Button type="submit" class="btn btn-primary">送出</Button>
+								<input type="hidden" name="action" value="add">
+								<input type="hidden" name="pubIDStr" value="${sessionScope.pubID}">
 							</div>
 						</div>
 					</form>
-					<input type="submit" class="btn btn-danger" value="清空">
 				</div>
 			</section>
 			<!-- /.content -->
 		</div>
-				<jsp:include page="../template/footer.jsp" flush="true">
+		<jsp:include page="../template/footer.jsp" flush="true">
 			<jsp:param name="footer" value="footer" />
 		</jsp:include>
 

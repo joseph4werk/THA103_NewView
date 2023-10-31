@@ -382,7 +382,7 @@
 				<ul class="header-cart-wrapitem w-full">
 					<li class="header-cart-item flex-w flex-t m-b-12">
 						<div class="header-cart-item-img">
-							<img src="images/item-cart-01.jpg" alt="IMG" />
+							<img src="images/act.jpg" alt="IMG" />
 						</div>
 
 						<div class="header-cart-item-txt p-t-8">
@@ -394,7 +394,7 @@
 
 					<li class="header-cart-item flex-w flex-t m-b-12">
 						<div class="header-cart-item-img">
-							<img src="images/item-cart-02.jpg" alt="IMG" />
+							<img src="images/act.jpg" alt="IMG" />
 						</div>
 
 						<div class="header-cart-item-txt p-t-8">
@@ -406,7 +406,7 @@
 
 					<li class="header-cart-item flex-w flex-t m-b-12">
 						<div class="header-cart-item-img">
-							<img src="images/item-cart-03.jpg" alt="IMG" />
+							<img src="images/act.jpg" alt="IMG" />
 						</div>
 
 						<div class="header-cart-item-txt p-t-8">
@@ -452,7 +452,7 @@
 		// 發送請求到Server
 		$.ajax({
 			type: "GET",
-			url: `http://localhost:8081/com.tha103.newview/GetOrderListServlet`,
+			url: `GetOrderListServlet`,
 			dataType: "json",
 			success: function (data) {
 				console.log(data);
@@ -683,7 +683,7 @@
 			row.innerHTML = `
 			<td class="column-1">
 			  <div class="how-itemcart1">
-				<img src="images/item-cart-04.jpg" alt="IMG">
+				<img src="images/act.jpg" alt="IMG">
 			  </div>
 			</td>
 			<td class="column-2">${item.actName}</td>
@@ -760,7 +760,7 @@
 
 	<!--------------------------------------- section3 結帳資訊確認------------------------------------>
 
-	<div class="outercontainer" style="margin-top: -350px;">
+	<div class="outercontainer" style="margin-top: -200px;">
 		<div class="ftco-section" style="background-color: rgb(250, 248, 248);">
 			<div class="container">
 				<div class="card mb-4 bg-white rounded shadow-sm p-b-40">
@@ -866,7 +866,7 @@
 
 		jsonData.forEach(item => {
 			firstPrice += item.actPriceTotal;
-			secondPrice += item.discountPrice;
+			secondPrice += item.discount;
 		});
 
 		var totalPrice = firstPrice - discountPrice;
@@ -926,7 +926,7 @@
 				var recipientuserID = $("#recipientuserID").val();
 				
 				$.ajax({
-					url: 'http://localhost:8081/com.tha103.newview/ConfirmUpdateOrder',
+					url: 'ConfirmUpdateOrder',
 					type: 'POST',
 					data: {
 						"orderData": order,
@@ -936,6 +936,7 @@
 					},
 					success: function (data) {
 						console.log(data);
+						window.location.href = "checkout_thankupage.html";
 					},
 					error: function (xhr, status, error) {
 						console.error('There was a problem with the AJAX request:', error);

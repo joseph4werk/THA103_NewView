@@ -31,11 +31,11 @@ pageContext.setAttribute("categories", categories);
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/plugins/fontawesome-free/css/all.min.css">
     <!-- Select2 -->
-    <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/plugins/select2/css/select2.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/dist/css/adminlte.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -157,7 +157,7 @@ pageContext.setAttribute("categories", categories);
                                                 <td>
 	                                                	
 	                                                	<Form METHOD="post"
-															ACTION="<%=request.getContextPath()%>/act/act.do">
+															ACTION="<%=request.getContextPath()%>/act/act.actadmindo">
 															<input type="submit" value="修改"
 																class="btn btn-block btn-success btn-sm"> <input
 																type="hidden" name="actId" value="${act.actID}">

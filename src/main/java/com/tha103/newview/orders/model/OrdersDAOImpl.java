@@ -111,7 +111,11 @@ public class OrdersDAOImpl implements OrdersDAO {
 			String hql = "FROM OrdersVO AS o WHERE o.publisherVO.pubID = :pubID";
 			Query<OrdersVO> query = session.createQuery(hql,OrdersVO.class);
 			query.setParameter("pubID",pubID);
-			return query.getResultList();
+			
+			List<OrdersVO> result = query.getResultList();
+			session.getTransaction().commit();
+			
+			return result;
 		}catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
@@ -147,6 +151,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 
 
 	//for Order & OrderList by Lin
+	//for Order & OrderList by Lin
 	@Override
 	public Integer getOrderBy(int userID, int pubID) {
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -157,16 +162,23 @@ public class OrdersDAOImpl implements OrdersDAO {
 	        query.setParameter("userID", userID);
 	        query.setParameter("pubID", pubID);
 
-	        Integer orderID = (Integer) query.uniqueResult();
-	        
+	        List<Integer> orderIDs = query.list();
+
 	        session.getTransaction().commit();
-	        return orderID != null ? orderID : 0; // Return 0 or handle null case according to your requirements
+
+	        if (orderIDs.isEmpty()) {
+	            return null; 
+	        } else {
+	    
+	            return orderIDs.get(0);
+	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        session.getTransaction().rollback();
 	    }
-	    return 0;
+	    return null; 
 	}
+
 
 
 

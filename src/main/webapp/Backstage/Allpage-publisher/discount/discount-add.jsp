@@ -3,6 +3,7 @@
 <%@ page import="com.tha103.newview.discount.model.*"%>
 <%@ page import="com.tha103.newview.discount.service.*"%>
 
+
 <%
 DiscountVO discountVO = (DiscountVO) request.getAttribute("discountVO");
 %>
@@ -45,6 +46,13 @@ DiscountVO discountVO = (DiscountVO) request.getAttribute("discountVO");
 	href="<%=request.getContextPath()%>/Backstage/plugins/dropzone/min/dropzone.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/Backstage/dist/css/adminlte.min.css">
+
+<style>
+input:valid {
+  background-color: #e8f0fe ;
+}
+</style>
+
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -69,7 +77,7 @@ DiscountVO discountVO = (DiscountVO) request.getAttribute("discountVO");
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="../../index.html">後台首頁</a></li>
+								<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/pub-index.jsp">後台首頁</a></li>
 								<li class="breadcrumb-item active">優惠管理</li>
 							</ol>
 						</div>
@@ -87,18 +95,18 @@ DiscountVO discountVO = (DiscountVO) request.getAttribute("discountVO");
 							<div class="col-md-10 offset-md-1">
 								<div class="form-group">
 									<label for="discountContent">優惠內容：</label> 
-									<input type="text" name="discountContent"
-										class="form-control" />
+									<input type="text" name="discountContent" class="form-control"
+									required placeholder="不得超過50字" pattern="^[<>a-zA-Z0-9\u4e00-\u9fa5]{1,50}$" />
 								</div>
 								<div class="form-group">
 									<label for="disAmount">優惠金額：</label> 
-									<input type="text" name="disAmount" 
-										class="form-control" />
+									<input type="text" name="disAmount" class="form-control"
+									required placeholder="請輸入金額" pattern="0\d{0,4}|[1-9]\d{0,9}" />
 								</div>
 								<div class="form-group">
 									<label for="discountCode">優惠碼：</label> 
-									<input name="discountCode" 
-									type="text" class="form-control" />
+									<input name="discountCode" type="text" class="form-control"
+									required placeholder="請輸入4-10英數字" pattern="[0-9A-z]{4,10}" />
 								</div>
 								<!-- Date range -->
 								<div class="form-group">
@@ -121,9 +129,9 @@ DiscountVO discountVO = (DiscountVO) request.getAttribute("discountVO");
 									</div>
 									<!-- /.input group -->
 								</div>
-			
+								
 								<div class="form-group">
-									<input type="submit" class="btn btn-primary" value="送出">
+									<Button type="submit" class="btn btn-primary">送出</Button>
 									<input type="hidden" name="action" value="add"> 
 									<input type="hidden" name="pubIDStr" value="${sessionScope.pubID}">
 								</div>

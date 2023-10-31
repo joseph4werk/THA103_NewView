@@ -92,7 +92,7 @@
           // 处理Table1的数据
           $.ajax({
             type: "POST",
-            url: "http://localhost:8081/com.tha103.newview/GetPostCategoryServlet",
+            url: "GetPostCategoryServlet",
             data: {
               postCategoryID: 1,
               action: "getbycate"
@@ -133,7 +133,7 @@
 
             $.ajax({
               type: "POST",
-              url: "http://localhost:8081/com.tha103.newview/GetPostCategoryServlet",
+              url: "GetPostCategoryServlet",
               data: {
                 postCategoryID: categoryID,
                 action: "getbycate"
@@ -1245,7 +1245,7 @@
                   </tr> -->
                 </tbody>
               </table>
-              <a href="http://localhost:8081/com.tha103.newview/forum_post.html?postCategoryID=1"
+              <a href="forum_post.html?postCategoryID=1"
                 style="color: rgb(56, 54, 54);">看更多分類文章Click me!</a>
             </div>
           </div>
@@ -1307,7 +1307,7 @@
                   </tr> -->
                 </tbody>
               </table>
-              <a href="http://localhost:8081/com.tha103.newview/forum_post.html?postCategoryID=2"
+              <a href="forum_post.html?postCategoryID=2"
                 style="color: rgb(56, 54, 54);">看更多分類文章Click me!</a>
             </div>
           </div>
@@ -1368,7 +1368,7 @@
                   </tr> -->
                 </tbody>
               </table>
-              <a href="http://localhost:8081/com.tha103.newview/forum_post.html?postCategoryID=3"
+              <a href="forum_post.html?postCategoryID=3"
                 style="color: rgb(56, 54, 54);">看更多分類文章Click me!</a>
             </div>
           </div>
@@ -1429,7 +1429,7 @@
                   </tr> -->
                 </tbody>
               </table>
-              <a href="http://localhost:8081/com.tha103.newview/forum_post.html?postCategoryID=4"
+              <a href="forum_post.html?postCategoryID=4"
                 style="color: rgb(56, 54, 54);">看更多分類文章Click me!</a>
             </div>
           </div>
@@ -1490,7 +1490,7 @@
                   </tr> -->
                 </tbody>
               </table>
-              <a href="http://localhost:8081/com.tha103.newview/forum_post.html?postCategoryID=5"
+              <a href="forum_post.html?postCategoryID=5"
                 style="color: rgb(56, 54, 54);">看更多分類文章Click me!</a>
             </div>
           </div>
@@ -1551,7 +1551,7 @@
                   </tr> -->
                 </tbody>
               </table>
-              <a href="http://localhost:8081/com.tha103.newview/forum_post.html?postCategoryID=6"
+              <a href="forum_post.html?postCategoryID=6"
                 style="color: rgb(56, 54, 54);">看更多分類文章Click me!</a>
             </div>
           </div>
@@ -1612,7 +1612,7 @@
                   </tr> -->
                 </tbody>
               </table>
-              <a href="http://localhost:8081/com.tha103.newview/forum_post.html?postCategoryID=7"
+              <a href="forum_post.html?postCategoryID=7"
                 style="color: rgb(56, 54, 54);">看更多分類文章Click me!</a>
             </div>
           </div>
@@ -1804,7 +1804,7 @@
           const postID = article.postID;
           const postCategoryID = article.postCategoryID;
           // 映射和處理數據，將article中的轉換為addPost函數需要的格式
-          const postUrl = `http://localhost:8081/com.tha103.newview/forum_postdetail.html?postID=${postID}&postCategoryID=${postCategoryID}`;
+          const postUrl = `forum_postdetail.html?postID=${postID}&postCategoryID=${postCategoryID}`;
           const postimg = article.postPic[0];
           const posttitle = article.postHeader;
           const postcontent = article.postContent;
@@ -1854,7 +1854,7 @@
 
       $.ajax({
         type: "GET",
-        url: "http://localhost:8081/com.tha103.newview/GetPostServlet?action=getAll",
+        url: "GetPostServlet?action=getAll",
         traditional: true,
         dataType: "json",
         success: function (data) {
@@ -1914,7 +1914,7 @@
           const title = article2.postHeader;
           const userName = article2.userName;
           const content = article2.postContent;
-          const url = `http://localhost:8081/com.tha103.newview/forum_postdetail.html?postID=${postID}&postCategoryID=${postCategoryID}`;
+          const url = `forum_postdetail.html?postID=${postID}&postCategoryID=${postCategoryID}`;
           const img = article2.postPic[0];
 
           addPost2(
@@ -1934,7 +1934,7 @@
 
       $.ajax({
         type: "GET",
-        url: "http://localhost:8081/com.tha103.newview/GetPostServlet?action=getbylike",
+        url: "GetPostServlet?action=getbylike",
         dataType: "json",
         success: function (data2) {
           console.log(data2);

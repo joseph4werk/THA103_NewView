@@ -34,44 +34,44 @@ public class PubuserServlet extends HttpServlet {
 		String action = req.getParameter("action");
 
 		if ("add".equals(action)) {
-
+			System.out.println("收到add新增請求");
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
 				/************************* 接收請求參數 **************************/
 				String pubNickname = req.getParameter("pubNickname");
-				String pubAccount = req.getParameter("pubAccount").trim();
-				String pubPassword = req.getParameter("pubPassword").trim();
+				String pubAccount = req.getParameter("pubAccount");
+				String pubPassword = req.getParameter("pubPassword");
 				byte pubAuthority = Byte.parseByte(req.getParameter("pubAuthority"));
 				// Integer pubID = Integer.valueOf(req.getParameter("pubID").trim());
-				Integer pubID = new Integer(req.getParameter("pubID").trim());
+				Integer pubID = new Integer(req.getParameter("pubIDStr"));
 
 				// 檢查請求參數接收
-				System.out.println(pubNickname);
-				System.out.println(pubAccount);
-				System.out.println(pubPassword);
-				System.out.println(pubAuthority);
-				System.out.println(pubID);
+				System.out.println("pubNickname" + pubNickname);
+				System.out.println("pubAccount" + pubAccount);
+				System.out.println("pubPassword" + pubPassword);
+				System.out.println("pubAuthority" + pubAuthority);
+				System.out.println("pubID" + pubID);
 
 				/************************* 輸入錯誤處理 **************************/
 
-				String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-				if (pubNickname == null || pubNickname.trim().length() == 0) {
-					errorMsgs.add("員工姓名: 請勿空白");
-
-				} else if (!pubNickname.trim().matches(nameReg)) { // 正則(規)表示式(regular-expression)
-					errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
-
-				}
-
-				if (pubAccount == null || pubAccount.trim().length() == 0) {
-					errorMsgs.add("帳號請勿空白");
-				}
-
-				if (pubPassword == null || pubPassword.trim().length() == 0) {
-					errorMsgs.add("密碼請勿空白");
-				}
+//				String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{6,16}$";
+//				if (pubNickname == null || pubNickname.trim().length() == 0) {
+//					errorMsgs.add("員工姓名: 請勿空白");
+//
+//				} else if (!pubNickname.trim().matches(nameReg)) { // 正則(規)表示式(regular-expression)
+//					errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在6到16之間");
+//
+//				}
+//
+//				if (pubAccount == null || pubAccount.trim().length() == 0) {
+//					errorMsgs.add("帳號請勿空白");
+//				}
+//
+//				if (pubPassword == null || pubPassword.trim().length() == 0) {
+//					errorMsgs.add("密碼請勿空白");
+//				}
 
 				/************************* Package data **************************/
 				// Package data
@@ -80,12 +80,11 @@ public class PubuserServlet extends HttpServlet {
 				pubuserVO.setPubAccount(pubAccount);
 				pubuserVO.setPubPassword(pubPassword);
 				pubuserVO.setPubAuthority(pubAuthority);
+				
 				// coz Association Publisher create PublisherVO object to set pubID
 				PublisherVO pubVO = new PublisherVO();
 				pubVO.setPubID(pubID);
-				// to PublisherVO to set PublisherVO
 				pubuserVO.setPublisherVO(pubVO);
-				System.out.println(pubuserVO);
 
 				// Send error back to form
 				if (!errorMsgs.isEmpty()) {
@@ -124,16 +123,18 @@ public class PubuserServlet extends HttpServlet {
 
 			// 送出修改的來源網頁路徑
 			String requestURL = req.getParameter("requestURL");
+			
+			System.out.println("收到更新請求");
 
 			try {
 				/************************* 接收請求參數 **************************/
 
-				Integer pubUserID = new Integer(req.getParameter("pubUserID").trim());
+				Integer pubUserID = Integer.parseInt(req.getParameter("pubUserID"));
 				String pubNickname = req.getParameter("pubNickname");
-				String pubAccount = req.getParameter("pubAccount").trim();
-				String pubPassword = req.getParameter("pubPassword").trim();
+				String pubAccount = req.getParameter("pubAccount");
+				String pubPassword = req.getParameter("pubPassword");
 				byte pubAuthority = Byte.parseByte(req.getParameter("pubAuthority"));
-				Integer pubID = new Integer(req.getParameter("pubID").trim());
+				Integer pubID = Integer.parseInt(req.getParameter("pubID"));
 
 				// 檢查請求參數接收
 				System.out.println(pubNickname);
@@ -179,7 +180,7 @@ public class PubuserServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("pubUserVO", pubuserVO);
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/Backstage/Allpage-publisher/user/user-add.jsp");
+							.getRequestDispatcher("/Backstage/Allpage-publisher/user/user-update.jsp");
 					failureView.forward(req, resp);
 					return;
 				}
@@ -251,6 +252,8 @@ public class PubuserServlet extends HttpServlet {
 		}
 
 		if ("getOneForDisplay".equals(action)) {
+			
+			System.out.println("收到顯示ID");
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);

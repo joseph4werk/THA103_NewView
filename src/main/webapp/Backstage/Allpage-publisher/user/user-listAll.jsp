@@ -16,8 +16,6 @@ PubUserService pubUserSvc = new PubUserService();
 List<PubUserVO> list = pubUserSvc.getPubuesrByPub(pubID);
 pageContext.setAttribute("list", list);
 
-
-System.out.println(list);
 %>
 
 
@@ -156,7 +154,13 @@ System.out.println(list);
 													<td>${pu.pubUserID}</td>
 													<td>${pu.pubNickname}</td>
 													<td>${pu.pubAccount}</td>
-													<td>${pu.pubAuthority}</td>
+													<td>
+														<c:choose>
+															<c:when test="${pu.pubAuthority == 1}">高級權限</c:when>
+															<c:when test="${pu.pubAuthority == 2}">一般權限</c:when>
+															<c:otherwise>其他權限</c:otherwise>
+														</c:choose>
+													</td>
 													<td>
 														<Form METHOD="post"
 															ACTION="<%=request.getContextPath()%>/pubuser/pubuser.do">

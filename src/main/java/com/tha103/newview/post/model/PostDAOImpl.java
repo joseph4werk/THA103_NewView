@@ -1,28 +1,12 @@
 package com.tha103.newview.post.model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
-import org.hibernate.criterion.Restrictions;
-
 import com.tha103.util.HibernateUtil;
-import com.tha103.util.Util;
 
 public class PostDAOImpl implements PostDAO {
 
@@ -62,23 +46,27 @@ public class PostDAOImpl implements PostDAO {
 
 	@Override
 	public int delete(Integer postID) {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    try {
+	        session.beginTransaction();
 
-		try {
-			session.beginTransaction();
-			PostVO post = session.get(PostVO.class, postID);
-			if (post != null) {
-				session.delete(post);
-			}
-			session.getTransaction().commit();
-			return 1;
-		} catch (Exception e) {
-			e.printStackTrace();
-			session.getTransaction().rollback();
-		}
-		return -1;
+	        // 使用原生 SQL 執行刪除操作
+	        String sql = "DELETE FROM post WHERE postID = :postID";
+	        SQLQuery query = session.createSQLQuery(sql);
+	        query.setParameter("postID", postID);
+
+	        int rowsAffected = query.executeUpdate();
+
+	        session.getTransaction().commit();
+	        return rowsAffected; // 返回受影響的行數
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        session.getTransaction().rollback();
+	    }
+	    return -1; // 返回錯誤碼
 	}
+
 
 	@Override
 	public PostVO findByPrimaryKey(Integer postID) {

@@ -8,6 +8,7 @@ DiscountVO discountVO = (DiscountVO) request.getAttribute("discountVO");
 System.out.println("update頁面接收到的資料" + discountVO);
 %>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -73,7 +74,7 @@ System.out.println("update頁面接收到的資料" + discountVO);
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="../../index.html">後台首頁</a></li>
+								<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-publisher/pub-index.jsp">後台首頁</a></li>
 								<li class="breadcrumb-item active">優惠管理</li>
 							</ol>
 						</div>
