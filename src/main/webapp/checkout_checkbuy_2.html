@@ -111,7 +111,7 @@ button {
 						<ul class="main-menu" style="font-weight: bold">
 							<li><a href="home-03.html">主頁</a></li>
 
-							<li><a href="product.html">活動專區</a></li>
+							<li><a href="NewActJSPTest.jsp">活動專區</a></li>
 
 							<li class="label1" data-label1="hot"><a
 								href="shoping-cart.html">購物車</a></li>
@@ -795,13 +795,14 @@ button {
 			</div>
 			<!-------------------------------------------- 送出確認 -------------------------------------------->
 			<div class="container" style="text-align: center;">
-				<button id="wanttobuy" type="button"
-					class="btn btn-primary py-3 px-4" style="font-size: large;">
-					<a href="checkout_thankupage.html"
-						style="color: inherit; text-decoration: none;"><strong>確定結帳，前往付款</strong></a>
-				</button>
+				<a href="checkout_thankupage.html"
+					style="color: inherit; text-decoration: none;">
+					<button id="wanttobuy" type="button"
+						class="btn btn-primary py-3 px-4" style="font-size: large;">
+						<strong>確定結帳，前往付款</strong>
+					</button>
+				</a>
 			</div>
-
 		</div>
 	</div>
 	<!--------------------------------------- section3 END ------------------------------------>
@@ -1110,7 +1111,7 @@ button {
 		    
 		    var discountPrice = $("#discountPrice").val();
 		    $("#wanttobuy").on("click", function (event) {
-		        event.preventDefault(); 
+		      
 		        $.ajax({
 		            url: "WantToBuy",
 		            type: "POST",
@@ -1183,6 +1184,17 @@ button {
 	            }
 	        });
 	}
+		
+		 var button = document.getElementById("wanttobuy");
+		    var link = button.querySelector("a");
+
+		  
+		    button.addEventListener("click", function() {
+		     
+		        if (link) {
+		            link.click();
+		        }
+		    });
 	</script>
 	<!--===============================================================================================-->
 </body>
