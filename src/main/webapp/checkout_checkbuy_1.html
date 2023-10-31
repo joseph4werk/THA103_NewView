@@ -866,7 +866,7 @@
 
 		jsonData.forEach(item => {
 			firstPrice += item.actPriceTotal;
-			secondPrice += item.discountPrice;
+			secondPrice += item.discount;
 		});
 
 		var totalPrice = firstPrice - discountPrice;
@@ -936,6 +936,7 @@
 					},
 					success: function (data) {
 						console.log(data);
+						window.location.href = "checkout_thankupage.html";
 					},
 					error: function (xhr, status, error) {
 						console.error('There was a problem with the AJAX request:', error);

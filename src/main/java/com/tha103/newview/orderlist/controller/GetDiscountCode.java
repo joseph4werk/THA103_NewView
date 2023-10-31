@@ -57,7 +57,7 @@ public class GetDiscountCode extends HttpServlet {
         String json = gson.toJson(jsonData);
 		res.getWriter().write(json); 
         
-        // 4.由參數反推誰擁有，並把對方的使用權做修正，從0變成1	
+        // 5.由參數反推誰擁有，並把對方的使用權做修正，從0變成1	
 		int useDisID = usedao.getUseDisIDBy(discountNO, userID);
 		if (useDisID != -1 ) {
 		    UseDiscountVO useVO = usedao.findeByPrimaryKey(useDisID);
@@ -65,6 +65,8 @@ public class GetDiscountCode extends HttpServlet {
 		    // 使用已修改的對象執行更新
 		    usedao.update(useVO); 
 		}
+		
+		// 6.修改訂單，新增DiscountNO(未完成)
 
         
 	}
