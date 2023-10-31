@@ -102,7 +102,7 @@ var webSocket;
 		    for(var i = 0; i < messageData.length ; i++ ){
 		    	 var seatTypeParts = messageData[i].seatType.split(',');
 		    	 
-		    if (seatElement.dataset.userName !== userName && (seatTypeParts[1] === "buy" ||seatTypeParts[1] ==="inCart") && seatTypeParts[1] !== "soldOut" && seatTypeParts[1] !== "soldReally") {
+		    if (seatElement.dataset.userName !== userName && (seatTypeParts[1] === "buy" || seatTypeParts[1] ==="inCart") && seatTypeParts[1] !== "soldOut" && seatTypeParts[1] !== "soldReally") {
 		    	console.log("處理中~~~~")
 		        otherSelectedSeats.push(messageData[i]);
 		        
