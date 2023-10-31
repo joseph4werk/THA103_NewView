@@ -53,9 +53,47 @@ public class UpdateUserInfoController extends HttpServlet {
 			return;
 		}
 		
-		// 2. 
+		// 2. 用戶暱稱
+		String nicknameReg = "^[(\u4e00-\u9fa5)(a-zA-Z)]{2,10}";
+		if(req.getParameter("nickname").trim()==null) {
+			data.put("error", "暱稱不得為空");
+			json = gson.toJson(data);
+			out.write(json);
+			return;
+		}else if((!req.getParameter("nickname").matches(nicknameReg))) {
+			data.put("error", "請輸入正確的中、英文暱稱格式，長度需介於2-10個字元");
+			json = gson.toJson(data);
+			out.write(json);
+			return;
+		}
 		
-
+		// 3. 信箱
+		if(req.getParameter("email").trim() == null) {
+			data.put("error", "信箱不得為空");
+			json = gson.toJson(data);
+			out.write(json);
+			return;
+		} else if (!(req.getParameter("email").contains("@"))) {
+			data.put("error", "請輸入正確的信箱格式 例: test@test.com");
+			json = gson.toJson(data);
+			out.write(json);
+			return;
+		}
+		
+		// 4. 電話
+		String cellReg = "09\\d{8}";
+		if(req.getParameter("cellphone").trim() == null) {
+			data.put("error", "電話不得為空");
+			json = gson.toJson(data);
+			out.write(json);
+			return;
+		} else if (!(req.getParameter("cellphone").matches(cellReg))) {
+			data.put("error", "請輸入正確的電話格式 例: 09xxxxxxxx");
+			json = gson.toJson(data);
+			out.write(json);
+			return;
+		}
+		
 		// 取得資料庫資料
 		UserService userSvc = new UserServiceImpl();
 

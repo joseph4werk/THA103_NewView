@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import com.tha103.newview.orders.model.OrdersVO;
 import com.tha103.newview.post.model.PostVO;
 import com.tha103.newview.post.service.PostService;
 import com.tha103.newview.post.service.PostServiceImpl;
@@ -54,10 +55,10 @@ public class TestHibernateDAO {
 //		System.out.println(user3);
 
 		// 查詢多筆
-		List<UserVO> list = dao.getAll();
-		for (UserVO lists : list) {
-			System.out.println(lists);
-		}
+//		List<UserVO> list = dao.getAll();
+//		for (UserVO lists : list) {
+//			System.out.println(lists);
+//		}
 
 		// 使用 userAccount 查詢單筆
 //		boolean notExist = dao.checkUserAccount("test_a");
@@ -161,7 +162,9 @@ public class TestHibernateDAO {
 //				.forEach(ordersID -> {
 //					System.out.println("ordersID: " + ordersID);
 //				});
-
+		
+		List<OrdersVO> ordersList = dao.getOrderByUserID(1);
+		System.out.println(ordersList);
 	}
 
 	public static List<Object[]> getActPicIDByUserID(Integer userID) {

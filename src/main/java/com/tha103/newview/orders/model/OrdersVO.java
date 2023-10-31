@@ -224,7 +224,15 @@ public class OrdersVO {
 		return false;
 	}
 	
-//	public int hashCode() {
+	public int hashCode() {
 //			return this.publisherVO.getPubID().hashCode();
-//	}
+		final int prime = 31;
+	    int result = 1;
+	    result = prime * result + ((getOrderID() == null) ? 0 : getOrderID().hashCode());
+	    if (this.publisherVO != null) {
+	        result = prime * result + ((this.publisherVO.getPubID() == null) ? 0 : this.publisherVO.getPubID().hashCode());
+	    }
+	    // 其他屬性的hashCode計算
+	    return result;
+	}
 }

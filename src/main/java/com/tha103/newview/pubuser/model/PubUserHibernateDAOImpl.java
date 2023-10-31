@@ -13,6 +13,8 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import com.tha103.newview.orders.model.OrdersVO;
+import com.tha103.newview.user.model.UserVO;
 import com.tha103.util.HibernateUtil;
 
 public class PubUserHibernateDAOImpl implements PubUserHibernateDAO {
@@ -205,25 +207,56 @@ public class PubUserHibernateDAOImpl implements PubUserHibernateDAO {
 
 	}
 
+//	@Override
+//	public List<PubUserVO> getListByPubID(Integer pubID) {
+//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//		try {
+//			session.beginTransaction();
+//			String sql = "FROM PubUserVO AS p WHERE p.publisherVO.pubID = :pubID ";
+//			Query<PubUserVO> query = session.createQuery(sql,PubUserVO.class);
+//			query.setParameter("pubID", pubID);
+//			
+//			if(query.getResultList() == null) {
+//				session.getTransaction().commit();
+//				return null;
+//			}
+//			
+//			session.getTransaction().commit();
+//			return query.getResultList();
+//			
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			session.getTransaction().rollback();
+//		}
+//		session.getTransaction().commit();
+//		return null;
+//	}
+	
 	@Override
 	public List<PubUserVO> getListByPubID(Integer pubID) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
 		try {
 			session.beginTransaction();
-			String hqlString = "FROM PubUserVO AS p WHERE p.publisherVO.pubID = :pubID";
-			Query<PubUserVO> query = session.createQuery(hqlString,PubUserVO.class);
-			query.setParameter("pubID", pubID);
+
+			String sql = "from PubUserVO WHERE pubID = :pubID ";
+			List<PubUserVO> pubUserVO = session.createQuery(sql).setParameter("pubID", pubID).list();
+
+			if(pubUserVO == null) {
+				session.getTransaction().commit();
+				return null;
+			}
+
 			session.getTransaction().commit();
-			return query.getResultList();
+			return pubUserVO;
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
+		session.getTransaction().commit();
 		return null;
 	}
-	
-	
-
 
 	
 	

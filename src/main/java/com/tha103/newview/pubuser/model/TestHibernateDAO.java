@@ -66,6 +66,11 @@ public class TestHibernateDAO {
 //			System.out.println(" ");
 //		}
 		
+//		List<Object[]> listByPubID = dao.getListByPubID(1);
+//		System.out.println(listByPubID);
+
+		List<PubUserVO> listByPubID = dao.getListByPubID(1);
+		System.out.println(listByPubID);
 		
 	}
 

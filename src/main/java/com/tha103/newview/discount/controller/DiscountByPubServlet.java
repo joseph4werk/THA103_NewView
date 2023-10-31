@@ -177,7 +177,7 @@ public class DiscountByPubServlet extends HttpServlet {
 				/********** 新增資料 **********/
 				System.out.println("準備新增資料");
 
-				discountVO = discountSvc.updateDiscount(discountNO, discountContent, disAmount, discountCode,
+				discountVO = discountSvc.updateDiscount(discountContent, disAmount, discountCode,
 						disStartDate, disFinishDate, pubID, adminID);
 
 				String url = "/Backstage/Allpage-publisher/discount/discount-list.jsp";
