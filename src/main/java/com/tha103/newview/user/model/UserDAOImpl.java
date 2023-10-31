@@ -219,16 +219,15 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public boolean checkUserAccountByEmail(String email) {
-
+		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
 
-			String sql = "from UserVO WHERE userEmail = :userEmail";
+			String sql = "from UserVO WHERE userEmail = :userEmail ";
 			UserVO user = (UserVO) session.createQuery(sql).setParameter("userEmail", email).uniqueResult();
 
-
-			// 若不存在使用者為 null -> 回傳 false
+			// 若不存在使用者帳號為 null -> 回傳 false
 			if (user == null) {
 				session.getTransaction().commit();
 				return false;
@@ -237,7 +236,7 @@ public class UserDAOImpl implements UserDAO {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
-		// 若存在使用者查得到值-> 回傳 true
+		// 若存在使用者帳號查得到值-> 回傳 true
 		session.getTransaction().commit();
 		return true;
 	}

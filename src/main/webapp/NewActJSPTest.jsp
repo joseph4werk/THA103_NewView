@@ -22,6 +22,7 @@ pageContext.setAttribute("user", userlist);
 pageContext.setAttribute("city", city);
 pageContext.setAttribute("list", list);
 pageContext.setAttribute("categories", categories);
+
 %>
 
 <html lang="en">
@@ -108,23 +109,6 @@ pageContext.setAttribute("categories", categories);
 </head>
 <body class="animsition">
 
-
-
-	<table border="1">
-		<tr>
-			<th>User ID</th>
-		</tr>
-
-		<c:if test="${not empty user}">
-			<tr>
-				<td>${user[0].userID}</td>
-				<script>
-					userIDValue = "${user[0].userID}";
-				</script>
-
-			</tr>
-		</c:if>
-	</table>
 	<!-- Header -->
 	<header class="header-v4">
 		<!-- Header desktop -->
@@ -624,113 +608,80 @@ pageContext.setAttribute("categories", categories);
 		</div>
 	</div>
 
-	<!-- Footer -->
-	<footer class="bg3 p-t-75 p-b-32">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">Categories</h4>
+	 <!-- Footer -->
+    <footer class="bg3 p-t-55 p-b-32">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6 col-lg-3 p-b-20">
+            <h4 class="stext-301 cl0 p-b-30">Categories</h4>
+            <ul style="border-right: 1px solid #ccc; padding-right: 20px">
+              <li class="p-b-10">
+                <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 脫口秀 </a>
+              </li>
 
-					<ul>
-						<li class="p-b-10"><a href="#"
-							class="stext-107 cl7 hov-cl1 trans-04"> Women </a></li>
+              <li class="p-b-10">
+                <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 講座 </a>
+              </li>
 
-						<li class="p-b-10"><a href="#"
-							class="stext-107 cl7 hov-cl1 trans-04"> Men </a></li>
+              <li class="p-b-10">
+                <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 音樂會 </a>
+              </li>
 
-						<li class="p-b-10"><a href="#"
-							class="stext-107 cl7 hov-cl1 trans-04"> Shoes </a></li>
+              <li class="p-b-10">
+                <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 舞台劇 </a>
+              </li>
 
-						<li class="p-b-10"><a href="#"
-							class="stext-107 cl7 hov-cl1 trans-04"> Watches </a></li>
-					</ul>
-				</div>
+              <li class="p-b-10">
+                <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 演唱會 </a>
+              </li>
+            </ul>
+          </div>
 
-				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">Help</h4>
+          <div class="col-sm-6 col-lg-3 p-b-20">
+            <h4 class="stext-301 cl0 p-b-30">Help</h4>
 
-					<ul>
-						<li class="p-b-10"><a href="#"
-							class="stext-107 cl7 hov-cl1 trans-04"> Track Order </a></li>
+            <ul>
+              <li class="p-b-10">
+                <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 訂單查詢 </a>
+              </li>
 
-						<li class="p-b-10"><a href="#"
-							class="stext-107 cl7 hov-cl1 trans-04"> Returns </a></li>
+              <li class="p-b-10">
+                <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> 退貨申請 </a>
+              </li>
 
-						<li class="p-b-10"><a href="#"
-							class="stext-107 cl7 hov-cl1 trans-04"> Shipping </a></li>
+              <li class="p-b-10">
+                <a href="#" class="stext-107 cl7 hov-cl1 trans-04"> FAQs </a>
+              </li>
+            </ul>
+          </div>
 
-						<li class="p-b-10"><a href="#"
-							class="stext-107 cl7 hov-cl1 trans-04"> FAQs </a></li>
-					</ul>
-				</div>
+          <div class="col-sm-6 col-lg-3 p-b-20">
+            <h4 class="stext-301 cl0 p-b-30">Newsletter</h4>
 
-				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">GET IN TOUCH</h4>
+            <form>
+              <div class="wrap-input1 w-full p-b-4">
+                <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com" />
+                <div class="focus-input1 trans-04"></div>
+              </div>
 
-					<p class="stext-107 cl7 size-201">Any questions? Let us know in
-						store at 8th floor, 379 Hudson St, New York, NY 10018 or call us
-						on (+1) 96 716 6879</p>
+              <div class="p-t-18">
+                <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">訂閱電子報</button>
+              </div>
+            </form>
+          </div>
 
-					<div class="p-t-27">
-						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16"> <i
-							class="fa fa-facebook"></i>
-						</a> <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16"> <i
-							class="fa fa-instagram"></i>
-						</a> <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16"> <i
-							class="fa fa-pinterest-p"></i>
-						</a>
-					</div>
-				</div>
+          <div class="col-sm-6 col-lg-3 p-b-20">
+            <!-- <h4 class="stext-301 cl0 p-b-30">Latest Blog Post</h4> -->
+            <p class="stext-301 cl7 size-201">Ready to get started?</p>
+            <p class="stext-107 cl7 size-201">Any questions? Let us know in store at 104台北市中山區南京東路三段219號5樓 or call us on (+886) 2712 0589</p>
 
-				<div class="col-sm-6 col-lg-3 p-b-50">
-					<h4 class="stext-301 cl0 p-b-30">Newsletter</h4>
-
-					<form>
-						<div class="wrap-input1 w-full p-b-4">
-							<input class="input1 bg-none plh1 stext-107 cl7" type="text"
-								name="email" placeholder="email@example.com" />
-							<div class="focus-input1 trans-04"></div>
-						</div>
-
-						<div class="p-t-18">
-							<button
-								class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-								Subscribe</button>
-						</div>
-					</form>
-				</div>
-			</div>
-
-			<div class="p-t-40">
-				<div class="flex-c-m flex-w p-b-18">
-					<a href="#" class="m-all-1"> <img
-						src="images/icons/icon-pay-01.png" alt="ICON-PAY" />
-					</a> <a href="#" class="m-all-1"> <img
-						src="images/icons/icon-pay-02.png" alt="ICON-PAY" />
-					</a> <a href="#" class="m-all-1"> <img
-						src="images/icons/icon-pay-03.png" alt="ICON-PAY" />
-					</a> <a href="#" class="m-all-1"> <img
-						src="images/icons/icon-pay-04.png" alt="ICON-PAY" />
-					</a> <a href="#" class="m-all-1"> <img
-						src="images/icons/icon-pay-05.png" alt="ICON-PAY" />
-					</a>
-				</div>
-
-				<p class="stext-107 cl6 txt-center">
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					Copyright &copy;
-					<script>
-						document.write(new Date().getFullYear());
-					</script>
-					All rights reserved |Made with <i class="fa fa-heart-o"
-						aria-hidden="true"></i> by <a href="https://colorlib.com"
-						target="_blank">Colorlib</a> &amp; distributed by <a
-						href="https://themewagon.com" target="_blank">ThemeWagon</a>
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-				</p>
-			</div>
-		</div>
-	</footer>
+            <div class="p-t-27">
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
 
 	<!-- Back to top -->
 	<div class="btn-back-to-top" id="myBtn">
@@ -771,32 +722,6 @@ pageContext.setAttribute("categories", categories);
 											</a>
 										</div>
 									</div>
-
-									<div id="img2YAa" class="item-slick3"
-										data-thumb="images/icons/iStock-961709574.jpg">
-										<div class="wrap-pic-w pos-relative">
-											<img id="img2YAa" src="images/icons/iStock-961709574.jpg"
-												alt="IMG-PRODUCT" /> <a id="img2YAa"
-												class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-												href="images/icons/iStock-961709574.jpg"> <i
-												class="fa fa-expand"></i>
-											</a>
-										</div>
-									</div>
-
-									<div id="img3YAa" class="item-slick3"
-										data-thumb="images/icons/iStock-461162561.jpg">
-										<div class="wrap-pic-w pos-relative">
-											<img id="img3YAa" src="images/icons/iStock-461162561.jpg"
-												alt="IMG-PRODUCT" /> <a id="img3YAa"
-												class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-												href="images/icons/iStock-461162561.jpg"> <i
-												class="fa fa-expand"></i>
-											</a>
-										</div>
-									</div>
-
-
 
 								</div>
 							</div>
@@ -949,8 +874,10 @@ pageContext.setAttribute("categories", categories);
 					});
 				});
 	</script>
+	
 	<!--===============================================================================================-->
 	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	
 	<script>
 		$(".js-pscroll").each(function() {
 			$(this).css("position", "relative");
@@ -973,7 +900,7 @@ pageContext.setAttribute("categories", categories);
 	<script>
 		var packagedData;
 		var userIDValue;
-		console.log(packagedData+",  "+userIDValue)
+		console.log(userIDValue)
 		function showModal(elem) {
 			var actIdStr = elem.getAttribute("data-act-id");
 			sendAjaxRequest(actIdStr);
@@ -1165,12 +1092,11 @@ pageContext.setAttribute("categories", categories);
 
 
 	</script>
-
 	<script type="text/javascript">
         // 在頁面加載完成後執行
-      $(document).ready(function() {
-    	  var userID = 1;
-
+$(document).ready(function() {
+ var userID = '<%= session.getAttribute("userID") %>';
+			
     	    // 每個按鈕都有一個不同的actID
  $(".btn-addwish-b2").each(function() {
     var actID = $(this).data("act-id");
@@ -1280,7 +1206,7 @@ pageContext.setAttribute("categories", categories);
     //我的最愛切換送交
     function sendLikeChangeRequest(element) {    
         var actIDchange = $(element).data("act-id");              
-        var userIDC =1;
+        var userIDC = '<%= session.getAttribute("userID") %>';
 
         
         $.ajax({

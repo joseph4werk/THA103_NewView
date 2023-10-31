@@ -70,7 +70,7 @@ public class OrderWantBuyOrNot extends HttpServlet {
         response.setContentType("application/json");
         Integer userID = null;
         Integer actID = null;
-        String userIDstr = (String) session.getAttribute("userid");
+        String userIDstr = (String) session.getAttribute("userID");
         String actIDstr = (String) session.getAttribute("actID");
 
         try {
@@ -103,7 +103,7 @@ public class OrderWantBuyOrNot extends HttpServlet {
             responseJson.add("actWithPics", gson.toJsonTree(actWithPicsDTO));
             responseJson.add("allSeatNumbers", gson.toJsonTree(allSeatNumbers));  
             responseJson.addProperty("totalSeatsReceived", totalSeatsReceived);  
-
+            responseJson.addProperty("userID", userID); 
             String responseString = gson.toJson(responseJson);
             response.getWriter().write(responseString);
         } else {

@@ -1,11 +1,21 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.tha103.newview.orders.service.*"%>
 <%@ page import="com.tha103.newview.orders.model.*"%>
+<<<<<<< HEAD
+<%@ page import="com.tha103.newview.user.model.*"%>
+<%@ page import="com.tha103.newview.user.service.*"%>
+<%@ page import="com.tha103.newview.discount.model.*"%>
+<%@ page import="com.tha103.newview.discount.service.*"%>
+<%@ page import="com.tha103.newview.publisher.model.*"%>
+<%@ page import="com.tha103.newview.publisher.service.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
-OrdersService ordersSvc = new OrdersService();
+OrdersVO ordersVO = (OrdersVO) request.getAttribute("ordersVO");
+
+
+OrdersServiceImpl ordersSvc = new OrdersServiceImpl();
 List<OrdersVO> list = ordersSvc.getAll();
 pageContext.setAttribute("list", list);
 
@@ -67,7 +77,7 @@ System.out.println(list);
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="../../index.html">後台首頁</a></li>
+                                <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/Backstage/Allpage-administrator/admin-index.jsp">後台首頁</a></li>
                                 <li class="breadcrumb-item active">訂單管理</li>
                             </ol>
                         </div>
@@ -98,24 +108,29 @@ System.out.println(list);
                                         <thead>
                                             <tr>
                                                 <th>訂單編號</th>
+                                                <th>廠商編號</th>
                                                 <th>訂單金額</th>
                                                 <th>折扣金額(廠商)</th>
                                                 <th>折扣金額(平台)</th>
                                                 <th>應收金額</th>
                                                 <th>訂單成立日期</th>
-                                                <th style="text-align: center;">訂單狀態</th>
+                                                <th>訂單狀態</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        	
                                             <tr>
-                                                <td>nv653</td>
-                                                <td>John Doe</td>
+                                                <td><%=ordersVO.getOrderID()%></td>
+                                                <td><%=ordersVO.getPublisherVO().getPubID()%></td>
+                                                <td><%=ordersVO.getOrdTotal()%></td>
                                                 <td>100</td>
                                                 <td>0</td>
-                                                <td>999</td>
-                                                <td><span class="tag tag-success">2023-09-22</span></td>
-                                                <td>未使用</td>
+                                                <td><%=ordersVO.getDiscountPrice()%></td>
+                                                <td><%=ordersVO.getOrdTime()%></td>
+                                                <td><%=ordersVO.getOrdType()%></td>
                                             </tr>  
+                                            
+
                                         </tbody>
                                     </table>
                                 </div>
