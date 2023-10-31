@@ -8,6 +8,7 @@ DiscountVO discountVO = (DiscountVO) request.getAttribute("discountVO");
 System.out.println("update頁面接收到的資料" + discountVO);
 %>
 
+
 <!DOCTYPE html>
 <html lang="en">
 

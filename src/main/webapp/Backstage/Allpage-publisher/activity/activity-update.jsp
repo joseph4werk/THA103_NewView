@@ -10,6 +10,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+
 <%
 Integer pubID = (Integer) session.getAttribute("pubID");
 if(pubID == null){

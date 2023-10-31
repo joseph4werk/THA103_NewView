@@ -114,6 +114,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 			
 			List<OrdersVO> result = query.getResultList();
 			session.getTransaction().commit();
+			
 			return result;
 		}catch (Exception e) {
 			e.printStackTrace();

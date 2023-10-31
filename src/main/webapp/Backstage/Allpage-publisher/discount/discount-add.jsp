@@ -3,6 +3,7 @@
 <%@ page import="com.tha103.newview.discount.model.*"%>
 <%@ page import="com.tha103.newview.discount.service.*"%>
 
+
 <%
 DiscountVO discountVO = (DiscountVO) request.getAttribute("discountVO");
 %>

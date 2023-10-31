@@ -3,6 +3,7 @@ package com.tha103.newview.pubuser.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -212,6 +213,7 @@ public class PubUserHibernateDAOImpl implements PubUserHibernateDAO {
 			String hqlString = "FROM PubUserVO AS p WHERE p.publisherVO.pubID = :pubID";
 			Query<PubUserVO> query = session.createQuery(hqlString,PubUserVO.class);
 			query.setParameter("pubID", pubID);
+			session.getTransaction().commit();
 			return query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -219,5 +221,11 @@ public class PubUserHibernateDAOImpl implements PubUserHibernateDAO {
 		}
 		return null;
 	}
+	
+	
 
+
+	
+	
+	
 }

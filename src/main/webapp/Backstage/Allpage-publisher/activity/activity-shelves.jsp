@@ -7,6 +7,7 @@
 <%@ page import="com.tha103.newview.cityaddress.model.*"%>
 <%@ page import="com.tha103.newview.publisher.model.*"%>
 <%@ page import="com.tha103.newview.act.controller.*"%>
+
 <%
 // ActDAO actDAO = new ActDAOHibernateImpl();
 // ActService actSvc = new ActServiceImpl(actDAO);

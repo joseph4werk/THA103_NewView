@@ -139,6 +139,7 @@ public class DiscountDAOImpl implements DiscountDAO {
 			
 			List<DiscountVO> result = query.getResultList();
 			session.getTransaction().commit();
+			
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();

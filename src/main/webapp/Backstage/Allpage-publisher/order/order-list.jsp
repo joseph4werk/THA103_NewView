@@ -95,29 +95,29 @@ pageContext.setAttribute("list", pubOrders);
 					<form action="enhanced-results.html">
 						<div class="row">
 							<div class="col-md-10 offset-md-1">
-								<div class="row">
-									<div class="col-6">
-										<div class="form-group">
-											<label>活動類別:</label> <select class="form-control"
-												style="width: 100%;">
-												<option>脫口秀</option>
-												<option>演講</option>
-												<option>音樂劇</option>
-												<option>舞台劇</option>
-												<option>演唱會</option>
-											</select>
-										</div>
-									</div>
-									<div class="col-6">
-										<div class="form-group">
-											<label>日期排序：</label> <select class="form-control"
-												style="width: 100%;">
-												<option>由新到舊</option>
-												<option>由舊到新</option>
-											</select>
-										</div>
-									</div>
-								</div>
+<!-- 								<div class="row"> -->
+<!-- 									<div class="col-6"> -->
+<!-- 										<div class="form-group"> -->
+<!-- 											<label>活動類別:</label> <select class="form-control" -->
+<!-- 												style="width: 100%;"> -->
+<!-- 												<option>脫口秀</option> -->
+<!-- 												<option>演講</option> -->
+<!-- 												<option>音樂劇</option> -->
+<!-- 												<option>舞台劇</option> -->
+<!-- 												<option>演唱會</option> -->
+<!-- 											</select> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 									<div class="col-6"> -->
+<!-- 										<div class="form-group"> -->
+<!-- 											<label>日期排序：</label> <select class="form-control" -->
+<!-- 												style="width: 100%;"> -->
+<!-- 												<option>由新到舊</option> -->
+<!-- 												<option>由舊到新</option> -->
+<!-- 											</select> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
 <!-- 								<div class="form-group"> -->
 <!-- 									<label>關鍵字搜尋:</label> -->
 <!-- 									<div class="input-group input-group-lg"> -->
@@ -168,7 +168,7 @@ pageContext.setAttribute("list", pubOrders);
 												<th>折扣後金額</th>
 												<th>訂單成立時間</th>
 												<th>訂單數量</th>
-												<th style="text-align: center;">操作</th>
+<!-- 												<th style="text-align: center;">操作</th> -->
 											</tr>
 										</thead>
 										<tbody>
@@ -181,10 +181,10 @@ pageContext.setAttribute("list", pubOrders);
 												<td>${orderDate.discountPrice}</td>
 												<td>${orderDate.ordTime}</td>
 												<td>${orderDate.actQuantity}</td>
-												<td>
-													<button type="button"
-														class="btn btn-block btn-success btn-sm">詳情</button>
-												</td>
+<!-- 												<td> -->
+<!-- 													<button type="button" -->
+<!-- 														class="btn btn-block btn-success btn-sm">詳情</button> -->
+<!-- 												</td> -->
 											</tr>
 											
 										</c:forEach>
