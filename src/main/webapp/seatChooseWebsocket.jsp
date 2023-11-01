@@ -425,12 +425,23 @@ var webSocket;
 			inputMessage.focus();
 		}
 	}
+	var isPurchaseClicked = false;
+	var buyButton = document.querySelector(".BuyIn");
+	var cartButton = document.querySelector(".cart");
+	cartButton.addEventListener("click", function() {
+	    // 設置標誌為 true，表示因為點擊購買按鈕而跳轉頁面
+	    isPurchaseClicked = true;
+	});
+	buyButton.addEventListener("click", function() {
+	    // 設置標誌為 true，表示因為點擊購買按鈕而跳轉頁面
+	    isPurchaseClicked = true;
+	});
 	function disconnect() {
 		var selectElement = document.getElementById("act");
 	    var selectedActivity = selectElement.options[selectElement.selectedIndex].text;
 	    var userName = "${sessionScope.userID}";
-	   
-	    var userType = "disconnect";
+	    var userType = isPurchaseClicked ? "purchase" : "disconnect";
+	    
 	    if (userName) {
 	        if (webSocket && webSocket.readyState === WebSocket.OPEN) {
 	            var userInfo = {
