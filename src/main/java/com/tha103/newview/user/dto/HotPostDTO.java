@@ -16,9 +16,13 @@ public class HotPostDTO {
 	List<String> postMessages = new ArrayList<>();
 	List<Integer> likeCounts = new ArrayList<>();
 	List<Integer> dislikeCounts = new ArrayList<>();
+	List<Integer> postID = new ArrayList<>();
+	List<Integer> postCategoryID = new ArrayList<>();
 
 	public HotPostDTO(PostVO postVOs) {
 		
+			this.postID.add(postVOs.getPostID());
+			this.postCategoryID.add(postVOs.getPostCategoryVO().getPostCategoryID());
 			this.likeCounts.add(postVOs.getLikeCount());
 			this.dislikeCounts.add(postVOs.getDisLikeCount());
 			this.userNickname.add(postVOs.getUserVO().getUserNickname());
