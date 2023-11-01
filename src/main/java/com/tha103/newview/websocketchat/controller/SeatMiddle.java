@@ -160,11 +160,13 @@ public class SeatMiddle {
 			        if (seatInfo.getActID().equals(actID) && seatInfo.getUserName().equals(userName)) {
 			            seatsToRemove.add(seatInfo);
 			            
-			            
+			            SeatInfo seatInfoSend =null;
 			            String seatNumber = seatInfo.getSeatNumber();
 			            String seatType = seatInfo.getSeatType();
-			            SeatInfo seatInfoSend = new SeatInfo(userName, seatNumber, actID + ",cancel", actID);
-			            
+			            System.out.println(seatType+", 禁止刪除");
+			            if(seatType != "soldOut") {
+			             seatInfoSend = new SeatInfo(userName, seatNumber, actID + ",cancel", actID);
+			            }
 			          
 //			            System.out.println("ActID: " + actID + ", UserName: " + userName + ", SeatNumber: " + seatNumber + ", SeatType: " + seatType);
 			            
@@ -457,8 +459,8 @@ public class SeatMiddle {
 			String senderActID = messageObject.getActID();
 			String messageType = messageObject.getType();
 			String userActID = (String) userSession.getUserProperties().get("actID");
-//			System.err.println(userActID);
-
+			System.err.println(messageType);
+			
 			if (senderActID.equals(userActID)) {
 				if ("cancel".equals(messageType)) {
 					// 取消狀態,回傳前端
