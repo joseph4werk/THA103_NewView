@@ -2,6 +2,7 @@ package com.tha103.newview.discount.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -149,31 +150,29 @@ public class DiscountDAOImpl implements DiscountDAO {
 	}
 	
 
-	@Override
-	public int deleteByPub(Integer discountNO) {
+	 @Override
+	 public int deleteByPub(Integer discountNO) {
 
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		try {
-			session.beginTransaction();
-			DiscountVO discountVO = session.get(DiscountVO.class, discountNO);
-			if (discountVO != null) {
-				
-				//取消關聯
-				OrdersVO ordersVO = (OrdersVO) session.get(OrdersVO.class,discountNO);
-				ordersVO.getDiscountVO().getOrdersVOs().remove(ordersVO);
-				ordersVO.setDiscountVO(null);
-				
-				//刪除資料
-				session.delete(discountVO);
-			}
-			session.getTransaction().commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-			session.getTransaction().rollback();
-		}
-		return -1;
-	}
-
+	  Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	  try {
+	   session.beginTransaction();
+	   DiscountVO discountVO = session.get(DiscountVO.class, discountNO);
+	         if (discountVO != null) {
+	          Set<OrdersVO> ordersSet = discountVO.getOrdersVOs();
+	              for (OrdersVO ordersVO : ordersSet) {
+	                  ordersVO.getDiscountVO().getOrdersVOs().remove(ordersVO); // 取消關聯
+	                  ordersVO.setDiscountVO(null);
+	              }
+	              session.delete(discountVO); // 刪除DiscountVO
+	          }
+	          session.getTransaction().commit();
+	          return 1; // 操作成功
+	  } catch (Exception e) {
+	   e.printStackTrace();
+	   session.getTransaction().rollback();
+	  }
+	  return -1;
+	 }
 
 
 	public static void main(String[] args) {

@@ -27,12 +27,14 @@ public class HotPostDTO {
 			this.dislikeCounts.add(postVOs.getDisLikeCount());
 			this.userNickname.add(postVOs.getUserVO().getUserNickname());
 			this.postHeader.add(postVOs.getPostHeader());
+			this.postMessages.add(postVOs.getPostContent());
+			this.messageDate.add(postVOs.getPostDateTime());
 
-			Set<PostMessageVO> postMessageVOs = postVOs.getPostMessageVOs();
-			for (PostMessageVO postMessageVO : postMessageVOs) {
-				this.postMessages.add(postMessageVO.getMesContent());
-				this.messageDate.add(postMessageVO.getMessageDate());
-			}
+//			Set<PostMessageVO> postMessageVOs = postVOs.getPostMessageVOs();
+//			for (PostMessageVO postMessageVO : postMessageVOs) {
+//				this.postMessages.add(postMessageVO.getMesContent());
+//				this.messageDate.add(postMessageVO.getMessageDate());
+//			}
 	}
 
 	public HotPostDTO() {
